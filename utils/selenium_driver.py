@@ -21,12 +21,17 @@ Note:
 :Author: Sinku Kumar
 """
 
+import os
+import sys
 from typing import Optional
 
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from utils import error_codes
 
 class SeleniumDriver:
     """

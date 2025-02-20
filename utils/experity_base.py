@@ -11,3 +11,6 @@ class ExperityBase:
 
     def open_portal(self, url):
         self.webdriver.get()
+
+if __name__ == "__main__":
+    pass

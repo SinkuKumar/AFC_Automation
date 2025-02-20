@@ -148,7 +148,7 @@ if __name__ == '__main__':
             selenium = SeleniumDriver(browser=browser, download_directory=download_directory)
             driver = selenium.setup_driver()
             driver.get("https://www.google.com")
-            time.sleep(5)
+            time.sleep(2)
             driver.quit()
         except Exception as e:
             print(e)

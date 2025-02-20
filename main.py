@@ -8,7 +8,11 @@ DOWNLOAD_DIR = os.getcwd()
 selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR)
 driver = selenium.setup_driver()
 
-ExperityBase(driver)
+experity = ExperityBase(driver)
+
+experity.open_portal(experity_url)
+experity.login(username, password)
+experity.open_report_page()
 
 
 

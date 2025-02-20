@@ -39,4 +39,5 @@ Traceback (most recent call last):
   File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\exception_usage.py", line 29, in <module>
     raise SeleniumException("Browser crashed unexpectedly!")
 SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
+.
 

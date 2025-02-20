@@ -31,7 +31,8 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from utils import error_codes
+from utils import error_messages as em
+from utils.automation_exceptions import SeleniumException 
 
 class SeleniumDriver:
     """
@@ -50,7 +51,7 @@ class SeleniumDriver:
         :param download_directory: The directory to download files to.
         """
         if browser not in self.BROWSER_OPTIONS:
-            raise ValueError(f"Unsupported browser. Please select from {self.BROWSER_OPTIONS}.")
+            raise SeleniumException(f"(Error Code: {em.UNSUPPORTED_BROWSER}) :Unsupported browser. Please select from {self.BROWSER_OPTIONS}.")
         self.browser: str = browser
         self.download_directory: str = download_directory
         self.driver: Optional[webdriver.Remote] = None
@@ -69,8 +70,7 @@ class SeleniumDriver:
             elif self.browser == 'edge':
                 return self.setup_edge()
         except Exception as e:
-            print(f"Error setting up the WebDriver: {e}")
-            raise
+            raise SeleniumException(f"Error setting up the WebDriver: {e}")
 
     def setup_chrome(self) -> webdriver.Chrome:
         """
@@ -78,17 +78,20 @@ class SeleniumDriver:
 
         :return: Chrome WebDriver instance.
         """
-        options = webdriver.ChromeOptions()
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        prefs = {
-            "download.default_directory": self.download_directory,
-            "profile.default_content_settings.popups": 0,
-            "profile.content_settings.exceptions.automatic_downloads.*.setting": 1
-        }
-        options.add_experimental_option("prefs", prefs)
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        self.driver = webdriver.Chrome(options=options)
-        return self.driver
+        try:
+            options = webdriver.ChromeOptions()
+            options.add_argument("--disable-blink-features=AutomationControlled")
+            prefs = {
+                "download.default_directory": self.download_directory,
+                "profile.default_content_settings.popups": 0,
+                "profile.content_settings.exceptions.automatic_downloads.*.setting": 1
+            }
+            options.add_experimental_option("prefs", prefs)
+            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            self.driver = webdriver.Chrome(options=options)
+            return self.driver
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.BROWSER_INSTANCE_ISSUE} | Message: Unable to create Chrome Browser Instance")
 
     def setup_firefox(self) -> webdriver.Firefox:
         """
@@ -96,16 +99,19 @@ class SeleniumDriver:
 
         :return: Firefox WebDriver instance.
         """
-        options = FirefoxOptions()
-        options.set_preference("browser.download.folderList", 2)
-        options.set_preference("browser.download.dir", self.download_directory)
-        options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/pdf, application/octet-stream")
-        options.set_preference("browser.download.manager.showWhenStarting", False)
-        options.set_preference("browser.helperApps.alwaysAsk.force", False)
-        options.set_preference("dom.webdriver.enabled", False)
-        options.set_preference("dom.webnotifications.enabled", False)
-        self.driver = webdriver.Firefox(options=options)
-        return self.driver
+        try:
+            options = FirefoxOptions()
+            options.set_preference("browser.download.folderList", 2)
+            options.set_preference("browser.download.dir", self.download_directory)
+            options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/pdf, application/octet-stream")
+            options.set_preference("browser.download.manager.showWhenStarting", False)
+            options.set_preference("browser.helperApps.alwaysAsk.force", False)
+            options.set_preference("dom.webdriver.enabled", False)
+            options.set_preference("dom.webnotifications.enabled", False)
+            self.driver = webdriver.Firefox(options=options)
+            return self.driver
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.BROWSER_INSTANCE_ISSUE} | Message: Unable to create Firefox Browser Instance")
 
     def setup_edge(self) -> webdriver.Edge:
         """
@@ -113,21 +119,24 @@ class SeleniumDriver:
 
         :return: Edge WebDriver instance.
         """
-        options = EdgeOptions()
-        prefs = {
-            "download.default_directory": self.download_directory,
-            "profile.default_content_settings.popups": 0,
-            "profile.content_settings.exceptions.automatic_downloads.*.setting": 1
-        }
-        options.add_experimental_option("prefs", prefs)
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        self.driver = webdriver.Edge(options=options)
-        return self.driver
+        try:
+            options = EdgeOptions()
+            prefs = {
+                "download.default_directory": self.download_directory,
+                "profile.default_content_settings.popups": 0,
+                "profile.content_settings.exceptions.automatic_downloads.*.setting": 1
+            }
+            options.add_experimental_option("prefs", prefs)
+            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            options.add_argument("--disable-blink-features=AutomationControlled")
+            self.driver = webdriver.Edge(options=options)
+            return self.driver
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.BROWSER_INSTANCE_ISSUE} | Message: Unable to create Edge Browser Instance")
 
 
 if __name__ == '__main__':
-    # Example usage of the SeleniumDriver class
+    # Example usage
     import os
     import time
     
@@ -135,8 +144,11 @@ if __name__ == '__main__':
     download_directory = os.getcwd()
 
     for browser in browsers:
-        selenium = SeleniumDriver(browser=browser, download_directory=download_directory)
-        driver = selenium.setup_driver()
-        driver.get("https://www.google.com")
-        time.sleep(5)
-        driver.quit()
+        try:
+            selenium = SeleniumDriver(browser=browser, download_directory=download_directory)
+            driver = selenium.setup_driver()
+            driver.get("https://www.google.com")
+            time.sleep(5)
+            driver.quit()
+        except Exception as e:
+            print(e)

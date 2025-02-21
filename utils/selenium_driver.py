@@ -43,7 +43,7 @@ class SeleniumDriver:
     """
     BROWSER_OPTIONS = ['chrome', 'firefox', 'edge']
 
-    def __init__(self, browser: str = 'chrome', download_directory: str = None) -> None:
+    def __init__(self, browser: str = 'chrome', download_directory: str = None, window_width: int = None, window_height: int = None) -> None:
         """
         Initialize the SeleniumDriver with a specified browser and download directory.
 
@@ -55,6 +55,8 @@ class SeleniumDriver:
         self.browser: str = browser
         self.download_directory: str = download_directory
         self.driver: Optional[webdriver.Remote] = None
+        self.window_width = window_width
+        self.window_height = window_height
 
     def setup_driver(self) -> webdriver.Remote:
         """
@@ -88,9 +90,14 @@ class SeleniumDriver:
             }
             options.add_experimental_option("prefs", prefs)
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            if self.window_width and self.window_height:
+                options.add_argument(f"--window-size={self.window_width},{self.window_height}")
+            else:
+                options.add_argument("--start-maximized")
+
             self.driver = webdriver.Chrome(options=options)
             return self.driver
-        except Exception as e:
+        except Exception:
             raise SeleniumException(f"Code: {em.BROWSER_INSTANCE_ISSUE} | Message: Unable to create Chrome Browser Instance")
 
     def setup_firefox(self) -> webdriver.Firefox:
@@ -108,7 +115,14 @@ class SeleniumDriver:
             options.set_preference("browser.helperApps.alwaysAsk.force", False)
             options.set_preference("dom.webdriver.enabled", False)
             options.set_preference("dom.webnotifications.enabled", False)
+            if self.window_width and self.window_height:
+                options.add_argument(f"--width={self.window_width}")
+                options.add_argument(f"--height={self.window_height}")
+
             self.driver = webdriver.Firefox(options=options)
+            
+            if not (self.window_width and self.window_height):
+                self.driver.maximize_window()
             return self.driver
         except Exception as e:
             raise SeleniumException(f"Code: {em.BROWSER_INSTANCE_ISSUE} | Message: Unable to create Firefox Browser Instance")
@@ -126,10 +140,17 @@ class SeleniumDriver:
                 "profile.default_content_settings.popups": 0,
                 "profile.content_settings.exceptions.automatic_downloads.*.setting": 1
             }
+            
             options.add_experimental_option("prefs", prefs)
+            options.add_argument(f"--window-size={self.window_width},{self.window_height}")
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_argument("--disable-blink-features=AutomationControlled")
-            self.driver = webdriver.Edge(options=options)
+            if self.window_width and self.window_height:
+                options.add_argument(f"--window-size={self.window_width},{self.window_height}")
+            else:
+                options.add_argument("--start-maximized")
+
+            self.driver = webdriver.Edge(options=options)            
             return self.driver
         except Exception as e:
             raise SeleniumException(f"Code: {em.BROWSER_INSTANCE_ISSUE} | Message: Unable to create Edge Browser Instance")

@@ -41,3 +41,49 @@ Traceback (most recent call last):
 SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
 .
 
+2025-02-21 16:20:02,501 - ERROR - Invalid URL format. URL must start with 'http://' or 'https://'.
+2025-02-21 16:21:31,924 - ERROR - Invalid URL format. URL must start with 'http://' or 'https://'.
+2025-02-21 16:21:31,924 - ERROR - An unexpected error occured : SeleniumException
+2025-02-21 16:23:04,545 - ERROR - Invalid URL format. URL must start with 'http://' or 'https://'.
+2025-02-21 16:23:04,545 - ERROR - An unexpected error occured : ValueError
+2025-02-21 16:24:55,061 - ERROR - Invalid URL format. URL must start with 'http://' or 'https://'.
+2025-02-21 16:24:55,061 - ERROR - An unexpected error occured : Invalid URL format. Please include 'http://' or 'https://'.
+2025-02-21 17:07:12,853 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 26, in <module>
+    experity.open_portal("www.google.com")
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 40, in open_portal
+    raise ValueError("Invalid URL format. Please include 'http://' or 'https://'.")
+ValueError: Invalid URL format. Please include 'http://' or 'https://'.
+
+2025-02-21 17:09:09,148 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 27, in <module>
+    experity.login(username, password)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 62, in login
+    login_username = self.wait.until(EC.element_to_be_clickable((By.ID,'txtLogin')))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: Browsing context has been discarded
+Stacktrace:
+RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:193:5
+NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:679:5
+assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:515:13
+assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
+GeckoDriver.prototype.findElement@chrome://remote/content/marionette/driver.sys.mjs:1515:15
+despatch@chrome://remote/content/marionette/server.sys.mjs:318:40
+execute@chrome://remote/content/marionette/server.sys.mjs:289:16
+onPacket/<@chrome://remote/content/marionette/server.sys.mjs:262:20
+onPacket@chrome://remote/content/marionette/server.sys.mjs:263:9
+_onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:494:20
+
+

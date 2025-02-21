@@ -10,6 +10,8 @@ BROWSER = 'chrome'
 DOWNLOAD_DIR = os.getcwd()
 WINDOW_WIDTH = None
 WINDOW_HEIGHT = None
+EXPERITY_URL = 'https://pvpm.practicevelocity.com'
+PORTAL_URL = '25_1'
 
 selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR, window_width=WINDOW_WIDTH, window_height= WINDOW_HEIGHT)
 driver = selenium.setup_driver()
@@ -20,9 +22,11 @@ password = os.getenv('PASSWORD')
 
 try:
     experity = ExperityBase(driver)
-    experity.open_portal("https://pvpm.practicevelocity.com/")
+    experity.open_portal(EXPERITY_URL)
     experity.login(username, password)
-    time.sleep(4)
+    experity.navigate_to_sub_nav(EXPERITY_URL, PORTAL_URL, "Summary")
+    experity.navigate_to_recievables_page(12345)
+    time.sleep(2)
 
 except Exception as e:
     logging.error("An unexpected error occured : \n" + traceback.format_exc())

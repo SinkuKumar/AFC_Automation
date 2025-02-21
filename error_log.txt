@@ -87,3 +87,33 @@ onPacket@chrome://remote/content/marionette/server.sys.mjs:263:9
 _onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:494:20
 
 
+2025-02-21 22:37:20,684 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 71, in login
+    self.wait.until(EC.element_to_be_clickable(By.ID,'btnNext')).click()
+TypeError: element_to_be_clickable() takes 1 positional argument but 2 were given
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 24, in <module>
+    experity.login(username, password)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 83, in login
+    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
+utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-02-21 22:38:45,103 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 71, in login
+    self.wait.until(EC.element_to_be_clickable(By.ID,'btnNext')).click()
+TypeError: element_to_be_clickable() takes 1 positional argument but 2 were given
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 24, in <module>
+    experity.login(username, password)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 83, in login
+    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
+utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process | Contact: BI Automation Team - bi@graphxsys.com
+

@@ -16,10 +16,6 @@ This module contains the PyODBCSQL class, which allows executing SQL queries and
 import os
 import pyodbc
 
-# TODO: Remove this in production.
-from dotenv import load_dotenv
-load_dotenv("./utils/.env")
-
 
 class PyODBCSQL:
     """
@@ -98,6 +94,11 @@ class PyODBCSQL:
         return self.execute_query(column_names_query)
 
 if __name__ == "__main__":
+    import os
+    from dotenv import load_dotenv
+    
+    load_dotenv()
+    
     sql = PyODBCSQL()
     result = sql.execute_query("SELECT 'Result' AS Test")
     print(result)

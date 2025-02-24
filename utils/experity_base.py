@@ -1,5 +1,6 @@
 import time
 import logging
+from datetime import datetime
 from bs4 import BeautifulSoup
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.keys import Keys
@@ -160,7 +161,7 @@ class ExperityBase:
             logging.info(f"Successfully navigated to '{sub_nav_item_name}'.")
         
         except Exception as e:
-            raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error occurred while navigating to '{sub_nav_item_name}'.")
+            raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Error occurred while navigating to '{sub_nav_item_name}'.")
             
     def get_clinic_list(self) -> list:
         """
@@ -200,7 +201,7 @@ class ExperityBase:
         
     def navigate_to_recievables_page(self, invoice_number: int) -> None:
         """
-        Navigates to recievables page where recievables details are present.
+        Navigates to recievables page where recievables details of given invoice number are present.
 
         Args:
             invoice_number (int): The invoice_number to get recievables details.
@@ -229,4 +230,245 @@ class ExperityBase:
             self.wait.until(page_loads)
             logging.info('Invoice number link clicked...')
         except Exception as e:
-            raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error in navigating to recievables page.")
+            raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Error in navigating to recievables page.")
+
+    def search_and_select_report(self, report_name: str) -> None:
+        """
+        Searches for a report by its name and selects it.
+
+        Args:
+            report_name(str): The name of the report to search and select.
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during searching and selection of the report.
+        """
+        try:  
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
+            logging.info("Switched to 'reportMainWindow' iframe.")
+
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "NavFrame")))
+            self.wait.until(page_loads)
+            logging.info("Switched to 'NavFrame' Frame.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Unable to switch to 'NavFrame' frame.")
+
+        try:
+            logging.info(f"Starting search for: {report_name}")
+            self.wait.until(EC.visibility_of_element_located((By.NAME, "userSearch"))).clear()
+            self.wait.until(EC.visibility_of_element_located((By.NAME, "userSearch"))).send_keys(report_name)
+
+            logging.info("Clicking search button...")
+            self.wait.until(EC.element_to_be_clickable((By.ID, 'dosearch'))).click()
+            self.wait.until(page_loads)
+            logging.info(f"Searched for report: {report_name}")
+        except Exception as e:
+            raise SeleniumException(f"Message : Unable to search for report.")
+
+        try:
+            self.driver.switch_to.default_content()
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
+            logging.info("Switched to 'reportMainWindow' iframe.")
+
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "PVRC_MainStage")))
+            logging.info("Switched to 'PVRC_MainStage' frame.")
+            self.wait.until(EC.text_to_be_present_in_element((By.XPATH, "//body"), f"Search for '{report_name}'"))
+            self.wait.until(page_loads)
+            self.wait.until(EC.element_to_be_clickable((By.ID, "mainbutton1"))).click()
+            self.wait.until(page_loads)
+            logging.info(f"Selected report: {report_name}")
+        except Exception as e:
+            raise SeleniumException(f"Message : Unable to select report after search.")
+
+    def select_report_date_range(self, date1:str, date2:str) -> None:
+        """
+        Sets the 'From Service Date' and 'To Service Date'.
+        
+        Args:
+            date1(str): One of the two dates entered by the user (Format: MM/DD/YYYY).
+            date2(str): The other date entered by the user (Format: MM/DD/YYYY).
+                        Either date may come first; the code will determine the start and end dates.
+        
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during searching and selection of the report.
+        """
+        date1_obj = datetime.strptime(date1, "%m/%d/%Y")
+        date2_obj = datetime.strptime(date2, "%m/%d/%Y")
+
+        from_date, to_date = (date1, date2) if date1_obj < date2_obj else (date2, date1)
+        
+        try:
+            from_service_date = self.wait.until(EC.element_to_be_clickable((By.ID, 'FromServiceDate')))
+            from_service_date.clear()
+            from_service_date.send_keys(from_date)
+
+            to_service_date = self.wait.until(EC.element_to_be_clickable((By.ID, 'ToServiceDate')))
+            to_service_date.clear()
+            to_service_date.send_keys(to_date)
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during service date range selection.")
+
+    def select_logbook_status(self, status_names: list) -> None:
+        """
+        Selects the specified logbook statuses.
+
+        Args:
+            status_name(list): A list of logbook status names to select.
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during the logbook status names selection process.
+        """
+        status_mapping = {
+            "All": 'freeStatusListcheck1',
+            "Charged": 'freeStatusListcheck5'
+        }
+
+        try:
+            self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunStatusListcheckall'))).click()
+            logging.info("'Uncheck All' button clicked successfully.")
+
+            for name in status_names:
+                checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, status_mapping[name])))
+                if not checkbox.is_selected():
+                    checkbox.click()
+                    logging.info(f"Checkbox '{name}' selected.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during logbook status selection.")
+
+    def select_financial_class(self, class_names: list) -> None:
+        """
+        Selects the specified financial classes.
+
+        Args:
+            class_name(list): A list of financial class names to select.
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during the financial class names selection process.
+        """
+        class_mapping = {
+            "All": 'freePayerClasscheck1',
+            "Great West": 'freePayerClasscheck5'
+        }
+
+        try:
+            self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunPayerClasscheckall'))).click()
+            logging.info("'Uncheck All' button clicked successfully.")
+
+            for name in class_names:
+                checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, class_mapping[name])))
+                if not checkbox.is_selected():
+                    checkbox.click()
+                    logging.info(f"Checkbox '{name}' selected.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during financial class selection.")
+
+    def select_arrival_status(self, status_names: list) -> None:
+        """
+        Selects the specified arrival statuses.
+
+        Args:
+            status_name(list): A list of arrival status names to select.
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during the arrival status names selection process.
+        """
+        status_mapping = {
+            "All": 'freeArrivalStatuscheck1',
+            "At Home": 'freeArrivalStatuscheck5'
+        }
+
+        try:
+            self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunArrivalStatuscheckall'))).click()
+            logging.info("'Uncheck All' button clicked successfully.")
+
+            for name in status_names:
+                checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, status_mapping[name])))
+                if not checkbox.is_selected():
+                    checkbox.click()
+                    logging.info(f"Checkbox '{name}' selected.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during arrival status selection.")
+
+    def run_report(self) -> None:
+        """
+        Triggers the 'Run Report' action by clicking the designated 'Run Report' button.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs while running the report.
+        """
+        try:
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='submit' and @name='submitbtn' and @value='Run Report']"))).click()
+            logging.info("'Run Report' button clicked successfully.")
+        except Exception as e:
+            raise SeleniumException(f"Message : Error occurred while clicking on 'Run Report' button.")
+
+    def switch_to_report_window(self) -> None:
+        """
+        Switches the WebDriver to a new browser window that contains the report data.
+
+        This method assumes that the new report window is the second window opened.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs while switching to report window.
+        """
+        try:
+            logging.info("Fetching available window handles.")
+            new_window = [handle for handle in self.driver.window_handles][1]
+            self.driver.switch_to.window(new_window)
+            logging.info("Successfully switched to the report window.")
+        except Exception as e:
+            raise SeleniumException(f"Message : Error occurred while switching to report window.")
+        
+    # def download_report(self):
+    #     self.wait.until(page_loads)
+    #     self.wait.until(EC.element_to_be_clickable((By.ID, "ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg")))
+    #     csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@onclick, \"exportReport('XML')\") and normalize-space(text())='XML file with report data']")))
+
+    def logout(self) -> None:
+        """
+        Logs out the user by clicking the logout button.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during logout.
+        """
+        try:
+            self.driver.switch_to.default_content()
+            logging.info("Attempting to locate the logout button...")
+            logout_button = self.wait.until(EC.element_to_be_clickable((By.ID,'tdMenuBarItemlogout')))
+            logout_button.click()
+            self.wait.until(page_loads)
+            logging.info("Logout successful.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.LOGOUT_ISSUE} | Message : Error occurred during logout.")

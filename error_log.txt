@@ -117,3 +117,153 @@ Traceback (most recent call last):
     raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
 utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process | Contact: BI Automation Team - bi@graphxsys.com
 
+2025-02-24 17:01:26,626 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 333, in logout
+    logout_button = self.wait.until(EC.element_to_be_clickable((By.ID,'tdMenuBarItemlogout')))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=133.0.6943.127)
+Stacktrace:
+	GetHandleVerifier [0x00007FF703506EE5+28773]
+	(No symbol) [0x00007FF7034725D0]
+	(No symbol) [0x00007FF703308FAA]
+	(No symbol) [0x00007FF7032F4DA5]
+	(No symbol) [0x00007FF70331973A]
+	(No symbol) [0x00007FF70338EFDF]
+	(No symbol) [0x00007FF7033AEFE2]
+	(No symbol) [0x00007FF703387023]
+	(No symbol) [0x00007FF70334FF5E]
+	(No symbol) [0x00007FF7033511E3]
+	GetHandleVerifier [0x00007FF70385422D+3490733]
+	GetHandleVerifier [0x00007FF70386BA13+3586963]
+	GetHandleVerifier [0x00007FF70386144D+3544525]
+	GetHandleVerifier [0x00007FF7035CC9AA+838442]
+	(No symbol) [0x00007FF70347D01F]
+	(No symbol) [0x00007FF7034795E4]
+	(No symbol) [0x00007FF703479786]
+	(No symbol) [0x00007FF703468CB9]
+	BaseThreadInitThunk [0x00007FF98705259D+29]
+	RtlUserThreadStart [0x00007FF988AAAF38+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 32, in <module>
+    experity.logout()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 338, in logout
+    raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error occurred during logout.")
+utils.exception_usage.SeleniumException: Code: EXP_1_001 | Message : Error occurred during logout. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-02-24 18:40:15,929 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 29, in <module>
+    experity.logbook_status(['All'])
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 327, in logbook_status
+    self.driver.find_element(By.ID, 'freeunStatusListcheckall').click()
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="freeunStatusListcheckall"]"}
+  (Session info: chrome=133.0.6943.127); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF703506EE5+28773]
+	(No symbol) [0x00007FF7034725D0]
+	(No symbol) [0x00007FF703308FAA]
+	(No symbol) [0x00007FF70335F286]
+	(No symbol) [0x00007FF70335F4BC]
+	(No symbol) [0x00007FF7033B2A27]
+	(No symbol) [0x00007FF70338728F]
+	(No symbol) [0x00007FF7033AF6F3]
+	(No symbol) [0x00007FF703387023]
+	(No symbol) [0x00007FF70334FF5E]
+	(No symbol) [0x00007FF7033511E3]
+	GetHandleVerifier [0x00007FF70385422D+3490733]
+	GetHandleVerifier [0x00007FF70386BA13+3586963]
+	GetHandleVerifier [0x00007FF70386144D+3544525]
+	GetHandleVerifier [0x00007FF7035CC9AA+838442]
+	(No symbol) [0x00007FF70347D01F]
+	(No symbol) [0x00007FF7034795E4]
+	(No symbol) [0x00007FF703479786]
+	(No symbol) [0x00007FF703468CB9]
+	BaseThreadInitThunk [0x00007FF98705259D+29]
+	RtlUserThreadStart [0x00007FF988AAAF38+40]
+
+
+2025-02-24 18:45:33,282 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 47, in open_portal
+    self.wait.until(page_loads)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 23, in page_loads
+    return driver.execute_script("return document.readyState") == "complete"
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 528, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=133.0.6943.127)
+Stacktrace:
+	GetHandleVerifier [0x00007FF703506EE5+28773]
+	(No symbol) [0x00007FF7034725D0]
+	(No symbol) [0x00007FF703308FAA]
+	(No symbol) [0x00007FF7032E1573]
+	(No symbol) [0x00007FF70338EE3E]
+	(No symbol) [0x00007FF7033AEFE2]
+	(No symbol) [0x00007FF703387023]
+	(No symbol) [0x00007FF70334FF5E]
+	(No symbol) [0x00007FF7033511E3]
+	GetHandleVerifier [0x00007FF70385422D+3490733]
+	GetHandleVerifier [0x00007FF70386BA13+3586963]
+	GetHandleVerifier [0x00007FF70386144D+3544525]
+	GetHandleVerifier [0x00007FF7035CC9AA+838442]
+	(No symbol) [0x00007FF70347D01F]
+	(No symbol) [0x00007FF7034795E4]
+	(No symbol) [0x00007FF703479786]
+	(No symbol) [0x00007FF703468CB9]
+	BaseThreadInitThunk [0x00007FF98705259D+29]
+	RtlUserThreadStart [0x00007FF988AAAF38+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 25, in <module>
+    experity.open_portal(EXPERITY_URL)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 51, in open_portal
+    raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while opening Experity portal")
+utils.exception_usage.SeleniumException: Code: EXP_1_001 | Message : Error while opening Experity portal | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-02-25 00:56:30,758 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 442, in switch_to_report_window
+    new_window = [handle for handle in self.driver.window_handles][1]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 35, in <module>
+    experity.switch_to_report_window()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 446, in switch_to_report_window
+    raise SeleniumException(f"Message : Error occurred while switching to report window.")
+utils.exception_usage.SeleniumException: Message : Error occurred while switching to report window. | Contact: BI Automation Team - bi@graphxsys.com
+

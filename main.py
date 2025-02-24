@@ -1,32 +1,36 @@
 import os
+import time
+import logging
+import traceback
 from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase
+from dotenv import load_dotenv
 
 BROWSER = 'chrome'
 DOWNLOAD_DIR = os.getcwd()
+WINDOW_WIDTH = None
+WINDOW_HEIGHT = None
+EXPERITY_URL = 'https://pvpm.practicevelocity.com'
+PORTAL_URL = '25_1'
 
-selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR)
+selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR, window_width=WINDOW_WIDTH, window_height= WINDOW_HEIGHT)
 driver = selenium.setup_driver()
 
-ExperityBase(driver)
+load_dotenv()
+username = os.getenv('USERNAME')
+password = os.getenv('PASSWORD')
 
+try:
+    experity = ExperityBase(driver)
+    experity.open_portal(EXPERITY_URL)
+    experity.login(username, password)
+    experity.navigate_to_sub_nav(EXPERITY_URL, PORTAL_URL, "Summary")
+    experity.navigate_to_recievables_page(12345)
+    time.sleep(2)
 
-
-"""
-import time
-
-from utils.selenium_driver import SeleniumDriver
-
-browsers = ['chrome', 'firefox', 'edge']
-
-for browser in browsers:
-    selenium = SeleniumDriver(browser=browser)
-    driver = selenium.setup_driver()
-    driver.get("https://www.google.com")
-    time.sleep(5)
+except Exception as e:
+    logging.error("An unexpected error occured : \n" + traceback.format_exc())
+    print(e)
+finally:
     driver.quit()
-
-# print(0/0)
-
-raise Exception("Message: This is an error | Error Code: 1xxx | Contact Automation Team L1 or above.")
-"""
+    logging.info("Browser closed successfully.")

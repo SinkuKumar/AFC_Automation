@@ -1,0 +1,60 @@
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-32-58-813.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-32-58-813.pdf', file_uploaddate = '2025-02-24 19:33:08'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-00-416.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-00-416.pdf', file_uploaddate = '2025-02-24 19:33:12'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-00-908.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-00-908.pdf', file_uploaddate = '2025-02-24 19:33:12'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-32-59-419.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-32-59-419.pdf', file_uploaddate = '2025-02-24 19:33:13'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-08-940.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-08-940.pdf', file_uploaddate = '2025-02-24 19:33:18'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-12-427.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-12-427.pdf', file_uploaddate = '2025-02-24 19:33:22'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-13-463.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-13-463.pdf', file_uploaddate = '2025-02-24 19:33:23'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-19-031.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-19-031.pdf', file_uploaddate = '2025-02-24 19:33:29'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-22-481.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-22-481.pdf', file_uploaddate = '2025-02-24 19:33:32'
+    WHERE ID = '1'
+    
+Updated record 1 with /Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-23-454.pdf
+	
+    UPDATE MB_trans_master_progress 
+    SET file_location = '/Users/Sinku/Development/AFC_Automation/Downloads/AFC-Medical-Billing-1-2025-02-24-19-33-23-454.pdf', file_uploaddate = '2025-02-24 19:33:33'
+    WHERE ID = '1'
+    

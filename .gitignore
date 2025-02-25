@@ -134,7 +134,7 @@ celerybeat.pid
 .env
 .venv
 env/
-venv/
+*venv/
 ENV/
 env.bak/
 venv.bak/
@@ -174,5 +174,3 @@ cython_debug/
 .pypirc
 
 .DS_Store
-
-*_venv/

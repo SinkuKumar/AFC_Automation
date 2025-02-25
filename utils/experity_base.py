@@ -1,3 +1,5 @@
+import os
+import sys
 import time
 import logging
 from datetime import datetime
@@ -7,7 +9,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from .exception_usage import SeleniumException
+from selenium.common.exceptions import TimeoutException
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from utils.exception_usage import SeleniumException
 from utils import error_messages as em
 
 def page_loads(driver: WebDriver) -> bool:
@@ -21,6 +27,34 @@ def page_loads(driver: WebDriver) -> bool:
         bool: True if the page is fully loaded, False otherwise.
     """
     return driver.execute_script("return document.readyState") == "complete"
+
+def switch_to_latest_window(driver: WebDriver) -> None:
+    """
+    Switches the Selenium WebDriver's focus to the latest (most recently opened) browser window.
+
+    This function waits until at least two windows are open and then switches the driver's focus
+    to the latest window.
+
+    Args:
+        driver (WebDriver): The Selenium WebDriver instance controlling the browser.
+
+    Returns:
+        None
+
+    Raises:
+        SeleniumException: If any issue occurs while switching to latest window.
+    """
+    logging.info("Attempting to switch to the latest browser window.")
+
+    try:
+        WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
+        latest_handle = driver.window_handles[-1]
+
+        driver.switch_to.window(latest_handle)
+        logging.info(f"Switched to the latest window: {latest_handle}")
+
+    except Exception as e:
+        raise SeleniumException(f"Message : Error occurred while switching to latest window.")
 
 class ExperityBase:
     def __init__(self, webdriver: WebDriver, time_out: int = 100):
@@ -421,35 +455,70 @@ class ExperityBase:
             logging.info("'Run Report' button clicked successfully.")
         except Exception as e:
             raise SeleniumException(f"Message : Error occurred while clicking on 'Run Report' button.")
-
-    def switch_to_report_window(self) -> None:
+        
+    def download_report(self, report_format:str) -> None:
         """
-        Switches the WebDriver to a new browser window that contains the report data.
+        Automates the process of downloading a report in provided report format.
 
-        This method assumes that the new report window is the second window opened.
+        Steps:
+        1. Switches to the latest browser window.
+        2. Waits for the page to fully load.
+        3. Ensures that the report viewer is ready.
+        4. Selects and clicks the provided report format download option.
 
         Args:
-            None
+            report_format(str): Specifies the format of the report (e.g., 'CSV', 'Excel', 'TXT').
 
         Returns:
             None
 
         Raises:
-            SeleniumException: If any issue occurs while switching to report window.
+            SeleniumException: If any issue occurs during report download.
         """
-        try:
-            logging.info("Fetching available window handles.")
-            new_window = [handle for handle in self.driver.window_handles][1]
-            self.driver.switch_to.window(new_window)
-            logging.info("Successfully switched to the report window.")
-        except Exception as e:
-            raise SeleniumException(f"Message : Error occurred while switching to report window.")
-        
-    # def download_report(self):
-    #     self.wait.until(page_loads)
-    #     self.wait.until(EC.element_to_be_clickable((By.ID, "ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg")))
-    #     csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@onclick, \"exportReport('XML')\") and normalize-space(text())='XML file with report data']")))
 
+        format_mapping = {
+            "CSV": {
+                "onclick": 'CSV',
+                "text": 'CSV (comma delimited)'
+            },
+            "Excel": {
+                "onclick": 'EXCELOPENXML',
+                "text": 'Excel'
+            },
+            "TXT": {
+                "onclick": 'PIPE',
+                "text": 'TXT (Pipe delimited)'
+            }
+        }
+        
+        logging.info("Starting the report download process.")
+
+        try:
+            on_click = format_mapping[report_format]['onclick']
+            text = format_mapping[report_format]['text']
+            switch_to_latest_window(self.driver)
+
+            self.wait.until(page_loads)
+            logging.info("Page load completed.")
+
+            self.wait.until(
+                EC.text_to_be_present_in_element_attribute(
+                    (By.ID, "ReportViewerControl_AsyncWait"), "style", "visibility: hidden;"
+                )
+            )
+            logging.info("Report viewer is ready.")
+
+            button = self.wait.until(EC.visibility_of_element_located((By.ID, "ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg")))
+            button.click()
+
+            xpath = f"//a[contains(@onclick, \"exportReport('{on_click}')\") and contains(text(), '{text}')]"
+            csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+            csv_element.click()
+            logging.info("Report download initiated successfully.")
+
+        except Exception as e:
+            raise SeleniumException(f"Message : Error occurred during report download.")
+        
     def logout(self) -> None:
         """
         Logs out the user by clicking the logout button.
@@ -472,3 +541,70 @@ class ExperityBase:
             logging.info("Logout successful.")
         except Exception as e:
             raise SeleniumException(f"Code: {em.LOGOUT_ISSUE} | Message : Error occurred during logout.")
+
+def close_other_windows(driver: WebDriver) -> None:
+    """
+    Closes all browser windows except the main one.
+
+    This function iterates through all open browser windows, closes any 
+    additional windows, and switches focus back to the main window.
+
+    Args:
+        driver (WebDriver): The Selenium WebDriver instance controlling the browser.
+
+    Raises:
+        None
+
+    Raises:
+        SeleniumException: If any issue occurs during closing other windows.
+        TimeoutException: If switching to a window or closing it times out.
+    """
+    logging.info("Attempting to close other browser windows.")
+    
+    try:
+        handles = driver.window_handles[1:]
+        if not handles:
+            logging.info("No other windows to close.")
+        else:
+            for handle in handles:
+                try:
+                    WebDriverWait(driver, 10).until(lambda d: handle in d.window_handles)
+                    driver.switch_to.window(handle)
+                    logging.info(f"Switched to window: {handle}")
+
+                    time.sleep(1)
+                    driver.close()
+                    logging.info(f"Closed window: {handle}")
+
+                except TimeoutException:
+                    logging.error(f"Timeout while switching to or closing window: {handle}")
+
+        driver.switch_to.window(driver.window_handles[0])
+        logging.info("Switched back to the main window.")
+
+    except Exception as e:
+        raise SeleniumException(f"Message : Error occurred while closing windows.")
+
+if __name__ == "__main__":
+    import os
+    from dotenv import load_dotenv
+    from utils.selenium_driver import SeleniumDriver
+    BROWSER = 'chrome'
+    EXPERITY_URL = 'https://pvpm.practicevelocity.com'
+    PORTAL_URL = '25_1'
+    load_dotenv()
+    username = os.getenv('USERNAME')
+    password = os.getenv('PASSWORD')
+    selenium = SeleniumDriver(browser=BROWSER)
+    driver = selenium.setup_driver()
+    try:
+        experity = ExperityBase(driver)
+        experity.open_portal(EXPERITY_URL)
+        experity.login(username, password)
+        experity.navigate_to_sub_nav(EXPERITY_URL, PORTAL_URL, "Reports")
+        experity.logout()
+    except Exception as e:
+        print(e)
+    finally:
+        driver.quit()
+        logging.info("Browser closed successfully.")

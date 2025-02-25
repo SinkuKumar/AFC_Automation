@@ -43,7 +43,7 @@ class SeleniumDriver:
     """
     BROWSER_OPTIONS = ['chrome', 'firefox', 'edge']
 
-    def __init__(self, browser: str = 'chrome', download_directory: str = None, window_width: int = 1280, window_height: int = 720) -> None:
+    def __init__(self, browser: str = 'chrome', download_directory: str = None, window_width: int = None, window_height: int = None) -> None:
         """
         Initialize the SeleniumDriver with a specified browser and download directory.
 

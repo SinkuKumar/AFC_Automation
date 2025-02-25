@@ -267,3 +267,223 @@ Traceback (most recent call last):
     raise SeleniumException(f"Message : Error occurred while switching to report window.")
 utils.exception_usage.SeleniumException: Message : Error occurred while switching to report window. | Contact: BI Automation Team - bi@graphxsys.com
 
+2025-02-25 16:30:31,950 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 48, in <module>
+    wait_for_download('CNT_27', download_dir)
+TypeError: wait_for_download() missing 1 required positional argument: 'download_directory'
+
+2025-02-25 16:34:00,884 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 46, in <module>
+    experity.download_report()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 453, in download_report
+    csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@onclick, \"exportReport('CSV')\") and normalize-space(text())='CSV (comma delimited)']")))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 632, in _predicate
+    element = visibility_of(target)(driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 260, in _predicate
+    return _element_if_visible(element)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 280, in _element_if_visible
+    return element if element.is_displayed() == visibility else False
+AttributeError: 'NoneType' object has no attribute 'is_displayed'
+
+2025-02-25 16:36:59,239 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 46, in <module>
+    experity.download_report()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 453, in download_report
+    csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@onclick, \"exportReport('CSV')\") and normalize-space(text())='CSV (comma delimited)']")))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 632, in _predicate
+    element = visibility_of(target)(driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 260, in _predicate
+    return _element_if_visible(element)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 280, in _element_if_visible
+    return element if element.is_displayed() == visibility else False
+AttributeError: 'NoneType' object has no attribute 'is_displayed'
+
+2025-02-25 17:42:18,620 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 47, in <module>
+    experity.download_report()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 453, in download_report
+    csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@onclick, \"exportReport('CSV')\") and normalize-space(text())='CSV (comma delimited)']")))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 632, in _predicate
+    element = visibility_of(target)(driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 260, in _predicate
+    return _element_if_visible(element)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 280, in _element_if_visible
+    return element if element.is_displayed() == visibility else False
+AttributeError: 'NoneType' object has no attribute 'is_displayed'
+
+2025-02-25 17:52:07,439 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 442, in switch_to_report_window
+    new_window = [handle for handle in self.driver.window_handles][1]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 42, in <module>
+    experity.switch_to_report_window()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 446, in switch_to_report_window
+    raise SeleniumException(f"Message : Error occurred while switching to report window.")
+utils.exception_usage.SeleniumException: Message : Error occurred while switching to report window. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-02-25 21:23:15,115 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 554, in download_report
+    csv_element = self.wait.until(EC.element_to_be_clickable(
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression //a[contains(@onclick, "exportReport('CSV')") and normalize-space(text())='CSV (comma delimited)' because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//a[contains(@onclick, "exportReport('CSV')") and normalize-space(text())='CSV (comma delimited)'' is not a valid XPath expression.
+  (Session info: chrome=133.0.6943.127); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF627396EE5+28773]
+	(No symbol) [0x00007FF6273025D0]
+	(No symbol) [0x00007FF627198FAA]
+	(No symbol) [0x00007FF6271A09B9]
+	(No symbol) [0x00007FF6271A377C]
+	(No symbol) [0x00007FF6271A384F]
+	(No symbol) [0x00007FF6271EEB40]
+	(No symbol) [0x00007FF6271EF4BC]
+	(No symbol) [0x00007FF627242A27]
+	(No symbol) [0x00007FF62721728F]
+	(No symbol) [0x00007FF62723F6F3]
+	(No symbol) [0x00007FF627217023]
+	(No symbol) [0x00007FF6271DFF5E]
+	(No symbol) [0x00007FF6271E11E3]
+	GetHandleVerifier [0x00007FF6276E422D+3490733]
+	GetHandleVerifier [0x00007FF6276FBA13+3586963]
+	GetHandleVerifier [0x00007FF6276F144D+3544525]
+	GetHandleVerifier [0x00007FF62745C9AA+838442]
+	(No symbol) [0x00007FF62730D01F]
+	(No symbol) [0x00007FF6273095E4]
+	(No symbol) [0x00007FF627309786]
+	(No symbol) [0x00007FF6272F8CB9]
+	BaseThreadInitThunk [0x00007FFC9F3F259D+29]
+	RtlUserThreadStart [0x00007FFCA05CAF38+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 40, in <module>
+    experity.download_report('CSV')
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 561, in download_report
+    raise SeleniumException(f"Message : Error occurred during report download.")
+utils.exception_usage.SeleniumException: Message : Error occurred during report download. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-02-25 21:30:55,769 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 555, in download_report
+    csv_element = self.wait.until(EC.element_to_be_clickable(
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression //a[contains(@onclick, "exportReport('CSV')") and normalize-space(text())="CSV (comma delimited)" because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//a[contains(@onclick, "exportReport('CSV')") and normalize-space(text())="CSV (comma delimited)"' is not a valid XPath expression.
+  (Session info: chrome=133.0.6943.127); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF627396EE5+28773]
+	(No symbol) [0x00007FF6273025D0]
+	(No symbol) [0x00007FF627198FAA]
+	(No symbol) [0x00007FF6271A09B9]
+	(No symbol) [0x00007FF6271A377C]
+	(No symbol) [0x00007FF6271A384F]
+	(No symbol) [0x00007FF6271EEB40]
+	(No symbol) [0x00007FF6271EF4BC]
+	(No symbol) [0x00007FF627242A27]
+	(No symbol) [0x00007FF62721728F]
+	(No symbol) [0x00007FF62723F6F3]
+	(No symbol) [0x00007FF627217023]
+	(No symbol) [0x00007FF6271DFF5E]
+	(No symbol) [0x00007FF6271E11E3]
+	GetHandleVerifier [0x00007FF6276E422D+3490733]
+	GetHandleVerifier [0x00007FF6276FBA13+3586963]
+	GetHandleVerifier [0x00007FF6276F144D+3544525]
+	GetHandleVerifier [0x00007FF62745C9AA+838442]
+	(No symbol) [0x00007FF62730D01F]
+	(No symbol) [0x00007FF6273095E4]
+	(No symbol) [0x00007FF627309786]
+	(No symbol) [0x00007FF6272F8CB9]
+	BaseThreadInitThunk [0x00007FFC9F3F259D+29]
+	RtlUserThreadStart [0x00007FFCA05CAF38+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 40, in <module>
+    experity.download_report('CSV')
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 562, in download_report
+    raise SeleniumException(f"Message : Error occurred during report download.")
+utils.exception_usage.SeleniumException: Message : Error occurred during report download. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-02-25 22:53:35,303 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 554, in close_other_windows
+    driver.close()
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 579, in close
+    self.execute(Command.CLOSE)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: MicrosoftEdge=133.0.3065.82)
+Stacktrace:
+	GetHandleVerifier [0x00007FF65915E735+13397]
+	Microsoft::Applications::Events::EventProperty::empty [0x00007FF6593EB1B4+2060276]
+	Microsoft::Applications::Events::EventProperty::empty [0x00007FF659342338+1368440]
+	(No symbol) [0x00007FF658ECA202]
+	(No symbol) [0x00007FF658F59F70]
+	(No symbol) [0x00007FF658F62B83]
+	(No symbol) [0x00007FF658F54220]
+	(No symbol) [0x00007FF658F28B96]
+	(No symbol) [0x00007FF658F27E50]
+	(No symbol) [0x00007FF658F289C3]
+	(No symbol) [0x00007FF658FB0214]
+	(No symbol) [0x00007FF6590406CF]
+	(No symbol) [0x00007FF658FB3A53]
+	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF6594A45BD+279981]
+	simdutf::get_active_implementation [0x00007FF6590E78C1+409457]
+	simdutf::get_active_implementation [0x00007FF6590E2BA4+389716]
+	simdutf::get_active_implementation [0x00007FF6590E2CE9+390041]
+	simdutf::get_active_implementation [0x00007FF6590D62E6+338326]
+	BaseThreadInitThunk [0x00007FFC9F3F259D+29]
+	RtlUserThreadStart [0x00007FFCA05CAF38+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 42, in <module>
+    close_other_windows(driver)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 564, in close_other_windows
+    raise SeleniumException(f"Message : Error occurred while closing windows.")
+utils.exception_usage.SeleniumException: Message : Error occurred while closing windows. | Contact: BI Automation Team - bi@graphxsys.com
+

@@ -3,7 +3,8 @@ import time
 import logging
 import traceback
 from utils.selenium_driver import SeleniumDriver
-from utils.experity_base import ExperityBase
+from utils.experity_base import ExperityBase, close_other_windows
+from utils.file_folder import wait_for_download, clear_directory_files
 from dotenv import load_dotenv
 
 BROWSER = 'chrome'
@@ -13,7 +14,10 @@ WINDOW_HEIGHT = None
 EXPERITY_URL = 'https://pvpm.practicevelocity.com'
 PORTAL_URL = '25_1'
 
-selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR, window_width=WINDOW_WIDTH, window_height= WINDOW_HEIGHT)
+current_dir = os.getcwd()
+download_dir = os.path.join(os.path.dirname(current_dir), 'AFC_Test_Files')
+
+selenium = SeleniumDriver(browser=BROWSER, download_directory=download_dir, window_width=WINDOW_WIDTH, window_height= WINDOW_HEIGHT)
 driver = selenium.setup_driver()
 
 load_dotenv()
@@ -32,18 +36,11 @@ try:
     experity.select_financial_class(['All'])
     experity.select_arrival_status(['All'])
     experity.run_report()
-
-    time.sleep(4)
-    experity.switch_to_report_window()
-    time.sleep(10)
-
-    main_window = [handle for handle in driver.window_handles][0]
-    logging.info(f"Switching to new window")
-    driver.switch_to.window(main_window)
-
-    time.sleep(2)
+    clear_directory_files(download_dir)
+    experity.download_report('Excel')
+    wait_for_download('CNT_27', download_dir)
+    close_other_windows(driver)
     experity.logout()
-    time.sleep(3)
 
 except Exception as e:
     logging.error("An unexpected error occured : \n" + traceback.format_exc())

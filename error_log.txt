@@ -487,3 +487,258 @@ Traceback (most recent call last):
     raise SeleniumException(f"Message : Error occurred while closing windows.")
 utils.exception_usage.SeleniumException: Message : Error occurred while closing windows. | Contact: BI Automation Team - bi@graphxsys.com
 
+2025-02-27 21:25:46,571 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 583, in logout
+    self.driver.switch_to.default_content()
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\switch_to.py", line 69, in default_content
+    self._driver.execute(Command.SWITCH_TO_FRAME, {"id": None})
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x00007FF7D09EC6A5+28789]
+	(No symbol) [0x00007FF7D0955B20]
+	(No symbol) [0x00007FF7D07E8DCC]
+	(No symbol) [0x00007FF7D082F1CF]
+	(No symbol) [0x00007FF7D08671F2]
+	(No symbol) [0x00007FF7D0861B89]
+	(No symbol) [0x00007FF7D0860C39]
+	(No symbol) [0x00007FF7D07B5595]
+	GetHandleVerifier [0x00007FF7D0D31AED+3458237]
+	GetHandleVerifier [0x00007FF7D0D4829C+3550316]
+	GetHandleVerifier [0x00007FF7D0D3DB9D+3507565]
+	GetHandleVerifier [0x00007FF7D0AB2C6A+841274]
+	(No symbol) [0x00007FF7D09609EF]
+	(No symbol) [0x00007FF7D07B41AE]
+	GetHandleVerifier [0x00007FF7D0DB66A8+4001912]
+	BaseThreadInitThunk [0x00007FF93AD0259D+29]
+	RtlUserThreadStart [0x00007FF93C04AF38+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 48, in <module>
+    experity.logout()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 590, in logout
+    raise SeleniumException(f"Code: {em.LOGOUT_ISSUE} | Message : Error occurred during logout.")
+utils.exception_usage.SeleniumException: Code: EXP_1_002 | Message : Error occurred during logout. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-02-27 22:30:43,433 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 35, in <module>
+    experity.select_report('Financials')
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 263, in select_report
+    tree_container = self.wait.until(EC.presence_of_element_located((By.ID, "treecontainer1x0x0x0")))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 110, in _predicate
+    return driver.find_element(*locator)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=133.0.6943.127)
+Stacktrace:
+	GetHandleVerifier [0x00007FF7D09EC6A5+28789]
+	(No symbol) [0x00007FF7D0955B20]
+	(No symbol) [0x00007FF7D07E8F9A]
+	(No symbol) [0x00007FF7D07D4D75]
+	(No symbol) [0x00007FF7D07F9784]
+	(No symbol) [0x00007FF7D086F0BF]
+	(No symbol) [0x00007FF7D088F0D2]
+	(No symbol) [0x00007FF7D0867103]
+	(No symbol) [0x00007FF7D082FFC0]
+	(No symbol) [0x00007FF7D0831273]
+	GetHandleVerifier [0x00007FF7D0D31AED+3458237]
+	GetHandleVerifier [0x00007FF7D0D4829C+3550316]
+	GetHandleVerifier [0x00007FF7D0D3DB9D+3507565]
+	GetHandleVerifier [0x00007FF7D0AB2C6A+841274]
+	(No symbol) [0x00007FF7D09609EF]
+	(No symbol) [0x00007FF7D095CB34]
+	(No symbol) [0x00007FF7D095CCD6]
+	(No symbol) [0x00007FF7D094C119]
+	BaseThreadInitThunk [0x00007FF93AD0259D+29]
+	RtlUserThreadStart [0x00007FF93C04AF38+40]
+
+
+2025-02-27 23:38:25,484 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 81, in open_portal
+    self.wait.until(page_loads)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 29, in page_loads
+    return driver.execute_script("return document.readyState") == "complete"
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 528, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: target frame detached
+  (failed to check if window was closed: disconnected: unable to send message to renderer)
+  (Session info: chrome=133.0.6943.127)
+Stacktrace:
+	GetHandleVerifier [0x00007FF7D09EC6A5+28789]
+	(No symbol) [0x00007FF7D0955B20]
+	(No symbol) [0x00007FF7D07E8DCC]
+	(No symbol) [0x00007FF7D07D60CB]
+	(No symbol) [0x00007FF7D07D4F7E]
+	(No symbol) [0x00007FF7D07F9784]
+	(No symbol) [0x00007FF7D086F0BF]
+	(No symbol) [0x00007FF7D088F0D2]
+	(No symbol) [0x00007FF7D0867103]
+	(No symbol) [0x00007FF7D082FFC0]
+	(No symbol) [0x00007FF7D0831273]
+	GetHandleVerifier [0x00007FF7D0D31AED+3458237]
+	GetHandleVerifier [0x00007FF7D0D4829C+3550316]
+	GetHandleVerifier [0x00007FF7D0D3DB9D+3507565]
+	GetHandleVerifier [0x00007FF7D0AB2C6A+841274]
+	(No symbol) [0x00007FF7D09609EF]
+	(No symbol) [0x00007FF7D095CB34]
+	(No symbol) [0x00007FF7D095CCD6]
+	(No symbol) [0x00007FF7D094C119]
+	BaseThreadInitThunk [0x00007FF93AD0259D+29]
+	RtlUserThreadStart [0x00007FF93C04AF38+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 31, in <module>
+    experity.open_portal(EXPERITY_URL)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 85, in open_portal
+    raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while opening Experity portal")
+utils.exception_usage.SeleniumException: Code: EXP_1_001 | Message : Error while opening Experity portal | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-02-27 23:39:37,068 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 38, in <module>
+    experity.select_closing_date()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 281, in select_closing_date
+    from_date_select = self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "FromClosingDate")))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 224, in _predicate
+    return _element_if_visible(driver.find_element(*locator))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=133.0.6943.127)
+Stacktrace:
+	GetHandleVerifier [0x00007FF7D09EC6A5+28789]
+	(No symbol) [0x00007FF7D0955B20]
+	(No symbol) [0x00007FF7D07E8F9A]
+	(No symbol) [0x00007FF7D07D4D75]
+	(No symbol) [0x00007FF7D07F9784]
+	(No symbol) [0x00007FF7D086F0BF]
+	(No symbol) [0x00007FF7D088F0D2]
+	(No symbol) [0x00007FF7D0867103]
+	(No symbol) [0x00007FF7D082FFC0]
+	(No symbol) [0x00007FF7D0831273]
+	GetHandleVerifier [0x00007FF7D0D31AED+3458237]
+	GetHandleVerifier [0x00007FF7D0D4829C+3550316]
+	GetHandleVerifier [0x00007FF7D0D3DB9D+3507565]
+	GetHandleVerifier [0x00007FF7D0AB2C6A+841274]
+	(No symbol) [0x00007FF7D09609EF]
+	(No symbol) [0x00007FF7D095CB34]
+	(No symbol) [0x00007FF7D095CCD6]
+	(No symbol) [0x00007FF7D094C119]
+	BaseThreadInitThunk [0x00007FF93AD0259D+29]
+	RtlUserThreadStart [0x00007FF93C04AF38+40]
+
+
+2025-02-28 00:25:50,369 - ERROR - Error selecting closing dates
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 324, in select_closing_date
+    to_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ToClosingDate")))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 224, in _predicate
+    return _element_if_visible(driver.find_element(*locator))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=133.0.6943.127)
+Stacktrace:
+	GetHandleVerifier [0x00007FF7D5B0C6A5+28789]
+	(No symbol) [0x00007FF7D5A75B20]
+	(No symbol) [0x00007FF7D5908F9A]
+	(No symbol) [0x00007FF7D58F4D75]
+	(No symbol) [0x00007FF7D5919784]
+	(No symbol) [0x00007FF7D598F0BF]
+	(No symbol) [0x00007FF7D59AF0D2]
+	(No symbol) [0x00007FF7D5987103]
+	(No symbol) [0x00007FF7D594FFC0]
+	(No symbol) [0x00007FF7D5951273]
+	GetHandleVerifier [0x00007FF7D5E51AED+3458237]
+	GetHandleVerifier [0x00007FF7D5E6829C+3550316]
+	GetHandleVerifier [0x00007FF7D5E5DB9D+3507565]
+	GetHandleVerifier [0x00007FF7D5BD2C6A+841274]
+	(No symbol) [0x00007FF7D5A809EF]
+	(No symbol) [0x00007FF7D5A7CB34]
+	(No symbol) [0x00007FF7D5A7CCD6]
+	(No symbol) [0x00007FF7D5A6C119]
+	BaseThreadInitThunk [0x00007FF93AD0259D+29]
+	RtlUserThreadStart [0x00007FF93C04AF38+40]
+
+2025-02-28 00:25:50,385 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 38, in <module>
+    experity.select_closing_date('ADJ 1', 'December 2024', 'August 2024')
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 324, in select_closing_date
+    to_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ToClosingDate")))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 224, in _predicate
+    return _element_if_visible(driver.find_element(*locator))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=133.0.6943.127)
+Stacktrace:
+	GetHandleVerifier [0x00007FF7D5B0C6A5+28789]
+	(No symbol) [0x00007FF7D5A75B20]
+	(No symbol) [0x00007FF7D5908F9A]
+	(No symbol) [0x00007FF7D58F4D75]
+	(No symbol) [0x00007FF7D5919784]
+	(No symbol) [0x00007FF7D598F0BF]
+	(No symbol) [0x00007FF7D59AF0D2]
+	(No symbol) [0x00007FF7D5987103]
+	(No symbol) [0x00007FF7D594FFC0]
+	(No symbol) [0x00007FF7D5951273]
+	GetHandleVerifier [0x00007FF7D5E51AED+3458237]
+	GetHandleVerifier [0x00007FF7D5E6829C+3550316]
+	GetHandleVerifier [0x00007FF7D5E5DB9D+3507565]
+	GetHandleVerifier [0x00007FF7D5BD2C6A+841274]
+	(No symbol) [0x00007FF7D5A809EF]
+	(No symbol) [0x00007FF7D5A7CB34]
+	(No symbol) [0x00007FF7D5A7CCD6]
+	(No symbol) [0x00007FF7D5A6C119]
+	BaseThreadInitThunk [0x00007FF93AD0259D+29]
+	RtlUserThreadStart [0x00007FF93C04AF38+40]
+
+

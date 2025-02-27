@@ -1,20 +1,18 @@
 import os
 from dotenv import load_dotenv
-from ultramsg_base import UltraMsgBase
+from .ultramsg_base import UltraMsgBase
 
 class UltraMsgContacts:
     """
     Child class inherits UltraMsgBase class and implements methods to deal with messages in WhatsApp using the API.\n
-    Note
-        Methods starting with `post_` use POST requests.
-        Methods starting with `get_` use GET requests.
     """
     def __init__(self, ultramsg_base: UltraMsgBase):
         self.umsg_base = ultramsg_base
 
-    def post_block(self, chatId: str):
+    def block_contact(self, chatId: str):
         '''
         Block contact on WhatsApp for the given chat ID.
+        Uses POST request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -25,9 +23,10 @@ class UltraMsgContacts:
         payload = f"token={self.umsg_base.token}&chatId={chatId}"
         return self.umsg_base.make_request(url = "contacts/block", payload = payload, type = "POST")
     
-    def post_unblock(self, chatId: str):
+    def unblock_contact(self, chatId: str):
         '''
         Unblock contact on WhatsApp for the given chat ID.
+        Uses POST request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -38,9 +37,10 @@ class UltraMsgContacts:
         payload = f"token={self.umsg_base.token}&chatId={chatId}"
         return self.umsg_base.make_request(url = "contacts/unblock", payload = payload, type = "POST")
     
-    def get_contacts(self):
+    def contact_list(self):
         '''
         Get the contacts list.
+        Uses GET request.
 
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
@@ -48,9 +48,10 @@ class UltraMsgContacts:
         query_string = {"token" : f"{self.umsg_base.token}"}
         return self.umsg_base.make_request(url = "contacts", payload = query_string, type = "GET")
     
-    def get_ids(self, clear: bool):
+    def contact_ids(self, clear: bool):
         '''
         Get the contact IDs.
+        Uses GET request.
 
         :param clear:
         :type clear: bool
@@ -64,9 +65,10 @@ class UltraMsgContacts:
         }
         return self.umsg_base.make_request(url = "contacts/ids", payload = query_string, type = "GET")
     
-    def get_contact(self, chatId: str):
+    def contact_profile_picture(self, chatId: str):
         '''
         Get the contact info for the given chat ID.
+        Uses GET request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -80,9 +82,10 @@ class UltraMsgContacts:
         }
         return self.umsg_base.make_request(url = "contacts/contact", payload = query_string, type = "GET")
     
-    def get_blocked(self):
+    def blocked_contacts(self):
         '''
         Get all blocked contacts.
+        Uses GET request.
 
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
@@ -90,9 +93,10 @@ class UltraMsgContacts:
         query_string = {"token" : f"{self.umsg_base.token}"}
         return self.umsg_base.make_request(url = "contacts/blocked", payload = query_string, type = "GET")
     
-    def get_invalid(self, clear: bool):
+    def invalid_contacts(self, clear: bool):
         '''
         Get all invalid contacts.
+        Uses GET request.
 
         :param clear: 
         :type clear: bool
@@ -105,9 +109,10 @@ class UltraMsgContacts:
         }
         return self.umsg_base.make_request(url = "contacts/invalid", payload = query_string, type = "GET")
     
-    def get_check_user(self, chatId: str, nocache: bool = False):
+    def check_if_whatsapp_user(self, chatId: str, nocache: bool = False):
         '''
         Checks if user is WhatsApp user
+        Uses GET request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -125,9 +130,10 @@ class UltraMsgContacts:
         }
         return self.umsg_base.make_request(url = "contacts/check", payload = query_string, type = "GET")
     
-    def get_contact(self, chatId: str):
+    def contact_profile_picture(self, chatId: str):
         '''
         Get the contact profile picture for the given chat ID.
+        Uses GET request.
 
         :param chatId: chatId for contact.
         :type chatId: str

@@ -1,20 +1,21 @@
 import os
+import json
 from dotenv import load_dotenv
+
 from ultramsg_base import UltraMsgBase
+from utils.UltraMsg.ultramsg_base import UltraMsgBase
 
 class UltraMsgMessages:
     """
-    Child class inherits UltraMsgBase class and implements methods to deal with messages in WhatsApp using the API.\n
-    Note:
-        Methods starting with `post_` use POST requests.
-        Methods starting with `get_` use GET requests.
+    Child class inherits UltraMsgBase class and implements methods to deal with messages in WhatsApp using the API.
     """
     def __init__(self, ultramsg_base: UltraMsgBase):
         self.umsg_base = ultramsg_base
 
-    def post_message(self, phone_number: int, message: str):
+    def send_message(self, phone_number: int, message: str):
         '''
         Send a whatsapp message to the provided phone number
+        Uses POST request
 
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -28,9 +29,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&body={message}'
         return self.umsg_base.make_request(url= 'messages/chat', type='POST', payload=payload)
     
-    def post_image(self, phone_number: int, image_url: str, image_caption: str):
+    def send_image(self, phone_number: int, image_url: str, image_caption: str):
         '''
         Send a image on the provided number along with caption.
+        Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -46,9 +48,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&image={image_url}&caption={image_caption}'
         return self.umsg_base.make_request(url= 'messages/image', type='POST', payload=payload)
 
-    def post_sticker(self, phone_number: int, sticker_url: str):
+    def send_sticker(self, phone_number: int, sticker_url: str):
         '''
-        Send a whatsapp sticker to the provided phone number
+        Send a whatsapp sticker to the provided phone number.
+        Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -62,9 +65,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&sticker={sticker_url}'
         return self.umsg_base.make_request(url= 'messages/sticker', type='POST', payload=payload)
     
-    def post_document(self, phone_number: int, doc_name: str, doc_url: str, doc_caption: str):
+    def send_document(self, phone_number: int, doc_name: str, doc_url: str, doc_caption: str):
         '''
         Send a document to the provided phone number along with a caption.
+        Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -82,9 +86,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&filename={doc_name}&document={doc_url}&caption={doc_caption}'
         return self.umsg_base.make_request(url= 'messages/document', type='POST', payload=payload)
     
-    def post_audio(self, phone_number: int, audio_url: str):
+    def send_audio(self, phone_number: int, audio_url: str):
         '''
         Send a audio clip to the provide phone number.
+        Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -98,9 +103,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&audio={audio_url}'
         return self.umsg_base.make_request(url = 'messages/audio', type = "POST", payload = payload)
     
-    def post_voicenote(self, phone_number: int, voice_url: str):
+    def send_voicenote(self, phone_number: int, voice_url: str):
         '''
         Sends a voice note to the provided phone number.
+        Uses POST request.
         
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -114,9 +120,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&audio={voice_url}'
         return self.umsg_base.make_request(url = 'messages/voice', type = "POST", payload = payload)
 
-    def post_video(self, phone_number: int, video_url: str, video_caption: str):
+    def send_video(self, phone_number: int, video_url: str, video_caption: str):
         '''
         Send a video on the provided number along with caption.
+        Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -132,9 +139,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&video={video_url}&caption={video_caption}'
         return self.umsg_base.make_request(url= 'messages/video', type='POST', payload=payload)
 
-    def post_contact(self, phone_number: int, contact_id: str):
+    def send_contact(self, phone_number: int, contact_id: str):
         '''
         Sends a contact ID to the provided phone number.
+        Uses POST request.
         
         :param phone_number: The phone number of receipient along with country code,  without any space or extra characters such as (, ), -, +:
             Eg: 911234567890
@@ -150,9 +158,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&contact={contact_id}'
         return self.umsg_base.make_request(url = 'messages/contact', type = "POST", payload = payload)
 
-    def post_location(self, phone_number: int, address: str, latitude: float, longitude: float):
+    def send_location(self, phone_number: int, address: str, latitude: float, longitude: float):
         '''
         Send location to the provided phone number.
+        Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -170,9 +179,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&address={address}&lat={latitude}&lng={longitude}'
         return self.umsg_base.make_request(url = "messages/location", type = "POST", payload = payload)
 
-    def post_vcard(self, phone_number: int, text_card: str):
+    def send_vcard(self, phone_number: int, text_card: str):
         '''
         Send a Virtual Contact File (VCF) to the given phone number.
+        Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
@@ -187,9 +197,10 @@ class UltraMsgMessages:
         return self.umsg_base.make_request(url = "messages/vcard", type = "POST", payload = payload)
         
     # Implement reaction method later, having some problems
-    def post_reaction(self, message_id, emoji: str):
+    def react_to_message(self, message_id, emoji: str):
         '''
         Reacts to a message with a given message ID.
+        Uses POST request.
 
         :param message_id: The message which should be reacted to.
         :type message_id: int
@@ -203,11 +214,10 @@ class UltraMsgMessages:
         return self.umsg_base.make_request(url = "messages/reaction", type = "POST", payload = payload)
 
     # Not implemented this function as not able to get message ID.
-    def post_delete_message(self, msgId: str):
+    def delete_message(self, msg_id: str):
         '''
         Deletes a WhatsApp message with the given message_id.
-        First we will get the chat ID - "<country_code><chat_id or phone_number>"
-        Then we will get the last chat and the message ID from that chat.
+        Uses POST request.
 
         :param msgId: Message ID of the message to be deleted.
         :type msgId: str
@@ -215,11 +225,13 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        pass
+        payload = f'msgId={msg_id}'
+        return self.umsg_base.make_request(url = "messages/delete", payload = payload, type = "POST")
     
-    def post_resend_by_status(self, status: str):
+    def resend_message_by_status(self, status: str):
         '''
-        Deletes a WhatsApp message given the status of the message.
+        Resends a WhatsApp message given the status of the message.
+        Uses POST request.
 
         :param status: Status of the message to be deleted (unsent, expired).
         :type status: str
@@ -227,13 +239,14 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&status={status}"
-        return um_base.make_request(url = "messages/resendByStatus", payload = payload, type = "POST")
+        payload = f"&status={status}"
+        return self.umsg_base.make_request(url = "messages/resendByStatus", payload = payload, type = "POST")
 
     # Not implemented this function as not able to get message ID.
-    def post_resend_by_id(self, msgId: str):
+    def resend_message_by_id(self, msgId: str):
         '''
         Resend a WhatsApp message given the ID of the message.
+        Uses POST request.
 
         :param msgId: Status of the message to be deleted.
         :type msgId: str
@@ -243,21 +256,23 @@ class UltraMsgMessages:
         '''
         pass
         
-    def post_clear_message(self, status: str):
+    def delete_message_from_instance(self, status: str):
         '''
-        Clear the messages from an instance (queue, sent or unsent)
+        Clear the messages from an instance (queue, sent or unsent).
+        Uses POST request.
 
         :param staus: Status of the message to be deleted (queue, sent, unsent, invalid)
         :type status: str
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&status={status}"
+        payload = f"status={status}"
         return self.umsg_base.make_request(url = "messages/clear", type = "POST", payload = payload)
 
-    def get_messages(self, page: int, limit: int, status: str, sort: str):
+    def message_list(self, page: int, limit: int, status: str, sort: str):
         '''
-        Get the list of instance messages (sent, queue, unsent, all)
+        Get the list of instance messages (sent, queue, unsent, all).
+        Uses GET request.
 
         :param page: Pagination page number
         :type page: int
@@ -272,7 +287,6 @@ class UltraMsgMessages:
         :rtype: str(json)
         '''
         query_string = {
-            "token" : f"{self.umsg_base.token}",
             "page" : page,
             "limit" : limit,
             "status" : status,
@@ -280,64 +294,61 @@ class UltraMsgMessages:
         }
         return self.umsg_base.make_request(url = 'messages', payload = query_string, type = "GET")
 
-    def get_statistics(self):
+    def message_statistics(self):
         '''
         Get statistics of instance messages.
+        Uses GET request.
 
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {"token" : f'{self.umsg_base.token}'}
-        return self.umsg_base.make_request(url = "messages/statistics", payload = query_string, type = "GET")
+        return self.umsg_base.make_request(url = "messages/statistics", payload = None, type = "GET")
 
 if __name__ == '__main__':
+    load_dotenv('../.env')
+
     # from dotenv import load_dotenv # TODO: Remove this in production
     try:
-        # TODO: Remove this later
-        load_dotenv('../.env')
-
         INSTANCE_ID = os.getenv('UMSG_INSTANCE_ID')
         TOKEN = os.getenv('UMSG_SECRET_KEY')
 
         um_base = UltraMsgBase(instance_id=INSTANCE_ID, token=TOKEN)
         um_msgs = UltraMsgMessages(um_base)
 
-        # clear_msg_resp = um_msgs.clear_message("all")
-
-        # msg_resp = um_msgs.post_message('919674573242', 'Hello World, this is a test from ultramsg python library.')
+        # msg_resp = um_msgs.send_message('919674573242', 'Hello World, this is a test from ultramsg python library.')
         # print(msg_resp)
 
-        # img_resp = um_msgs.post_image('919674573242', 'https://images.pexels.com/photos/8007094/pexels-photo-8007094.jpeg', 'A man cycling.')
+        # img_resp = um_msgs.send_image('919674573242', 'https://images.pexels.com/photos/8007094/pexels-photo-8007094.jpeg', 'A man cycling.')
         # print(img_resp)
 
-        # sticker_resp = um_msgs.post_sticker('919674573242', 'https://www.gstatic.com/webp/gallery/3.jpg')
+        # sticker_resp = um_msgs.send_sticker('919674573242', 'https://www.gstatic.com/webp/gallery/3.jpg')
         # print(sticker_resp)
 
-        # doc_resp = um_msgs.post_document('919674573242', 'CV', 'https://file-example.s3-accelerate.amazonaws.com/documents/cv.pdf', 'PFA my resume attached above.')
+        # doc_resp = um_msgs.send_document('919674573242', 'CV', 'https://file-example.s3-accelerate.amazonaws.com/documents/cv.pdf', 'PFA my resume attached above.')
         # print(doc_resp)
 
-        # audio_resp = um_msgs.post_audio("919674573242", "https://file-example.s3-accelerate.amazonaws.com/audio/2.mp3")
+        # audio_resp = um_msgs.send_audio('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/audio/2.mp3')
         # print(audio_resp)
 
-        # audio_resp = um_msgs.post_audio("919674573242", "https://file-example.s3-accelerate.amazonaws.com/voice/oog_example.ogg")
+        # audio_resp = um_msgs.send_audio('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/voice/oog_example.ogg')
         # print(audio_resp)
         
-        # video_resp = um_msgs.post_video('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/video/test.mp4', 'This is a sample video.')
+        # video_resp = um_msgs.send_video('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/video/test.mp4', 'This is a sample video.')
         # print(video_resp)
 
-        # contact_resp = um_msgs.post_contact("919674573242", "911234567890@c.us")
+        # contact_resp = um_msgs.post_contact('919674573242', '911234567890@c.us')
         # print(contact_resp)
 
-        # location_resp = um_msgs.post_location('919674573242', 'Floor 2 Aasvhi Building, \n Veerendra Street, 100ft Ring Road, Banashankari', 12.918, 77.564)
+        # location_resp = um_msgs.send_location('919674573242', 'Floor 2 Aasvhi Building, \n Veerendra Street, 100ft Ring Road, Banashankari', 12.918, 77.564)
         # print(location_resp)
 
         # # Data fields for the vcard method
-        # name = "Oliver;James"
-        # full_name = "James Oliver"
-        # nickname = "James"
-        # birthdate = "1987-01-01"
-        # gender = "M"
-        # note = "Sample Note"
+        # name = 'Oliver;James'
+        # full_name = 'James Oliver'
+        # nickname = 'James'
+        # birthdate = '1987-01-01'
+        # gender = 'M'
+        # note = 'Sample Note'
 
         # vcard_data = f"""BEGIN:VCARD
         # VERSION:3.0
@@ -352,25 +363,36 @@ if __name__ == '__main__':
         # ADR;TYPE=work:;;;;;;
         # END:VCARD"""
 
-        # vcard_resp = um_msgs.post_vcard('919674573242', vcard_data)
+        # vcard_resp = um_msgs.send_vcard('919674573242', vcard_data)
         # print(vcard_resp)
 
 
-        # get_msg_resp = um_msgs.get_messages(page = 1, limit = 1, status = "sent", sort = "desc")
+        # get_msg_resp = um_msgs.message_list(page = 1, limit = 1, status = "sent", sort = "desc")
         # json_resp = json.loads(get_msg_resp)
         # # print(json_resp)
         # msg_id = json_resp["messages"][0]
         # print(msg_id)
-        # reaction_resp = um_msgs.post_reaction(msg_id, "👍")
+        # reaction_resp = um_msgs.react_to_message(msg_id, "👍")
         # print(reaction_resp)
 
-        # msg_stats_resp = um_msgs.get_statistics()
+        # msg_stats_resp = um_msgs.message_statistics()
         # print(msg_stats_resp)
 
-        # resend_msg_by_id_resp = um_msgs.post_resend_by_id(msg_id)
+        # resend_msg_by_id_resp = um_msgs.resend_message_by_id(msg_id)
         # print(resend_msg_by_id_resp)
 
-        # um_msgs.post_delete_message()        
+        # um_msgs.delete_message()   
+
+        # # NOTE: Reaction not working even on Ultramsg
+        # react_resp = um_msgs.react_to_message('true_919674573242@c.us_3EB09D4D6989D6BDC6E85C', '👍')     
+        # print(react_resp)
+
+        # # NOTE: Delete message not working from ultramsg
+        # del_resp = um_msgs.delete_message('true_919674573242@c.us_3EB09D4D6989D6BDC6E85C')
+        # print(del_resp)
+        
+        print(um_msgs.message_statistics())
+        print(um_msgs.message_list(1, 2, "all", "desc"))
 
     except Exception as e:
         print(f"Exception occurred: {(type(e).__name__)}: {e}")

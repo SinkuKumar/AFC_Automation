@@ -1,30 +1,33 @@
+import sys
 import os
 from dotenv import load_dotenv
+
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from ultramsg_base import UltraMsgBase
 
 class UltraMsgChats:
     """
     Child class inherits UltraMsgBase class and implements methods to deal with messages in WhatsApp using the API.\n
-    Note
-        Methods starting with `post_` use POST requests.
-        Methods starting with `get_` use GET requests.
     """
     def __init__(self, ultramsg_base: UltraMsgBase):
         self.umsg_base = ultramsg_base
 
-    def get_chats(self):
+    def chat_list(self):
         '''
         Get list of chats.
+        Uses GET request.
 
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {"token" : f'{self.umsg_base.token}'}
-        return self.umsg_base.make_request(url = "chats", payload = query_string, type = "GET")
+        # query_string = {"token" : f'{self.umsg_base.token}'}
+        return self.umsg_base.make_request(url = "chats", payload = None, type = "GET")
     
-    def get_ids(self, clear: bool):
+    def chat_ids(self, clear: bool):
         '''
         Get the chat IDs.
+        Uses GET request.
 
         :param clear:
         :type clear: bool
@@ -38,9 +41,10 @@ class UltraMsgChats:
         }
         return self.umsg_base.make_request(url = "chats/ids", payload = query_string, type = "GET")
     
-    def get_messages(self, chatId: str, limit: int):
+    def last_message(self, chatId: str, limit: int):
         '''
         Get last message from chat conversation for the given chat ID.
+        Uses GET request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -58,9 +62,10 @@ class UltraMsgChats:
         }
         return self.umsg_base.make_request(url = "chats/messages", payload = query_string, type = "GET")
     
-    def post_archive_chats(self, chatId: str):
+    def archive_chats(self, chatId: str):
         '''
         Archives the chat for the given chat ID.
+        Uses POST request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -71,9 +76,10 @@ class UltraMsgChats:
         payload = f"token={self.umsg_base.token}&chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/archive', payload = payload, type = "POST")
     
-    def post_unarchive_chats(self, chatId: str):
+    def unarchive_chats(self, chatId: str):
         '''
         Uarchives the chat for the given chat ID.
+        Uses POST request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -84,9 +90,10 @@ class UltraMsgChats:
         payload = f"token={self.umsg_base.token}&chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/unarchive', payload = payload, type = "POST")
     
-    def post_clear_messages(self, chatId: str):
+    def clear_messages(self, chatId: str):
         '''
         Clears all messages from the chat for the given chat ID.
+        Uses POST request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -97,9 +104,10 @@ class UltraMsgChats:
         payload = f"token={self.umsg_base.token}&chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/clearMessages', payload = payload, type = "POST")
     
-    def post_delete_chat(self, chatId: str):
+    def delete_chat(self, chatId: str):
         '''
         Deletes the chat from chat list for the given chat ID.
+        Uses POST request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -110,9 +118,10 @@ class UltraMsgChats:
         payload = f"token={self.umsg_base.token}&chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/delete', payload = payload, type = "POST")
 
-    def post_chat_read(self, chatId: str):
+    def mark_chat_read(self, chatId: str):
         '''
         Marks chat message as read for the given chat ID.
+        Uses POST request.
 
         :param chatId: chatId for contact or group.
         :type chatId: str
@@ -132,7 +141,12 @@ if __name__ == "__main__":
         TOKEN = os.getenv('UMSG_SECRET_KEY')
 
         um_base = UltraMsgBase(instance_id=INSTANCE_ID, token=TOKEN)
-        um_msgs = UltraMsgChats(um_base)
+        um_chats = UltraMsgChats(um_base)
+
+        # last_msg_resp = um_chats.last_message('919674573242@c.us', 1)
+        # print(last_msg_resp)
+
+        print(um_chats.chat_list())
 
     except Exception as e:
         print(f"Exception occurred: {(type(e).__name__)}: {e}")

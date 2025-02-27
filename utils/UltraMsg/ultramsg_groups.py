@@ -1,20 +1,18 @@
 import os
 from dotenv import load_dotenv
-from ultramsg_base import UltraMsgBase
+from .ultramsg_base import UltraMsgBase
 
 class UltraMsgGroups:
     """
     Child class inherits UltraMsgBase class and implements methods to deal with messages in WhatsApp using the API.\n
-    Note
-        Methods starting with `post_` use POST requests.
-        Methods starting with `get_` use GET requests.
     """
     def __init__(self, ultramsg_base: UltraMsgBase):
         self.umsg_base = ultramsg_base
 
-    def get_groups(self):
+    def all_groups_info(self):
         '''
         Get all groups info and participants.
+        Uses GET request.
 
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
@@ -22,9 +20,10 @@ class UltraMsgGroups:
         query_string = {"token" : f"{self.umsg_base.token}"}
         return self.umsg_base.make_request(url = "groups", payload = query_string, type = "GET")
     
-    def get_group_ids(self, clear: bool):
+    def group_ids(self, clear: bool):
         '''
         Get all group IDs.
+        Uses GET request.
 
         :param clear:
         :type clear: bool
@@ -38,7 +37,7 @@ class UltraMsgGroups:
         }
         return self.umsg_base.make_request(url = "groups/ids", payload = query_string, type = "GET")
 
-    def get_groups(self, groupId: str):
+    def group_info(self, groupId: str):
         '''
         Get group info and participants.
 

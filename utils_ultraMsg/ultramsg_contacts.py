@@ -1,6 +1,11 @@
 import os
+import sys
 from dotenv import load_dotenv
-from .ultramsg_base import UltraMsgBase
+
+# Add the project's root directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from utils_ultraMsg.ultramsg_base import UltraMsgBase
 
 class UltraMsgContacts:
     """
@@ -20,7 +25,7 @@ class UltraMsgContacts:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&chatId={chatId}"
+        payload = f"chatId={chatId}"
         return self.umsg_base.make_request(url = "contacts/block", payload = payload, type = "POST")
     
     def unblock_contact(self, chatId: str):
@@ -34,7 +39,7 @@ class UltraMsgContacts:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&chatId={chatId}"
+        payload = f"chatId={chatId}"
         return self.umsg_base.make_request(url = "contacts/unblock", payload = payload, type = "POST")
     
     def contact_list(self):

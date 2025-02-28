@@ -1,6 +1,11 @@
 import os
+import sys
 from dotenv import load_dotenv
-from .ultramsg_base import UltraMsgBase
+
+# Add the project's root directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from utils_ultraMsg.ultramsg_base import UltraMsgBase
 
 class UltraMsgInstances:
     def __init__(self, ultramsg_base: UltraMsgBase):
@@ -14,8 +19,8 @@ class UltraMsgInstances:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {"token" : f"{self.umsg_base.token}"}
-        return self.umsg_base.make_request(url = "instance/status", payload = query_string, type = "GET")
+        query_string = {"token":f"{self.umsg_base.token}"}
+        return self.umsg_base.make_request(url = "instance/status", payload=query_string, type = "GET")
 
     def get_qr_image(self):
         '''
@@ -69,8 +74,7 @@ class UltraMsgInstances:
         :returns: The json response from the ultramsg server.
         :rtype: str(json) 
         '''
-        payload = f"token={self.umsg_base.token}"
-        return self.umsg_base.make_request(url = "instance/logout", payload = payload)
+        return self.umsg_base.make_request(url = "instance/logout")
 
     def restart(self):
         '''
@@ -80,8 +84,7 @@ class UltraMsgInstances:
         :returns: The json response from the ultramsg server.
         :rtype: str(json) 
         '''
-        payload = f"token={self.umsg_base.token}"
-        return self.umsg_base.make_request(url = "stance/restart", payload = payload)
+        return self.umsg_base.make_request(url = "stance/restart")
 
     def settings(self, webhook_url: str, webhook_message_received: bool, webhook_message_create: bool, webhook_message_ack: bool, webhook_message_download_media, sendDelay: int = 1):
         '''
@@ -108,7 +111,7 @@ class UltraMsgInstances:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&sendDelay={sendDelay}&webhook_url={webhook_url}&webhook_message_received={webhook_message_received}&webhook_message_create={webhook_message_create}&webhook_message_ack={webhook_message_ack}&webhook_message_download_media={webhook_message_download_media}"
+        payload = f"sendDelay={sendDelay}&webhook_url={webhook_url}&webhook_message_received={webhook_message_received}&webhook_message_create={webhook_message_create}&webhook_message_ack={webhook_message_ack}&webhook_message_download_media={webhook_message_download_media}"
         return self.umsg_base.make_request(url = "instance/settings", payload = payload)
 
     def reset_to_default(self):
@@ -119,10 +122,9 @@ class UltraMsgInstances:
         :returns: The response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}"
-        return self.umsg_base.make_request(url = "instance/clear", payload = payload)
+        return self.umsg_base.make_request(url = "instance/clear")
 
-"""
+
 if __name__ == '__main__':
     try:
         load_dotenv('../.env')
@@ -132,16 +134,14 @@ if __name__ == '__main__':
         um_base = UltraMsgBase(instance_id=INSTANCE_ID, token=TOKEN)
         um_insts = UltraMsgInstances(um_base)
 
-        get_inst_status_resp = um_insts.instance_status()
-        print(f'Instance status: {get_inst_status_resp}')
+        print(f'Instance status: {um_insts.instance_status()}')
 
         # get_qr_image_status = um_insts.get_qr_image()
         # print(type(get_qr_image_status))
         # print(get_qr_image_status)
 
-        get_inst_settings_resp = um_insts.get_instance_settings()
-        print(f'Instance settings{get_inst_settings_resp}')
+        # get_inst_settings_resp = um_insts.get_instance_settings()
+        # print(f'Instance settings{get_inst_settings_resp}')
     
     except Exception as e:
         print(f"Exception occurred: {(type(e).__name__)}: {e}")
-"""

@@ -1,9 +1,12 @@
 import os
+import sys
 import json
 from dotenv import load_dotenv
 
-from ultramsg_base import UltraMsgBase
-from utils.UltraMsg.ultramsg_base import UltraMsgBase
+# Add the project's root directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from utils_ultraMsg.ultramsg_base import UltraMsgBase
 
 class UltraMsgMessages:
     """
@@ -14,7 +17,7 @@ class UltraMsgMessages:
 
     def send_message(self, phone_number: int, message: str):
         '''
-        Send a whatsapp message to the provided phone number
+        Send a whatsapp message to the provided phone number\n
         Uses POST request
 
         :param phone_number: The phone number of receipient along with country code: 
@@ -31,7 +34,7 @@ class UltraMsgMessages:
     
     def send_image(self, phone_number: int, image_url: str, image_caption: str):
         '''
-        Send a image on the provided number along with caption.
+        Send a image on the provided number along with caption.\n
         Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
@@ -50,7 +53,7 @@ class UltraMsgMessages:
 
     def send_sticker(self, phone_number: int, sticker_url: str):
         '''
-        Send a whatsapp sticker to the provided phone number.
+        Send a whatsapp sticker to the provided phone number.\n
         Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
@@ -67,7 +70,7 @@ class UltraMsgMessages:
     
     def send_document(self, phone_number: int, doc_name: str, doc_url: str, doc_caption: str):
         '''
-        Send a document to the provided phone number along with a caption.
+        Send a document to the provided phone number along with a caption.\n
         Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
@@ -105,7 +108,7 @@ class UltraMsgMessages:
     
     def send_voicenote(self, phone_number: int, voice_url: str):
         '''
-        Sends a voice note to the provided phone number.
+        Sends a voice note to the provided phone number.\n
         Uses POST request.
         
         :param phone_number: The phone number of receipient along with country code: 
@@ -122,7 +125,7 @@ class UltraMsgMessages:
 
     def send_video(self, phone_number: int, video_url: str, video_caption: str):
         '''
-        Send a video on the provided number along with caption.
+        Send a video on the provided number along with caption.\n
         Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
@@ -141,7 +144,7 @@ class UltraMsgMessages:
 
     def send_contact(self, phone_number: int, contact_id: str):
         '''
-        Sends a contact ID to the provided phone number.
+        Sends a contact ID to the provided phone number.\n
         Uses POST request.
         
         :param phone_number: The phone number of receipient along with country code,  without any space or extra characters such as (, ), -, +:
@@ -160,7 +163,7 @@ class UltraMsgMessages:
 
     def send_location(self, phone_number: int, address: str, latitude: float, longitude: float):
         '''
-        Send location to the provided phone number.
+        Send location to the provided phone number.\n
         Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
@@ -181,7 +184,7 @@ class UltraMsgMessages:
 
     def send_vcard(self, phone_number: int, text_card: str):
         '''
-        Send a Virtual Contact File (VCF) to the given phone number.
+        Send a Virtual Contact File (VCF) to the given phone number.\n
         Uses POST request.
 
         :param phone_number: The phone number of receipient along with country code: 
@@ -196,10 +199,10 @@ class UltraMsgMessages:
         payload = f'to={phone_number}&vcard={text_card}'
         return self.umsg_base.make_request(url = "messages/vcard", type = "POST", payload = payload)
         
-    # Implement reaction method later, having some problems
+    # Unable to get message ID.
     def react_to_message(self, message_id, emoji: str):
         '''
-        Reacts to a message with a given message ID.
+        Reacts to a message with a given message ID.\n
         Uses POST request.
 
         :param message_id: The message which should be reacted to.
@@ -213,10 +216,10 @@ class UltraMsgMessages:
         payload = f'msgId={message_id}&emoji={emoji}'
         return self.umsg_base.make_request(url = "messages/reaction", type = "POST", payload = payload)
 
-    # Not implemented this function as not able to get message ID.
+    # Unable to get message ID.
     def delete_message(self, msg_id: str):
         '''
-        Deletes a WhatsApp message with the given message_id.
+        Deletes a WhatsApp message with the given message ID.\n
         Uses POST request.
 
         :param msgId: Message ID of the message to be deleted.
@@ -230,7 +233,7 @@ class UltraMsgMessages:
     
     def resend_message_by_status(self, status: str):
         '''
-        Resends a WhatsApp message given the status of the message.
+        Resends a WhatsApp message given the status of the message.\n
         Uses POST request.
 
         :param status: Status of the message to be deleted (unsent, expired).
@@ -242,10 +245,10 @@ class UltraMsgMessages:
         payload = f"&status={status}"
         return self.umsg_base.make_request(url = "messages/resendByStatus", payload = payload, type = "POST")
 
-    # Not implemented this function as not able to get message ID.
-    def resend_message_by_id(self, msgId: str):
+    # Unable to get message ID.
+    def resend_message_by_id(self, id: int):
         '''
-        Resend a WhatsApp message given the ID of the message.
+        Resend a WhatsApp message given the ID of the message.\n
         Uses POST request.
 
         :param msgId: Status of the message to be deleted.
@@ -254,11 +257,12 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        pass
+        payload = f"id={id}"
+        return self.umsg_base.make_request(url = "resendById", payload = payload, type = "POST")
         
     def delete_message_from_instance(self, status: str):
         '''
-        Clear the messages from an instance (queue, sent or unsent).
+        Clear the messages from an instance (queue, sent, unsent, invalid).\n
         Uses POST request.
 
         :param staus: Status of the message to be deleted (queue, sent, unsent, invalid)
@@ -271,14 +275,14 @@ class UltraMsgMessages:
 
     def message_list(self, page: int, limit: int, status: str, sort: str):
         '''
-        Get the list of instance messages (sent, queue, unsent, all).
+        Get the list of instance messages (sent, queue, unsent, invalid all).
         Uses GET request.
 
         :param page: Pagination page number
         :type page: int
         :param limit: number of messages per request
         :type limit: int
-        :param status: Status of the message (sent , queue , unsent , invalid, all)
+        :param status: Status of the message (sent, queue, unsent, invalid, all)
         :type status: str
         :param sort: Order of sorting of messages (asc, desc)
         :type sort: str
@@ -305,43 +309,52 @@ class UltraMsgMessages:
         return self.umsg_base.make_request(url = "messages/statistics", payload = None, type = "GET")
 
 if __name__ == '__main__':
+    # load_dotenv('utils/.env')
     load_dotenv('../.env')
 
     # from dotenv import load_dotenv # TODO: Remove this in production
     try:
+        import sys  
+        import os  
+        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) 
         INSTANCE_ID = os.getenv('UMSG_INSTANCE_ID')
         TOKEN = os.getenv('UMSG_SECRET_KEY')
+
+        # print(f'Instance ID: {INSTANCE_ID}')
+        # print(f'Token: {TOKEN}')
 
         um_base = UltraMsgBase(instance_id=INSTANCE_ID, token=TOKEN)
         um_msgs = UltraMsgMessages(um_base)
 
-        # msg_resp = um_msgs.send_message('919674573242', 'Hello World, this is a test from ultramsg python library.')
-        # print(msg_resp)
+        print(um_msgs.delete_message_from_instance("all"))
+        """
+        print(f"Send message: {um_msgs.send_message('919674573242', 'Hello World, this is a test message from ultramsg python library.')}")
 
-        # img_resp = um_msgs.send_image('919674573242', 'https://images.pexels.com/photos/8007094/pexels-photo-8007094.jpeg', 'A man cycling.')
-        # print(img_resp)
+        print(f"Send image: {um_msgs.send_image('919674573242', 'https://images.pexels.com/photos/8007094/pexels-photo-8007094.jpeg', 'A man cycling.')}")
 
-        # sticker_resp = um_msgs.send_sticker('919674573242', 'https://www.gstatic.com/webp/gallery/3.jpg')
-        # print(sticker_resp)
+        print(f"Send sticker: {um_msgs.send_sticker('919674573242', 'https://www.gstatic.com/webp/gallery/3.jpg')}")
 
-        # doc_resp = um_msgs.send_document('919674573242', 'CV', 'https://file-example.s3-accelerate.amazonaws.com/documents/cv.pdf', 'PFA my resume attached above.')
-        # print(doc_resp)
+        print(f"Send document: {um_msgs.send_document('919674573242', 'CV', 'https://file-example.s3-accelerate.amazonaws.com/documents/cv.pdf', 'Resume')}")
 
-        # audio_resp = um_msgs.send_audio('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/audio/2.mp3')
-        # print(audio_resp)
+        print(f"Send audio: {um_msgs.send_audio('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/audio/2.mp3')}")
 
-        # audio_resp = um_msgs.send_audio('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/voice/oog_example.ogg')
-        # print(audio_resp)
+        print(f"Send voice note: {um_msgs.send_voicenote('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/voice/oog_example.ogg')}")
         
-        # video_resp = um_msgs.send_video('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/video/test.mp4', 'This is a sample video.')
-        # print(video_resp)
+        print(f"Send video: {um_msgs.send_video('919674573242', 'https://file-example.s3-accelerate.amazonaws.com/video/test.mp4', 'This is a sample video.')}")
 
-        # contact_resp = um_msgs.post_contact('919674573242', '911234567890@c.us')
-        # print(contact_resp)
+        print(f"Send contact{um_msgs.send_contact('919674573242', '911234567890@c.us')}")
 
-        # location_resp = um_msgs.send_location('919674573242', 'Floor 2 Aasvhi Building, \n Veerendra Street, 100ft Ring Road, Banashankari', 12.918, 77.564)
-        # print(location_resp)
+        send_loc_resp = um_msgs.send_location('919674573242', 'Office building \nBangalore', 12.918, 77.564)
+        print("Send location: {0}".format(send_loc_resp))
 
+        # Parse the response to a JSON object to get values
+        json_resp = json.loads(send_loc_resp)
+        send_loc_resp_id = json_resp['id']
+
+        # Getting the following error: Resend message by id: {"error":"Path not found in Method: POST"}
+        print(f'Resend message by id: {um_msgs.resend_message_by_id(send_loc_resp_id)}')
+
+        print(f'Get statistics: {um_msgs.message_statistics()}')
         # # Data fields for the vcard method
         # name = 'Oliver;James'
         # full_name = 'James Oliver'
@@ -350,6 +363,7 @@ if __name__ == '__main__':
         # gender = 'M'
         # note = 'Sample Note'
 
+        """
         # vcard_data = f"""BEGIN:VCARD
         # VERSION:3.0
         # N:{name}
@@ -375,11 +389,7 @@ if __name__ == '__main__':
         # reaction_resp = um_msgs.react_to_message(msg_id, "👍")
         # print(reaction_resp)
 
-        # msg_stats_resp = um_msgs.message_statistics()
-        # print(msg_stats_resp)
-
-        # resend_msg_by_id_resp = um_msgs.resend_message_by_id(msg_id)
-        # print(resend_msg_by_id_resp)
+        # print(um_msgs.resend_message_by_id(msg_id))
 
         # um_msgs.delete_message()   
 
@@ -387,12 +397,11 @@ if __name__ == '__main__':
         # react_resp = um_msgs.react_to_message('true_919674573242@c.us_3EB09D4D6989D6BDC6E85C', '👍')     
         # print(react_resp)
 
-        # # NOTE: Delete message not working from ultramsg
+        # # NOTE: Delete message not working from Ultramsg
         # del_resp = um_msgs.delete_message('true_919674573242@c.us_3EB09D4D6989D6BDC6E85C')
         # print(del_resp)
         
-        print(um_msgs.message_statistics())
-        print(um_msgs.message_list(1, 2, "all", "desc"))
+        print(um_msgs.message_list(1, 2, 'all', 'desc'))
 
     except Exception as e:
         print(f"Exception occurred: {(type(e).__name__)}: {e}")

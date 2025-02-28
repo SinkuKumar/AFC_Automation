@@ -1,6 +1,11 @@
 import os
+import sys
 from dotenv import load_dotenv
-from .ultramsg_base import UltraMsgBase
+
+# Add the project's root directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from utils_ultraMsg.ultramsg_base import UltraMsgBase
 
 class UltraMsgGroups:
     """

@@ -2,9 +2,10 @@ import sys
 import os
 from dotenv import load_dotenv
 
-# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Add the project's root directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ultramsg_base import UltraMsgBase
+from utils_ultraMsg.ultramsg_base import UltraMsgBase
 
 class UltraMsgChats:
     """
@@ -35,10 +36,7 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {
-            "token" : f"{self.umsg_base.token}",
-            "clear" : clear
-        }
+        query_string = {"clear" : clear}
         return self.umsg_base.make_request(url = "chats/ids", payload = query_string, type = "GET")
     
     def last_message(self, chatId: str, limit: int):
@@ -56,7 +54,6 @@ class UltraMsgChats:
         :rtype: str(json)
         '''
         query_string = {
-            "token" : f"{self.umsg_base.token}",
             "chatId" : chatId,
             "limit" : limit
         }
@@ -73,7 +70,7 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&chatId={chatId}"
+        payload = f"chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/archive', payload = payload, type = "POST")
     
     def unarchive_chats(self, chatId: str):
@@ -87,7 +84,7 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&chatId={chatId}"
+        payload = f"chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/unarchive', payload = payload, type = "POST")
     
     def clear_messages(self, chatId: str):
@@ -101,7 +98,7 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&chatId={chatId}"
+        payload = f"chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/clearMessages', payload = payload, type = "POST")
     
     def delete_chat(self, chatId: str):
@@ -115,7 +112,7 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&chatId={chatId}"
+        payload = f"chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/delete', payload = payload, type = "POST")
 
     def mark_chat_read(self, chatId: str):
@@ -129,7 +126,7 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"token={self.umsg_base.token}&chatId={chatId}"
+        payload = f"chatId={chatId}"
         return self.umsg_base.make_request(url = 'chats/read', payload = payload, type = "POST")
     
 
@@ -145,6 +142,8 @@ if __name__ == "__main__":
 
         # last_msg_resp = um_chats.last_message('919674573242@c.us', 1)
         # print(last_msg_resp)
+
+        print(f'Get chat IDs: {um_chats.chat_ids(True)}')
 
         print(um_chats.chat_list())
 

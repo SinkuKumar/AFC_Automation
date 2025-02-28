@@ -1,6 +1,8 @@
 import os
 import time
+import shutil
 import logging
+from datetime import datetime
 
 class FileOperations:
     """
@@ -171,4 +173,63 @@ class FileOperations:
 
         except Exception as e:
             logging.critical(f"Unexpected error occurred: {e}", exc_info=True)
+            raise
+
+    def move_file(file_path, base_directory, client_id=None):
+        """
+        Moves a file into a subfolder named with the current date inside the given base directory.
+        Optionally, the file can be renamed to include the client ID before the file extension.
+
+        Process:
+            - Creates a folder named with the current date (format: YYYY_MM_DD) inside `base_directory`.
+            - Moves `file_path` into this folder.
+            - If `client_id` is provided, appends `_clientid` to the filename before the extension.
+
+        Args:
+            file_path (str): full path of the file to be moved.
+            base_directory (str): path to the base directory where the dated folder should be created.
+            client_id (str, optional (default=None)): optional client ID to append to the file name before the file extension.
+
+        Returns:
+            None
+
+        Raises:
+            Exception if the file move operation fails.
+
+        Example:
+            file_path = '/path/to/data.csv'
+            base_directory = '/new/location'
+            client_id = '12345'
+
+            It will be moved to:
+                /new/location/2025_02_28/data_12345.csv
+
+            If `client_id` is not provided:
+                /new/location/2025_02_28/data.csv
+        """
+        today_date = datetime.today().strftime("%Y_%m_%d")
+
+        folder_path = os.path.join(base_directory, today_date)
+
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+            logging.info(f"Directory '{folder_path}' created successfully.")
+        else:
+            logging.info(f"Directory '{folder_path}' already exists.")
+
+        file_name = os.path.basename(file_path)
+        name, ext = os.path.splitext(file_name)
+
+        if client_id:
+            new_file_name = f"{name}_{client_id}{ext}"
+        else:
+            new_file_name = file_name
+
+        new_file_path = os.path.join(folder_path, new_file_name)
+
+        try:
+            shutil.move(file_path, new_file_path)
+            logging.info(f"File '{file_name}' moved to '{new_file_path}' successfully.")
+        except Exception as e:
+            logging.error(f"An error occurred while moving the file '{file_path}' to '{new_file_path}': {e}")
             raise

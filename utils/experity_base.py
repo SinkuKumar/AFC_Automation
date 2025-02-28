@@ -2,19 +2,19 @@ import os
 import sys
 import time
 import logging
-from datetime import datetime
 from bs4 import BeautifulSoup
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.common.keys import Keys
+from datetime import datetime
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait, Select
-from selenium.common.exceptions import TimeoutException
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from utils.exception_usage import SeleniumException
 from utils import error_messages as em
+from utils.exception_usage import SeleniumException
 
 def page_loads(driver: WebDriver) -> bool:
     """
@@ -25,6 +25,9 @@ def page_loads(driver: WebDriver) -> bool:
 
     Returns:
         bool: True if the page is fully loaded, False otherwise.
+
+    Raises:
+        None
     """
     return driver.execute_script("return document.readyState") == "complete"
 
@@ -197,198 +200,6 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Error occurred while navigating to '{sub_nav_item_name}'.")
         
-    def select_pm_report(self, category_name: str, subcategory_name: str, report_identifier: str):
-        """
-        This function handles:
-        1. Expanding the correct Category (by name)
-        2. Expanding the correct Subcategory (by name), scoped inside the Category
-        3. Clicking the correct Report (by report code or report name), scoped inside the Subcategory
-
-        Args:
-            category_name (str): Name of the Category.
-            subcategory_name (str): Name of the Subcategory.
-            report_identifier (str): Either the report name OR report code.
-
-        Returns:
-            None
-
-        Raises:
-
-        """
-        try:  
-            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
-            logging.info("Switched to 'reportMainWindow' iframe.")
-
-            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "NavFrame")))
-            self.wait.until(page_loads)
-            print("Switched to 'NavFrame' Frame.")
-        except Exception as e:
-            print('Soemthing went wrong in switching to iframe')
-
-        try:
-            month_end_button = self.wait.until(EC.element_to_be_clickable((By.XPATH,"//div[@id='monthend' and .//b[text()='Month End Only']]")))
-            month_end_button.click()
-
-            tree_container = self.wait.until(EC.presence_of_element_located((By.ID, "treecontainer1x0x0x0")))
-
-            category_div = self.wait.until(lambda d: tree_container.find_element(
-                By.XPATH, f".//div[contains(@id, 'treeitem') and .//b[text()='{category_name}']]"
-            ))
-            category_expand_img = self.wait.until(lambda d: category_div.find_element(
-                By.XPATH, ".//div[contains(@id, 'treeimg')]//img"
-            ))
-            category_expand_img.click()
-
-            time.sleep(3)
-
-            subcategory_div = self.wait.until(lambda d: category_div.find_element(
-                By.XPATH, f".//following-sibling::div//div[contains(@id, 'treeitem') and .//b[text()='{subcategory_name}']]"
-            ))
-
-            subcategory_expand_img = subcategory_div.find_element(By.XPATH, ".//div[contains(@id, 'treeimg')]//img")
-            subcategory_expand_img.click()
-
-            subcategory_container = subcategory_div.find_element(By.XPATH, "./following-sibling::div[contains(@id, 'treecontainer')]")
-
-            report_div = self.wait.until(lambda d: subcategory_container.find_element(
-                By.XPATH, f".//div[contains(@class, 'treeitem') and (contains(., '{report_identifier}'))]"
-            ))
-
-            report_div.click()
-            time.sleep(5)
-        except:
-            print('error in cstegory selectiog')
-
-        try:
-            self.driver.switch_to.default_content()
-            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
-            logging.info("Switched to 'reportMainWindow' iframe.")
-            print("Switched to 'reportMainWindow' iframe.")
-
-            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "PVRC_MainStage")))
-            self.wait.until(page_loads)
-            logging.info("Switched to 'PVRC_MainStage' frame.")
-
-            breadcrumb_locator = (By.CSS_SELECTOR, "#adivname > div:first-child")
-            self.wait.until(EC.visibility_of_element_located(breadcrumb_locator))
-
-        except Exception as e:
-            print(f"Soemthing went wrong : {e}")
-
-    def select_closing_date(self, report_identifier: str, to_date: str, from_date: str = None):
-        """
-        Selects closing dates for a given report. Handles both 'From' and 'To' dates.
-
-        Logic:
-            - If both dates are given, sorts them automatically (older = from date, newer = to date).
-            - If only `to_date` is given, just selects the `to_date`.
-            - If the `report_identifier` is in `mylist`, 'FromClosingDate' is also handled.
-
-        Args:
-            report_identifier (str): The report identifier.
-            to_date (str): The 'To' closing date (format: "Month YYYY").
-            from_date (str, optional): The 'From' closing date (format: "Month YYYY"). Defaults to None.
-
-        Raises:
-            Exception: In case of any Selenium failures.
-        """
-
-        report_list = ['ADJ 0', 'By Reason']
-
-        try:
-            if from_date:
-                dates = [from_date, to_date]
-                from_date, to_date = sorted(dates, key=lambda x: datetime.strptime(x, "%B %Y"))
-                logging.info(f"Using From date: {from_date}, To date: {to_date}")
-            else:
-                logging.info(f"Only To date provided: {to_date}")
-
-            if report_identifier in report_list:
-                from_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "FromClosingDate")))
-                Select(from_date_select).select_by_visible_text(from_date)
-                logging.info(f"Selected FromClosingDate: {from_date}")
-
-                to_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ToClosingDate")))
-                Select(to_date_select).select_by_visible_text(to_date)
-                logging.info(f"Selected ToClosingDate: {to_date}")
-            else:
-                month_end_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ClosingDate")))
-                Select(month_end_select).select_by_visible_text(to_date)
-                logging.info(f"Selected ToClosingDate: {to_date}")
-
-        except Exception as e:
-            logging.exception(f"Error selecting closing dates")
-            raise
-
-    def get_clinic_list(self) -> list:
-        """
-        Extracts and return data from 'Clinic List' table data.
-
-        Args:
-            None
-
-        Returns:
-            data(list): A list of lists containing table data where each inner list represents a row.
-
-        Raises:
-            SeleniumException: If any issue occurs during data extraction.
-        """
-        try:
-            self.wait.until(page_loads)
-            logging.info("Fetching page source.")
-            html = self.driver.page_source
-            soup = BeautifulSoup(html, 'html.parser')
-
-            logging.info("Parsing HTML to find the table with id 'gvClinicList'.")
-            table = soup.find('table', {'id': 'gvClinicList'})
-
-            if table is None:
-                raise SeleniumException("Table with id 'gvClinicList' not found.")
-
-            data = []
-            for row in table.find_all('tr'):
-                cols = [col.get_text(strip=True) for col in row.find_all(['td', 'th'])]
-                data.append(cols)
-
-            logging.info("Data extraction successful.")
-            return data
-
-        except Exception as e:
-            raise SeleniumException(f"Code: {em.DATA_FETCH_ISSUE} | Message : Error during data fetch.")
-        
-    def navigate_to_recievables_page(self, invoice_number: int) -> None:
-        """
-        Navigates to recievables page where recievables details of given invoice number are present.
-
-        Args:
-            invoice_number (int): The invoice_number to get recievables details.
-
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during navigating to recievables page.
-        """
-        try:
-            logging.info(f"Waiting for invoice number input field.")
-            invoice_input = self.wait.until(EC.element_to_be_clickable((By.ID,'txtInvNum')))
-            invoice_input.send_keys(invoice_number)
-            invoice_input.send_keys(Keys.RETURN)
-            logging.info(f"Input '{invoice_number}' invoice number submitted successfully.")
-
-            self.wait.until(page_loads)
-            patient_number_link = self.wait.until(EC.element_to_be_clickable((By.ID,'lbtnPatNum')))
-            patient_number_link.click()
-            logging.info("Patient number link clicked...")
-
-            self.wait.until(page_loads)
-            invoice_number_link = self.wait.until(EC.element_to_be_clickable((By.XPATH, f'//*[@id="receivablesGridRow_{invoice_number}"]/td[1]/a')))
-            invoice_number_link.click()
-            self.wait.until(page_loads)
-            logging.info('Invoice number link clicked...')
-        except Exception as e:
-            raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Error in navigating to recievables page.")
-
     def search_and_select_report(self, report_name: str) -> None:
         """
         Searches for a report by its name and selects it.
@@ -560,6 +371,222 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during arrival status selection.")
 
+    def select_pm_report(self, category_name: str, subcategory_name: str, report_identifier: str) -> None:
+        """
+        This function handles:
+        1. Expanding the correct Category (by name)
+        2. Expanding the correct Subcategory (by name), scoped inside the Category
+        3. Clicking the correct Report (by report code or report name), scoped inside the Subcategory
+
+        Args:
+            category_name (str): Name of the Category.
+            subcategory_name (str): Name of the Subcategory.
+            report_identifier (str): Either the report name OR report code.
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during the pm report selection process.
+        """
+        try:  
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
+            logging.info("Switched to 'reportMainWindow' iframe.")
+
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "NavFrame")))
+            self.wait.until(page_loads)
+            print("Switched to 'NavFrame' Frame.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Unable to switch to 'NavFrame' frame.")
+
+        try:
+            month_end_button = self.wait.until(EC.element_to_be_clickable((By.XPATH,"//div[@id='monthend' and .//b[text()='Month End Only']]")))
+            month_end_button.click()
+
+            tree_container = self.wait.until(EC.presence_of_element_located((By.ID, "treecontainer1x0x0x0")))
+
+            category_div = self.wait.until(lambda d: tree_container.find_element(
+                By.XPATH, f".//div[contains(@id, 'treeitem') and .//b[text()='{category_name}']]"
+            ))
+            category_expand_img = self.wait.until(lambda d: category_div.find_element(
+                By.XPATH, ".//div[contains(@id, 'treeimg')]//img"
+            ))
+            category_expand_img.click()
+
+            time.sleep(3)
+
+            subcategory_div = self.wait.until(lambda d: category_div.find_element(
+                By.XPATH, f".//following-sibling::div//div[contains(@id, 'treeitem') and .//b[text()='{subcategory_name}']]"
+            ))
+
+            subcategory_expand_img = subcategory_div.find_element(By.XPATH, ".//div[contains(@id, 'treeimg')]//img")
+            subcategory_expand_img.click()
+
+            subcategory_container = subcategory_div.find_element(By.XPATH, "./following-sibling::div[contains(@id, 'treecontainer')]")
+
+            report_div = self.wait.until(lambda d: subcategory_container.find_element(
+                By.XPATH, f".//div[contains(@class, 'treeitem') and (contains(., '{report_identifier}'))]"
+            ))
+            report_div.click()
+            time.sleep(2)
+        except:
+            raise SeleniumException(f"Message : Error while selecting report '{report_identifier}'.")
+
+        try:
+            self.driver.switch_to.default_content()
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
+            logging.info("Switched to 'reportMainWindow' iframe.")
+            print("Switched to 'reportMainWindow' iframe.")
+
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "PVRC_MainStage")))
+            self.wait.until(page_loads)
+            logging.info("Switched to 'PVRC_MainStage' frame.")
+
+            breadcrumb_locator = (By.CSS_SELECTOR, "#adivname > div:first-child")
+            self.wait.until(EC.visibility_of_element_located(breadcrumb_locator))
+
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Unable to switch to 'PVRC MainStage' frame.")
+
+    def select_pm_report_filter(self, report_code: str, cls_from_date: str = None, cls_to_date: str = None, cls_month_end: str = None, serv_from_date: str = None, serv_to_date: str = None, rev_code: str = None, report_type: str = None) -> None:
+        """
+        Applies filters to select a PM report based on various criteria.
+
+        Args:
+            report_code (str): The code identifying the specific report to be selected.
+            cls_from_date (str, optional): From date for the closing date filter (format: "Month YYYY"). Defaults to None.
+            cls_to_date (str, optional): To date for the closing date filter (format: "Month YYYY"). Defaults to None.
+            cls_month_end (str, optional): Closing month-end date filter (format: "Month YYYY"). Defaults to None.
+            serv_from_date (str, optional): From date for the service date filter (format: "MM/DD/YYYY"). Defaults to None.
+            serv_to_date (str, optional): To date for the service date filter (format: "MM/DD/YYYY"). Defaults to None.
+            rev_code (str, optional): Revenue code filter. Defaults to None.
+            report_type (str, optional): Type of report being requested. Defaults to None.
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during PM report filter selection process. 
+
+        Notes:
+            This function is intended to apply various filters that refine the selection of a PM report.
+        """
+        try:
+            if report_code in ["ADJ 0", "AGE 11 DW", "AGE 12 DW", "ARC 3 DW", "REV 1 DW", "REV 15", "REV 20 DW"]:
+                dates = [cls_from_date, cls_to_date]
+                cls_from_date, cls_to_date = sorted(dates, key=lambda x: datetime.strptime(x, "%B %Y"))
+
+                cls_from_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "FromClosingDate")))
+                Select(cls_from_date_select).select_by_visible_text(cls_from_date)
+
+                cls_to_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ToClosingDate")))
+                Select(cls_to_date_select).select_by_visible_text(cls_to_date)
+                if report_code in ["ARC 3 DW", "ARC 4 DW", "REV 20 DW"]:
+
+                    self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunClinicscheckall'))).click()
+                    logging.info("'Uncheck All' button clicked successfully.")
+
+                    checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, 'freeClinicscheck1')))
+                    if not checkbox.is_selected():
+                        checkbox.click()
+                        logging.info(f"Checkbox 'ALL' selected.")
+                        
+                    if report_code in ["ARC 3 DW"]:
+                        self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunPayerClasscheckall'))).click()
+                        logging.info("'Uncheck All' button clicked successfully.")
+
+                        checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, 'freePayerClasscheck1')))
+                        if not checkbox.is_selected():
+                            checkbox.click()
+                            logging.info(f"Checkbox 'ALL' selected.")
+
+                    elif report_code in ["REV 20 DW"]:
+                        type = self.wait.until(EC.visibility_of_element_located((By.NAME, "BranchingDDL")))
+                        Select(type).select_by_visible_text(report_type)
+
+            elif report_code in ["PAT 0",  "PAY 5", "MRI 2"]:
+                self.select_report_date_range(serv_from_date, serv_to_date)
+            elif report_code in ["AGE 13 DW"]:
+                pass
+            else:
+                month_end_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ClosingDate")))
+                Select(month_end_select).select_by_visible_text(cls_month_end)
+                if report_code in ["REV 14"]:
+                    revenue_code = self.wait.until(EC.visibility_of_element_located((By.NAME, "freeRevCode")))
+                    Select(revenue_code).select_by_visible_text(rev_code)
+
+        except Exception as e:
+            raise SeleniumException("Message : Error occurred while selecting pm report filters.")
+
+    def get_clinic_list(self) -> list:
+        """
+        Extracts and return data from 'Clinic List' table data.
+
+        Args:
+            None
+
+        Returns:
+            data(list): A list of lists containing table data where each inner list represents a row.
+
+        Raises:
+            SeleniumException: If any issue occurs during data extraction.
+        """
+        try:
+            self.wait.until(page_loads)
+            logging.info("Fetching page source.")
+            html = self.driver.page_source
+            soup = BeautifulSoup(html, 'html.parser')
+
+            logging.info("Parsing HTML to find the table with id 'gvClinicList'.")
+            table = soup.find('table', {'id': 'gvClinicList'})
+
+            if table is None:
+                raise SeleniumException("Table with id 'gvClinicList' not found.")
+
+            data = []
+            for row in table.find_all('tr'):
+                cols = [col.get_text(strip=True) for col in row.find_all(['td', 'th'])]
+                data.append(cols)
+
+            logging.info("Data extraction successful.")
+            return data
+
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.DATA_FETCH_ISSUE} | Message : Error during data fetch.")
+        
+    def navigate_to_recievables_page(self, invoice_number: int) -> None:
+        """
+        Navigates to recievables page where recievables details of given invoice number are present.
+
+        Args:
+            invoice_number (int): The invoice_number to get recievables details.
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during navigating to recievables page.
+        """
+        try:
+            logging.info(f"Waiting for invoice number input field.")
+            invoice_input = self.wait.until(EC.element_to_be_clickable((By.ID,'txtInvNum')))
+            invoice_input.send_keys(invoice_number)
+            invoice_input.send_keys(Keys.RETURN)
+            logging.info(f"Input '{invoice_number}' invoice number submitted successfully.")
+
+            self.wait.until(page_loads)
+            patient_number_link = self.wait.until(EC.element_to_be_clickable((By.ID,'lbtnPatNum')))
+            patient_number_link.click()
+            logging.info("Patient number link clicked...")
+
+            self.wait.until(page_loads)
+            invoice_number_link = self.wait.until(EC.element_to_be_clickable((By.XPATH, f'//*[@id="receivablesGridRow_{invoice_number}"]/td[1]/a')))
+            invoice_number_link.click()
+            self.wait.until(page_loads)
+            logging.info('Invoice number link clicked...')
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Error in navigating to recievables page.")
+
     def run_report(self) -> None:
         """
         Triggers the 'Run Report' action by clicking the designated 'Run Report' button.
@@ -712,6 +739,7 @@ if __name__ == "__main__":
     import os
     from dotenv import load_dotenv
     from utils.selenium_driver import SeleniumDriver
+
     BROWSER = 'chrome'
     EXPERITY_URL = 'https://pvpm.practicevelocity.com'
     PORTAL_URL = '25_1'

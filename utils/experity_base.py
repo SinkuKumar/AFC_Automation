@@ -121,6 +121,7 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
         
+    # TODO: Refactor this: Use a proper name for below function.
     def navigate_to_sub_nav(self, base_url: str, portal_url: str, sub_nav_item_name: str) -> None:
         """
         Navigates to a specific sub-navigation item on the Experity website.
@@ -185,7 +186,7 @@ class ExperityBase:
             "Educational Materials": "HelpDocument",
             # "Knowledge Base": "KnowledgeBase"
         }
-
+        
         try:
             logging.info(f"Attempting to navigate to '{sub_nav_item_name}'.")
             if sub_nav_item_name not in menu_mapping:
@@ -553,7 +554,7 @@ class ExperityBase:
 
         except Exception as e:
             raise SeleniumException(f"Code: {em.DATA_FETCH_ISSUE} | Message : Error during data fetch.")
-        
+    
     def navigate_to_recievables_page(self, invoice_number: int) -> None:
         """
         Navigates to recievables page where recievables details of given invoice number are present.

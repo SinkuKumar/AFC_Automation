@@ -1,11 +1,31 @@
+"""
+Ultramsg Instances
+-------------------
+
+This module provides functionality to interact with Ultramsg Instances
+    with the help of Ultramsg WhatsApp API.
+
+This module can be used as a standalone script, 
+if that the `UMSG_INSTANCE_ID` and `UMSG_SECRET_KEY` environment variables are set.
+
+:module: contacts.py
+:platform: Unix, Windows
+
+:date: March 3, 2025
+:author: Niladri Mallik `niladrimallik.p@hq.graphxsys.com <mailto:niladrimallik.p@hq.graphxsys.com>`
+
+# TODO: Implement logging
+# TODO: Add error handling
+# TODO: Implement error codes
+"""
+
 import os
 import sys
-from dotenv import load_dotenv
 
 # Add the project's root directory to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from utils_ultraMsg.ultramsg_base import UltraMsgBase
+from utils.ultramsg.base import UltraMsgBase
 
 class UltraMsgInstances:
     def __init__(self, ultramsg_base: UltraMsgBase):
@@ -20,7 +40,8 @@ class UltraMsgInstances:
         :rtype: str(json)
         '''
         query_string = {"token":f"{self.umsg_base.token}"}
-        return self.umsg_base.make_request(url = "instance/status", payload=query_string, type = "GET")
+        return self.umsg_base.make_request(url = "instance/status",
+                                           payload=query_string, request_type = "GET")
 
     def get_qr_image(self):
         '''
@@ -31,7 +52,8 @@ class UltraMsgInstances:
         :rtype: str(json)
         '''
         query_string = {"token" : f"{self.umsg_base.token}"}
-        return self.umsg_base.make_request(url = "instance/qr", type = "GET", payload = query_string)
+        return self.umsg_base.make_request(url = "instance/qr",
+                                           payload = query_string, request_type = "GET")
 
     def get_qr_code(self):
         '''
@@ -42,7 +64,8 @@ class UltraMsgInstances:
         :rtype: str(json)
         '''
         query_string = {"token" : f"{self.umsg_base.token1}"}
-        return self.umsg_base.make_request(url = "instance/qrCode", payload = query_string)
+        return self.umsg_base.make_request(url = "instance/qrCode",
+                                           payload = query_string)
 
     def phone_informations(self):
         '''
@@ -53,7 +76,8 @@ class UltraMsgInstances:
         :rtype: str(json)
         '''
         query_string = {"token" : f"{self.umsg_base.token}"}
-        return self.umsg_base.make_request(url = "instance/me", payload = query_string)
+        return self.umsg_base.make_request(url = "instance/me",
+                                           payload = query_string)
 
     def get_instance_settings(self):
         '''
@@ -64,7 +88,8 @@ class UltraMsgInstances:
         :rtype: str(json)        
         '''
         query_string = {"token" : f"{self.umsg_base.token}"}
-        return self.umsg_base.make_request(url = "instance/settings", payload = query_string)
+        return self.umsg_base.make_request(url = "instance/settings",
+                                           payload = query_string)
 
     def logout(self):
         '''
@@ -86,7 +111,9 @@ class UltraMsgInstances:
         '''
         return self.umsg_base.make_request(url = "stance/restart")
 
-    def settings(self, webhook_url: str, webhook_message_received: bool, webhook_message_create: bool, webhook_message_ack: bool, webhook_message_download_media, sendDelay: int = 1):
+    def settings(self, webhook_url: str, webhook_message_received: bool,
+                 webhook_message_create: bool, webhook_message_ack: bool,
+                 webhook_message_download_media, send_delay: int = 1):
         '''
         Update WhatsApp instance settings.
         Uses POST request.
@@ -100,7 +127,8 @@ class UltraMsgInstances:
         :param webhook_message_create: true/false notifications in webhooks when message create 
         :type param_webhook_create: bool
 
-        :param webhook_message_ack: true/false ack (message delivered and message viewed) notifications in webhooks
+        :param webhook_message_ack: true/false acknowledgement 
+            (message delivered and message viewed) notifications in webhooks
         :type webhook_message_ack: bool
 
         :param webhook_message_download_media:
@@ -111,7 +139,11 @@ class UltraMsgInstances:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"sendDelay={sendDelay}&webhook_url={webhook_url}&webhook_message_received={webhook_message_received}&webhook_message_create={webhook_message_create}&webhook_message_ack={webhook_message_ack}&webhook_message_download_media={webhook_message_download_media}"
+        payload = f"""sendDelay={send_delay}&webhook_url={webhook_url}&
+            webhook_message_received={webhook_message_received}&
+            webhook_message_create={webhook_message_create}&
+            webhook_message_ack={webhook_message_ack}&
+            webhook_message_download_media={webhook_message_download_media}"""
         return self.umsg_base.make_request(url = "instance/settings", payload = payload)
 
     def reset_to_default(self):
@@ -127,7 +159,12 @@ class UltraMsgInstances:
 
 if __name__ == '__main__':
     try:
-        load_dotenv('../.env')
+        import os
+
+        from dotenv import load_dotenv
+
+        load_dotenv()
+
         INSTANCE_ID = os.getenv('UMSG_INSTANCE_ID')
         TOKEN = os.getenv('UMSG_SECRET_KEY')
 
@@ -142,6 +179,6 @@ if __name__ == '__main__':
 
         # get_inst_settings_resp = um_insts.get_instance_settings()
         # print(f'Instance settings{get_inst_settings_resp}')
-    
+
     except Exception as e:
         print(f"Exception occurred: {(type(e).__name__)}: {e}")

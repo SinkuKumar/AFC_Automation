@@ -1,20 +1,20 @@
 """
 Ultramsg Base 
--------------
+-------------------
 
 This module provides functionality to interact with the UltraMsg API to send messages via WhatsApp.
 
-It contains the `UltraMsgBase` class that allows initializing an UltraMsg instance with an `instance_id`
+`UltraMsgBase` class initializes an UltraMsg instance with an `instance_id`
 and `token`, and a method to send requests to the UltraMsg API.
 
-This module can be used as a standalone script to send a WhatsApp message, provided that the `UMSG_INSTANCE_ID`
-and `UMSG_SECRET_KEY` environment variables are set.
+This module can be used as a standalone script to send a WhatsApp message, 
+    if that the `UMSG_INSTANCE_ID` and `UMSG_SECRET_KEY` environment variables are set.
 
-:module: ultramsg_base.py
+:module: ultramsg.base.py
 :platform: Unix, Windows
 
 :date: March 3, 2025
-:author: Sinku Kumar `sinkukumar.r@hq.graphxsys.com <mailto:sinkukumar.r@hq.graphxsys.com>`, # TODO: Update Mallik's email
+:author: Niladri Mallik `niladrimallik.p@hq.graphxsys.com <mailto:niladrimallik.p@hq.graphxsys.com>`
 
 # TODO: Implement logging
 # TODO: Add error handling
@@ -28,9 +28,9 @@ class UltraMsgBase:
     """
     A class to represent an UltraMsg instance for WhatsApp communication.
 
-    This class allows sending requests to the UltraMsg API using the provided instance ID and token.
-    The instance is initialized with the `instance_id` and `token`, and it constructs the base URL for
-    making requests to the UltraMsg API.
+    This class sends requests to the UltraMsg API using the provided instance ID and token.
+    The instance is initialized with the `instance_id` and `token`.
+    It constructs the base URL for making requests to the UltraMsg API.
 
     Attributes:
         instance_id (str): The instance ID provided by UltraMsg.
@@ -69,24 +69,24 @@ class UltraMsgBase:
         self.req_url = f'{self.url}/{url}'
         self.payload = f'token={self.token}&{payload}'
         self.headers = {'content-type': 'application/x-www-form-urlencoded'}
-        response = requests.request(request_type, self.req_url, data=self.payload, headers=self.headers)
+        response = requests.request(request_type, self.req_url, 
+                                    data=self.payload, headers=self.headers)
         return response.text
-    
 
 if __name__ == "__main__":
     # Example usage
     import os
     from dotenv import load_dotenv
-    
+
     load_dotenv()
-    
+
     instance_id = os.getenv("UMSG_INSTANCE_ID")
     token = os.getenv("UMSG_SECRET_KEY")
     ultra_msg = UltraMsgBase(instance_id, token)
 
-    test_phone = '919717425826'
-    test_message = 'Hello, this is a test message!'
-    payload = f'to={test_phone}&body={test_message}'
-    
+    TEST_PHONE = '919717425826'
+    TEST_SYMBOL = 'Hello, this is a test message!'
+    payload = f'to={TEST_PHONE}&body={TEST_SYMBOL}'
+
     msg_resp = ultra_msg.make_request('messages/chat', payload, 'POST')
     print(msg_resp)

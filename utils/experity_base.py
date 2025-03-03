@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import logging
+from functools import wraps
 from bs4 import BeautifulSoup
 from datetime import datetime
 from selenium.webdriver.common.by import By
@@ -30,6 +31,35 @@ def page_loads(driver: WebDriver) -> bool:
         None
     """
     return driver.execute_script("return document.readyState") == "complete"
+
+def retry_on_exception(retries: int = 3, delay: int = 2) -> callable:
+    """
+    Decorator to automatically retry a class method if it raises an exception.
+
+    Args:
+        retries (int): The number of retry attempts before failing completely.
+        delay (int): The wait time (in seconds) between retries.
+
+    Returns:
+        Callable: A wrapped function with retry logic applied.
+
+    Raises:
+        SeleniumException: If the function still fails after all retries.
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            attempts = 0
+            while attempts < retries:
+                try:
+                    return func(self, *args, **kwargs)
+                except Exception as e:
+                    attempts += 1
+                    logging.warning(f"Retry {attempts}/{retries} for {func.__name__} failed: {e}")
+                    time.sleep(delay)
+            raise SeleniumException(f"Message : {func.__name__} failed after {retries} retries.")
+        return wrapper
+    return decorator
 
 def switch_to_latest_window(driver: WebDriver) -> None:
     """
@@ -65,6 +95,7 @@ class ExperityBase:
         self.time_out = time_out
         self.wait = WebDriverWait(webdriver, self.time_out)
 
+    @retry_on_exception()
     def open_portal(self, url: str) -> None:
         """
         Opens the specified Experity portal URL.
@@ -86,7 +117,38 @@ class ExperityBase:
 
         except Exception as e:
             raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while opening Experity portal")
+    
+    @retry_on_exception()
+    def get_portal_url(self) -> str:
+        """
+        Extract the portal URL segment from the current browser URL.
 
+        This method fetches the current URL from the WebDriver, splits it by slashes (`/`),
+        and returns the 4th part (index 3), which is the portal url/segment.
+
+        Returns:
+            portal_url (str): The portal URL segment extracted from the current browser URL.
+
+        Raises:
+            ValueError: If the URL structure does not match the expected format.
+            SeleniumException: If any other issue occurs while extracting portal URL segment.
+        """
+        try:
+            current_url = self.driver.current_url
+            logging.info(f"Current URL fetched from driver: {current_url}")
+
+            url_parts = current_url.split('/')
+            if len(url_parts) < 4:
+                raise ValueError(f"Unexpected URL structure: {current_url}")
+
+            portal_url = url_parts[3]
+            logging.info(f"Extracted portal URL segment: {portal_url}")
+            return portal_url
+
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while extracting portal URL segment.")
+
+    @retry_on_exception()
     def login(self, username: str, password: str) -> None:
         """
         Automates the login process for Experity portal.
@@ -121,8 +183,7 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
         
-    # TODO: Refactor this: Use a proper name for below function.
-    def navigate_to_sub_nav(self, base_url: str, portal_url: str, sub_nav_item_name: str) -> None:
+    def select_sub_navigation_item(self, base_url: str, portal_url: str, sub_nav_item_name: str) -> None:
         """
         Navigates to a specific sub-navigation item on the Experity website.
 
@@ -372,6 +433,7 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during arrival status selection.")
 
+    @retry_on_exception()
     def select_pm_report(self, category_name: str, subcategory_name: str, report_identifier: str) -> None:
         """
         This function handles:
@@ -396,7 +458,7 @@ class ExperityBase:
 
             self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "NavFrame")))
             self.wait.until(page_loads)
-            print("Switched to 'NavFrame' Frame.")
+            logging.info("Switched to 'NavFrame' Frame.")
         except Exception as e:
             raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Unable to switch to 'NavFrame' frame.")
 
@@ -413,8 +475,6 @@ class ExperityBase:
                 By.XPATH, ".//div[contains(@id, 'treeimg')]//img"
             ))
             category_expand_img.click()
-
-            time.sleep(3)
 
             subcategory_div = self.wait.until(lambda d: category_div.find_element(
                 By.XPATH, f".//following-sibling::div//div[contains(@id, 'treeitem') and .//b[text()='{subcategory_name}']]"
@@ -437,7 +497,6 @@ class ExperityBase:
             self.driver.switch_to.default_content()
             self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
             logging.info("Switched to 'reportMainWindow' iframe.")
-            print("Switched to 'reportMainWindow' iframe.")
 
             self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "PVRC_MainStage")))
             self.wait.until(page_loads)
@@ -628,13 +687,33 @@ class ExperityBase:
         """
 
         format_mapping = {
+            "XML": {
+                "onclick": 'XML',
+                "text": 'XML file with report data'
+            },
             "CSV": {
                 "onclick": 'CSV',
                 "text": 'CSV (comma delimited)'
             },
+            "PDF": {
+                "onclick": 'PDF',
+                "text": 'PDF'
+            },
+            "MHTML": {
+                "onclick": 'MHTML',
+                "text": 'MHTML (web archive)'
+            },
             "Excel": {
                 "onclick": 'EXCELOPENXML',
                 "text": 'Excel'
+            },
+            "TIFF": {
+                "onclick": 'IMAGE',
+                "text": 'TIFF file'
+            },
+            "Word": {
+                "onclick": 'WORDOPENXML',
+                "text": 'Word'
             },
             "TXT": {
                 "onclick": 'PIPE',
@@ -743,7 +822,6 @@ if __name__ == "__main__":
 
     BROWSER = 'chrome'
     EXPERITY_URL = 'https://pvpm.practicevelocity.com'
-    PORTAL_URL = '25_1'
     load_dotenv()
     username = os.getenv('USERNAME')
     password = os.getenv('PASSWORD')
@@ -752,11 +830,40 @@ if __name__ == "__main__":
     try:
         experity = ExperityBase(driver)
         experity.open_portal(EXPERITY_URL)
+        PORTAL_URL = experity.get_portal_url()
         experity.login(username, password)
-        experity.navigate_to_sub_nav(EXPERITY_URL, PORTAL_URL, "Reports")
+        experity.select_sub_navigation_item(EXPERITY_URL, PORTAL_URL, "Reports")
         experity.logout()
     except Exception as e:
         print(e)
     finally:
         driver.quit()
         logging.info("Browser closed successfully.")
+
+# from datetime import datetime, timedelta
+
+# def months_range(start_month: str = 'March 2005', end_month: str = None):
+#     # Parse start month (format: "Month Year", e.g., "January 2001")
+#     start_date = datetime.strptime(start_month, "%B %Y")
+    
+#     # If end_month is not provided, use the previous month relative to today
+#     if end_month is None:
+#         today = datetime.now()
+#         previous_month = today.replace(day=1) - timedelta(days=1)
+#         end_date = previous_month
+#     else:
+#         end_date = datetime.strptime(end_month, "%B %Y")
+    
+#     current_date = start_date
+#     while current_date <= end_date:
+#         print(current_date.strftime("%B %Y"))
+#         # Move to next month
+#         if current_date.month == 12:
+#             current_date = datetime(current_date.year + 1, 1, 1)
+#         else:
+#             current_date = datetime(current_date.year, current_date.month + 1, 1)
+
+# # print("Example 1: From January 2001 to previous month")
+# # print_months_range("January 2024")
+
+# months_range(end_month="December 2006")

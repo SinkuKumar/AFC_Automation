@@ -8,7 +8,7 @@ This module contains the PyODBCSQL class, which allows executing SQL queries and
 :synopsis: Executes SQL queries and performing data operations with a SQL database.
 
 :date: Feb 24, 2025
-:author: Sinku Kumar `sinkukumar.r@hq.graphxsys.com <mailto:sinkukumar.r@hq.graphxsys.com>`_
+:author: Sinku Kumar `sinkukumar.r@hq.graphxsys.com <mailto:sinkukumar.r@hq.graphxsys.com>`
 """
 
 # TODO: Implement logging along with proper error handling with error codes, as per guidelines.

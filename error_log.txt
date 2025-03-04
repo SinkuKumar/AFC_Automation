@@ -95,3 +95,77 @@
 2025-03-04 17:20:32,515 - INFO - Got portal URL
 2025-03-04 17:20:38,553 - INFO - Navigate to method called
 2025-03-04 17:20:39,643 - INFO - Error occurred: SeleniumException Message : Unable to select report after search. | Contact: BI Automation Team - bi@graphxsys.com
+2025-03-04 20:32:20,029 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 810, in logout
+    logout_button = self.wait.until(EC.element_to_be_clickable((By.ID,'tdMenuBarItemlogout')))
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=133.0.6943.142)
+Stacktrace:
+	GetHandleVerifier [0x00007FF7EDFAC6A5+28789]
+	(No symbol) [0x00007FF7EDF15B20]
+	(No symbol) [0x00007FF7EDDA8F9A]
+	(No symbol) [0x00007FF7EDD94D75]
+	(No symbol) [0x00007FF7EDDB9784]
+	(No symbol) [0x00007FF7EDE2F0BF]
+	(No symbol) [0x00007FF7EDE4F0D2]
+	(No symbol) [0x00007FF7EDE27103]
+	(No symbol) [0x00007FF7EDDEFFC0]
+	(No symbol) [0x00007FF7EDDF1273]
+	GetHandleVerifier [0x00007FF7EE2F1AED+3458237]
+	GetHandleVerifier [0x00007FF7EE30829C+3550316]
+	GetHandleVerifier [0x00007FF7EE2FDB9D+3507565]
+	GetHandleVerifier [0x00007FF7EE072C6A+841274]
+	(No symbol) [0x00007FF7EDF209EF]
+	(No symbol) [0x00007FF7EDF1CB34]
+	(No symbol) [0x00007FF7EDF1CCD6]
+	(No symbol) [0x00007FF7EDF0C119]
+	BaseThreadInitThunk [0x00007FFA1475259D+29]
+	RtlUserThreadStart [0x00007FFA15F6AF38+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\main_new.py", line 56, in <module>
+    experity.logout()
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 815, in logout
+    raise SeleniumException(f"Code: {em.LOGOUT_ISSUE} | Message : Error occurred during logout.")
+utils.exception_usage.SeleniumException: Code: EXP_1_002 | Message : Error occurred during logout. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-03-04 20:38:11,681 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 183, in login
+    self.driver.find_element(By.ID, "txtPassword").save_screenshot(f"Screenshots/Password_Expire_{username}_{TIMESTAMP_IDENTIFIER}.png")
+AttributeError: 'WebElement' object has no attribute 'save_screenshot'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\main_new.py", line 32, in <module>
+    experity.login(username, password)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 192, in login
+    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
+utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-03-04 21:13:47,225 - ERROR - Invalid user credentials. Please check username and password.
+2025-03-04 22:15:32,437 - ERROR - Invalid user credentials. Please check username and password.
+2025-03-04 22:15:45,832 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\main_new.py", line 34, in <module>
+    experity.select_pm_report('Financials', 'Revenue', 'REV 14')
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 61, in wrapper
+    raise SeleniumException(f"Message : {func.__name__} failed after {retries} retries.")
+utils.exception_usage.SeleniumException: Message : select_pm_report failed after 3 retries. | Contact: BI Automation Team - bi@graphxsys.com
+

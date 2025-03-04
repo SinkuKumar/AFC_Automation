@@ -16,6 +16,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from utils import error_messages as em
 from utils.exception_usage import SeleniumException
+TIMESTAMP_IDENTIFIER = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 def page_loads(driver: WebDriver) -> bool:
     """
@@ -148,16 +149,9 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while extracting portal URL segment.")
 
-    @retry_on_exception() # Don't relogin, instead find the cause and raise a notification.
     def login(self, username: str, password: str) -> None:
         """
-        # TODO: Login function don't detects the invalid username and password.
-        # There are couple of things needs to extended.
-        - Check if the login is successful, if not:
-            - Check if the password is incorrect
-            - Check if the password is expired
-        - Check if the password is about to expire.
-        Automates the login process for Experity portal.
+        Automates the login process for Experity portal, checks for invalid username or password..
 
         Args:
             username (str): username to log in.
@@ -182,13 +176,43 @@ class ExperityBase:
             login_password.send_keys(password)
 
             logging.info("Clicking 'Submit' button to log in.")
-            self. wait.until(EC.element_to_be_clickable((By.ID,'btnSubmit'))).click()
+            self.wait.until(EC.element_to_be_clickable((By.ID,'btnSubmit'))).click()
             self.wait.until(page_loads)
+            if self.driver.title == "PVM > Login":
+                """
+                Verify if the username or password is incorrect, and capture a screenshot if necessary.
+                """
+                try:
+                    if self.driver.find_element(By.ID, "lblErrorMessage").text == "Invalid User Credentials":
+                        # Check for Invalid username or password
+                        logging.error("Invalid user credentials. Please check username and password.")
+                        self.driver.find_element(By.ID, "ctl00").screenshot(f"Screenshots/Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                        raise Exception("Invalid user credentials.")
+                except:
+                    pass
+            elif self.driver.title == "PVM > User Profile":
+                """
+                Check if the user is required to change the password, and capture a screenshot if necessary.
+                """
+                try:
+                    error_message = self.driver.find_element(By.ID, "lblPasswordError").text
+                except:
+                    error_message = ""
+
+                if error_message == "You are required to change your password.":
+                    logging.error(error_message)
+                    self.driver.find_element(By.ID, "pnlPassword").screenshot(f"Screenshots/Password_Change_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                    raise Exception("Password change required")
+
+                elif "Your password is about to expire on" in error_message:
+                    logging.error(error_message)
+                    self.driver.find_element(By.ID, "pnlPassword").screenshot(f"Screenshots/Password_Expire_{username}_{TIMESTAMP_IDENTIFIER}.png")
+
             logging.info("Login process completed successfully.")
 
         except Exception as e:
             raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
-        
+
     def navigate_to(self, base_url: str, portal_url: str, sub_nav_item_name: str) -> None:
         """
         Navigates to a specific sub-navigation item on the Experity website.
@@ -348,6 +372,52 @@ class ExperityBase:
             to_service_date.send_keys(to_date)
         except Exception as e:
             raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during service date range selection.")
+
+    def select_month(self, month: str = None, from_month: str = None, to_month: str = None):
+        """
+        Selects a single month or a month range (from_month to to_month).
+
+        This function interacts with Selenium dropdowns to either:
+        - Select a single month from the "ClosingDate" dropdown.
+        - Select a date range using the "FromClosingDate" and "ToClosingDate" dropdowns.
+
+        Date Format:
+            Month Year (e.g., 'March 2010', 'December 2022')
+
+        Args:
+            month (str, optional): Single month to select.
+            from_month (str, optional): Start month for range selection.
+            to_month (str, optional): End month for range selection.
+
+        Returns:
+            None
+
+        Raises:
+            ValueError: If arguments provided are invalid (e.g., only from_month or to_month is given).
+            SeleniumException: If any issue occurs during searching and selection of the report.
+        """
+        try:
+            if month:
+                logging.info(f"Selecting month: {month}")
+                month_dropdown = self.wait.until(EC.visibility_of_element_located((By.NAME, "ClosingDate")))
+                Select(month_dropdown).select_by_visible_text(month)
+                logging.info(f"Successfully selected month: {month}")
+
+            elif from_month and to_month:
+                logging.info(f"Selecting month range: {from_month} to {to_month}")
+
+                from_dropdown = self.wait.until(EC.visibility_of_element_located((By.NAME, "FromClosingDate")))
+                Select(from_dropdown).select_by_visible_text(from_month)
+
+                to_dropdown = self.wait.until(EC.visibility_of_element_located((By.NAME, "ToClosingDate")))
+                Select(to_dropdown).select_by_visible_text(to_month)
+
+                logging.info(f"Successfully selected month range: {from_month} to {to_month}")
+
+            else:
+                raise ValueError("Arguments provided are invalid for range selection.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Failed to select month(s).")
 
     def select_logbook_status(self, status_names: list) -> None:
         """
@@ -514,14 +584,14 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Unable to switch to 'PVRC MainStage' frame.")
 
-    def select_pm_report_filter(self, report_code: str, cls_from_date: str = None, cls_to_date: str = None, cls_month_end: str = None, serv_from_date: str = None, serv_to_date: str = None, rev_code: str = None, report_type: str = None) -> None:
+    def select_pm_report_filter(self, report_code: str, cls_from_month: str = None, cls_to_month: str = None, cls_month_end: str = None, serv_from_date: str = None, serv_to_date: str = None, rev_code: str = None, report_type: str = None) -> None:
         """
         Applies filters to select a PM report based on various criteria.
 
         Args:
             report_code (str): The code identifying the specific report to be selected.
-            cls_from_date (str, optional): From date for the closing date filter (format: "Month YYYY"). Defaults to None.
-            cls_to_date (str, optional): To date for the closing date filter (format: "Month YYYY"). Defaults to None.
+            cls_from_month (str, optional): From month for the closing date filter (format: "Month YYYY"). Defaults to None.
+            cls_to_month (str, optional): To month for the closing date filter (format: "Month YYYY"). Defaults to None.
             cls_month_end (str, optional): Closing month-end date filter (format: "Month YYYY"). Defaults to None.
             serv_from_date (str, optional): From date for the service date filter (format: "MM/DD/YYYY"). Defaults to None.
             serv_to_date (str, optional): To date for the service date filter (format: "MM/DD/YYYY"). Defaults to None.
@@ -539,14 +609,10 @@ class ExperityBase:
         """
         try:
             if report_code in ["ADJ 0", "AGE 11 DW", "AGE 12 DW", "ARC 3 DW", "REV 1 DW", "REV 15", "REV 20 DW"]:
-                dates = [cls_from_date, cls_to_date]
-                cls_from_date, cls_to_date = sorted(dates, key=lambda x: datetime.strptime(x, "%B %Y"))
+                dates = [cls_from_month, cls_to_month]
+                cls_from_month, cls_to_month = sorted(dates, key=lambda x: datetime.strptime(x, "%B %Y"))
 
-                cls_from_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "FromClosingDate")))
-                Select(cls_from_date_select).select_by_visible_text(cls_from_date)
-
-                cls_to_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ToClosingDate")))
-                Select(cls_to_date_select).select_by_visible_text(cls_to_date)
+                self.select_month(from_month=cls_from_month, to_month=cls_to_month)
                 if report_code in ["ARC 3 DW", "ARC 4 DW", "REV 20 DW"]:
 
                     self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunClinicscheckall'))).click()
@@ -575,8 +641,7 @@ class ExperityBase:
             elif report_code in ["AGE 13 DW"]:
                 pass
             else:
-                month_end_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ClosingDate")))
-                Select(month_end_select).select_by_visible_text(cls_month_end)
+                self.select_month(month=cls_month_end)
                 if report_code in ["REV 14"]:
                     revenue_code = self.wait.until(EC.visibility_of_element_located((By.NAME, "freeRevCode")))
                     Select(revenue_code).select_by_visible_text(rev_code)
@@ -820,7 +885,7 @@ def close_other_windows(driver: WebDriver) -> None:
 
     except Exception as e:
         raise SeleniumException(f"Message : Error occurred while closing windows.")
-
+    
 if __name__ == "__main__":
     import os
     from dotenv import load_dotenv
@@ -845,31 +910,3 @@ if __name__ == "__main__":
     finally:
         driver.quit()
         logging.info("Browser closed successfully.")
-
-# from datetime import datetime, timedelta
-
-# def months_range(start_month: str = 'March 2005', end_month: str = None):
-#     # Parse start month (format: "Month Year", e.g., "January 2001")
-#     start_date = datetime.strptime(start_month, "%B %Y")
-    
-#     # If end_month is not provided, use the previous month relative to today
-#     if end_month is None:
-#         today = datetime.now()
-#         previous_month = today.replace(day=1) - timedelta(days=1)
-#         end_date = previous_month
-#     else:
-#         end_date = datetime.strptime(end_month, "%B %Y")
-    
-#     current_date = start_date
-#     while current_date <= end_date:
-#         print(current_date.strftime("%B %Y"))
-#         # Move to next month
-#         if current_date.month == 12:
-#             current_date = datetime(current_date.year + 1, 1, 1)
-#         else:
-#             current_date = datetime(current_date.year, current_date.month + 1, 1)
-
-# # print("Example 1: From January 2001 to previous month")
-# # print_months_range("January 2024")
-
-# months_range(end_month="December 2006")

@@ -47,9 +47,9 @@ class UltraMsgBase:
         :param token: The secret key for authenticating API requests.
         :type token: str
         """
-        self.instance_id = instance_id
-        self.token = token
-        self.url = f'https://api.ultramsg.com/{self.instance_id}'
+        self.instance_id=instance_id
+        self.token=token
+        self.url=f'https://api.ultramsg.com/{self.instance_id}'
 
     def make_request(self, url: str, payload: str, request_type: str = 'POST') -> str:
         """

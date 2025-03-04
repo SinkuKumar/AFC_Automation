@@ -44,8 +44,8 @@ class UltraMsgChats:
         :rtype: str(json)
         '''
         # query_string = {"token" : f'{self.umsg_base.token}'}
-        return self.umsg_base.make_request(url = "chats",
-                                           payload = None, request_type = "GET")
+        return self.umsg_base.make_request(url="chats",
+                                           payload=None, request_type="GET")
 
     def chat_ids(self, clear: bool):
         '''
@@ -58,9 +58,9 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {"clear" : clear}
-        return self.umsg_base.make_request(url = "chats/ids",
-                                           payload = query_string, request_type = "GET")
+        query_string={"clear":clear}
+        return self.umsg_base.make_request(url="chats/ids",
+                                           payload=query_string, request_type="GET")
 
     def last_message(self, chat_id: str, limit: int):
         '''
@@ -76,12 +76,12 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {
-            "chatId" : chat_id,
-            "limit" : limit
+        query_string={
+            "chatId":chat_id,
+            "limit":limit
         }
-        return self.umsg_base.make_request(url = "chats/messages",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="chats/messages",
+                                           payload=query_string, request_type="GET")
 
     def archive_chats(self, chat_id: str):
         '''
@@ -95,8 +95,8 @@ class UltraMsgChats:
         :rtype: str(json)
         '''
         payload = f"chatId={chat_id}"
-        return self.umsg_base.make_request(url = 'chats/archive',
-                                           payload = payload, request_type = "POST")
+        return self.umsg_base.make_request(url='chats/archive',
+                                           payload=payload, request_type="POST")
 
     def unarchive_chats(self, chat_id: str):
         '''
@@ -110,8 +110,8 @@ class UltraMsgChats:
         :rtype: str(json)
         '''
         payload = f"chatId={chat_id}"
-        return self.umsg_base.make_request(url = 'chats/unarchive',
-                                           payload = payload, request_type = "POST")
+        return self.umsg_base.make_request(url='chats/unarchive',
+                                           payload=payload, request_type="POST")
 
     def clear_messages(self, chat_id: str):
         '''
@@ -125,8 +125,8 @@ class UltraMsgChats:
         :rtype: str(json)
         '''
         payload = f"chatId={chat_id}"
-        return self.umsg_base.make_request(url = 'chats/clearMessages',
-                                           payload = payload, request_type = "POST")
+        return self.umsg_base.make_request(url='chats/clearMessages',
+                                           payload=payload, request_type="POST")
 
     def delete_chat(self, chat_id: str):
         '''
@@ -139,9 +139,9 @@ class UltraMsgChats:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"chatId={chat_id}"
-        return self.umsg_base.make_request(url = 'chats/delete',
-                                           payload = payload, request_type = "POST")
+        payload=f"chatId={chat_id}"
+        return self.umsg_base.make_request(url='chats/delete',
+                                           payload=payload, request_type="POST")
 
     def mark_chat_read(self, chat_id: str):
         '''
@@ -155,8 +155,8 @@ class UltraMsgChats:
         :rtype: str(json)
         '''
         payload = f"chatId={chat_id}"
-        return self.umsg_base.make_request(url = 'chats/read',
-                                           payload = payload, request_type = "POST")
+        return self.umsg_base.make_request(url='chats/read',
+                                           payload=payload, request_type="POST")
 
 if __name__ == "__main__":
     try:

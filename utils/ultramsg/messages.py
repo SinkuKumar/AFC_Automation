@@ -36,7 +36,7 @@ class UltraMsgMessages:
     Implements methods to deal with messages in WhatsApp using the API.\n
     """
     def __init__(self, ultramsg_base: UltraMsgBase):
-        self.umsg_base = ultramsg_base
+        self.umsg_base=ultramsg_base
 
     def send_message(self, phone_number: int, message: str):
         '''
@@ -52,11 +52,11 @@ class UltraMsgMessages:
         :returns: The response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'to={phone_number}&body={message}'
-        return self.umsg_base.make_request(url= 'messages/chat',
+        payload=f'to={phone_number}&body={message}'
+        return self.umsg_base.make_request(url='messages/chat',
                                            payload=payload, request_type='POST')
 
-    def send_image(self, phone_number: int, image_url: str, image_caption: str):
+    def send_image(self, phone_number:int, image_url:str, image_caption:str):
         '''
         Send a image on the provided number along with caption.\n
         Uses POST request.
@@ -72,8 +72,8 @@ class UltraMsgMessages:
         :returns: The response from the ultramsg server.
         rtype: str(json)
         '''
-        payload = f'to={phone_number}&image={image_url}&caption={image_caption}'
-        return self.umsg_base.make_request(url= 'messages/image',
+        payload=f'to={phone_number}&image={image_url}&caption={image_caption}'
+        return self.umsg_base.make_request(url='messages/image',
                                            request_type='POST', payload=payload)
 
     def send_sticker(self, phone_number: int, sticker_url: str):
@@ -91,8 +91,8 @@ class UltraMsgMessages:
         :returns: The response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'to={phone_number}&sticker={sticker_url}'
-        return self.umsg_base.make_request(url= 'messages/sticker',
+        payload=f'to={phone_number}&sticker={sticker_url}'
+        return self.umsg_base.make_request(url='messages/sticker',
                                            payload=payload, request_type='POST')
 
     def send_document(self, phone_number: int, doc_name: str, doc_url: str, doc_caption: str):
@@ -114,8 +114,8 @@ class UltraMsgMessages:
         :returns: The response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'to={phone_number}&filename={doc_name}&document={doc_url}&caption={doc_caption}'
-        return self.umsg_base.make_request(url= 'messages/document',
+        payload=f'to={phone_number}&filename={doc_name}&document={doc_url}&caption={doc_caption}'
+        return self.umsg_base.make_request(url='messages/document',
                                            payload=payload, request_type='POST')
 
     def send_audio(self, phone_number: int, audio_url: str):
@@ -133,7 +133,7 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'to={phone_number}&audio={audio_url}'
+        payload=f'to={phone_number}&audio={audio_url}'
         return self.umsg_base.make_request(url='messages/audio',
                                            payload=payload, request_type="POST")
 
@@ -152,9 +152,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'to={phone_number}&audio={voice_url}'
-        return self.umsg_base.make_request(url = 'messages/voice',
-                                           payload = payload, request_type="POST")
+        payload=f'to={phone_number}&audio={voice_url}'
+        return self.umsg_base.make_request(url='messages/voice',
+                                           payload=payload, request_type="POST")
 
     def send_video(self, phone_number: int, video_url: str, video_caption: str):
         '''
@@ -173,8 +173,8 @@ class UltraMsgMessages:
         :returns: The response from the ultramsg server.
         rtype: str(json)
         '''
-        payload = f'to={phone_number}&video={video_url}&caption={video_caption}'
-        return self.umsg_base.make_request(url= 'messages/video',
+        payload=f'to={phone_number}&video={video_url}&caption={video_caption}'
+        return self.umsg_base.make_request(url='messages/video',
                                            payload=payload, request_type='POST')
 
     def send_contact(self, phone_number: int, contact_id: str):
@@ -194,9 +194,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'to={phone_number}&contact={contact_id}'
-        return self.umsg_base.make_request(url = 'messages/contact',
-                                           payload = payload, request_type="POST")
+        payload=f'to={phone_number}&contact={contact_id}'
+        return self.umsg_base.make_request(url='messages/contact',
+                                           payload=payload, request_type="POST")
 
     def send_location(self, phone_number: int, address: str, latitude: float, longitude: float):
         '''
@@ -217,9 +217,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'to={phone_number}&address={address}&lat={latitude}&lng={longitude}'
-        return self.umsg_base.make_request(url = "messages/location",
-                                           payload = payload, request_type="POST")
+        payload=f'to={phone_number}&address={address}&lat={latitude}&lng={longitude}'
+        return self.umsg_base.make_request(url="messages/location",
+                                           payload=payload, request_type="POST")
 
     def send_vcard(self, phone_number: int, text_card: str):
         '''
@@ -235,9 +235,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'to={phone_number}&vcard={text_card}'
-        return self.umsg_base.make_request(url = "messages/vcard",
-                                           payload = payload, request_type="POST")
+        payload=f'to={phone_number}&vcard={text_card}'
+        return self.umsg_base.make_request(url="messages/vcard",
+                                           payload=payload, request_type="POST")
 
     # Unable to get message ID.
     def react_to_message(self, message_id, emoji: str):
@@ -253,9 +253,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'msgId={message_id}&emoji={emoji}'
-        return self.umsg_base.make_request(url = "messages/reaction",
-                                           payload = payload, request_type="POST")
+        payload=f'msgId={message_id}&emoji={emoji}'
+        return self.umsg_base.make_request(url="messages/reaction",
+                                           payload=payload, request_type="POST")
 
     # Unable to get message ID.
     def delete_message(self, msg_id: str):
@@ -269,9 +269,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f'msgId={msg_id}'
-        return self.umsg_base.make_request(url = "messages/delete",
-                                           payload = payload, request_type="POST")
+        payload=f'msgId={msg_id}'
+        return self.umsg_base.make_request(url="messages/delete",
+                                           payload=payload, request_type="POST")
 
     def resend_message_by_status(self, status: str):
         '''
@@ -284,9 +284,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"&status={status}"
-        return self.umsg_base.make_request(url = "messages/resendByStatus",
-                                           payload = payload, request_type="POST")
+        payload=f"&status={status}"
+        return self.umsg_base.make_request(url="messages/resendByStatus",
+                                           payload=payload, request_type="POST")
 
     # Unable to get message ID.
     def resend_message_by_id(self, req_id: int):
@@ -300,9 +300,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"id={req_id}"
-        return self.umsg_base.make_request(url = "resendById",
-                                           payload = payload, request_type="POST")
+        payload=f"id={req_id}"
+        return self.umsg_base.make_request(url="resendById",
+                                           payload=payload, request_type="POST")
 
     def delete_message_from_instance(self, status: str):
         '''
@@ -314,9 +314,9 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"status={status}"
-        return self.umsg_base.make_request(url = "messages/clear",
-                                           payload = payload, request_type="POST")
+        payload=f"status={status}"
+        return self.umsg_base.make_request(url="messages/clear",
+                                           payload=payload, request_type="POST")
 
     def message_list(self, page: int, limit: int, status: str, sort: str):
         '''
@@ -341,8 +341,8 @@ class UltraMsgMessages:
             "status" : status,
             "sort" : sort
         }
-        return self.umsg_base.make_request(url = 'messages',
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url='messages',
+                                           payload=query_string, request_type="GET")
 
     def message_statistics(self):
         '''
@@ -352,8 +352,8 @@ class UltraMsgMessages:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        return self.umsg_base.make_request(url = "messages/statistics",
-                                           payload = None, request_type = "GET")
+        return self.umsg_base.make_request(url="messages/statistics",
+                                           payload=None, request_type="GET")
 
 if __name__ == '__main__':
     try:

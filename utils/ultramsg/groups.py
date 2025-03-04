@@ -44,8 +44,8 @@ class UltraMsgGroups:
         :rtype: str(json)
         '''
         query_string = {"token" : f"{self.umsg_base.token}"}
-        return self.umsg_base.make_request(url = "groups",
-                                           payload = query_string, request_ = "GET")
+        return self.umsg_base.make_request(url="groups",
+                                           payload=query_string, request_ = "GET")
 
     def group_ids(self, clear: bool):
         '''
@@ -62,8 +62,8 @@ class UltraMsgGroups:
             "token" : f"{self.umsg_base.token}",
             "clear" : clear
         }
-        return self.umsg_base.make_request(url = "groups/ids",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="groups/ids",
+                                           payload=query_string, request_type="GET")
 
     def group_info(self, group_id: str):
         '''
@@ -79,8 +79,8 @@ class UltraMsgGroups:
             "token" : f"{self.umsg_base.token}",
             "groupId" : group_id
         }
-        return self.umsg_base.make_request(url = "groups/group",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="groups/group",
+                                           payload=query_string, request_type="GET")
 
 if __name__ == '__main__':
     # from dotenv import load_dotenv # TODO: Remove this in production

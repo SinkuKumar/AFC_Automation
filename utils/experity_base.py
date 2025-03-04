@@ -148,9 +148,15 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while extracting portal URL segment.")
 
-    @retry_on_exception()
+    @retry_on_exception() # Don't relogin, instead find the cause and raise a notification.
     def login(self, username: str, password: str) -> None:
         """
+        # TODO: Login function don't detects the invalid username and password.
+        # There are couple of things needs to extended.
+        - Check if the login is successful, if not:
+            - Check if the password is incorrect
+            - Check if the password is expired
+        - Check if the password is about to expire.
         Automates the login process for Experity portal.
 
         Args:
@@ -183,7 +189,7 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
         
-    def select_sub_navigation_item(self, base_url: str, portal_url: str, sub_nav_item_name: str) -> None:
+    def navigate_to(self, base_url: str, portal_url: str, sub_nav_item_name: str) -> None:
         """
         Navigates to a specific sub-navigation item on the Experity website.
 
@@ -832,7 +838,7 @@ if __name__ == "__main__":
         experity.open_portal(EXPERITY_URL)
         PORTAL_URL = experity.get_portal_url()
         experity.login(username, password)
-        experity.select_sub_navigation_item(EXPERITY_URL, PORTAL_URL, "Reports")
+        experity.navigate_to(EXPERITY_URL, PORTAL_URL, "Reports")
         experity.logout()
     except Exception as e:
         print(e)

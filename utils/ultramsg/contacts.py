@@ -46,9 +46,9 @@ class UltraMsgContacts:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        payload = f"chatId={chat_id}"
-        return self.umsg_base.make_request(url = "contacts/block",
-                                           payload = payload, request_type = "POST")
+        payload=f"chatId={chat_id}"
+        return self.umsg_base.make_request(url="contacts/block",
+                                           payload=payload, request_type="POST")
 
     def unblock_contact(self, chat_id: str):
         '''
@@ -62,8 +62,8 @@ class UltraMsgContacts:
         :rtype: str(json)
         '''
         payload = f"chatId={chat_id}"
-        return self.umsg_base.make_request(url = "contacts/unblock",
-                                           payload = payload, request_type = "POST")
+        return self.umsg_base.make_request(url="contacts/unblock",
+                                           payload=payload, request_type="POST")
 
     def contact_list(self):
         '''
@@ -74,8 +74,8 @@ class UltraMsgContacts:
         :rtype: str(json)
         '''
         query_string = {"token" : f"{self.umsg_base.token}"}
-        return self.umsg_base.make_request(url = "contacts",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="contacts",
+                                           payload=query_string, request_type="GET")
 
     def contact_ids(self, clear: bool):
         '''
@@ -92,8 +92,8 @@ class UltraMsgContacts:
             "token" : f"{self.umsg_base.token}",
             "clear" : clear
         }
-        return self.umsg_base.make_request(url = "contacts/ids",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="contacts/ids",
+                                           payload=query_string, request_type="GET")
 
     def contact_info(self, chat_id: str):
         '''
@@ -110,8 +110,8 @@ class UltraMsgContacts:
             "token" : f"{self.umsg_base.token}",
             "chatId" : chat_id
         }
-        return self.umsg_base.make_request(url = "contacts/contact",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="contacts/contact",
+                                           payload=query_string, request_type="GET")
 
     def blocked_contacts(self):
         '''
@@ -121,9 +121,9 @@ class UltraMsgContacts:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {"token" : f"{self.umsg_base.token}"}
-        return self.umsg_base.make_request(url = "contacts/blocked",
-                                           payload = query_string, request_type = "GET")
+        query_string = {"token":f"{self.umsg_base.token}"}
+        return self.umsg_base.make_request(url="contacts/blocked",
+                                           payload=query_string, request_type="GET")
 
     def invalid_contacts(self, clear: bool):
         '''
@@ -135,12 +135,12 @@ class UltraMsgContacts:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {
+        query_string={
             "token" : f"{self.umsg_base.token}",
             "clear" : clear
         }
-        return self.umsg_base.make_request(url = "contacts/invalid",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="contacts/invalid",
+                                           payload=query_string, request_type="GET")
 
     def check_if_whatsapp_user(self, chat_id: str, nocache: bool = False):
         '''
@@ -157,13 +157,13 @@ class UltraMsgContacts:
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
-        query_string = {
-            "token" : f"{self.umsg_base.token}",
-            "chatId" : chat_id,
-            "nocache" : nocache
+        query_string={
+            "token":f"{self.umsg_base.token}",
+            "chatId":chat_id,
+            "nocache":nocache
         }
-        return self.umsg_base.make_request(url = "contacts/check",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="contacts/check",
+                                           payload=query_string, request_type="GET")
 
     def contact_profile_picture(self, chat_id: str):
         '''
@@ -180,8 +180,8 @@ class UltraMsgContacts:
             "token" : f"{self.umsg_base.token}",
             "chatId" : chat_id
         }
-        return self.umsg_base.make_request(url = "contacts/image",
-                                           payload = query_string, request_type = "GET")
+        return self.umsg_base.make_request(url="contacts/image",
+                                           payload=query_string, request_type="GET")
 
 if __name__ == '__main__':
     # TODO: Remove this in production

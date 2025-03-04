@@ -47,8 +47,8 @@ class UltraMsgMedia:
         :rtype: str(json)
         '''
         payload = f"file={file}"
-        return self.umsg_base.make_request(url = "media/upload",
-                                           payload = payload, request_type = "POST")
+        return self.umsg_base.make_request(url="media/upload",
+                                           payload=payload, request_type="POST")
 
     def delete_media(self, url: str):
         '''
@@ -62,8 +62,8 @@ class UltraMsgMedia:
         :rtype: str(json)
         '''
         payload = f"url={url}"
-        return self.umsg_base.make_request(url = "media/delete",
-                                           payload = payload, request_type = "POST")
+        return self.umsg_base.make_request(url="media/delete",
+                                           payload=payload, request_type="POST")
 
     def delete_media_by_date(self, date: str):
         '''
@@ -78,8 +78,8 @@ class UltraMsgMedia:
         :rtype: str(json)
         '''
         payload = f"url={date}"
-        return self.umsg_base.make_request(url = "media/deleteByDate",
-                                           payload = payload, request_type = "POST")
+        return self.umsg_base.make_request(url="media/deleteByDate",
+                                           payload=payload, request_type="POST")
 
 if __name__ == '__main__':
     try:

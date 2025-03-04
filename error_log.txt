@@ -1,744 +1,97 @@
-2025-02-20 18:35:54,542 - ERROR - An error occurred:
-Traceback (most recent call last):
-  File "/Users/Sinku/Development/AFC_Automation/utils/custom_exceptions.py", line 30, in <module>
-    raise SeleniumException("Browser crashed unexpectedly!")
-SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-20 18:47:26,187 - ERROR - An error occurred:
-Traceback (most recent call last):
-  File "/Users/Sinku/Development/AFC_Automation/utils/exception_usage.py", line 34, in <module>
-    raise SeleniumException("Browser crashed unexpectedly!")
-SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-20 18:47:52,312 - ERROR - An error occurred:
-Traceback (most recent call last):
-  File "/Users/Sinku/Development/AFC_Automation/utils/exception_usage.py", line 34, in <module>
-    raise SeleniumException("Browser crashed unexpectedly!")
-SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-20 18:52:06,660 - ERROR - An error occurred:
-Traceback (most recent call last):
-  File "/Users/Sinku/Development/AFC_Automation/utils/exception_usage.py", line 34, in <module>
-    raise SeleniumException("Browser crashed unexpectedly!")
-SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-20 18:54:34,561 - ERROR - An error occurred:
-Traceback (most recent call last):
-  File "/Users/Sinku/Development/AFC_Automation/utils/exception_usage.py", line 34, in <module>
-    raise SeleniumException("Browser crashed unexpectedly!")
-SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-20 19:05:44,446 - ERROR - An error occurred:
-Traceback (most recent call last):
-  File "/Users/Sinku/Development/AFC_Automation/utils/exception_usage.py", line 29, in <module>
-    raise SeleniumException("Browser crashed unexpectedly!")
-SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-20 20:05:29,936 - ERROR - An error occurred:
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\exception_usage.py", line 29, in <module>
-    raise SeleniumException("Browser crashed unexpectedly!")
-SeleniumException: Browser crashed unexpectedly! | Contact: BI Automation Team - bi@graphxsys.com
-.
-
-2025-02-21 16:20:02,501 - ERROR - Invalid URL format. URL must start with 'http://' or 'https://'.
-2025-02-21 16:21:31,924 - ERROR - Invalid URL format. URL must start with 'http://' or 'https://'.
-2025-02-21 16:21:31,924 - ERROR - An unexpected error occured : SeleniumException
-2025-02-21 16:23:04,545 - ERROR - Invalid URL format. URL must start with 'http://' or 'https://'.
-2025-02-21 16:23:04,545 - ERROR - An unexpected error occured : ValueError
-2025-02-21 16:24:55,061 - ERROR - Invalid URL format. URL must start with 'http://' or 'https://'.
-2025-02-21 16:24:55,061 - ERROR - An unexpected error occured : Invalid URL format. Please include 'http://' or 'https://'.
-2025-02-21 17:07:12,853 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 26, in <module>
-    experity.open_portal("www.google.com")
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 40, in open_portal
-    raise ValueError("Invalid URL format. Please include 'http://' or 'https://'.")
-ValueError: Invalid URL format. Please include 'http://' or 'https://'.
-
-2025-02-21 17:09:09,148 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 27, in <module>
-    experity.login(username, password)
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 62, in login
-    login_username = self.wait.until(EC.element_to_be_clickable((By.ID,'txtLogin')))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchWindowException: Message: Browsing context has been discarded
-Stacktrace:
-RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
-WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:193:5
-NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:679:5
-assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:515:13
-assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:147:4
-GeckoDriver.prototype.findElement@chrome://remote/content/marionette/driver.sys.mjs:1515:15
-despatch@chrome://remote/content/marionette/server.sys.mjs:318:40
-execute@chrome://remote/content/marionette/server.sys.mjs:289:16
-onPacket/<@chrome://remote/content/marionette/server.sys.mjs:262:20
-onPacket@chrome://remote/content/marionette/server.sys.mjs:263:9
-_onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:494:20
-
-
-2025-02-21 22:37:20,684 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 71, in login
-    self.wait.until(EC.element_to_be_clickable(By.ID,'btnNext')).click()
-TypeError: element_to_be_clickable() takes 1 positional argument but 2 were given
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 24, in <module>
-    experity.login(username, password)
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 83, in login
-    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
-utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-21 22:38:45,103 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 71, in login
-    self.wait.until(EC.element_to_be_clickable(By.ID,'btnNext')).click()
-TypeError: element_to_be_clickable() takes 1 positional argument but 2 were given
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 24, in <module>
-    experity.login(username, password)
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 83, in login
-    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
-utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-24 17:01:26,626 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 333, in logout
-    logout_button = self.wait.until(EC.element_to_be_clickable((By.ID,'tdMenuBarItemlogout')))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
-from disconnected: not connected to DevTools
-  (Session info: chrome=133.0.6943.127)
-Stacktrace:
-	GetHandleVerifier [0x00007FF703506EE5+28773]
-	(No symbol) [0x00007FF7034725D0]
-	(No symbol) [0x00007FF703308FAA]
-	(No symbol) [0x00007FF7032F4DA5]
-	(No symbol) [0x00007FF70331973A]
-	(No symbol) [0x00007FF70338EFDF]
-	(No symbol) [0x00007FF7033AEFE2]
-	(No symbol) [0x00007FF703387023]
-	(No symbol) [0x00007FF70334FF5E]
-	(No symbol) [0x00007FF7033511E3]
-	GetHandleVerifier [0x00007FF70385422D+3490733]
-	GetHandleVerifier [0x00007FF70386BA13+3586963]
-	GetHandleVerifier [0x00007FF70386144D+3544525]
-	GetHandleVerifier [0x00007FF7035CC9AA+838442]
-	(No symbol) [0x00007FF70347D01F]
-	(No symbol) [0x00007FF7034795E4]
-	(No symbol) [0x00007FF703479786]
-	(No symbol) [0x00007FF703468CB9]
-	BaseThreadInitThunk [0x00007FF98705259D+29]
-	RtlUserThreadStart [0x00007FF988AAAF38+40]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 32, in <module>
-    experity.logout()
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 338, in logout
-    raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error occurred during logout.")
-utils.exception_usage.SeleniumException: Code: EXP_1_001 | Message : Error occurred during logout. | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-24 18:40:15,929 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 29, in <module>
-    experity.logbook_status(['All'])
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 327, in logbook_status
-    self.driver.find_element(By.ID, 'freeunStatusListcheckall').click()
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="freeunStatusListcheckall"]"}
-  (Session info: chrome=133.0.6943.127); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF703506EE5+28773]
-	(No symbol) [0x00007FF7034725D0]
-	(No symbol) [0x00007FF703308FAA]
-	(No symbol) [0x00007FF70335F286]
-	(No symbol) [0x00007FF70335F4BC]
-	(No symbol) [0x00007FF7033B2A27]
-	(No symbol) [0x00007FF70338728F]
-	(No symbol) [0x00007FF7033AF6F3]
-	(No symbol) [0x00007FF703387023]
-	(No symbol) [0x00007FF70334FF5E]
-	(No symbol) [0x00007FF7033511E3]
-	GetHandleVerifier [0x00007FF70385422D+3490733]
-	GetHandleVerifier [0x00007FF70386BA13+3586963]
-	GetHandleVerifier [0x00007FF70386144D+3544525]
-	GetHandleVerifier [0x00007FF7035CC9AA+838442]
-	(No symbol) [0x00007FF70347D01F]
-	(No symbol) [0x00007FF7034795E4]
-	(No symbol) [0x00007FF703479786]
-	(No symbol) [0x00007FF703468CB9]
-	BaseThreadInitThunk [0x00007FF98705259D+29]
-	RtlUserThreadStart [0x00007FF988AAAF38+40]
-
-
-2025-02-24 18:45:33,282 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 47, in open_portal
-    self.wait.until(page_loads)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 23, in page_loads
-    return driver.execute_script("return document.readyState") == "complete"
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 528, in execute_script
-    return self.execute(command, {"script": script, "args": converted_args})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
-from unknown error: web view not found
-  (Session info: chrome=133.0.6943.127)
-Stacktrace:
-	GetHandleVerifier [0x00007FF703506EE5+28773]
-	(No symbol) [0x00007FF7034725D0]
-	(No symbol) [0x00007FF703308FAA]
-	(No symbol) [0x00007FF7032E1573]
-	(No symbol) [0x00007FF70338EE3E]
-	(No symbol) [0x00007FF7033AEFE2]
-	(No symbol) [0x00007FF703387023]
-	(No symbol) [0x00007FF70334FF5E]
-	(No symbol) [0x00007FF7033511E3]
-	GetHandleVerifier [0x00007FF70385422D+3490733]
-	GetHandleVerifier [0x00007FF70386BA13+3586963]
-	GetHandleVerifier [0x00007FF70386144D+3544525]
-	GetHandleVerifier [0x00007FF7035CC9AA+838442]
-	(No symbol) [0x00007FF70347D01F]
-	(No symbol) [0x00007FF7034795E4]
-	(No symbol) [0x00007FF703479786]
-	(No symbol) [0x00007FF703468CB9]
-	BaseThreadInitThunk [0x00007FF98705259D+29]
-	RtlUserThreadStart [0x00007FF988AAAF38+40]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 25, in <module>
-    experity.open_portal(EXPERITY_URL)
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 51, in open_portal
-    raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while opening Experity portal")
-utils.exception_usage.SeleniumException: Code: EXP_1_001 | Message : Error while opening Experity portal | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-25 00:56:30,758 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 442, in switch_to_report_window
-    new_window = [handle for handle in self.driver.window_handles][1]
-IndexError: list index out of range
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 35, in <module>
-    experity.switch_to_report_window()
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 446, in switch_to_report_window
-    raise SeleniumException(f"Message : Error occurred while switching to report window.")
-utils.exception_usage.SeleniumException: Message : Error occurred while switching to report window. | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-25 16:30:31,950 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 48, in <module>
-    wait_for_download('CNT_27', download_dir)
-TypeError: wait_for_download() missing 1 required positional argument: 'download_directory'
-
-2025-02-25 16:34:00,884 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 46, in <module>
-    experity.download_report()
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 453, in download_report
-    csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@onclick, \"exportReport('CSV')\") and normalize-space(text())='CSV (comma delimited)']")))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 632, in _predicate
-    element = visibility_of(target)(driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 260, in _predicate
-    return _element_if_visible(element)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 280, in _element_if_visible
-    return element if element.is_displayed() == visibility else False
-AttributeError: 'NoneType' object has no attribute 'is_displayed'
-
-2025-02-25 16:36:59,239 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 46, in <module>
-    experity.download_report()
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 453, in download_report
-    csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@onclick, \"exportReport('CSV')\") and normalize-space(text())='CSV (comma delimited)']")))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 632, in _predicate
-    element = visibility_of(target)(driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 260, in _predicate
-    return _element_if_visible(element)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 280, in _element_if_visible
-    return element if element.is_displayed() == visibility else False
-AttributeError: 'NoneType' object has no attribute 'is_displayed'
-
-2025-02-25 17:42:18,620 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 47, in <module>
-    experity.download_report()
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 453, in download_report
-    csv_element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@onclick, \"exportReport('CSV')\") and normalize-space(text())='CSV (comma delimited)']")))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 632, in _predicate
-    element = visibility_of(target)(driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 260, in _predicate
-    return _element_if_visible(element)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 280, in _element_if_visible
-    return element if element.is_displayed() == visibility else False
-AttributeError: 'NoneType' object has no attribute 'is_displayed'
-
-2025-02-25 17:52:07,439 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 442, in switch_to_report_window
-    new_window = [handle for handle in self.driver.window_handles][1]
-IndexError: list index out of range
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 42, in <module>
-    experity.switch_to_report_window()
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 446, in switch_to_report_window
-    raise SeleniumException(f"Message : Error occurred while switching to report window.")
-utils.exception_usage.SeleniumException: Message : Error occurred while switching to report window. | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-25 21:23:15,115 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 554, in download_report
-    csv_element = self.wait.until(EC.element_to_be_clickable(
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression //a[contains(@onclick, "exportReport('CSV')") and normalize-space(text())='CSV (comma delimited)' because of the following error:
-SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//a[contains(@onclick, "exportReport('CSV')") and normalize-space(text())='CSV (comma delimited)'' is not a valid XPath expression.
-  (Session info: chrome=133.0.6943.127); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF627396EE5+28773]
-	(No symbol) [0x00007FF6273025D0]
-	(No symbol) [0x00007FF627198FAA]
-	(No symbol) [0x00007FF6271A09B9]
-	(No symbol) [0x00007FF6271A377C]
-	(No symbol) [0x00007FF6271A384F]
-	(No symbol) [0x00007FF6271EEB40]
-	(No symbol) [0x00007FF6271EF4BC]
-	(No symbol) [0x00007FF627242A27]
-	(No symbol) [0x00007FF62721728F]
-	(No symbol) [0x00007FF62723F6F3]
-	(No symbol) [0x00007FF627217023]
-	(No symbol) [0x00007FF6271DFF5E]
-	(No symbol) [0x00007FF6271E11E3]
-	GetHandleVerifier [0x00007FF6276E422D+3490733]
-	GetHandleVerifier [0x00007FF6276FBA13+3586963]
-	GetHandleVerifier [0x00007FF6276F144D+3544525]
-	GetHandleVerifier [0x00007FF62745C9AA+838442]
-	(No symbol) [0x00007FF62730D01F]
-	(No symbol) [0x00007FF6273095E4]
-	(No symbol) [0x00007FF627309786]
-	(No symbol) [0x00007FF6272F8CB9]
-	BaseThreadInitThunk [0x00007FFC9F3F259D+29]
-	RtlUserThreadStart [0x00007FFCA05CAF38+40]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 40, in <module>
-    experity.download_report('CSV')
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 561, in download_report
-    raise SeleniumException(f"Message : Error occurred during report download.")
-utils.exception_usage.SeleniumException: Message : Error occurred during report download. | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-25 21:30:55,769 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 555, in download_report
-    csv_element = self.wait.until(EC.element_to_be_clickable(
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 631, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression //a[contains(@onclick, "exportReport('CSV')") and normalize-space(text())="CSV (comma delimited)" because of the following error:
-SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//a[contains(@onclick, "exportReport('CSV')") and normalize-space(text())="CSV (comma delimited)"' is not a valid XPath expression.
-  (Session info: chrome=133.0.6943.127); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF627396EE5+28773]
-	(No symbol) [0x00007FF6273025D0]
-	(No symbol) [0x00007FF627198FAA]
-	(No symbol) [0x00007FF6271A09B9]
-	(No symbol) [0x00007FF6271A377C]
-	(No symbol) [0x00007FF6271A384F]
-	(No symbol) [0x00007FF6271EEB40]
-	(No symbol) [0x00007FF6271EF4BC]
-	(No symbol) [0x00007FF627242A27]
-	(No symbol) [0x00007FF62721728F]
-	(No symbol) [0x00007FF62723F6F3]
-	(No symbol) [0x00007FF627217023]
-	(No symbol) [0x00007FF6271DFF5E]
-	(No symbol) [0x00007FF6271E11E3]
-	GetHandleVerifier [0x00007FF6276E422D+3490733]
-	GetHandleVerifier [0x00007FF6276FBA13+3586963]
-	GetHandleVerifier [0x00007FF6276F144D+3544525]
-	GetHandleVerifier [0x00007FF62745C9AA+838442]
-	(No symbol) [0x00007FF62730D01F]
-	(No symbol) [0x00007FF6273095E4]
-	(No symbol) [0x00007FF627309786]
-	(No symbol) [0x00007FF6272F8CB9]
-	BaseThreadInitThunk [0x00007FFC9F3F259D+29]
-	RtlUserThreadStart [0x00007FFCA05CAF38+40]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 40, in <module>
-    experity.download_report('CSV')
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 562, in download_report
-    raise SeleniumException(f"Message : Error occurred during report download.")
-utils.exception_usage.SeleniumException: Message : Error occurred during report download. | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-25 22:53:35,303 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 554, in close_other_windows
-    driver.close()
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 579, in close
-    self.execute(Command.CLOSE)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
-from unknown error: web view not found
-  (Session info: MicrosoftEdge=133.0.3065.82)
-Stacktrace:
-	GetHandleVerifier [0x00007FF65915E735+13397]
-	Microsoft::Applications::Events::EventProperty::empty [0x00007FF6593EB1B4+2060276]
-	Microsoft::Applications::Events::EventProperty::empty [0x00007FF659342338+1368440]
-	(No symbol) [0x00007FF658ECA202]
-	(No symbol) [0x00007FF658F59F70]
-	(No symbol) [0x00007FF658F62B83]
-	(No symbol) [0x00007FF658F54220]
-	(No symbol) [0x00007FF658F28B96]
-	(No symbol) [0x00007FF658F27E50]
-	(No symbol) [0x00007FF658F289C3]
-	(No symbol) [0x00007FF658FB0214]
-	(No symbol) [0x00007FF6590406CF]
-	(No symbol) [0x00007FF658FB3A53]
-	Microsoft::Applications::Events::EventProperty::to_string [0x00007FF6594A45BD+279981]
-	simdutf::get_active_implementation [0x00007FF6590E78C1+409457]
-	simdutf::get_active_implementation [0x00007FF6590E2BA4+389716]
-	simdutf::get_active_implementation [0x00007FF6590E2CE9+390041]
-	simdutf::get_active_implementation [0x00007FF6590D62E6+338326]
-	BaseThreadInitThunk [0x00007FFC9F3F259D+29]
-	RtlUserThreadStart [0x00007FFCA05CAF38+40]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 42, in <module>
-    close_other_windows(driver)
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 564, in close_other_windows
-    raise SeleniumException(f"Message : Error occurred while closing windows.")
-utils.exception_usage.SeleniumException: Message : Error occurred while closing windows. | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-27 21:25:46,571 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 583, in logout
-    self.driver.switch_to.default_content()
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\switch_to.py", line 69, in default_content
-    self._driver.execute(Command.SWITCH_TO_FRAME, {"id": None})
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D09EC6A5+28789]
-	(No symbol) [0x00007FF7D0955B20]
-	(No symbol) [0x00007FF7D07E8DCC]
-	(No symbol) [0x00007FF7D082F1CF]
-	(No symbol) [0x00007FF7D08671F2]
-	(No symbol) [0x00007FF7D0861B89]
-	(No symbol) [0x00007FF7D0860C39]
-	(No symbol) [0x00007FF7D07B5595]
-	GetHandleVerifier [0x00007FF7D0D31AED+3458237]
-	GetHandleVerifier [0x00007FF7D0D4829C+3550316]
-	GetHandleVerifier [0x00007FF7D0D3DB9D+3507565]
-	GetHandleVerifier [0x00007FF7D0AB2C6A+841274]
-	(No symbol) [0x00007FF7D09609EF]
-	(No symbol) [0x00007FF7D07B41AE]
-	GetHandleVerifier [0x00007FF7D0DB66A8+4001912]
-	BaseThreadInitThunk [0x00007FF93AD0259D+29]
-	RtlUserThreadStart [0x00007FF93C04AF38+40]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 48, in <module>
-    experity.logout()
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 590, in logout
-    raise SeleniumException(f"Code: {em.LOGOUT_ISSUE} | Message : Error occurred during logout.")
-utils.exception_usage.SeleniumException: Code: EXP_1_002 | Message : Error occurred during logout. | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-27 22:30:43,433 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 35, in <module>
-    experity.select_report('Financials')
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 263, in select_report
-    tree_container = self.wait.until(EC.presence_of_element_located((By.ID, "treecontainer1x0x0x0")))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 110, in _predicate
-    return driver.find_element(*locator)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
-from disconnected: not connected to DevTools
-  (Session info: chrome=133.0.6943.127)
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D09EC6A5+28789]
-	(No symbol) [0x00007FF7D0955B20]
-	(No symbol) [0x00007FF7D07E8F9A]
-	(No symbol) [0x00007FF7D07D4D75]
-	(No symbol) [0x00007FF7D07F9784]
-	(No symbol) [0x00007FF7D086F0BF]
-	(No symbol) [0x00007FF7D088F0D2]
-	(No symbol) [0x00007FF7D0867103]
-	(No symbol) [0x00007FF7D082FFC0]
-	(No symbol) [0x00007FF7D0831273]
-	GetHandleVerifier [0x00007FF7D0D31AED+3458237]
-	GetHandleVerifier [0x00007FF7D0D4829C+3550316]
-	GetHandleVerifier [0x00007FF7D0D3DB9D+3507565]
-	GetHandleVerifier [0x00007FF7D0AB2C6A+841274]
-	(No symbol) [0x00007FF7D09609EF]
-	(No symbol) [0x00007FF7D095CB34]
-	(No symbol) [0x00007FF7D095CCD6]
-	(No symbol) [0x00007FF7D094C119]
-	BaseThreadInitThunk [0x00007FF93AD0259D+29]
-	RtlUserThreadStart [0x00007FF93C04AF38+40]
-
-
-2025-02-27 23:38:25,484 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 81, in open_portal
-    self.wait.until(page_loads)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 29, in page_loads
-    return driver.execute_script("return document.readyState") == "complete"
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 528, in execute_script
-    return self.execute(command, {"script": script, "args": converted_args})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.WebDriverException: Message: target frame detached
-  (failed to check if window was closed: disconnected: unable to send message to renderer)
-  (Session info: chrome=133.0.6943.127)
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D09EC6A5+28789]
-	(No symbol) [0x00007FF7D0955B20]
-	(No symbol) [0x00007FF7D07E8DCC]
-	(No symbol) [0x00007FF7D07D60CB]
-	(No symbol) [0x00007FF7D07D4F7E]
-	(No symbol) [0x00007FF7D07F9784]
-	(No symbol) [0x00007FF7D086F0BF]
-	(No symbol) [0x00007FF7D088F0D2]
-	(No symbol) [0x00007FF7D0867103]
-	(No symbol) [0x00007FF7D082FFC0]
-	(No symbol) [0x00007FF7D0831273]
-	GetHandleVerifier [0x00007FF7D0D31AED+3458237]
-	GetHandleVerifier [0x00007FF7D0D4829C+3550316]
-	GetHandleVerifier [0x00007FF7D0D3DB9D+3507565]
-	GetHandleVerifier [0x00007FF7D0AB2C6A+841274]
-	(No symbol) [0x00007FF7D09609EF]
-	(No symbol) [0x00007FF7D095CB34]
-	(No symbol) [0x00007FF7D095CCD6]
-	(No symbol) [0x00007FF7D094C119]
-	BaseThreadInitThunk [0x00007FF93AD0259D+29]
-	RtlUserThreadStart [0x00007FF93C04AF38+40]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 31, in <module>
-    experity.open_portal(EXPERITY_URL)
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 85, in open_portal
-    raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while opening Experity portal")
-utils.exception_usage.SeleniumException: Code: EXP_1_001 | Message : Error while opening Experity portal | Contact: BI Automation Team - bi@graphxsys.com
-
-2025-02-27 23:39:37,068 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 38, in <module>
-    experity.select_closing_date()
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 281, in select_closing_date
-    from_date_select = self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "FromClosingDate")))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 224, in _predicate
-    return _element_if_visible(driver.find_element(*locator))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
-from disconnected: not connected to DevTools
-  (Session info: chrome=133.0.6943.127)
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D09EC6A5+28789]
-	(No symbol) [0x00007FF7D0955B20]
-	(No symbol) [0x00007FF7D07E8F9A]
-	(No symbol) [0x00007FF7D07D4D75]
-	(No symbol) [0x00007FF7D07F9784]
-	(No symbol) [0x00007FF7D086F0BF]
-	(No symbol) [0x00007FF7D088F0D2]
-	(No symbol) [0x00007FF7D0867103]
-	(No symbol) [0x00007FF7D082FFC0]
-	(No symbol) [0x00007FF7D0831273]
-	GetHandleVerifier [0x00007FF7D0D31AED+3458237]
-	GetHandleVerifier [0x00007FF7D0D4829C+3550316]
-	GetHandleVerifier [0x00007FF7D0D3DB9D+3507565]
-	GetHandleVerifier [0x00007FF7D0AB2C6A+841274]
-	(No symbol) [0x00007FF7D09609EF]
-	(No symbol) [0x00007FF7D095CB34]
-	(No symbol) [0x00007FF7D095CCD6]
-	(No symbol) [0x00007FF7D094C119]
-	BaseThreadInitThunk [0x00007FF93AD0259D+29]
-	RtlUserThreadStart [0x00007FF93C04AF38+40]
-
-
-2025-02-28 00:25:50,369 - ERROR - Error selecting closing dates
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 324, in select_closing_date
-    to_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ToClosingDate")))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 224, in _predicate
-    return _element_if_visible(driver.find_element(*locator))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
-from disconnected: not connected to DevTools
-  (Session info: chrome=133.0.6943.127)
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D5B0C6A5+28789]
-	(No symbol) [0x00007FF7D5A75B20]
-	(No symbol) [0x00007FF7D5908F9A]
-	(No symbol) [0x00007FF7D58F4D75]
-	(No symbol) [0x00007FF7D5919784]
-	(No symbol) [0x00007FF7D598F0BF]
-	(No symbol) [0x00007FF7D59AF0D2]
-	(No symbol) [0x00007FF7D5987103]
-	(No symbol) [0x00007FF7D594FFC0]
-	(No symbol) [0x00007FF7D5951273]
-	GetHandleVerifier [0x00007FF7D5E51AED+3458237]
-	GetHandleVerifier [0x00007FF7D5E6829C+3550316]
-	GetHandleVerifier [0x00007FF7D5E5DB9D+3507565]
-	GetHandleVerifier [0x00007FF7D5BD2C6A+841274]
-	(No symbol) [0x00007FF7D5A809EF]
-	(No symbol) [0x00007FF7D5A7CB34]
-	(No symbol) [0x00007FF7D5A7CCD6]
-	(No symbol) [0x00007FF7D5A6C119]
-	BaseThreadInitThunk [0x00007FF93AD0259D+29]
-	RtlUserThreadStart [0x00007FF93C04AF38+40]
-
-2025-02-28 00:25:50,385 - ERROR - An unexpected error occured : 
-Traceback (most recent call last):
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main.py", line 38, in <module>
-    experity.select_closing_date('ADJ 1', 'December 2024', 'August 2024')
-  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 324, in select_closing_date
-    to_date_select = self.wait.until(EC.visibility_of_element_located((By.NAME, "ToClosingDate")))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
-    value = method(self._driver)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 224, in _predicate
-    return _element_if_visible(driver.find_element(*locator))
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\Prasad Goled\Desktop\Project\AFC_Automation\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
-from disconnected: not connected to DevTools
-  (Session info: chrome=133.0.6943.127)
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D5B0C6A5+28789]
-	(No symbol) [0x00007FF7D5A75B20]
-	(No symbol) [0x00007FF7D5908F9A]
-	(No symbol) [0x00007FF7D58F4D75]
-	(No symbol) [0x00007FF7D5919784]
-	(No symbol) [0x00007FF7D598F0BF]
-	(No symbol) [0x00007FF7D59AF0D2]
-	(No symbol) [0x00007FF7D5987103]
-	(No symbol) [0x00007FF7D594FFC0]
-	(No symbol) [0x00007FF7D5951273]
-	GetHandleVerifier [0x00007FF7D5E51AED+3458237]
-	GetHandleVerifier [0x00007FF7D5E6829C+3550316]
-	GetHandleVerifier [0x00007FF7D5E5DB9D+3507565]
-	GetHandleVerifier [0x00007FF7D5BD2C6A+841274]
-	(No symbol) [0x00007FF7D5A809EF]
-	(No symbol) [0x00007FF7D5A7CB34]
-	(No symbol) [0x00007FF7D5A7CCD6]
-	(No symbol) [0x00007FF7D5A6C119]
-	BaseThreadInitThunk [0x00007FF93AD0259D+29]
-	RtlUserThreadStart [0x00007FF93C04AF38+40]
-
-
+2025-03-04 15:58:57,776 - INFO - Opened portal
+2025-03-04 15:59:10,994 - INFO - Logged in
+2025-03-04 15:59:11,005 - INFO - Got portal URL
+2025-03-04 15:59:16,658 - INFO - Navigate to method called
+2025-03-04 15:59:18,230 - INFO - Search and select report method called
+2025-03-04 15:59:20,006 - INFO - Date report range method called
+2025-03-04 15:59:20,238 - INFO - Run report method called
+2025-03-04 16:02:38,396 - INFO - Opened portal
+2025-03-04 16:02:55,405 - INFO - Logged in
+2025-03-04 16:02:55,416 - INFO - Got portal URL
+2025-03-04 16:03:02,348 - INFO - Navigate to method called
+2025-03-04 16:03:04,261 - INFO - Search and select report method called
+2025-03-04 16:03:06,209 - INFO - Date report range method called
+2025-03-04 16:03:06,568 - INFO - Run report method called
+2025-03-04 16:06:17,264 - INFO - Opened portal
+2025-03-04 16:06:22,839 - INFO - Logged in
+2025-03-04 16:06:22,852 - INFO - Got portal URL
+2025-03-04 16:06:28,512 - INFO - Navigate to method called
+2025-03-04 16:06:30,890 - INFO - Search and select report method called
+2025-03-04 16:06:32,449 - INFO - Date report range method called
+2025-03-04 16:06:34,946 - INFO - Run report method called
+2025-03-04 16:09:12,213 - INFO - Opened portal
+2025-03-04 16:09:23,282 - INFO - Logged in
+2025-03-04 16:09:23,299 - INFO - Got portal URL
+2025-03-04 16:09:28,296 - INFO - Navigate to method called
+2025-03-04 16:09:30,298 - INFO - Search and select report method called
+2025-03-04 16:09:31,768 - INFO - Date report range method called
+2025-03-04 16:09:34,214 - INFO - Run report method called
+2025-03-04 16:09:42,419 - INFO - Download report method called
+2025-03-04 16:16:02,107 - INFO - Opened portal
+2025-03-04 16:16:07,383 - INFO - Logged in
+2025-03-04 16:16:07,404 - INFO - Got portal URL
+2025-03-04 16:16:12,483 - INFO - Navigate to method called
+2025-03-04 16:16:14,275 - INFO - Search and select report method called
+2025-03-04 16:16:15,734 - INFO - Date report range method called
+2025-03-04 16:16:18,176 - INFO - Run report method called
+2025-03-04 16:16:36,242 - INFO - Download report method called
+2025-03-04 16:16:56,903 - INFO - Opened portal
+2025-03-04 16:17:02,210 - INFO - Logged in
+2025-03-04 16:17:02,225 - INFO - Got portal URL
+2025-03-04 16:17:07,274 - INFO - Navigate to method called
+2025-03-04 16:17:09,156 - INFO - Search and select report method called
+2025-03-04 16:17:10,617 - INFO - Date report range method called
+2025-03-04 16:17:12,888 - INFO - Run report method called
+2025-03-04 16:17:21,235 - INFO - Download report method called
+2025-03-04 16:21:36,884 - INFO - Opened portal
+2025-03-04 16:21:41,984 - INFO - Logged in
+2025-03-04 16:21:41,994 - INFO - Got portal URL
+2025-03-04 16:21:47,193 - INFO - Navigate to method called
+2025-03-04 16:21:49,007 - INFO - Search and select report method called
+2025-03-04 16:21:51,493 - INFO - Date report range method called
+2025-03-04 16:21:54,014 - INFO - Run report method called
+2025-03-04 16:22:04,275 - INFO - Download report method called
+2025-03-04 16:22:28,317 - INFO - Opened portal
+2025-03-04 16:22:33,851 - INFO - Logged in
+2025-03-04 16:22:33,866 - INFO - Got portal URL
+2025-03-04 16:22:38,543 - INFO - Navigate to method called
+2025-03-04 16:22:40,411 - INFO - Search and select report method called
+2025-03-04 16:22:41,898 - INFO - Date report range method called
+2025-03-04 16:22:44,405 - INFO - Run report method called
+2025-03-04 16:22:53,260 - INFO - Download report method called
+2025-03-04 16:27:27,941 - INFO - Opened portal
+2025-03-04 16:27:36,736 - INFO - Logged in
+2025-03-04 16:27:36,749 - INFO - Got portal URL
+2025-03-04 16:27:42,432 - INFO - Navigate to method called
+2025-03-04 16:27:44,370 - INFO - Search and select report method called
+2025-03-04 16:27:46,313 - INFO - Date report range method called
+2025-03-04 16:27:48,655 - INFO - Run report method called
+2025-03-04 16:27:53,441 - ERROR - Download directory does not exist: C:\Users\Niladri Mallik\Desktop\AFC_Automation\Report Downloads
+2025-03-04 16:27:53,441 - INFO - 
+2025-03-04 16:31:51,095 - INFO - Opened portal
+2025-03-04 16:31:56,812 - INFO - Logged in
+2025-03-04 16:31:56,819 - INFO - Got portal URL
+2025-03-04 16:32:02,010 - INFO - Navigate to method called
+2025-03-04 16:32:04,340 - INFO - Search and select report method called
+2025-03-04 16:32:05,842 - INFO - Date report range method called
+2025-03-04 16:32:08,548 - INFO - Run report method called
+2025-03-04 16:32:16,709 - ERROR - Download directory does not exist: C:\Users\Niladri Mallik\Desktop\AFC_Automation\Report Downloads
+2025-03-04 16:32:16,709 - INFO - 
+2025-03-04 16:35:14,608 - INFO - Opened portal
+2025-03-04 16:35:21,301 - INFO - Logged in
+2025-03-04 16:35:21,314 - INFO - Got portal URL
+2025-03-04 16:35:28,485 - INFO - Navigate to method called
+2025-03-04 16:35:30,314 - INFO - Search and select report method called
+2025-03-04 16:35:31,820 - INFO - Date report range method called
+2025-03-04 16:35:34,290 - INFO - Run report method called
+2025-03-04 16:35:45,004 - INFO - Download report method called
+2025-03-04 17:18:27,654 - INFO - Opened portal
+2025-03-04 17:18:41,889 - INFO - Logged in
+2025-03-04 17:18:41,904 - INFO - Got portal URL
+2025-03-04 17:18:44,734 - INFO - Error occurred: <class 'utils.exception_usage.SeleniumException'> Code: SEL_3_002 | Message : Error occurred while navigating to 'Reports'. | Contact: BI Automation Team - bi@graphxsys.com
+2025-03-04 17:19:37,697 - INFO - Opened portal
+2025-03-04 17:20:24,164 - INFO - Opened portal
+2025-03-04 17:20:32,504 - INFO - Logged in
+2025-03-04 17:20:32,515 - INFO - Got portal URL
+2025-03-04 17:20:38,553 - INFO - Navigate to method called
+2025-03-04 17:20:39,643 - INFO - Error occurred: SeleniumException Message : Unable to select report after search. | Contact: BI Automation Team - bi@graphxsys.com

@@ -169,3 +169,73 @@ Traceback (most recent call last):
     raise SeleniumException(f"Message : {func.__name__} failed after {retries} retries.")
 utils.exception_usage.SeleniumException: Message : select_pm_report failed after 3 retries. | Contact: BI Automation Team - bi@graphxsys.com
 
+2025-03-05 16:10:53,497 - ERROR - Invalid user credentials. Please check username and password.
+2025-03-05 16:11:34,066 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main_new.py", line 104, in <module>
+    experity.select_pm_report('Financials', 'Adjustments', 'ADJ 0')
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 61, in wrapper
+    raise SeleniumException(f"Message : {func.__name__} failed after {retries} retries.")
+utils.exception_usage.SeleniumException: Message : select_pm_report failed after 3 retries. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-03-05 16:13:31,259 - ERROR - Invalid user credentials. Please check username and password.
+2025-03-05 16:13:31,428 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 190, in login
+    raise Exception("Invalid user credentials.")
+Exception: Invalid user credentials.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main_new.py", line 100, in <module>
+    experity.login(username, password)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 214, in login
+    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
+utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-03-05 16:32:59,679 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 188, in login
+    raise Exception("Invalid user credentials.")
+Exception: Invalid user credentials.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main_new.py", line 100, in <module>
+    experity.login(username, password)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 210, in login
+    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process - {str(e)}")
+utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process - Invalid user credentials. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-03-05 17:01:00,407 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 188, in login
+    raise Exception("Invalid user credentials.")
+Exception: Invalid user credentials.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main_new.py", line 100, in <module>
+    experity.login(username, password)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 210, in login
+    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process - {str(e)}")
+utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process - Invalid user credentials. | Contact: BI Automation Team - bi@graphxsys.com
+
+2025-03-05 22:00:29,982 - ERROR - An unexpected error occured : 
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 188, in login
+    raise Exception("Invalid user credentials.")
+Exception: Invalid user credentials.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\main_new.py", line 100, in <module>
+    experity.login(username, password)
+  File "c:\Users\Prasad Goled\Desktop\Project\AFC_Automation\utils\experity_base.py", line 210, in login
+    raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process - {str(e)}")
+utils.exception_usage.SeleniumException: Code: EXP_1 | Message : Error in Logging process - Invalid user credentials. | Contact: BI Automation Team - bi@graphxsys.com
+

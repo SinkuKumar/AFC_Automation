@@ -182,14 +182,11 @@ class ExperityBase:
                 """
                 Verify if the username or password is incorrect, and capture a screenshot if necessary.
                 """
-                try:
-                    if self.driver.find_element(By.ID, "lblErrorMessage").text == "Invalid User Credentials":
-                        # Check for Invalid username or password
-                        logging.error("Invalid user credentials. Please check username and password.")
-                        self.driver.find_element(By.ID, "ctl00").screenshot(f"Screenshots/Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
-                        raise Exception("Invalid user credentials.")
-                except:
-                    pass
+                if self.driver.find_element(By.ID, "lblErrorMessage").text == "Invalid User Credentials":
+                    # Check for Invalid username or password
+                    self.driver.find_element(By.ID, "ctl00").screenshot(f"Screenshots/Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                    raise Exception("Invalid user credentials.")
+
             elif self.driver.title == "PVM > User Profile":
                 """
                 Check if the user is required to change the password, and capture a screenshot if necessary.
@@ -200,18 +197,17 @@ class ExperityBase:
                     error_message = ""
 
                 if error_message == "You are required to change your password.":
-                    logging.error(error_message)
                     self.driver.find_element(By.ID, "pnlPassword").screenshot(f"Screenshots/Password_Change_{username}_{TIMESTAMP_IDENTIFIER}.png")
                     raise Exception("Password change required")
 
                 elif "Your password is about to expire on" in error_message:
-                    logging.error(error_message)
                     self.driver.find_element(By.ID, "pnlPassword").screenshot(f"Screenshots/Password_Expire_{username}_{TIMESTAMP_IDENTIFIER}.png")
-
+                    logging.warning(error_message)
+                    
             logging.info("Login process completed successfully.")
 
         except Exception as e:
-            raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process")
+            raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process - {str(e)}")
 
     def navigate_to(self, base_url: str, portal_url: str, sub_nav_item_name: str) -> None:
         """
@@ -440,6 +436,7 @@ class ExperityBase:
         try:
             self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunStatusListcheckall'))).click()
             logging.info("'Uncheck All' button clicked successfully.")
+            self.wait.until(page_loads)
 
             for name in status_names:
                 checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, status_mapping[name])))
@@ -470,6 +467,7 @@ class ExperityBase:
         try:
             self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunPayerClasscheckall'))).click()
             logging.info("'Uncheck All' button clicked successfully.")
+            self.wait.until(page_loads)
 
             for name in class_names:
                 checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, class_mapping[name])))
@@ -500,6 +498,7 @@ class ExperityBase:
         try:
             self.wait.until(EC.element_to_be_clickable((By.ID, 'freeunArrivalStatuscheckall'))).click()
             logging.info("'Uncheck All' button clicked successfully.")
+            self.wait.until(page_loads)
 
             for name in status_names:
                 checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, status_mapping[name])))
@@ -508,6 +507,50 @@ class ExperityBase:
                     logging.info(f"Checkbox '{name}' selected.")
         except Exception as e:
             raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during arrival status selection.")
+        
+    def uncheck_all_check_all(self, uncheck_button_identifier_id: str, check_checkbox_identifier_id: str):
+        """
+        Performs the action of first clicking the 'Uncheck All' button and then selecting the 'All' checkbox.
+
+        This is a 'fallback method' meant for scenarios where dedicated filter selection methods 
+        (like `select_logbook_status`, `select_financial_class`, etc.) are not implemented for a particular filter.
+
+        Note:
+            - Prefer using dedicated methods like `select_logbook_status`, `select_financial_class`, etc., which are more maintainable and easier to enhance.
+            - Use this method only when no dedicated method exists, or the filter is generic and does not have structured helper methods yet.
+            - This method directly interacts with the UI elements via their IDs, so ensure the identifiers are correct.
+        
+        Args:
+            uncheck_button_identifier_id (str): The HTML element ID for the 'Uncheck All' button.
+            check_checkbox_identifier_id (str): The HTML element ID for the 'All' checkbox.
+        
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs while clicking the 'Uncheck All' button and then selecting the 'All' checkbox.
+        """
+
+        logging.info(f"Starting 'Uncheck All' and 'Check All' process using elements.")
+
+        try:
+            uncheck_button = self.wait.until(EC.element_to_be_clickable((By.ID, uncheck_button_identifier_id)))
+            uncheck_button.click()
+            logging.info(f"Clicked 'Uncheck All' button (ID: {uncheck_button_identifier_id}).")
+
+            self.wait.until(page_loads)
+
+            check_checkbox = self.wait.until(EC.element_to_be_clickable((By.ID, check_checkbox_identifier_id)))
+            if not check_checkbox.is_selected():
+                check_checkbox.click()
+                logging.debug(f"Checked the 'All' checkbox (ID: {check_checkbox_identifier_id}).")
+            else:
+                logging.debug(f"'All' checkbox was already selected (ID: {check_checkbox_identifier_id}).")
+
+            logging.info("Successfully clicked on 'Uncheck All' and selected 'All' checkbox.")
+        
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message: Unable to click 'Uncheck All' and select 'All' checkbox.")
 
     @retry_on_exception()
     def select_pm_report(self, category_name: str, subcategory_name: str, report_identifier: str) -> None:
@@ -885,6 +928,53 @@ def close_other_windows(driver: WebDriver) -> None:
 
     except Exception as e:
         raise SeleniumException(f"Message : Error occurred while closing windows.")
+    
+def run_logic_for_each_month(from_month: str, to_month: str, logic_function, *args, **kwargs) -> None:
+    """
+    Executes the provided logic function for each month between 'from_month' and 'to_month', inclusive.
+
+    Args:
+        from_month (str): Starting month in the format "Month YYYY", e.g., "March 2023".
+        to_month (str): Ending month in the format "Month YYYY", e.g., "February 2024".
+        logic_function (Callable): Function to call for each month, accepting:
+            - A string with the month and year (e.g., "March 2023")
+            - Any additional positional (*args) and keyword arguments (**kwargs)
+        *args: Additional positional arguments passed to 'logic_function'.
+        **kwargs: Additional keyword arguments passed to 'logic_function'.
+
+    Returns:
+        None
+
+    Raises:
+        ValueError: If date formats are incorrect, or 'from_month' is after 'to_month'.
+
+    Example:
+        def process_month(month_year, flag=None):
+            print(f"Processing {month_year}, flag={flag}")
+
+        run_logic_for_each_month("March 2023", "May 2023", process_month, flag="example")
+    """
+    try:
+        start_date = datetime.strptime(from_month, "%B %Y")
+        end_date = datetime.strptime(to_month, "%B %Y")
+    except ValueError as e:
+        raise ValueError("Invalid date format. Expected 'Month YYYY'.")
+
+    if start_date > end_date:
+        raise ValueError(f"from_month ('{from_month}') cannot be after to_month ('{to_month}').")
+
+    current_date = start_date
+
+    while current_date <= end_date:
+        month_year_str = current_date.strftime("%B %Y")
+        logic_function(month_year_str, *args, **kwargs)
+
+        next_month = current_date.month + 1
+        next_year = current_date.year
+        if next_month > 12:
+            next_month = 1
+            next_year += 1
+        current_date = datetime(next_year, next_month, 1)
     
 if __name__ == "__main__":
     import os

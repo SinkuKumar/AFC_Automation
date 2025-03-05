@@ -1,84 +1,138 @@
 import os
-import threading
+import sys
+from pdb import run
+import time
+from datetime import datetime
 import logging
-
+import traceback
 from dotenv import load_dotenv
-
-from utils.file_folder import FileOperations
 from utils.selenium_driver import SeleniumDriver
-from utils.experity_base import ExperityBase, close_other_windows, switch_to_latest_window
+from utils.experity_base import ExperityBase
+from utils.file_folder import FileOperations
 
-load_dotenv(".env")
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress TensorFlow logs
-
-# Configure logging to ignore TensorFlow warnings
-logging.getLogger("tensorflow").setLevel(logging.ERROR)
-
-
-BROSWER = 'chrome'
-DOWNLOAD_PATH = '/Downloads'
-WINDOW_WIDTH, WINDOW_HEIGHT = 1920, 1080
-TIMEOUT = 100
-
-USERNAME = os.getenv('EXP_USERNAME')
-PASSWORD = os.getenv('PASSWORD')
-
-EXPERITY_URL = os.getenv("EXPERITY_URL")
-PORTAL_URL = os.getenv("PORTAL_URL")
-
-reports = {
-    "mtd_reports" : ['CNT_27']
-    # "mtd_reports" : ['CNT_27', 'CNT_19', 'FIN_18', 'ADJ_11', 'PAY_41', 'PAT_2'],
-    # "mtd_mb_reports" : ['CNT_27', 'CNT_19', 'FIN_18', 'ADJ_11', 'PAY_41', 'PAT_2'],
-    # "other_reports" :  ['LAB_01', 'XRY_03', 'CHT_02', 'MED_01', 'PAT_20', 'PER_2'],
-    # "ccr_reports" : ['CCR_02', 'CCR_03']
-}
-
-# client_list = [[640,655,822,3650,3657,3696,3698,3724,3716,3705],
-#                [3622,3625,3630,3649,3678,3705,3665,3720,3725,3726],
-#                [36,489,3624,3670,3672,3697,3718,3735,3736]
-#                ]
-# mb_clients = [3681, 3671, 16]
-
-sel_driver = SeleniumDriver(BROSWER, DOWNLOAD_PATH, WINDOW_WIDTH, WINDOW_HEIGHT)
-driver = sel_driver.setup_driver()
-
-experity = ExperityBase(driver, TIMEOUT)
-file_operation = FileOperations()
-
-
-def download_reports(report_name: str, experity_instance: ExperityBase, experity_url: str,
-                     experity_username: str, experity_password: str, portal_url: str):
+def complete_report(report_info: dict,
+                    user_info: dict,
+                    browser: str,
+                    logger_instance: logging.getLogger
+                    ):
     """
-    Performs download operations for each report.
+    Function to complete login and download one particular report.
 
-    Args:
-    :param report_name: Name of the report
-    :type report_name: str
+    :param report_info: dictionary, containing the details of the report.
+        ```
+        report_info = {'download_dir' : '', 'report_name' : ''}
+        ```
+    :type report_info: dict
 
-    :param experity_instance: Object of Experity class
-    :type experity_instance: ExperityBase
+    :param user_info: dictionary containing the username and password
+        ```
+            user_info = {'username' : '', 'password' : ''}
+        ```
+    :type user_info: dict
 
-    :param experity_url: https URL of the experity portal
-    :type experity_url: str
+    :logger_instance: the instance of the logger class
+    :type logger_instance: logging.getLogger
 
+    :param browser: the desired browser to open ['chrome', 'firefox', 'edge']
+    :type browser: str
 
+    Returns None
     """
     try:
-        experity_instance.open_portal(experity_url)
-        experity_instance.login(experity_username, experity_password)
-        experity_instance.select_sub_navigation_item(experity_url, PORTAL_URL, "Reports")
-        experity_instance.search_and_select_report(report_name=report_name)
-        experity_instance.run_report()
-        experity_instance.download_report("CSV")
-        switch_to_latest_window(driver = driver)
-        close_other_windows(driver = driver)
-    except Exception as e:
-        print(f'Error occurred: {e}')
-        experity_instance.logout()
+        download_dir = report_info['download_dir']
+        report_name = report_info['report_name']
 
-for report_class, report_list in reports.items():
-    print(f"Report class {report_class}: ")
-    for i in report_list:
-        download_reports(i,experity_instance=experity)
-    print('\n')
+        # TODO: Remove this in production, create this in top layer.
+        if not os.path.exists(download_dir):
+            os.makedirs(download_dir)
+
+        experity_url = 'https://pvpm.practicevelocity.com'
+
+        selenium = SeleniumDriver(browser=browser, download_directory=download_dir)
+        driver = selenium.setup_driver()
+        experity = ExperityBase(driver)
+        file_operation = FileOperations()
+
+        experity.open_portal(experity_url)
+        logger_instance.info("Opened portal")
+
+        # TODO: Maybe remove this 6 lines in production
+        username = user_info["username"]
+        password = user_info['password']
+        client_id = user_info['client_id']
+
+        experity.login(username, password)
+        logger_instance.info("Logged in")
+
+        experity_version = experity.get_portal_url()
+        logger_instance.info("Got portal URL")
+
+        experity.navigate_to(experity_url, experity_version, "Reports")
+        logger_instance.info("Navigate to method called")
+
+        experity.search_and_select_report("CNT_27")
+        logger_instance.info("Search and select report method called")
+
+        experity.select_report_date_range('02/02/2025', '02/02/2025')
+        logger_instance.info("Date report range method called")
+
+        experity.select_logbook_status(['All'])
+
+        experity.select_financial_class(['All'])
+        experity.select_arrival_status(['All'])
+
+        # Uncheck all check all option ??
+        experity.run_report()
+        logger_instance.info("Run report method called")
+        experity.download_report('CSV')
+        file_operation.wait_for_download(report_name, download_dir)
+        logger_instance.info("Download report method called")
+
+    except Exception as e:
+        logger_instance.info("Error occurred: %s %s", type(e).__name__, e)
+
+def get_logger_name(log_name):
+    """
+    Method to define the logger for this module.
+
+    :param log_name: name of the logger
+
+    :returns: A logger instance
+    :rtype: logger.getLogger()
+    """
+    logger = logging.getLogger(log_name)
+    logger.setLevel(logging.DEBUG)
+
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)
+    log_format = f"{{asctime}} : {__name__} : {{levelname}} : {{message}}"
+    console_formatter = logging.Formatter(
+        fmt = log_format,
+        style = "{"
+    )
+    console_handler.setFormatter(console_formatter)
+    logger.addHandler(console_handler)
+    return logger
+
+'''
+if __name__ == "__main__":
+    load_dotenv('.env')
+
+    today = datetime.now().strftime("%Y_%m_%d")
+    report_info ={}
+    report_info['report_name'] = "CNT_27"
+    report_info['download_dir'] = os.path.join(os.getcwd(), 'Downloaded Reports', today)
+    browser = "chrome"
+
+    user_info = {}
+    user_info['client_id'] = os.getenv("CLIENT_ID")
+    user_info["username"] = os.getenv('EXP_USERNAME')
+    user_info["password"] = os.getenv('PASSWORD')
+
+    logger_inst = get_logger_name("main")
+
+    complete_report(report_info = report_info,
+                    browser = browser, user_info=user_info,
+                    logger_instance=logger_inst
+                    )
+'''

@@ -6,7 +6,6 @@ import logging
 
 from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase
-from utils.experity_base import close_other_windows
 from utils.file_folder import FileOperations
 
 def complete_report(staging_table_name: str,

@@ -5,7 +5,6 @@ import time
 from datetime import datetime
 import logging
 import traceback
-from dotenv import load_dotenv
 from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase
 from utils.file_folder import FileOperations
@@ -13,7 +12,8 @@ from utils.file_folder import FileOperations
 def complete_report(report_info: dict,
                     user_info: dict,
                     browser: str,
-                    logger_instance: logging.getLogger
+                    cnt_27_from_date: str,
+                    cnt_27_to_date: str
                     ):
     """
     Function to complete login and download one particular report.
@@ -54,27 +54,26 @@ def complete_report(report_info: dict,
         file_operation = FileOperations()
 
         experity.open_portal(experity_url)
-        logger_instance.info("Opened portal")
+        # logger_instance.info("Opened portal")
 
         # TODO: Maybe remove this 6 lines in production
         username = user_info["username"]
         password = user_info['password']
-        client_id = user_info['client_id']
 
         experity.login(username, password)
-        logger_instance.info("Logged in")
+        # logger_instance.info("Logged in")
 
         experity_version = experity.get_portal_url()
-        logger_instance.info("Got portal URL")
+        # logger_instance.info("Got portal URL")
 
         experity.navigate_to(experity_url, experity_version, "Reports")
-        logger_instance.info("Navigate to method called")
+        # logger_instance.info("Navigate to method called")
 
         experity.search_and_select_report("CNT_27")
-        logger_instance.info("Search and select report method called")
+        # logger_instance.info("Search and select report method called")
 
-        experity.select_report_date_range('02/02/2025', '02/02/2025')
-        logger_instance.info("Date report range method called")
+        experity.select_report_date_range(cnt_27_from_date, cnt_27_to_date)
+        # logger_instance.info("Date report range method called")
 
         experity.select_logbook_status(['All'])
 
@@ -83,14 +82,16 @@ def complete_report(report_info: dict,
 
         # Uncheck all check all option ??
         experity.run_report()
-        logger_instance.info("Run report method called")
+        # logger_instance.info("Run report method called")
         experity.download_report('CSV')
         file_operation.wait_for_download(report_name, download_dir)
-        logger_instance.info("Download report method called")
+        # logger_instance.info("Download report method called")
 
     except Exception as e:
-        logger_instance.info("Error occurred: %s %s", type(e).__name__, e)
+        # logger_instance.info("Error occurred: %s %s", type(e).__name__, e)
+        print("Error occurred: %s %s", type(e).__name__, e)
 
+'''
 def get_logger_name(log_name):
     """
     Method to define the logger for this module.
@@ -113,7 +114,7 @@ def get_logger_name(log_name):
     console_handler.setFormatter(console_formatter)
     logger.addHandler(console_handler)
     return logger
-
+'''
 '''
 if __name__ == "__main__":
     load_dotenv('.env')
@@ -135,4 +136,5 @@ if __name__ == "__main__":
                     browser = browser, user_info=user_info,
                     logger_instance=logger_inst
                     )
+
 '''

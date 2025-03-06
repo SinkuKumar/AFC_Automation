@@ -183,3 +183,5 @@ cython_debug/
 
 # Downloaded data files
 Downloaded Reports/
+Screenshots/
+error_log.txt

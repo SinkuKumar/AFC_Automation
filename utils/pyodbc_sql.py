@@ -36,17 +36,26 @@ class PyODBCSQL:
         :bulk_insert_csv_sql(self, file_path: str, staging_table_name: str, client_id: str) -> None:
     """
 
-    def __init__(self):
+    def __init__(self, server, database, username, password):
         """
         Initializes the MSSQLDatabase class.
+
+        :param server: MS-SQL host address.
+        :type server: str
+        :param database: The name of the database.
+        :type database: str
+        :param username: The username for the SQL server.
+        :type username: str
+        :param password: The password for the SQL server.
+        :type password: str
 
         :return: None
         :rtype: None
         """
-        self.server = os.getenv("SQL_SERVER")
-        self.database = os.getenv("SQL_DATABASE")
-        self.username = os.getenv("SQL_USERNAME")
-        self.password = os.getenv("SQL_PASSWORD")
+        self.server = server # os.getenv("SQL_SERVER")
+        self.database = database # os.getenv("SQL_DATABASE")
+        self.username = username # os.getenv("SQL_USERNAME")
+        self.password = password# os.getenv("SQL_PASSWORD")
         self.conn = None
 
     def execute_query(self, query: str) -> list[tuple[str, str]]:
@@ -92,6 +101,99 @@ class PyODBCSQL:
         """
         column_names_query = f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table_name}';"
         return self.execute_query(column_names_query)
+    
+    def bulk_insert_data(self, file_type, csv_file_path, table_name):
+        """
+        Bulk insert data from a CSV file into a SQL table.
+
+        :param file_type: The type of file to insert.
+        :type file_type: str
+        :param csv_file_path: The path to the CSV file.
+        :type csv_file_path: str
+        :param table_name: The name of the SQL table.
+        :type table_name: str
+        """
+        query = f"""
+        BULK INSERT {table_name}
+        FROM '{csv_file_path}'
+        WITH
+        (
+            FORMAT = '{file_type}',
+            FIELDTERMINATOR = ',',
+            ROWTERMINATOR = '\\n',
+            FIRSTROW = 2,
+            TABLOCK
+        );
+        """
+        self.execute_query(query)
+
+    def delete_table_data(self, table_name: str) -> None:
+        """
+        Deletes the data from the specified table.
+
+        :param table_name: The name of the table to delete the data from.
+        :type table_name: str
+        """
+        delete_query = f"TRUNCATE TABLE {table_name};"
+        self.execute_query(delete_query)
+
+    def insert_data(self, data, table_name, chunk_size=1000, empty_table=False):
+        """
+        Insert data into a SQL table.
+    
+        :param data: The data to insert.
+        :type data: list[tuple]
+        :param table_name: The name of the SQL table.
+        :type table_name: str
+        :param chunk_size: The number of rows to insert at a time.
+        :type chunk_size: int
+        :param empty_table: Whether to empty the table before inserting the data.
+        :type empty_table: bool
+        """
+        # Get the column names from the data
+        column_names = data[0]
+        data = data[1:]
+    
+        # Empty the table if specified
+        if empty_table:
+            print(f"Emptying the table {table_name}...")
+            self.delete_table_data(table_name)
+            print(f"Table {table_name} emptied.")
+    
+        # Create the query to insert the data
+        query = f"INSERT INTO {table_name} ({', '.join(column_names)}) VALUES "
+    
+        # Insert the data in chunks
+        for i in range(0, len(data), chunk_size):
+            chunk = data[i:i + chunk_size]
+    
+            # Format values correctly as tuples
+            values = ", ".join([f"({', '.join(map(repr, row))})" for row in chunk])
+            chunk_query = query + values
+    
+            # print(f"Inserting chunk {i // chunk_size + 1} into {table_name}...")
+            # print(f"SQL Query: {chunk_query}\n")  # Print the full SQL query
+            self.execute_query(chunk_query)
+            print(f"Chunk {i // chunk_size + 1} inserted.")
+    
+        print(f"All data inserted into {table_name}.")
+    
+
+    # Use insert_data method to insert data from a csv file
+    def insert_csv_data(self, table_name, csv_file_path, empty_table=False):
+        """
+        Insert data from a CSV file into a SQL table.
+
+        :param empty_table: Whether to empty the table before inserting the data.
+        :type empty_table: bool
+        :param table_name: The name of the SQL table.
+        :type table_name: str
+        :param csv_file_path: The path to the CSV file.
+        :type csv_file_path: str
+        """
+        with open(csv_file_path, "r") as file:
+            data = [line.strip().split(",") for line in file.readlines()]
+            self.insert_data(data, table_name)
 
 if __name__ == "__main__":
     import os

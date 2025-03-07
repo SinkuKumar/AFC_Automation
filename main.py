@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from any_report_download import complete_report, get_logger_name
 
-load_dotenv('.env')
+load_dotenv('utils/.env')
 
 today = datetime.now().strftime("%Y_%m_%d")
 

@@ -182,14 +182,11 @@ class ExperityBase:
                 """
                 Verify if the username or password is incorrect, and capture a screenshot if necessary.
                 """
-                # try:
                 if self.driver.find_element(By.ID, "lblErrorMessage").text == "Invalid User Credentials":
                     # Check for Invalid username or password
-                    logging.error("Invalid user credentials. Please check username and password.")
                     self.driver.find_element(By.ID, "ctl00").screenshot(f"Screenshots/Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
                     raise Exception("Invalid user credentials.")
-                # except:
-                #     pass
+
             elif self.driver.title == "PVM > User Profile":
                 """
                 Check if the user is required to change the password, and capture a screenshot if necessary.

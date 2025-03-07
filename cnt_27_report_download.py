@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 
 from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase, close_other_windows
-from utils.file_folder import FileOperations
+from utils import file_folder as file_operation
+from utils.sql_operations import MSSQLDatabase
 
 def complete_report(report_info: dict,
                     user_info: dict,
@@ -59,11 +60,11 @@ def complete_report(report_info: dict,
         download_dir = report_info['download_dir']
         report_name_list = report_info['report_names'].keys()
 
+        # Clearing the download folder ending with today's date
         selenium = SeleniumDriver(browser=browser, download_directory=download_dir)
         driver = selenium.setup_driver()
         experity = ExperityBase(driver)
-        file_operation = FileOperations()
-        
+
         # TODO: Remove this in production, create this in top layer.
         if not os.path.exists(download_dir):
             os.makedirs(download_dir)
@@ -74,22 +75,24 @@ def complete_report(report_info: dict,
         experity_url = 'https://pvpm.practicevelocity.com'
 
         experity.open_portal(experity_url)
-        logger_instance.info("Opened portal")
+        logger_instance.info("Opened portal https://pvpm.practicevelocity.com")
 
         # TODO: Maybe remove this 6 lines in production
         client_ids = user_info.keys()
 
         for current_client_id in client_ids:
-            print(current_client_id)
+            # print(current_client_id)
             username = user_info[current_client_id][0]
             password = user_info[current_client_id][1]
-            print(username, password)
+            # print(username, password)
 
+            logger_instance.info("Running report for client_id %s.", current_client_id)
             experity.login(username, password)
-            exit()
+
             logger_instance.info("Logged in")
 
             experity_version = experity.get_portal_url()
+            print("\n")
             logger_instance.info("Got portal URL")
 
             for report_name in report_name_list:
@@ -126,6 +129,13 @@ def complete_report(report_info: dict,
                 experity.download_report('CSV')
                 logger_instance.info("Download report method called")
 
+                # Creating a separate download directory for each file
+                download_dir = os.path.join("Client ", str(current_client_id), "_", download_dir)
+
+                # TODO: Remove this in production, create this in top layer.
+                if not os.path.exists(download_dir):
+                    os.makedirs(download_dir)
+
                 file_operation.wait_for_download(report_name, download_dir)
                 logger_instance.info("Downloaded report %s.", report_name)
 
@@ -134,6 +144,7 @@ def complete_report(report_info: dict,
                 logger_instance.info("Closed other windows")
 
                 logger_instance.info("Report %s completed.", report_name)
+                print("\n")
 
                 if run_sp:
                     logger_instance.info("Running stored procedure for report %s.", report_name)
@@ -179,8 +190,8 @@ if __name__ == "__main__":
     start_date = "01/01/2025"
     end_date = datetime.now().strftime("%m/%d/%Y")
     '''
-    Report_details has the following structure:
-    
+    The structure of report_details and user details are present in the
+    `reportDetailsAndUserDetailsStructures.js` file.
     '''
     report_details['report_names'] = {
         "CNT_27" : [start_date, end_date], 
@@ -200,10 +211,15 @@ if __name__ == "__main__":
         1. the first element is username for the client
         2. the second element is password for the client
     '''
+
+    sql = MSSQLDatabase()
     user_details = {}
-    client_id = os.getenv("CLIENT_ID")
-    user_details[client_id] = [os.getenv('EXP_USERNAME'), os.getenv('PASSWORD')]
-    # print(user_details)
+
+    results = sql.execute_query("SELECT client_id, username, password FROM AFC_Password_Tbl WHERE Active = 1")
+
+    for result in results:
+        client_id, username, password = result
+        user_details[client_id] = [username, password]
 
     logger_inst = get_logger_name("mtd_reports")
 

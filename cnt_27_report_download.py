@@ -56,35 +56,45 @@ def complete_report(report_info: dict,
 
     Returns None
     """
-    try:
-        download_dir = report_info['download_dir']
-        report_name_list = report_info['report_names'].keys()
+    client_ids = user_info.keys()
+    for current_client_id in client_ids:
+        try:
+            # download_dir = report_info['download_dir']
+            report_name_list = report_info['report_names'].keys()
+            # Creating a separate download directory for each client
+            client_download_dir = os.path.join(report_info['download_dir'], f"Client {str(current_client_id)}")
 
-        # Clearing the download folder ending with today's date
-        selenium = SeleniumDriver(browser=browser, download_directory=download_dir)
-        driver = selenium.setup_driver()
-        experity = ExperityBase(driver)
+            # Clearing the download folder ending with today's date
+            selenium = SeleniumDriver(browser=browser, download_directory=client_download_dir)
+            driver = selenium.setup_driver()
+            experity = ExperityBase(driver)
 
-        # TODO: Remove this in production, create this in top layer.
-        if not os.path.exists(download_dir):
-            os.makedirs(download_dir)
+            # TODO: Remove this in production, create this in top layer.
+            if not os.path.exists(client_download_dir):
+                os.makedirs(client_download_dir)
+            else:
+                file_operation.clear_directory_files(client_download_dir)
+                logger_instance.info("Download directory %s already exists, cleared.", client_download_dir)
 
-        file_operation.clear_directory_files(download_dir)
-        logger_instance.info("Download directory %s cleared.", download_dir)
+            experity_url = 'https://pvpm.practicevelocity.com'
 
-        experity_url = 'https://pvpm.practicevelocity.com'
+            experity.open_portal(experity_url)
+            logger_instance.info("Opened portal https://pvpm.practicevelocity.com")
 
-        experity.open_portal(experity_url)
-        logger_instance.info("Opened portal https://pvpm.practicevelocity.com")
+            # TODO: Maybe remove this 6 lines in production
 
-        # TODO: Maybe remove this 6 lines in production
-        client_ids = user_info.keys()
-
-        for current_client_id in client_ids:
             # print(current_client_id)
             username = user_info[current_client_id][0]
             password = user_info[current_client_id][1]
             # print(username, password)
+
+
+            # # TODO: Remove this in production, create this in top layer.
+            # if not os.path.exists(client_download_dir):
+            #     os.makedirs(client_download_dir)
+            # # else:
+            # #     file_operation.clear_directory_files(client_download_dir)
+            # #     logger_instance.info("Client download directory %s already exists, cleared.", client_download_dir)
 
             logger_instance.info("Running report for client_id %s.", current_client_id)
             experity.login(username, password)
@@ -129,14 +139,7 @@ def complete_report(report_info: dict,
                 experity.download_report('CSV')
                 logger_instance.info("Download report method called")
 
-                # Creating a separate download directory for each file
-                download_dir = os.path.join("Client ", str(current_client_id), "_", download_dir)
-
-                # TODO: Remove this in production, create this in top layer.
-                if not os.path.exists(download_dir):
-                    os.makedirs(download_dir)
-
-                file_operation.wait_for_download(report_name, download_dir)
+                file_operation.wait_for_download(report_name, client_download_dir)
                 logger_instance.info("Downloaded report %s.", report_name)
 
                 # Close the window and switch to the main window
@@ -152,10 +155,11 @@ def complete_report(report_info: dict,
             # Logout
             experity.logout()
             logger_instance.info("Logged out")
+            driver.quit()
 
-    except Exception as e:
-        logger_instance.info("Error occurred: %s %s", type(e).__name__, e)
-        print("Error occurred: %s %s", type(e).__name__, e)
+        except Exception as e:
+            logger_instance.info("Error occurred: %s %s", type(e).__name__, e)
+            print("Error occurred: %s %s", type(e).__name__, e)
 
 
 def get_logger_name(log_name):

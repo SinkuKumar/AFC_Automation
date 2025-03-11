@@ -1,9 +1,9 @@
 """
 Module Description:
 
-- This module contains the script for downloading FIN_18 monthly reports for Experity clients.
+- This module contains the script for downloading CNT_19 monthly reports for Experity clients.
 
-:module: FIN_18.py
+:module: CNT_19.py
 :platform: Windows, Unix
 :synopsis: monthly reports for Experity clients
 
@@ -24,8 +24,8 @@ from utils import file_folder as file_operation
 def download_report(specific_client: int,
                     user_details: dict,
                     browser: str,
-                    fin_18_from_date: str,
-                    fin_18_to_date: str,
+                    cnt_19_from_date: str,
+                    cnt_19_to_date: str,
                     logger_instance: logging.getLogger,
                     run_sp: bool = True
                     ):
@@ -38,11 +38,11 @@ def download_report(specific_client: int,
     :param browser: the desired browser to open ['chrome', 'firefox', 'edge']
     :type browser: str
 
-    :param fin_18_from_date: starting date
-    :type fin_18_from_date: str
+    :param cnt_19_from_date: starting date
+    :type cnt_19_from_date: str
 
-    :param fin_18_to_date: end date
-    :param fin_18_to_date: str
+    :param cnt_19_to_date: end date
+    :param cnt_19_to_date: str
 
     :param logger_instance: the instance of the logger class
     :type logger_instance: logging.getLogger
@@ -59,7 +59,7 @@ def download_report(specific_client: int,
 
     try:
         logger_instance.info("Running report for client_id %s.", specific_client)
-        report_name = "FIN_18"
+        report_name = "CNT_19"
 
         # for report_name in report_name_list:
         logger_instance.info("Running for report %s.", report_name)
@@ -116,14 +116,14 @@ def download_report(specific_client: int,
         experity.search_and_select_report(report_name)
         logger_instance.info("Search and select report method called")
 
-        # fin_18_from_date = report_info['report_names'][report_name][0]
-        # fin_18_to_date = report_info['report_names'][report_name][1]
+        # cnt_19_from_date = report_info['report_names'][report_name][0]
+        # cnt_19_to_date = report_info['report_names'][report_name][1]
 
-        experity.select_report_date_range(fin_18_from_date, fin_18_to_date)
+        experity.select_report_date_range(cnt_19_from_date, cnt_19_to_date)
         logger_instance.info("Date report range method called")
-        logger_instance.info("Start date: %s, end date: %s.", fin_18_from_date, fin_18_to_date)
+        logger_instance.info("Start date: %s, end date: %s.", cnt_19_from_date, cnt_19_to_date)
 
-        # if report_name in ['FIN_18']:
+        # if report_name in ['CNT_19']:
         #     experity.select_logbook_status(['All'])
         #     experity.select_financial_class(['All'])
         #     experity.select_arrival_status(['All'])
@@ -201,9 +201,9 @@ if __name__ == "__main__":
     The structure of report_details and user details are present in the
     `reportDetailsAndUserDetailsStructures.js` file.
     # report_details['report_names'] = {
-    #     "FIN_18" : [start_date, end_date],
+    #     "CNT_19" : [start_date, end_date],
     #     "ADJ_11" : [start_date, end_date],
-    #     'FIN_18' : [start_date, end_date],
+    #     'CNT_19' : [start_date, end_date],
     #     "PAY_41" : [start_date, end_date],
     #     "PAT_2" : [start_date, end_date],
     #     "CNT_19" : [start_date, end_date]
@@ -226,8 +226,8 @@ if __name__ == "__main__":
 
     download_report(specific_client = specific_clients,
                     browser = browser_name,
-                    fin_18_from_date = start_date,
-                    fin_18_to_date = end_date,
+                    cnt_19_from_date = start_date,
+                    cnt_19_to_date = end_date,
                     logger_instance=logger_inst,
                     run_sp=False
                     )

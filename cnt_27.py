@@ -12,6 +12,7 @@ Module Description:
 """
 
 import os
+import glob
 from datetime import datetime
 import logging
 # from dotenv import load_dotenv
@@ -19,9 +20,9 @@ import logging
 from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase, close_other_windows
 from utils import file_folder as file_operation
-from utils.sql_operations import MSSQLDatabase
 
-def download_report(specific_client_list: list,
+def download_report(specific_client: int,
+                    user_details: dict,
                     browser: str,
                     cnt_27_from_date: str,
                     cnt_27_to_date: str,
@@ -51,122 +52,112 @@ def download_report(specific_client_list: list,
 
     Returns None
     """
-    sql = MSSQLDatabase()
-    user_details = {}
-
-    results = sql.execute_query("SELECT client_id, username, password FROM AFC_Password_Tbl WHERE Active = 1")
 
     today = datetime.now().strftime("%Y_%m_%d")
 
-    for result in results:
-        client_id, username, password = result
-        if client_id in specific_client_list:
-            user_details[client_id] = [username, password]
-
     download_dir = os.path.join(os.getcwd(), 'Downloaded Reports', today)
 
-    for current_client_id in specific_client_list:
-        try:
-            report_name = "CNT_27"
-            # Creating a separate download directory for each client
-            client_download_dir = os.path.join(download_dir, f"Client {str(current_client_id)}")
+    try:
+        logger_instance.info("\nRunning report for client_id %s.", specific_client)
+        report_name = "CNT_27"
+        # for report_name in report_name_list:
+        logger_instance.info("Running for report %s.", report_name)
 
-            # Clearing the download folder ending with today's date
-            selenium = SeleniumDriver(browser=browser, download_directory=client_download_dir)
-            driver = selenium.setup_driver()
-            experity = ExperityBase(driver)
+        # Creating a separate download directory for each client
+        client_download_dir = os.path.join(download_dir, f"Client {str(specific_client)}")
 
-            # TODO: Remove this in production, create this in top layer.
-            if not os.path.exists(client_download_dir):
-                os.makedirs(client_download_dir)
-            else:
-                file_operation.clear_directory_files(client_download_dir)
-                logger_instance.info("Download directory %s already exists, cleared.", client_download_dir)
+        # TODO: Remove this in production, create this in top layer.
+        if not os.path.exists(client_download_dir):
+            os.makedirs(client_download_dir)
+        else:
+            for file in glob.glob(os.path.join(client_download_dir, f"{report_name}*")):
+                os.remove(file)
+                logger_instance.info("Previous %s reports in download directory %s cleared.", report_name, client_download_dir)
 
-            experity_url = 'https://pvpm.practicevelocity.com'
+        # Clearing the download folder ending with today's date
+        selenium = SeleniumDriver(browser=browser, download_directory=client_download_dir)
+        driver = selenium.setup_driver()
+        experity = ExperityBase(driver)
 
-            experity.open_portal(experity_url)
-            logger_instance.info("Opened portal https://pvpm.practicevelocity.com")
+        experity_url = 'https://pvpm.practicevelocity.com'
 
-            # TODO: Maybe remove this 6 lines in production
+        experity.open_portal(experity_url)
+        logger_instance.info("Opened portal https://pvpm.practicevelocity.com")
 
-            # print(current_client_id)
-            username = user_details[current_client_id][0]
-            password = user_details[current_client_id][1]
-            # print(username, password)
+        # TODO: Maybe remove this 6 lines in production
+
+        # print(current_client_id)
+        username = user_details[specific_client][0]
+        password = user_details[specific_client][1]
+        # print(username, password)
+
+        # # TODO: Remove this in production, create this in top layer.
+        # if not os.path.exists(client_download_dir):
+        #     os.makedirs(client_download_dir)
+        # # else:
+        # #     file_operation.clear_directory_files(client_download_dir)
+        # #     logger_instance.info("Client download directory %s already exists, cleared.", client_download_dir)
+
+        experity.login(username, password)
+        logger_instance.info("Logged in")
+
+        experity_version = experity.get_portal_url()
+        logger_instance.info("Got portal URL")
 
 
-            # # TODO: Remove this in production, create this in top layer.
-            # if not os.path.exists(client_download_dir):
-            #     os.makedirs(client_download_dir)
-            # # else:
-            # #     file_operation.clear_directory_files(client_download_dir)
-            # #     logger_instance.info("Client download directory %s already exists, cleared.", client_download_dir)
+        experity.navigate_to(experity_url, experity_version, "Reports")
+        logger_instance.info("Navigate to method called")
 
-            logger_instance.info("Running report for client_id %s.", current_client_id)
-            experity.login(username, password)
+        experity.search_and_select_report(report_name)
+        logger_instance.info("Search and select report method called")
 
-            logger_instance.info("Logged in")
+        # cnt_27_from_date = report_info['report_names'][report_name][0]
+        # cnt_27_to_date = report_info['report_names'][report_name][1]
 
-            experity_version = experity.get_portal_url()
-            print("\n")
-            logger_instance.info("Got portal URL")
+        experity.select_report_date_range(cnt_27_from_date, cnt_27_to_date)
+        logger_instance.info("Date report range method called")
+        logger_instance.info("Start date: %s, end date: %s.", cnt_27_from_date, cnt_27_to_date)
 
-            # for report_name in report_name_list:
+        experity.select_logbook_status(['All'])
+        experity.select_financial_class(['All'])
+        experity.select_arrival_status(['All'])
+        
+        # if report_name in ['ADJ_11']:
+        #     uncheck_button_identifier_id = "freeunReasonCodescheckall"
+        #     check_checkbox_identifier_id = "freeReasonCodescheck2"
+        #     experity.uncheck_all_check_all(uncheck_button_identifier_id, check_checkbox_identifier_id)
 
-            logger_instance.info("Running for report %s.", report_name)
+        # Uncheck all check all option ??
+        experity.run_report()
+        logger_instance.info("Run report method called")
 
-            experity.navigate_to(experity_url, experity_version, "Reports")
-            logger_instance.info("Navigate to method called")
+        experity.download_report('CSV')
+        logger_instance.info("Download report method called")
 
-            experity.search_and_select_report(report_name)
-            logger_instance.info("Search and select report method called")
+        file_operation.wait_for_download(report_name, client_download_dir)
+        logger_instance.info("Downloaded report %s.", report_name)
 
-            # cnt_27_from_date = report_info['report_names'][report_name][0]
-            # cnt_27_to_date = report_info['report_names'][report_name][1]
+        # Close the window and switch to the main window
+        close_other_windows(driver)
+        logger_instance.info("Closed other windows")
 
-            experity.select_report_date_range(cnt_27_from_date, cnt_27_to_date)
-            logger_instance.info("Date report range method called")
-            logger_instance.info("Start date: %s, end date: %s.", cnt_27_from_date, cnt_27_to_date)
+        logger_instance.info("Report %s completed.", report_name)
+        print("\n")
 
-            if report_name in ['CNT_27']:
-                experity.select_logbook_status(['All'])
-                experity.select_financial_class(['All'])
-                experity.select_arrival_status(['All'])
-            
-            if report_name in ['ADJ_11']:
-                uncheck_button_identifier_id = "freeunReasonCodescheckall"
-                check_checkbox_identifier_id = "freeReasonCodescheck2"
-                experity.uncheck_all_check_all(uncheck_button_identifier_id, check_checkbox_identifier_id)
+        if run_sp:
+            logger_instance.info("Running stored procedure for report %s.", report_name)
+            logger_instance.info("...........................")
+            logger_instance.info("...........................")
+            logger_instance.info("...........................")
 
-            # Uncheck all check all option ??
-            experity.run_report()
-            logger_instance.info("Run report method called")
+        # Logout
+        experity.logout()
+        logger_instance.info("Logged out")
+        driver.quit()
 
-            experity.download_report('CSV')
-            logger_instance.info("Download report method called")
-
-            file_operation.wait_for_download(report_name, client_download_dir)
-            logger_instance.info("Downloaded report %s.", report_name)
-
-            # Close the window and switch to the main window
-            close_other_windows(driver)
-            logger_instance.info("Closed other windows")
-
-            logger_instance.info("Report %s completed.", report_name)
-            print("\n")
-
-            if run_sp:
-                logger_instance.info("Running stored procedure for report %s.", report_name)
-
-            # Logout
-            experity.logout()
-            logger_instance.info("Logged out")
-            driver.quit()
-
-        except Exception as e:
-            logger_instance.info("Error occurred: %s %s", type(e).__name__, e)
-            print("Error occurred: %s %s", type(e).__name__, e)
+    except Exception as e:
+        logger_instance.info("Error occurred: %s %s", type(e).__name__, e)
+        print("Error occurred: %s %s", type(e).__name__, e)
 
 
 def get_logger_name(log_name):
@@ -192,6 +183,7 @@ def get_logger_name(log_name):
     logger.addHandler(console_handler)
     return logger
 
+'''
 if __name__ == "__main__":
 
     # today = datetime.now().strftime("%Y_%m_%d")
@@ -199,10 +191,9 @@ if __name__ == "__main__":
 
     start_date = "01/01/2025"
     end_date = datetime.now().strftime("%m/%d/%Y")
-    '''
+    """
     The structure of report_details and user details are present in the
     `reportDetailsAndUserDetailsStructures.js` file.
-    '''
     # report_details['report_names'] = {
     #     "CNT_27" : [start_date, end_date],
     #     "ADJ_11" : [start_date, end_date],
@@ -217,20 +208,21 @@ if __name__ == "__main__":
     specific_clients = [3681, 3671, 16]
 
     browser_name = "chrome"
-    '''
+    """
     User details is a dictionary.
     The keys of user details are the client_ids.
     The values are lists:
         1. the first element is username for the client
         2. the second element is password for the client
-    '''
+    """
 
     logger_inst = get_logger_name("mtd_reports")
 
-    download_report(specific_client_list = specific_clients,
+    download_report(specific_client = specific_clients,
                     browser = browser_name,
                     cnt_27_from_date = start_date,
                     cnt_27_to_date = end_date,
                     logger_instance=logger_inst,
                     run_sp=False
                     )
+'''

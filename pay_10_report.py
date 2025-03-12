@@ -68,8 +68,8 @@ def data_workflow():
         input_csv_file = os.path.join(date_folder, download_csv_file_rename)
         output_csv_file = os.path.join(date_folder, transformed_csv_file_name)
         pay_10_report_data_transformation(input_csv_file, output_csv_file, client_id)
-        # DB.delete_table_data(TABLE_NAME, client_id)
-        # DB.csv_bulk_insert(output_csv_file, TABLE_NAME)
+        DB.delete_table_data(TABLE_NAME, client_id)
+        DB.csv_bulk_insert(output_csv_file, TABLE_NAME)
         print(f'Data transformation and Records insertion completed for client : {client_id}')
         logging.info('Database workflow completed!')
     except Exception as e:

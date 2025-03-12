@@ -170,7 +170,7 @@ def wait_for_download(report_name: str, download_directory: str, timeout: int = 
         logging.critical(f"Unexpected error occurred: {e}", exc_info=True)
         raise
 
-def move_file(file_path, base_directory, client_id=None):
+def move_file(file_path: str, base_directory: str, client_id: str=None):
     """
     Moves a file into a subfolder named with the current date inside the given base directory.
     Optionally, the file can be renamed to include the client ID before the file extension.
@@ -227,4 +227,35 @@ def move_file(file_path, base_directory, client_id=None):
         logging.info(f"File '{file_name}' moved to '{new_file_path}' successfully.")
     except Exception as e:
         logging.error(f"An error occurred while moving the file '{file_path}' to '{new_file_path}': {e}")
+        raise
+
+def rename_file_or_folder(old_name: str, new_name: str) -> None:
+    """
+    Renames a file or folder from `old_name` to `new_name`.
+
+    Parameters:
+        old_name (str): The current name (or path) of the file or folder.
+        new_name (str): The new name (or path) to rename the file or folder.
+
+    Returns:
+        bool: True if renaming was successful, False otherwise.
+
+    Raises:
+        FileNotFoundError: If the specified `old_name` does not exist.
+        FileExistsError: If a file or folder with `new_name` already exists.
+        PermissionError: If the operation is not permitted due to system restrictions.
+        OSError: For other OS-related errors.
+    """
+    try:
+        if not os.path.exists(old_name):
+            raise FileNotFoundError(f"Error: '{old_name}' does not exist.")
+
+        if os.path.exists(new_name):
+            raise FileExistsError(f"Error: A file or folder named '{new_name}' already exists.")
+
+        os.rename(old_name, new_name)
+        logging.info(f"Successfully renamed '{old_name}' to '{new_name}'.")
+
+    except (FileNotFoundError, FileExistsError, PermissionError, OSError) as e:
+        logging.error(f"Failed to rename from {old_name} to {new_name}.")
         raise

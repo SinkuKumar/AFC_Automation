@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import logging
 
@@ -20,6 +20,27 @@ def get_current_date() -> str:
         return current_date
     except Exception as e:
         logging.error("Error occurred while fetching current date: %s", str(e))
+        raise
+
+def get_yesterdays_date() -> str:
+    """
+    Returns yesterday's date in MM/DD/YYYY format.
+
+    Args:
+        None
+
+    Returns:
+        str: Yesterday's date in MM/DD/YYYY format.
+
+    Raises:
+        Exception: If an unexpected error occurs while retrieving the date.
+    """
+    try:
+        yesterday = datetime.now() - timedelta(days=1)
+        logging.info("Successfully retrieved the yesterday's date")
+        return yesterday.strftime("%m/%d/%Y")
+    except Exception as e:
+        logging.error("Error occurred while fetching yesterday's date: %s", str(e))
         raise
 
 def get_past_date(days: int = 0, months: int = 0, years: int = 0, quarters: int = 0, from_date: str = None) -> str:

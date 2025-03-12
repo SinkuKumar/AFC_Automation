@@ -43,7 +43,7 @@ def web_workflow():
     
         experity.open_portal(EXPERITY_URL)
         experity.login(username, password)
-        PORTAL_URL = experity.get_portal_url()
+        PORTAL_URL = experity.experity_version()
         experity.navigate_to(EXPERITY_URL, PORTAL_URL, "Reports")
         experity.search_and_select_report('PAY 10')
         experity.select_report_date_range(report_from_date, report_to_date)

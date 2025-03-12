@@ -121,7 +121,7 @@ class ExperityBase:
             raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while opening Experity portal")
     
     @retry_on_exception()
-    def get_portal_url(self) -> str:
+    def experity_version(self) -> str:
         """
         Extract the portal URL segment from the current browser URL.
 
@@ -999,7 +999,7 @@ if __name__ == "__main__":
     try:
         experity = ExperityBase(driver)
         experity.open_portal(EXPERITY_URL)
-        PORTAL_URL = experity.get_portal_url()
+        PORTAL_URL = experity.experity_version()
         experity.login(username, password)
         experity.navigate_to(EXPERITY_URL, PORTAL_URL, "Reports")
         experity.logout()

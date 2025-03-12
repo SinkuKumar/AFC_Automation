@@ -62,7 +62,7 @@ class PyODBCSQL:
         """
 
         self.conn = pyodbc.connect(
-            f"""DRIVER={{ODBC Driver 18 for SQL Server}};SERVER={self.server};DATABASE={self.database};
+            f"""DRIVER={{SQL Server}};SERVER={self.server};DATABASE={self.database};
                                 UID={self.username};PWD={self.password}""",
             TrustServerCertificate="yes",
         )
@@ -153,6 +153,32 @@ class PyODBCSQL:
             logging.error(f"Code: {em.DATA_LOAD_ISSUE} | Message : Database operation failed while bulk insert into database.")
             raise
  
+    def delete_table_data(self, table_name: str, client_id: int) -> None:
+        """
+        Deletes all data from the specified database table.
+
+        This method executes a SQL `TRUNCATE TABLE` statement to remove all rows 
+        from the given table. 
+
+        Args:
+            table_name (str): The name of the table from which data should be deleted.
+            client_id (int): Client ID for which the data to be deleted.
+
+        Returns:
+            None
+            
+        Raises:
+            pyodbc.Error: If an error occurs while executing the SQL query.
+        """
+        try:
+            query = f"DELETE FROM {table_name} where Client_id = {client_id}"
+            self.execute_query(query)
+            logging.info(f"Successfully deleted table data for client : {client_id}.")
+
+        except pyodbc.Error as e:
+            logging.error(f"Database error occurred while deleting the table data: {e}")
+            raise
+
 if __name__ == "__main__":
     import os
     from dotenv import load_dotenv

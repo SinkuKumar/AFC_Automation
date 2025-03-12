@@ -51,3 +51,22 @@ class Reports:
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+
+    def adj_11(self, report_name, adj_11_from_date, adj_11_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(adj_11_from_date, adj_11_to_date)
+        self.experity.uncheck_all_check_all("freeunReasonCodescheckall", "freeReasonCodescheck2")
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def fin_18(self, report_name, fin_18_from_date, fin_18_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(fin_18_from_date, fin_18_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)

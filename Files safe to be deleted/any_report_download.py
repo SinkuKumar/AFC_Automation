@@ -83,7 +83,7 @@ def complete_report(staging_table_name: str,
         experity.login(username, password)
         logger_instance.info("Logged in")
 
-        experity_version = experity.get_portal_url()
+        experity_version = experity.experity_version()
         print(experity_version)
 
         logger_instance.info("Got portal URL")

@@ -101,7 +101,7 @@ def download_report(specific_client: int,
         experity.login(username, password)
         logger_instance.info("Logged in")
 
-        experity_version = experity.get_portal_url()
+        experity_version = experity.experity_version()
         logger_instance.info("Got portal URL")
 
 

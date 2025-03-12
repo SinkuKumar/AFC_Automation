@@ -15,7 +15,8 @@ This module contains the PyODBCSQL class, which allows executing SQL queries and
 
 import os
 import pyodbc
-
+import logging
+import utils.error_messages as em
 
 class PyODBCSQL:
     """
@@ -66,7 +67,6 @@ class PyODBCSQL:
             TrustServerCertificate="yes",
         )
         
-      
         cursor = self.conn.cursor()
         cursor.execute(query)
 
@@ -92,7 +92,67 @@ class PyODBCSQL:
         """
         column_names_query = f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table_name}';"
         return self.execute_query(column_names_query)
+    
+    def get_users_credentials(self, client_ids: list[int]) -> list[tuple[str, str]]:
+        """
+        Fetches the usernames and passwords of active clients from the MSSQL database.
 
+        Args:
+            client_ids (List[int]): List of client IDs whose credentials need to be fetched.
+
+        Returns:
+            list[tuple[str, str]]: A list of tuples, where each tuple contains (Username, Password).
+
+        Raises:
+            ValueError: If the client_ids list is empty.
+            Exception: If there is a database error.
+        """
+        if not client_ids:
+            logging.warning("Empty client_ids list provided.")
+            raise ValueError("Client ID list cannot be empty.")
+        
+        try:
+            ids_str = ','.join(map(str, client_ids))
+            query = f"SELECT client_id, Username, Password FROM bi_afc.dbo.afc_password_tbl WHERE active = 1 and client_id IN ({ids_str})"
+            results = self.execute_query(query)
+            logging.info("Successfully retrieved user credentials.")
+            return [(row[0], row[1], row[2]) for row in results]
+
+        except pyodbc.Error as e:
+            logging.error(f"Database error occurred while fecthing users credentials: {e}")
+            raise
+
+    def csv_bulk_insert(self, output_csv_path: str, table_name: str) -> None:
+        """
+        Load data from a CSV file into a database table.
+
+        This function reads data from a CSV file and inserts it into the specified database table 
+        using the provided connection string.
+
+        Args:
+            output_csv_path (str): The path to the CSV file containing the data to be loaded.
+            table_name (str): The name of the target database table.
+
+        Returns:
+            None
+        """
+        try:
+            sql = f"""
+            BULK INSERT {table_name}
+            FROM '{output_csv_path}'
+            WITH (
+                FORMAT = 'CSV',
+                FIELDTERMINATOR = ',', 
+                ROWTERMINATOR = '\n',
+                FIRSTROW = 2
+            );
+            """
+            self.execute_query(sql)
+            logging.info(f"Records inserted successfully.")
+        except pyodbc.Error as e:
+            logging.error(f"Code: {em.DATA_LOAD_ISSUE} | Message : Database operation failed while bulk insert into database.")
+            raise
+ 
 if __name__ == "__main__":
     import os
     from dotenv import load_dotenv

@@ -30,10 +30,13 @@ def create_directories(paths: list[str]) -> None:
                 logging.info(f"Directory already exists: {path}")
         except PermissionError:
             logging.error(f"Permission denied: Unable to create directory '{path}'.")
+            raise
         except OSError as e:
             logging.error(f"OS error occurred while creating directory '{path}': {e}")
+            raise
         except Exception as e:
             logging.critical(f"Unexpected error while creating directory '{path}': {e}", exc_info=True)
+            raise
 
 def clear_directory_files(directory_path: str) -> None:
     """

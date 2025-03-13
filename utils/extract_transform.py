@@ -2,9 +2,6 @@ import logging
 import datetime
 import polars as pl
 
-from utils.pyodbc_sql import PyODBCSQL
-DB = PyODBCSQL()
-
 def clean_currency_column(df: pl.DataFrame, column_names: str | list[str], decimals: int = 2) -> pl.DataFrame:
     """
     Cleans and converts currency columns in a Polars DataFrame to numeric values.
@@ -154,7 +151,7 @@ def fin_25_report_data_transformation(input_csv_data_file: str, output_csv_data_
         logging.error("Error occurred during data transformation.")
         raise
 
-def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_path: str, table_name, client_id: int) -> None:
+def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_path: str, table_columns, client_id: int) -> None:
     """
     Processes a CSV file and generates a cleaned report.
 
@@ -193,8 +190,6 @@ def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_
         df = df.with_columns(pl.lit(datetime.datetime.now()).alias("Date_Updated"))
 
         df = df.with_columns(pl.lit(client_id).alias("Client_id"))
-
-        table_columns = DB.get_column_names(table_name)
 
         df = sync_dataframe_with_table(table_columns, df)
         df.write_csv(output_csv_data_path)

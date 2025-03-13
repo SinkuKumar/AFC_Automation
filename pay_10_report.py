@@ -10,7 +10,7 @@ from utils.selenium_driver import SeleniumDriver
 from utils.extract_transform import pay_10_report_data_transformation
 from datetime import datetime
 
-client_ids = [3671]
+client_ids = [3681]
 report_from_date = '01/01/2022'  # MM/DD/YYYY format
 report_to_date =  get_yesterdays_date()   # MM/DD/YYYY format
 
@@ -32,12 +32,12 @@ selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR, wind
 driver = selenium.setup_driver()
 
 load_dotenv()
-DB = PyODBCSQL()
+db = PyODBCSQL()
 
 def web_workflow():
     try:
         print(f'Web Workflow started for client : {client_id}')
-        experity = ExperityBase(driver)
+        experity = ExperityBase(driver, 300)
     
         experity.open_portal(EXPERITY_URL)
         experity.login(username, password)
@@ -47,7 +47,7 @@ def web_workflow():
         experity.select_report_date_range(report_from_date, report_to_date)
         experity.run_report()
         experity.download_report('CSV')
-        file_operation.wait_for_download(REPORT_NAME, DOWNLOAD_DIR)
+        file_operation.wait_for_download(REPORT_NAME, DOWNLOAD_DIR, 500)
         close_other_windows(driver)
         experity.logout()
 
@@ -67,17 +67,18 @@ def data_workflow():
         print(f'Data transformation and Records insertion process started for client : {client_id}')
         input_csv_file = os.path.join(DOWNLOAD_DIR, download_csv_file_rename)
         output_csv_file = os.path.join(DOWNLOAD_DIR, transformed_csv_file_name)
-        pay_10_report_data_transformation(input_csv_file, output_csv_file, TABLE_NAME, client_id)
+        table_columns = db.get_column_names(TABLE_NAME)
+        pay_10_report_data_transformation(input_csv_file, output_csv_file, table_columns, client_id)
         file_operation.move_files_only(DOWNLOAD_DIR, date_folder)
-        DB.truncate_table(TABLE_NAME)
-        DB.csv_bulk_insert(output_csv_file, TABLE_NAME)
+        db.truncate_table(TABLE_NAME)
+        db.csv_bulk_insert(output_csv_file, TABLE_NAME)
         print(f'Data transformation and Records insertion completed for client : {client_id}')
         logging.info('Database workflow completed!')
     except Exception as e:
         print(e)
         logging.error(f'An unexpected error occurred during the ETL process: {e}', exc_info=True)
 
-user_credentials = DB.get_users_credentials(client_ids)
+user_credentials = db.get_users_credentials(client_ids)
 
 for client_id, username, password in user_credentials:
     TABLE_NAME = f'PAY_10_Staging_{client_id}'
@@ -93,6 +94,6 @@ for client_id, username, password in user_credentials:
         current_date = datetime.today().strftime('%Y-%m-%d')
         for i in range(1,6):
             query = f"exec [Py_AFC_Pay_10] {client_id},'Pay_10',{i},{current_date}"
-            DB.execute_query(query)
+            db.execute_query(query)
 logging.info('Automation run Finished. Please review the results.')
 print('\nAutomation run Finished. Please review the results.')

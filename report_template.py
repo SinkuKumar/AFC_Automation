@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase, close_other_windows
 from utils import file_folder
-from utils.reports import Reports
+from utils.reports_base import Reports
 
 BROWSER = 'chrome'
 TIME_OUT = 300

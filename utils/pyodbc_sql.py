@@ -37,17 +37,26 @@ class PyODBCSQL:
         :bulk_insert_csv_sql(self, file_path: str, staging_table_name: str, client_id: str) -> None:
     """
 
-    def __init__(self):
+    def __init__(self, server, database, username, password):
         """
         Initializes the MSSQLDatabase class.
+
+        :param server: MS-SQL host address.
+        :type server: str
+        :param database: The name of the database.
+        :type database: str
+        :param username: The username for the SQL server.
+        :type username: str
+        :param password: The password for the SQL server.
+        :type password: str
 
         :return: None
         :rtype: None
         """
-        self.server = os.getenv("SQL_SERVER")
-        self.database = os.getenv("SQL_DATABASE")
-        self.username = os.getenv("SQL_USERNAME")
-        self.password = os.getenv("SQL_PASSWORD")
+        self.server = server # os.getenv("SQL_SERVER")
+        self.database = database # os.getenv("SQL_DATABASE")
+        self.username = username # os.getenv("SQL_USERNAME")
+        self.password = password# os.getenv("SQL_PASSWORD")
         self.conn = None
 
     def execute_query(self, query: str) -> list[tuple[str, str]]:

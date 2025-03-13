@@ -1,7 +1,9 @@
 import logging
 import datetime
 import polars as pl
-from datetime import datetime
+
+from utils.pyodbc_sql import PyODBCSQL
+DB = PyODBCSQL()
 
 def clean_currency_column(df: pl.DataFrame, column_names: str | list[str], decimals: int = 2) -> pl.DataFrame:
     """
@@ -63,6 +65,36 @@ def drop_all_null_rows(frame: pl.DataFrame | pl.LazyFrame) -> pl.DataFrame | pl.
 
     return frame.filter(~pl.all_horizontal(pl.all().is_null()))
 
+def sync_dataframe_with_table(table_columns: list, df: pl.DataFrame) -> pl.DataFrame:
+        """
+        Aligns a Polars DataFrame with a database table by ensuring it has the same columns.
+        Any extra columns in the DataFrame are removed, and missing columns are added with NULL values.
+
+        Args:
+            table_columns (list): The column names of the database table.
+            df (pl.DataFrame): The Polars DataFrame to align.
+
+        Returns:
+            pl.DataFrame: A modified DataFrame that matches the database table schema.
+        """
+        try:            
+            table_columns_lower = {col.lower(): col for sublist in table_columns for col in sublist}
+            df_columns_lower = {col.lower(): col for col in df.columns}
+
+            missing_columns = set(table_columns_lower.keys()) - set(df_columns_lower.keys())
+
+            for col_lower in missing_columns:
+                df = df.with_columns(pl.lit(None).alias(table_columns_lower[col_lower]))
+
+            flat_table_columns = [col for sublist in table_columns for col in sublist]
+            df = df.select(flat_table_columns)
+
+            logging.info("Aligned DataFrame to match database table and dataframe columns")
+            return df
+
+        except Exception as e:
+            logging.error(f"Error aligning DataFrame: {e}")
+            raise
 
 def fin_25_report_data_transformation(input_csv_data_file: str, output_csv_data_path: str, client_id: int) -> None:
     """
@@ -106,7 +138,7 @@ def fin_25_report_data_transformation(input_csv_data_file: str, output_csv_data_
         )
 
         df = df.drop(["split_key_value", "Proc_Code"])
-        df = df.rename({"new_proc_code":"proc_code"})
+        df = df.rename({"new_proc_code": "proc_code"})
 
         df = df.with_columns(pl.lit(client_id).alias("client_id"))
         df = clean_currency_column(df, ["Total_Charge", "Copay_Paid", "Curr_Pay_Amt", "Other_Paid", "Total_Adj", "Crg_Balance", "proc_amount"])
@@ -122,16 +154,16 @@ def fin_25_report_data_transformation(input_csv_data_file: str, output_csv_data_
         logging.error("Error occurred during data transformation.")
         raise
 
-def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_path: str, client_id: int) -> None:
+def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_path: str, table_name, client_id: int) -> None:
     """
     Processes a CSV file and generates a cleaned report.
 
     This function performs the following operations:
     - Reads the CSV into a Polars DataFrame with specified Columns.
-    - Removes rows where all columns contain only null (None) values
+    - Removes rows where all columns contain only null (None) values.
     - Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
     - Cleans currency columns using `clean_currency_column`.
-    - Adds a new column `updated_date` with the current date.
+    - Adds a new column `Date_Updated` with the current date and time.
     - Converts `Svc_Date` to a date.
     - Adds a new column `Client_id` with the provided client ID.
     - Writes the cleaned DataFrame to an output CSV file.
@@ -158,9 +190,13 @@ def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_
         )
 
         df = df.with_columns(pl.col("Svc_Date").str.to_date(format="%m/%d/%Y", strict=False))
+        df = df.with_columns(pl.lit(datetime.datetime.now()).alias("Date_Updated"))
 
         df = df.with_columns(pl.lit(client_id).alias("Client_id"))
 
+        table_columns = DB.get_column_names(table_name)
+
+        df = sync_dataframe_with_table(table_columns, df)
         df.write_csv(output_csv_data_path)
         logging.info("Data transformation process completed.")
     except Exception as e:

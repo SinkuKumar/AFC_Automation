@@ -170,65 +170,6 @@ def wait_for_download(report_name: str, download_directory: str, timeout: int = 
         logging.critical(f"Unexpected error occurred: {e}", exc_info=True)
         raise
 
-def move_file(file_path: str, base_directory: str, client_id: str=None):
-    """
-    Moves a file into a subfolder named with the current date inside the given base directory.
-    Optionally, the file can be renamed to include the client ID before the file extension.
-
-    Process:
-        - Creates a folder named with the current date (format: YYYY_MM_DD) inside `base_directory`.
-        - Moves `file_path` into this folder.
-        - If `client_id` is provided, appends `_clientid` to the filename before the extension.
-
-    Args:
-        file_path (str): full path of the file to be moved.
-        base_directory (str): path to the base directory where the dated folder should be created.
-        client_id (str, optional (default=None)): optional client ID to append to the file name before the file extension.
-
-    Returns:
-        None
-
-    Raises:
-        Exception if the file move operation fails.
-
-    Example:
-        file_path = '/path/to/data.csv'
-        base_directory = '/new/location'
-        client_id = '12345'
-
-        It will be moved to:
-            /new/location/2025_02_28/data_12345.csv
-
-        If `client_id` is not provided:
-            /new/location/2025_02_28/data.csv
-    """
-    today_date = datetime.today().strftime("%Y_%m_%d")
-
-    folder_path = os.path.join(base_directory, today_date)
-
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
-        logging.info(f"Directory '{folder_path}' created successfully.")
-    else:
-        logging.info(f"Directory '{folder_path}' already exists.")
-
-    file_name = os.path.basename(file_path)
-    name, ext = os.path.splitext(file_name)
-
-    if client_id:
-        new_file_name = f"{name}_{client_id}{ext}"
-    else:
-        new_file_name = file_name
-
-    new_file_path = os.path.join(folder_path, new_file_name)
-
-    try:
-        shutil.move(file_path, new_file_path)
-        logging.info(f"File '{file_name}' moved to '{new_file_path}' successfully.")
-    except Exception as e:
-        logging.error(f"An error occurred while moving the file '{file_path}' to '{new_file_path}': {e}")
-        raise
-
 def rename_file_or_folder(old_name: str, new_name: str) -> None:
     """
     Renames a file or folder from `old_name` to `new_name`.
@@ -258,4 +199,79 @@ def rename_file_or_folder(old_name: str, new_name: str) -> None:
 
     except (FileNotFoundError, FileExistsError, PermissionError, OSError) as e:
         logging.error(f"Failed to rename from {old_name} to {new_name}.")
+        raise
+
+def move_path(source: str, destination: str) -> None:
+    """
+    Moves a file or folder from the source path to the destination path.
+
+    If the destination is an existing directory, the source will be moved inside it. 
+    If the destination path does not exist, it will be created.
+
+    Args:
+        source (str): The path of the file or directory to move.
+        destination (str): The target path where the file or directory should be moved.
+
+    Raises:
+        FileNotFoundError: If the source file or directory does not exist.
+        PermissionError: If the process lacks the necessary permissions.
+        Exception: If any other unexpected error occurs during the move operation.
+    """
+    try:
+        if not os.path.exists(source):
+            raise FileNotFoundError(f"Source path does not exist: {source}")
+
+        os.makedirs(os.path.dirname(destination), exist_ok=True)
+
+        shutil.move(source, destination)
+        logging.info(f"Successfully moved source path to destination path")
+
+    except FileNotFoundError as e:
+        logging.error(f"Error: {e}")
+        raise
+    except PermissionError as e:
+        logging.error(f"Permission error: {e}")
+        raise
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}")
+        raise
+
+def move_files_only(source_folder: str, destination_folder: str) -> None:
+    """
+    Moves all files (but not subfolders) from the source folder to the destination folder.
+
+    Args:
+        source_folder (str): The folder containing files to be moved.
+        destination_folder (str): The folder where the files should be moved.
+
+    Raises:
+        FileNotFoundError: If the source folder does not exist.
+        PermissionError: If the process lacks necessary permissions.
+        Exception: If any other unexpected error occurs.
+    """
+    try:
+        if not os.path.exists(source_folder):
+            raise FileNotFoundError(f"Source folder does not exist: {source_folder}")
+
+        if not os.path.exists(destination_folder):
+            os.makedirs(destination_folder)
+
+        for item in os.listdir(source_folder):
+            source_path = os.path.join(source_folder, item)
+            destination_path = os.path.join(destination_folder, item)
+
+            if os.path.isfile(source_path):
+                shutil.move(source_path, destination_path)
+                logging.info(f"Moved files form Temporary folder to All files folder")
+
+        logging.info("All files have been moved successfully.")
+
+    except FileNotFoundError as e:
+        logging.error(f"Error: {e}")
+        raise
+    except PermissionError as e:
+        logging.error(f"Permission error: {e}")
+        raise
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}")
         raise

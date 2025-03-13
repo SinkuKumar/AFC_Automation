@@ -1,3 +1,7 @@
+# User folders and files
+Temp_Downloads/
+Downloads/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -185,3 +189,8 @@ cython_debug/
 Downloaded Reports/
 Screenshots/
 error_log.txt
+
+
+# Personal reference files
+reportDetailsAndUserDetailsStructure.js
+mallik_personal_reports.py

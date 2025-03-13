@@ -7,12 +7,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from utils import error_messages
 
-# Configure logging
-LOG_FILE = "error_log.txt"
-logging.basicConfig(filename=LOG_FILE, level=logging.ERROR, 
-                    format="%(asctime)s - %(levelname)s - %(message)s")
-
-
 class SeleniumException(Exception):
     """Custom exception for Selenium errors with suppressed stack trace."""
     
@@ -25,6 +19,10 @@ class SeleniumException(Exception):
 
 if __name__ == "__main__":
     # Example usage
+    # Configure logging
+    LOG_FILE = "error_log.txt"
+    logging.basicConfig(filename=LOG_FILE, level=logging.ERROR, 
+                        format="%(asctime)s - %(levelname)s - %(message)s")
     try:
         raise SeleniumException("Browser crashed unexpectedly!")
     except SeleniumException as e:

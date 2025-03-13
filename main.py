@@ -1,47 +1,81 @@
-import os
 from datetime import datetime
-import traceback
-from dotenv import load_dotenv
+# from cnt_27 import download_report, get_logger_name
+import cnt_27, fin_18, cnt_19
 
-from any_report_download import complete_report, get_logger_name
+from utils.sql_operations import MSSQLDatabase
 
-load_dotenv('.env')
+cnt_27_start_date = "01/01/2025"
+cnt_27_end_date = datetime.now().strftime("%m/%d/%Y")
+fin_18_start_date = "01/01/2025"
+fin_18_end_date = datetime.now().strftime("%m/%d/%Y")
+cnt_19_from_date = '01/01/2025'
+cnt_19_end_date = datetime.now().strftime("%m/%d/%Y")
+'''
+The structure of report_details and user details are present in the
+`reportDetailsAndUserDetailsStructures.js` file.
+'''
+# report_info ={}
+# report_info['report_names'] = {
+#     # "ADJ_11" : [start_date, start_date],
+#     # 'FIN_18' : [start_date, start_date],
+#     # "CNT_27" : [start_date, start_date],
+#     # "PAY_41" : [start_date, start_date],
+#     # "PAT_2" : [start_date, start_date],
+#     "CNT_19" : [cnt_27_start_date, cnt_27_start_date]
+#     }
+# report_details['download_dir'] = os.path.join(os.getcwd(), 'Downloaded Reports', today)
 
-today = datetime.now().strftime("%Y_%m_%d")
+# Put the name of the required clients here.
+specific_clients = [3681, 3671, 16]
 
-browser = "chrome"
+browser_name = "chrome"
 
-# TODO: remove this in production
-user_info = {}
-user_info['client_id'] = os.getenv("CLIENT_ID")
-user_info["username"] = os.getenv('EXP_USERNAME')
-user_info["password"] = os.getenv('PASSWORD')
+'''
+User details is a dictionary.
+The keys of user details are the client_ids.
+The values are lists:
+    1. the first element is username for the client
+    2. the second element is password for the client
+'''
+sql = MSSQLDatabase()
+results = sql.execute_query("SELECT client_id, username, password FROM AFC_Password_Tbl WHERE Active = 1")
+specific_clients = [3681, 3671, 16]
+user_details = {}
 
-from_date, to_date = '02/02/2025', '02/02/2025'
+for result in results:
+    client_id, username, password = result
+    if client_id in specific_clients:
+        user_details[client_id] = [username, password]
 
-logger_inst = get_logger_name("report_dwnld")
+logger_inst = cnt_27.get_logger_name("mtd_reports")
 
-report_names_staging_tables = {
-    "CNT 27" : f"CNT_27_Temp_MTD_{user_info['client_id']}",
-    "FIN 18" : f"FIN_18_Temp_MTD_{user_info['client_id']}",
-    "ADJ 11" : f"ADJ_11_Temp_MTD_{user_info['client_id']}",
-    "PAY 41" : f"PAY_11_Temp_MTD_{user_info['client_id']}",
-    "CNT 19" : "CNT_19_Temp_MTD"
-}
+for specific_client in specific_clients:
+    cnt_27.download_report(specific_client = specific_client, 
+                           user_details = user_details,
+                           browser = browser_name,
+                           cnt_27_from_date = cnt_27_start_date,
+                           cnt_27_to_date = cnt_27_end_date,
+                           logger_instance=logger_inst,
+                           run_sp=True
+                           )
+    fin_18.download_report(specific_client = specific_client, 
+                           user_details = user_details,
+                           browser = browser_name,
+                           fin_18_from_date = fin_18_start_date,
+                           fin_18_to_date = fin_18_end_date,
+                           logger_instance=logger_inst,
+                           run_sp=True
+                           )
 
-report_info ={}
-report_info['download_dir'] = os.path.join(os.getcwd(), 'Downloaded Reports', today)
+    cnt_19.download_report(specific_client = specific_client,
+                           user_details = user_details,
+                           browser = browser_name,
+                           cnt_19_from_date = cnt_19_from_date,
+                           cnt_19_to_date = cnt_19_end_date,
+                           logger_instance = logger_inst,
+                           run_sp = True
+                           )
 
-for report_name, staging_table in report_names_staging_tables.items():
-    report_info['report_name'] = report_name
-    print(report_name, staging_table)
-
-    complete_report(staging_table_name = report_names_staging_tables[report_info['report_name']],
-                    report_info = report_info,
-                    user_info = user_info,
-                    browser = browser,
-                    from_date = from_date,
-                    to_date = to_date,
-                    logger_instance=logger_inst,
-                    run_sp = True
-                    )
+print("=x="*16)
+print("Process Completed, Please check the email or logs.")
+print("=x="*16)

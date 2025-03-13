@@ -11,6 +11,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait, Select
+from utils.file_folder import create_directories
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -120,7 +121,7 @@ class ExperityBase:
             raise SeleniumException(f"Code: {em.PORTAL_ISSUE} | Message : Error while opening Experity portal")
     
     @retry_on_exception()
-    def get_portal_url(self) -> str:
+    def experity_version(self) -> str:
         """
         Extract the portal URL segment from the current browser URL.
 
@@ -178,13 +179,18 @@ class ExperityBase:
             logging.info("Clicking 'Submit' button to log in.")
             self.wait.until(EC.element_to_be_clickable((By.ID,'btnSubmit'))).click()
             self.wait.until(page_loads)
+
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            screenshots_folder = os.path.join(project_root, "Screenshots")
+            create_directories([screenshots_folder])
+
             if self.driver.title == "PVM > Login":
                 """
                 Verify if the username or password is incorrect, and capture a screenshot if necessary.
                 """
                 if self.driver.find_element(By.ID, "lblErrorMessage").text == "Invalid User Credentials":
-                    # Check for Invalid username or password
-                    self.driver.find_element(By.ID, "ctl00").screenshot(f"Screenshots/Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                    screenshot_path = os.path.join(screenshots_folder, f"Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                    self.driver.find_element(By.ID, "ctl00").screenshot(screenshot_path)
                     raise Exception("Invalid user credentials.")
 
             elif self.driver.title == "PVM > User Profile":
@@ -197,11 +203,13 @@ class ExperityBase:
                     error_message = ""
 
                 if error_message == "You are required to change your password.":
-                    self.driver.find_element(By.ID, "pnlPassword").screenshot(f"Screenshots/Password_Change_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                    screenshot_path = os.path.join(screenshots_folder, f"Password_Change_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                    self.driver.find_element(By.ID, "pnlPassword").screenshot(screenshot_path)
                     raise Exception("Password change required")
 
                 elif "Your password is about to expire on" in error_message:
-                    self.driver.find_element(By.ID, "pnlPassword").screenshot(f"Screenshots/Password_Expire_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                    screenshot_path = os.path.join(screenshots_folder, f"Password_Expire_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                    self.driver.find_element(By.ID, "pnlPassword").screenshot(screenshot_path)
                     logging.warning(error_message)
                     
             logging.info("Login process completed successfully.")
@@ -991,7 +999,7 @@ if __name__ == "__main__":
     try:
         experity = ExperityBase(driver)
         experity.open_portal(EXPERITY_URL)
-        PORTAL_URL = experity.get_portal_url()
+        PORTAL_URL = experity.experity_version()
         experity.login(username, password)
         experity.navigate_to(EXPERITY_URL, PORTAL_URL, "Reports")
         experity.logout()

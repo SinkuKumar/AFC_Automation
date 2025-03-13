@@ -15,7 +15,8 @@ This module contains the PyODBCSQL class, which allows executing SQL queries and
 
 import os
 import pyodbc
-
+import logging
+import utils.error_messages as em
 
 class PyODBCSQL:
     """
@@ -70,12 +71,11 @@ class PyODBCSQL:
         """
 
         self.conn = pyodbc.connect(
-            f"""DRIVER={{ODBC Driver 18 for SQL Server}};SERVER={self.server};DATABASE={self.database};
+            f"""DRIVER={{SQL Server}};SERVER={self.server};DATABASE={self.database};
                                 UID={self.username};PWD={self.password}""",
             TrustServerCertificate="yes",
         )
         
-      
         cursor = self.conn.cursor()
         cursor.execute(query)
 
@@ -102,98 +102,91 @@ class PyODBCSQL:
         column_names_query = f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table_name}';"
         return self.execute_query(column_names_query)
     
-    def bulk_insert_data(self, file_type, csv_file_path, table_name):
+    def get_users_credentials(self, client_ids: list[int]) -> list[tuple[str, str]]:
         """
-        Bulk insert data from a CSV file into a SQL table.
+        Fetches the usernames and passwords of active clients from the MSSQL database.
 
-        :param file_type: The type of file to insert.
-        :type file_type: str
-        :param csv_file_path: The path to the CSV file.
-        :type csv_file_path: str
-        :param table_name: The name of the SQL table.
-        :type table_name: str
-        """
-        query = f"""
-        BULK INSERT {table_name}
-        FROM '{csv_file_path}'
-        WITH
-        (
-            FORMAT = '{file_type}',
-            FIELDTERMINATOR = ',',
-            ROWTERMINATOR = '\\n',
-            FIRSTROW = 2,
-            TABLOCK
-        );
-        """
-        self.execute_query(query)
+        Args:
+            client_ids (List[int]): List of client IDs whose credentials need to be fetched.
 
-    def delete_table_data(self, table_name: str) -> None:
-        """
-        Deletes the data from the specified table.
+        Returns:
+            list[tuple[str, str]]: A list of tuples, where each tuple contains (Username, Password).
 
-        :param table_name: The name of the table to delete the data from.
-        :type table_name: str
+        Raises:
+            ValueError: If the client_ids list is empty.
+            Exception: If there is a database error.
         """
-        delete_query = f"TRUNCATE TABLE {table_name};"
-        self.execute_query(delete_query)
+        if not client_ids:
+            logging.warning("Empty client_ids list provided.")
+            raise ValueError("Client ID list cannot be empty.")
+        
+        try:
+            ids_str = ','.join(map(str, client_ids))
+            query = f"SELECT client_id, Username, Password FROM bi_afc.dbo.afc_password_tbl WHERE active = 1 and client_id IN ({ids_str})"
+            results = self.execute_query(query)
+            logging.info("Successfully retrieved user credentials.")
+            return [(row[0], row[1], row[2]) for row in results]
 
-    def insert_data(self, data, table_name, chunk_size=1000, empty_table=False):
-        """
-        Insert data into a SQL table.
-    
-        :param data: The data to insert.
-        :type data: list[tuple]
-        :param table_name: The name of the SQL table.
-        :type table_name: str
-        :param chunk_size: The number of rows to insert at a time.
-        :type chunk_size: int
-        :param empty_table: Whether to empty the table before inserting the data.
-        :type empty_table: bool
-        """
-        # Get the column names from the data
-        column_names = data[0]
-        data = data[1:]
-    
-        # Empty the table if specified
-        if empty_table:
-            print(f"Emptying the table {table_name}...")
-            self.delete_table_data(table_name)
-            print(f"Table {table_name} emptied.")
-    
-        # Create the query to insert the data
-        query = f"INSERT INTO {table_name} ({', '.join(column_names)}) VALUES "
-    
-        # Insert the data in chunks
-        for i in range(0, len(data), chunk_size):
-            chunk = data[i:i + chunk_size]
-    
-            # Format values correctly as tuples
-            values = ", ".join([f"({', '.join(map(repr, row))})" for row in chunk])
-            chunk_query = query + values
-    
-            # print(f"Inserting chunk {i // chunk_size + 1} into {table_name}...")
-            # print(f"SQL Query: {chunk_query}\n")  # Print the full SQL query
-            self.execute_query(chunk_query)
-            print(f"Chunk {i // chunk_size + 1} inserted.")
-    
-        print(f"All data inserted into {table_name}.")
-    
+        except pyodbc.Error as e:
+            logging.error(f"Database error occurred while fecthing users credentials: {e}")
+            raise
 
-    # Use insert_data method to insert data from a csv file
-    def insert_csv_data(self, table_name, csv_file_path, empty_table=False):
+    def csv_bulk_insert(self, output_csv_path: str, table_name: str) -> None:
         """
-        Insert data from a CSV file into a SQL table.
+        Load data from a CSV file into a database table.
 
-        :param empty_table: Whether to empty the table before inserting the data.
-        :type empty_table: bool
-        :param table_name: The name of the SQL table.
-        :type table_name: str
-        :param csv_file_path: The path to the CSV file.
-        :type csv_file_path: str
+        This function reads data from a CSV file and inserts it into the specified database table 
+        using the provided connection string.
+
+        Args:
+            output_csv_path (str): The path to the CSV file containing the data to be loaded.
+            table_name (str): The name of the target database table.
+
+        Returns:
+            None
         """
-        with open(csv_file_path, "r") as file:
-            data = [line.strip().split(",") for line in file.readlines()]
-            self.insert_data(data, table_name)
+        try:
+            sql = f"""
+            BULK INSERT {table_name}
+            FROM '{output_csv_path}'
+            WITH (
+                FORMAT = 'CSV',
+                FIELDTERMINATOR = ',', 
+                ROWTERMINATOR = '\n',
+                FIRSTROW = 2
+            );
+            """
+            self.execute_query(sql)
+            logging.info(f"Records inserted successfully.")
+        except pyodbc.Error as e:
+            logging.error(f"Code: {em.DATA_LOAD_ISSUE} | Message : Database operation failed while bulk insert into database.")
+            raise
+ 
+    def delete_table_data(self, table_name: str, client_id: int) -> None:
+        """
+        Deletes all data from the specified database table.
+
+        This method executes a SQL `TRUNCATE TABLE` statement to remove all rows 
+        from the given table. 
+
+        Args:
+            table_name (str): The name of the table from which data should be deleted.
+            client_id (int): Client ID for which the data to be deleted.
+
+        Returns:
+            None
+            
+        Raises:
+            pyodbc.Error: If an error occurs while executing the SQL query.
+        """
+        try:
+            query = f"DELETE FROM {table_name} where Client_id = {client_id}"
+            self.execute_query(query)
+            logging.info(f"Successfully deleted table data for client : {client_id}.")
+
+        except pyodbc.Error as e:
+            logging.error(f"Database error occurred while deleting the table data: {e}")
+            raise
 
 if __name__ == "__main__":
     import os

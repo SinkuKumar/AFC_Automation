@@ -5,8 +5,7 @@ from dotenv import load_dotenv
 import logging
 
 from utils.selenium_driver import SeleniumDriver
-from utils.experity_base import ExperityBase
-from utils.experity_base import close_other_windows
+from utils.experity_base import ExperityBase, close_other_windows
 from utils.file_folder import FileOperations
 
 def complete_report(staging_table_name: str,
@@ -84,7 +83,9 @@ def complete_report(staging_table_name: str,
         experity.login(username, password)
         logger_instance.info("Logged in")
 
-        experity_version = experity.get_portal_url()
+        experity_version = experity.experity_version()
+        print(experity_version)
+
         logger_instance.info("Got portal URL")
 
         experity.navigate_to(experity_url, experity_version, "Reports")
@@ -97,7 +98,6 @@ def complete_report(staging_table_name: str,
         logger_instance.info("Date report range method called")
 
         experity.select_logbook_status(uncheck_all_check_all)
-
         experity.select_financial_class(uncheck_all_check_all)
         experity.select_arrival_status(uncheck_all_check_all)
 

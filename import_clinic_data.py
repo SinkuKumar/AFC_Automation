@@ -36,7 +36,7 @@ def get_clinic(client_id):
     experity = ExperityBase(driver)
     
     # Fetch credentials for the provided client_id
-    query = f"SELECT TOP 1 * FROM afc_password_tbl WHERE active = 1 AND client_id LIKE '%{client_id}%'"
+    query = f"SELECT TOP 1 * FROM afc_password_tbl WHERE active = 1 AND client_id = {client_id}"
     credentials = sql_server.execute_query(query)
     
     if not credentials:
@@ -54,6 +54,7 @@ def get_clinic(client_id):
     
     # Append client_id to clinic data and insert into database
     clinic = [list(list(row) + [str(client_id)]) for row in clinic]
+    clinic[0][0] = 'clinic_id'
     clinic[0][-1] = 'Client_ID'
     sql_docker.insert_data(clinic, 'clinic')
 

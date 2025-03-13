@@ -92,7 +92,7 @@ class PyODBCSQL:
         """
         column_names_query = f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table_name}';"
         return self.execute_query(column_names_query)
-    
+
     def get_users_credentials(self, client_ids: list[int]) -> list[tuple[str, str]]:
         """
         Fetches the usernames and passwords of active clients from the MSSQL database.
@@ -110,7 +110,7 @@ class PyODBCSQL:
         if not client_ids:
             logging.warning("Empty client_ids list provided.")
             raise ValueError("Client ID list cannot be empty.")
-        
+
         try:
             ids_str = ','.join(map(str, client_ids))
             query = f"SELECT client_id, Username, Password FROM bi_afc.dbo.afc_password_tbl WHERE active = 1 and client_id IN ({ids_str})"
@@ -152,13 +152,12 @@ class PyODBCSQL:
         except pyodbc.Error as e:
             logging.error(f"Code: {em.DATA_LOAD_ISSUE} | Message : Database operation failed while bulk insert into database.")
             raise
- 
+
     def delete_table_data(self, table_name: str, client_id: int) -> None:
         """
-        Deletes all data from the specified database table.
+        Deletes all data for particular client_id from the specified database table.
 
-        This method executes a SQL `TRUNCATE TABLE` statement to remove all rows 
-        from the given table. 
+        This method executes a SQL `DELETE` statement to remove all rows of the particular client_id from the given table. 
 
         Args:
             table_name (str): The name of the table from which data should be deleted.
@@ -166,7 +165,7 @@ class PyODBCSQL:
 
         Returns:
             None
-            
+
         Raises:
             pyodbc.Error: If an error occurs while executing the SQL query.
         """
@@ -178,6 +177,32 @@ class PyODBCSQL:
         except pyodbc.Error as e:
             logging.error(f"Database error occurred while deleting the table data: {e}")
             raise
+
+    def truncate_table(self, table_name: str) -> None:
+        """
+        Deletes all data for particular client_id from the specified database table.
+
+        This method executes a SQL `DELETE` statement to remove all rows of the particular client_id from the given table. 
+
+        Args:
+            table_name (str): The name of the table from which data should be deleted.
+
+        Returns:
+            None
+
+        Raises:
+            pyodbc.Error: If an error occurs while executing the SQL query.
+        """
+        try:
+            query = f"TRUNCATE TABLE {table_name};"
+            self.execute_query(query)
+            logging.info(f"Successfully deleted table data.")
+
+        except pyodbc.Error as e:
+            logging.error(f"Database error occurred while deleting the table data: {e}")
+            raise
+
+        
 
 if __name__ == "__main__":
     import os

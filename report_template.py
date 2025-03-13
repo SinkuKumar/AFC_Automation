@@ -1,8 +1,6 @@
 from math import exp
 import os
-from re import M
 import time
-from turtle import down
 
 from dotenv import load_dotenv
 

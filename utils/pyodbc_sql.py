@@ -37,7 +37,7 @@ class PyODBCSQL:
         :bulk_insert_csv_sql(self, file_path: str, staging_table_name: str, client_id: str) -> None:
     """
 
-    def __init__(self, server, database, username, password):
+    def __init__(self):
         """
         Initializes the MSSQLDatabase class.
 

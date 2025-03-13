@@ -21,6 +21,8 @@ Note:
 :Author: Sinku Kumar
 """
 
+# TODO: Either remove setup_driver method or make the setup_chrome, setup_firefox, and setup_edge methods private.
+
 import os
 import sys
 from typing import Optional

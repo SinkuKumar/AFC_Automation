@@ -53,10 +53,10 @@ class PyODBCSQL:
         :return: None
         :rtype: None
         """
-        self.server = server # os.getenv("SQL_SERVER")
-        self.database = database # os.getenv("SQL_DATABASE")
-        self.username = username # os.getenv("SQL_USERNAME")
-        self.password = password# os.getenv("SQL_PASSWORD")
+        self.server = os.getenv("SQL_SERVER")
+        self.database = os.getenv("SQL_DATABASE")
+        self.username = os.getenv("SQL_USERNAME")
+        self.password = os.getenv("SQL_PASSWORD")
         self.conn = None
 
     def execute_query(self, query: str) -> list[tuple[str, str]]:

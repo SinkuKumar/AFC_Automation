@@ -16,7 +16,7 @@ from utils.file_folder import create_directories
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from utils import error_messages as em
-from utils.exception_usage import SeleniumException
+from utils.automation_exceptions import SeleniumException
 TIMESTAMP_IDENTIFIER = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 def page_loads(driver: WebDriver) -> bool:

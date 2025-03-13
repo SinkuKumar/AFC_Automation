@@ -8,8 +8,6 @@ from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase, close_other_windows
 from utils import file_folder
 
-# Not an actual implementation just to make the intellisense work during development
-
 class Reports:
     def __init__(self, driver, experity, experity_url, experity_version, report_export_type, download_directory, time_out):
         self.driver = driver
@@ -32,7 +30,7 @@ class Reports:
         file_folder.wait_for_download(report_name, self.download_directory, self.time_out)
         close_other_windows(self.driver)
 
-    def cnt_19(self, report_name, cnt_19_from_date, cnt_19_to_date, run_stored_proc = True):
+    def cnt_19(self, report_name, cnt_19_from_date, cnt_19_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(cnt_19_from_date, cnt_19_to_date)
@@ -40,11 +38,6 @@ class Reports:
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory, self.time_out)
         close_other_windows(self.driver)
-
-        if run_stored_proc:
-            print("-" * 16)
-            print(f"running stored procedure.")
-            print("-" * 16)
 
     def fin_25(self, report_name, fin_25_from_date, fin_25_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -57,7 +50,7 @@ class Reports:
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
 
-    def adj_11(self, report_name, adj_11_from_date, adj_11_to_date, run_stored_proc = True):
+    def adj_11(self, report_name, adj_11_from_date, adj_11_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(adj_11_from_date, adj_11_to_date)
@@ -66,12 +59,8 @@ class Reports:
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
-        if run_stored_proc:
-            print("running stored procedure")
-            print("-" * 16)
-            print("-" * 16)
 
-    def fin_18(self, report_name, fin_18_from_date, fin_18_to_date, run_stored_proc = True):
+    def fin_18(self, report_name, fin_18_from_date, fin_18_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(fin_18_from_date, fin_18_to_date)
@@ -80,13 +69,7 @@ class Reports:
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
 
-        if run_stored_proc:
-            print("-" * 16)
-            for count in range(1, 50):
-                print(f"running stored procedure, iteration: {count}")
-            print("-" * 16)
-
-    def pay_41(self, report_name, pay_41_from_date, pay_41_to_date, run_stored_proc = True):
+    def pay_41(self, report_name, pay_41_from_date, pay_41_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
@@ -96,13 +79,7 @@ class Reports:
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
 
-        if run_stored_proc:
-            print("-" * 16)
-            for count in range(1, 230):
-                print(f"running stored procedure, iteration: {count}")
-            print("-" * 16)
-
-    def pat_2(self, report_name, pay_41_from_date, pay_41_to_date, run_stored_proc = True):
+    def pat_2(self, report_name, pay_41_from_date, pay_41_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
@@ -110,8 +87,3 @@ class Reports:
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
-
-        if run_stored_proc:
-            print("-" * 16)
-            print("running stored procedure")
-            print("-" * 16)

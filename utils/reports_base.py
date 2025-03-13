@@ -8,8 +8,6 @@ from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase, close_other_windows
 from utils import file_folder
 
-# Not an actual implementation just to make the intellisense work during development
-
 class Reports:
     def __init__(self, driver, experity, experity_url, experity_version, report_export_type, download_directory, time_out):
         self.driver = driver
@@ -66,6 +64,25 @@ class Reports:
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(fin_18_from_date, fin_18_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def pay_41(self, report_name, pay_41_from_date, pay_41_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
+        self.experity.uncheck_all_check_all("freeunPaymentReasoncheckall", "freePaymentReasoncheck1")
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def pat_2(self, report_name, pay_41_from_date, pay_41_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)

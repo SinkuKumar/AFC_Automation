@@ -87,3 +87,79 @@ class Reports:
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+
+    def lab_01(self, report_name, pay_41_from_date, pay_41_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def xry_03(self, report_name, xry_03_from_date, xry_03_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(xry_03_from_date, xry_03_to_date)
+        self.experity.uncheck_all_check_all("freeunClinicListcheckall", "freeClinicListcheck1")
+        self.experity.include_x_rays_reviewed()
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def cht_02(self, report_name, cht_02_from_date, cht_02_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(cht_02_from_date, cht_02_to_date)
+        self.experity.uncheck_all_check_all("freeunClinicListcheckall", "freeClinicListcheck1")
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def med_01(self, report_name, med_01_from_date, med_01_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(med_01_from_date, med_01_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def per_02(self, report_name, per_02_from_date, per_02_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(per_02_from_date, per_02_to_date)
+        self.experity.uncheck_all_check_all("freeunPhyListcheckall", "freePhyListcheck1")
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def pat_20(self, report_name, pat_20_from_date, pat_20_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(pat_20_from_date, pat_20_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def ccr_02(self, report_name, ccr_02_from_date, ccr_02_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(ccr_02_from_date, ccr_02_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def ccr_03(self, report_name, ccr_03_from_date, ccr_03_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(ccr_03_from_date, ccr_03_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)

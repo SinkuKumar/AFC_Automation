@@ -175,7 +175,7 @@ def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_
     """
     try:
         logging.info("Data transformation process started.")
-        df = pl.read_csv(input_csv_data_file, columns=["Payer_Class", "Payer_Name", "Pat_Name", "Svc_Date", "CPT_Code", "textbox18", "Paid_Amt", "Adj_Amt", "textbox22"])
+        df = pl.read_csv(input_csv_data_file, columns=["Payer_Class", "Payer_Name", "Pat_Name", "Svc_Date", "CPT_Code", "textbox18", "Paid_Amt", "Adj_Amt", "textbox22"],  infer_schema_length=10000)
         df = drop_all_null_rows(df)
 
         df = df.rename({"textbox18":"Charge_Amt", "textbox22":"Net_AR"})

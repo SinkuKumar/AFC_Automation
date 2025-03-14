@@ -177,7 +177,6 @@ class PyODBCSQL:
             client_ids_result = self.execute_query("select client_id from bi_afc.dbo.afc_password_tbl where active = 1;")
             client_ids = [client_id[0] for client_id in client_ids_result]
             logging.info("Successfully retrieved %d Client IDs.", len(client_ids))
-            print("Successfully retrieved %d Client IDs.", len(client_ids))
             return client_ids
         except Exception as e:
             logging.error("Failed to retrieve Client IDs: %s", str(e))
@@ -202,12 +201,10 @@ class PyODBCSQL:
 
             if table_exists == 1:
                 logging.info("Table '%s' already exists.", table_name)
-                print("Table '%s' already exists.", table_name)
             elif table_exists == 0:
                 logging.info("Table '%s' does not exist. Creating table...", table_name)
                 self.execute_query(create_table_query)
                 logging.info("Table '%s' has been successfully created.", table_name)
-                print("Table '%s' has been successfully created.", table_name)
         except Exception as e:
             logging.error("Error checking or creating table '%s': %s", table_name, str(e))
             raise

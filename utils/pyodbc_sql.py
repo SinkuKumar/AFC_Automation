@@ -161,6 +161,56 @@ class PyODBCSQL:
         except pyodbc.Error as e:
             logging.error(f"Code: {em.DATA_LOAD_ISSUE} | Message : Database operation failed while bulk insert into database.")
             raise
+    
+    def get_all_active_client_ids(self) -> None:
+        """
+        Retrieves all active Client IDs from the Database table.
+
+        Args:
+            None
+        
+        Returns:
+            list: A list of active Client IDs.
+        """
+        try:
+            logging.info("Fetching all Client IDs from Databse table.")
+            client_ids_result = self.execute_query("select client_id from bi_afc.dbo.afc_password_tbl where active = 1;")
+            client_ids = [client_id[0] for client_id in client_ids_result]
+            logging.info("Successfully retrieved %d Client IDs.", len(client_ids))
+            print("Successfully retrieved %d Client IDs.", len(client_ids))
+            return client_ids
+        except Exception as e:
+            logging.error("Failed to retrieve Client IDs: %s", str(e))
+            raise
+
+    def check_and_create_table(self, table_name, create_table_query):
+        """
+        Checks if a table exists in the database and creates it if it does not exist.
+
+        Args:
+            table_name (str): The name of the table to check.
+            create_table_query (str): The SQL query to create the table if it does not exist.
+
+        Returns:
+            None
+        """
+        try:
+            logging.info("Checking if table '%s' exists.", table_name)
+            
+            result = self.execute_query(f"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '{table_name}';")
+            table_exists = result[0][0]
+
+            if table_exists == 1:
+                logging.info("Table '%s' already exists.", table_name)
+                print("Table '%s' already exists.", table_name)
+            elif table_exists == 0:
+                logging.info("Table '%s' does not exist. Creating table...", table_name)
+                self.execute_query(create_table_query)
+                logging.info("Table '%s' has been successfully created.", table_name)
+                print("Table '%s' has been successfully created.", table_name)
+        except Exception as e:
+            logging.error("Error checking or creating table '%s': %s", table_name, str(e))
+            raise
 
     def delete_table_data(self, table_name: str, client_id: int) -> None:
         """

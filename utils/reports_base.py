@@ -1,5 +1,6 @@
 import sys
 import os
+from datetime import datetime
 
 # Add the project's root directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -159,6 +160,57 @@ class Reports:
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(ccr_03_from_date, ccr_03_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def rev_16(self, report_name, rev_16_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        try:
+             # Convert the input date string to a datetime object
+            input_date = datetime.strptime(rev_16_date, "%Y/%m/%d")
+
+            # Format the datetime object as "Month Year"
+            formatted_date = input_date.strftime("%B %Y")
+            self.experity.select_month(month = formatted_date)
+        except ValueError:
+            print("Invalid date format. Please provide a valid YYYY/MM/DD date.")
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def pay_4(self, report_name, pay_4_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        try:
+             # Convert the input date string to a datetime object
+            input_date = datetime.strptime(pay_4_date, "%Y/%m/%d")
+
+            # Format the datetime object as "Month Year"
+            formatted_date = input_date.strftime("%B %Y")
+            self.experity.select_month(month = formatted_date)
+        except ValueError:
+            print("Invalid date format. Please provide a valid YYYY/MM/DD date.")
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)
+
+    def adj_4(self, report_name, adj_4_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        try:
+             # Convert the input date string to a datetime object
+            input_date = datetime.strptime(adj_4_date, "%Y/%m/%d")
+
+            # Format the datetime object as "Month Year"
+            formatted_date = input_date.strftime("%B %Y")
+            self.experity.select_month(month = formatted_date)
+        except ValueError:
+            print("Invalid date format. Please provide a valid YYYY/MM/DD date.")
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)

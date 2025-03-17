@@ -82,6 +82,12 @@ ccr_03_report_name = 'CCR_03'
 ccr_03_from_date = cnt_27_from_date
 ccr_03_to_date = cnt_27_to_date
 
+rev_16_report_name = 'REV_16'
+rev_16_date = '2025/01/01' # Give the date properly, in YYYY/MM/DD format.
+
+adj_4_report_name = 'ADJ_4'
+adj_4_date = '2025/01/01' # Give the date properly, in YYYY/MM/DD format.
+
 print(f'Running for Client {CLIENT_ID}')
 
 DOWNLOAD_DIRECTORY = os.path.join(os.getcwd(), 'Temp_Downloads')
@@ -124,6 +130,9 @@ reports.pat_20(pat_20_report_name, pat_20_from_date, pat_20_to_date)
 
 reports.ccr_02(ccr_02_report_name, ccr_02_from_date, ccr_02_to_date)
 reports.ccr_03(ccr_03_report_name, ccr_03_from_date, ccr_03_to_date)
+
+reports.rev_16(rev_16_report_name, rev_16_date)
+reports.adj_4(adj_4_report_name, adj_4_date)
 
 time.sleep(1000)
 experity.logout()

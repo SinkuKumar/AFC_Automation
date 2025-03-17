@@ -8,11 +8,16 @@ from utils.pyodbc_sql import PyODBCSQL
 from utils.experity_base import ExperityBase, close_other_windows
 from utils.selenium_driver import SeleniumDriver
 from utils.extract_transform import pay_10_report_data_transformation
+from utils.create_table_queries import pay_10_create_query
 from datetime import datetime
 
-client_ids = [3671]
-report_from_date = '01/01/2022'  # MM/DD/YYYY format
-report_to_date =  get_yesterdays_date()   # MM/DD/YYYY format
+load_dotenv()
+db = PyODBCSQL()
+
+client_ids = db.get_all_active_client_ids()   # For all clients
+# client_ids = [3671, 3681, 16]               # For particular clients
+report_from_date = '01/01/2022'               # MM/DD/YYYY format
+report_to_date =  get_yesterdays_date()       # MM/DD/YYYY format
 
 REPORT_NAME = 'PAY_10'
 BROWSER = 'chrome'
@@ -26,19 +31,14 @@ file_operation.create_directories([date_folder, DOWNLOAD_DIR])
 
 logging.info(f"{'-'*30}")
 logging.info('  New Automation run started')
-print('New Automation Run Started...\n')
 logging.info(f"{'-'*30}")
 selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR, window_width=WINDOW_WIDTH, window_height= WINDOW_HEIGHT)
-driver = selenium.setup_driver()
-
-load_dotenv()
-DB = PyODBCSQL()
 
 def web_workflow():
     try:
         print(f'Web Workflow started for client : {client_id}')
-        experity = ExperityBase(driver)
-    
+        driver = selenium.setup_driver()
+        experity = ExperityBase(driver, 300)
         experity.open_portal(EXPERITY_URL)
         experity.login(username, password)
         PORTAL_URL = experity.experity_version()
@@ -47,7 +47,7 @@ def web_workflow():
         experity.select_report_date_range(report_from_date, report_to_date)
         experity.run_report()
         experity.download_report('CSV')
-        file_operation.wait_for_download(REPORT_NAME, DOWNLOAD_DIR)
+        file_operation.wait_for_download(REPORT_NAME, DOWNLOAD_DIR, 500)
         close_other_windows(driver)
         experity.logout()
 
@@ -67,17 +67,20 @@ def data_workflow():
         print(f'Data transformation and Records insertion process started for client : {client_id}')
         input_csv_file = os.path.join(DOWNLOAD_DIR, download_csv_file_rename)
         output_csv_file = os.path.join(DOWNLOAD_DIR, transformed_csv_file_name)
-        pay_10_report_data_transformation(input_csv_file, output_csv_file, TABLE_NAME, client_id)
+        db.check_and_create_table(TABLE_NAME, pay_10_create_query(TABLE_NAME))
+        table_columns = db.get_column_names(TABLE_NAME)
+        pay_10_report_data_transformation(input_csv_file, output_csv_file, table_columns, client_id)
+        db.truncate_table(TABLE_NAME)
+        db.csv_bulk_insert(output_csv_file, TABLE_NAME)
         file_operation.move_files_only(DOWNLOAD_DIR, date_folder)
-        DB.truncate_table(TABLE_NAME)
-        DB.csv_bulk_insert(output_csv_file, TABLE_NAME)
         print(f'Data transformation and Records insertion completed for client : {client_id}')
         logging.info('Database workflow completed!')
     except Exception as e:
         print(e)
         logging.error(f'An unexpected error occurred during the ETL process: {e}', exc_info=True)
 
-user_credentials = DB.get_users_credentials(client_ids)
+print('New Automation Run Started...\n')
+user_credentials = db.get_users_credentials(client_ids)
 
 for client_id, username, password in user_credentials:
     TABLE_NAME = f'PAY_10_Staging_{client_id}'
@@ -90,9 +93,9 @@ for client_id, username, password in user_credentials:
     status = web_workflow()
     if status:
         data_workflow()
-        current_date = datetime.today().strftime('%Y-%m-%d')
-        for i in range(1,6):
-            query = f"exec [Py_AFC_Pay_10] {client_id},'Pay_10',{i},{current_date}"
-            DB.execute_query(query)
+        current_date = datetime.today().strftime('%Y/%m/%d')
+        for i in range(1,7):
+            query = f"exec [Py_AFC_Pay_10] {client_id},'Pay_10',{i},'{current_date}'"
+            db.execute_query(query)
 logging.info('Automation run Finished. Please review the results.')
 print('\nAutomation run Finished. Please review the results.')

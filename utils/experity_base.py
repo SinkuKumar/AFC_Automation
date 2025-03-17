@@ -560,6 +560,18 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message: Unable to click 'Uncheck All' and select 'All' checkbox.")
 
+    def include_x_rays_reviewed(self):
+        """
+        Performs the action of clicking the `Include x-rays in 'reveiwed' status` button.
+        This method is used for XRY_03 reports.
+        """
+        try:
+            review_button = self.wait.until(EC.element_to_be_clickable((By.NAME, 'freeIncludeReviewedStatus' )))
+            review_button.click()
+            logging.info("Clicked include x-rays in reveiwed status button.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message: Unable to click include x-rays in reveiwed status button.")
+
     @retry_on_exception()
     def select_pm_report(self, category_name: str, subcategory_name: str, report_identifier: str) -> None:
         """

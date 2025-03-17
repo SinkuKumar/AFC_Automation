@@ -71,7 +71,7 @@ class PyODBCSQL:
         """
 
         self.conn = pyodbc.connect(
-            f"""DRIVER={{SQL Server}};SERVER={self.server};DATABASE={self.database};
+            f"""DRIVER={{ODBC Driver 18 for SQL Server}};SERVER={self.server};DATABASE={self.database};
                                 UID={self.username};PWD={self.password}""",
             TrustServerCertificate="yes",
         )
@@ -151,9 +151,10 @@ class PyODBCSQL:
             FROM '{output_csv_path}'
             WITH (
                 FORMAT = 'CSV',
-                FIELDTERMINATOR = ',', 
-                ROWTERMINATOR = '\n',
-                FIRSTROW = 2
+                FIELDTERMINATOR = ',',
+                ROWTERMINATOR = '0x0A',
+                FIRSTROW = 2,
+                FIELDQUOTE = '"'
             );
             """
             self.execute_query(sql)

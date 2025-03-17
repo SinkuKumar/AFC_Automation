@@ -1,19 +1,19 @@
 import logging
 
 def setup_logger(
-    log_file="logfile.log", log_level_console=logging.ERROR, log_level_file=logging.INFO
+    log_file=r"./logs/logfile.log", log_level_console=logging.ERROR, log_level_file=logging.INFO
 ):
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
 
     console_formatter = logging.Formatter("%(asctime)s: %(message)s")
-    file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    file_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
     console_handler = logging.StreamHandler()
     console_handler.setLevel(log_level_console)
     console_handler.setFormatter(console_formatter)
 
-    file_handler = logging.FileHandler(os.path.join("logs", log_file))
+    file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(log_level_file)
     file_handler.setFormatter(file_formatter)
 

@@ -94,6 +94,16 @@ def clear_directory_files(directory_path: str) -> None:
         logging.critical(f"Unexpected error occurred: {e}", exc_info=True)
         raise
 
+def init_directory(directory_path: str) -> None:
+    """
+    Creates a directory if it does not already exist.
+    Clear all the files in the directory if it already exists.
+    """
+    if os.path.exists(directory_path):
+        clear_directory_files(directory_path)
+    else:
+        create_directories([directory_path])
+
 def wait_for_download(report_name: str, download_directory: str, timeout: int = 300, sleep_interval: int = 1) -> None:
     """
     Waits for a file download to complete in the specified directory.
@@ -157,6 +167,7 @@ def wait_for_download(report_name: str, download_directory: str, timeout: int = 
 
         time.sleep(2)  # Final small wait to ensure file is stable
         logging.info("File download completed successfully.")
+        return os.path.join(download_directory, [file for file in os.listdir(download_directory) if file.startswith(report_name)][0])
 
     except PermissionError:
         logging.error("Permission denied while accessing the download directory.")

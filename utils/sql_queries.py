@@ -1,0 +1,1 @@
+CREDENTAILS_QUERY = "SELECT client_id, client_name, username, password FROM BI_AFC..AFC_Password_Tbl WHERE active = 1 AND client_id in ({client_id})"

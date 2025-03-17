@@ -2,9 +2,6 @@ import multiprocessing
 import time
 import random
 
-# File to store records
-FILE_PATH = "records.txt"
-
 def worker(queue):
     """ Function to process queue and write data sequentially to a file """
     with open(FILE_PATH, "a") as f:  # Open file in append mode
@@ -25,6 +22,8 @@ def process_task(queue, process_id):
         time.sleep(random.uniform(0.5, 1.5))  # Simulating work delay
 
 if __name__ == "__main__":
+    # File to store records
+    FILE_PATH = "records.txt"
     queue = multiprocessing.Queue()
 
     # Start worker process

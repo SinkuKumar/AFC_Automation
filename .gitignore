@@ -1,4 +1,5 @@
 # User folders and files
+*.csv
 Temp_Downloads/
 Downloads/
 Screenshots/

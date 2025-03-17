@@ -87,8 +87,12 @@ class SeleniumDriver:
             options.add_argument("--disable-blink-features=AutomationControlled")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-gpu")
+            options.add_argument("--disable-sync")
             options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--disable-component-update")
+            options.add_argument("--enable-unsafe-swiftshader")
             options.add_argument("--disable-usb-keyboard-detect")
+            options.add_argument("--disable-background-networking")
             options.add_argument("--disable-features=UseDeviceAsDictationMic")
             prefs = {
                 "download.default_directory": self.download_directory,

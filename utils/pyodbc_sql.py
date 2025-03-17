@@ -151,9 +151,10 @@ class PyODBCSQL:
             FROM '{output_csv_path}'
             WITH (
                 FORMAT = 'CSV',
-                FIELDTERMINATOR = ',', 
-                ROWTERMINATOR = '\n',
-                FIRSTROW = 2
+                FIELDTERMINATOR = ',',
+                ROWTERMINATOR = '0x0A',
+                FIRSTROW = 2,
+                FIELDQUOTE = '"'
             );
             """
             self.execute_query(sql)

@@ -5,12 +5,11 @@ from datetime import datetime
 # Add the project's root directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase, close_other_windows
 from utils import file_folder
 
 class Reports:
-    def __init__(self, driver, experity, experity_url, experity_version, report_export_type, download_directory, time_out=300):
+    def __init__(self, driver, experity: ExperityBase, experity_url, experity_version, report_export_type, download_directory, time_out=300):
         self.driver = driver
         self.experity = experity
         self.experity_url = experity_url

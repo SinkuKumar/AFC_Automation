@@ -67,7 +67,6 @@ def cnt_27(file_path: str, client_id: int, date_stamp: str, time_stamp: str) -> 
     # df = df.rename(columns_to_rename)
     df = convert_money_column(df, "Total_Charge")
     df = add_client_id_date_updated_columns(df, client_id, date_stamp)
-    time.sleep(100)
     processed_file = os.path.join(os.path.dirname(file_path), f"CNT_27_Processed_{time_stamp}.csv")
     df.write_csv(processed_file)
 

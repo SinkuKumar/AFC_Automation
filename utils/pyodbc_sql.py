@@ -71,7 +71,7 @@ class PyODBCSQL:
         """
 
         self.conn = pyodbc.connect(
-            f"""DRIVER={{SQL Server}};SERVER={self.server};DATABASE={self.database};
+            f"""DRIVER={{ODBC Driver 18 for SQL Server}};SERVER={self.server};DATABASE={self.database};
                                 UID={self.username};PWD={self.password}""",
             TrustServerCertificate="yes",
         )

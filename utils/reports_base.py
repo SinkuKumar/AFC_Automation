@@ -9,7 +9,7 @@ from utils.experity_base import ExperityBase, close_other_windows
 from utils import file_folder
 
 class Reports:
-    def __init__(self, driver, experity, experity_url, experity_version, report_export_type, download_directory, time_out):
+    def __init__(self, driver, experity, experity_url, experity_version, report_export_type, download_directory, time_out=300):
         self.driver = driver
         self.experity = experity
         self.experity_url = experity_url
@@ -27,8 +27,9 @@ class Reports:
         self.experity.select_arrival_status(['All'])
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory, self.time_out)
+        report_file_path = file_folder.wait_for_download(report_name, self.download_directory, self.time_out)
         close_other_windows(self.driver)
+        return report_file_path
 
     def cnt_19(self, report_name, cnt_19_from_date, cnt_19_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -36,8 +37,9 @@ class Reports:
         self.experity.select_report_date_range(cnt_19_from_date, cnt_19_to_date)
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory, self.time_out)
+        report_file_path = file_folder.wait_for_download(report_name, self.download_directory, self.time_out)
         close_other_windows(self.driver)
+        return report_file_path
 
     def fin_25(self, report_name, fin_25_from_date, fin_25_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -47,8 +49,9 @@ class Reports:
         self.experity.select_financial_class(['All'])
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory)
+        report_file_path = file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+        return report_file_path
 
     def adj_11(self, report_name, adj_11_from_date, adj_11_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -57,8 +60,9 @@ class Reports:
         self.experity.uncheck_all_check_all("freeunReasonCodescheckall", "freeReasonCodescheck2")
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory)
+        report_file_path = file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+        return report_file_path
 
     def fin_18(self, report_name, fin_18_from_date, fin_18_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -66,8 +70,9 @@ class Reports:
         self.experity.select_report_date_range(fin_18_from_date, fin_18_to_date)
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory)
+        report_file_path = file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+        return report_file_path
 
     def pay_41(self, report_name, pay_41_from_date, pay_41_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -76,8 +81,9 @@ class Reports:
         self.experity.uncheck_all_check_all("freeunPaymentReasoncheckall", "freePaymentReasoncheck1")
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory)
+        report_file_path = file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+        return report_file_path
 
     def pat_2(self, report_name, pay_41_from_date, pay_41_to_date):
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -85,5 +91,6 @@ class Reports:
         self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory)
+        report_file_path = file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+        return report_file_path

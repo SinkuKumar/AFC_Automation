@@ -84,7 +84,6 @@ class SeleniumDriver:
         """
         try:
             options = webdriver.ChromeOptions()
-            options.add_argument("--disable-blink-features=AutomationControlled")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-gpu")
             options.add_argument("--disable-sync")
@@ -94,6 +93,7 @@ class SeleniumDriver:
             options.add_argument("--disable-usb-keyboard-detect")
             options.add_argument("--disable-background-networking")
             options.add_argument("--disable-features=UseDeviceAsDictationMic")
+            options.add_argument("--disable-blink-features=AutomationControlled")
             prefs = {
                 "download.default_directory": self.download_directory,
                 "profile.default_content_settings.popups": 0,

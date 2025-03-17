@@ -1,23 +1,5 @@
+import os
 import time
-import polars as pl
-
-def convert_money_column(df: pl.DataFrame, column: str) -> pl.DataFrame:
-    """
-    Convert a money column with values like '$1,080.00' into float.
-
-    Args:
-        df (pl.DataFrame): Input DataFrame.
-        column (str): Column name containing money values.
-
-    Returns:
-        pl.DataFrame: Updated DataFrame with the column converted to float.
-    """
-    return df.with_columns(
-        pl.col(column)
-        .str.replace_all(r"[\$,]", "")  # Remove '$' and ',' from values
-        .cast(pl.Float64)  # Convert to float
-    )
-
 import polars as pl
 
 def convert_money_column(df: pl.DataFrame, column: str) -> pl.DataFrame:
@@ -86,7 +68,7 @@ def cnt_27(file_path: str, client_id: int, date_stamp: str, time_stamp: str) -> 
     df = convert_money_column(df, "Total_Charge")
     df = add_client_id_date_updated_columns(df, client_id, date_stamp)
     time.sleep(100)
-    processed_file = f"CNT_27_Processed_{time_stamp}.csv"
+    processed_file = os.path.join(os.path.dirname(file_path), f"CNT_27_Processed_{time_stamp}.csv")
     df.write_csv(processed_file)
 
 if __name__ == "__main__":

@@ -23,6 +23,8 @@ EXPERITY_URL = "https://pvpm.practicevelocity.com"
 sql = PyODBCSQL()
 task_q = TaskQueue()
 
+file_folder.create_directories(['logs'])
+
 date_stamp = time.strftime("%Y-%m-%d")
 time_stamp = time.strftime("%H-%M-%S")
 credentials = sql.execute_query(CREDENTAILS_QUERY.format(client_id=3622))
@@ -37,10 +39,7 @@ driver = sel_driver.setup_driver()
 
 experity = ExperityBase(driver, TIME_OUT)
 
-if not os.path.exists(download_directory):
-    os.makedirs(download_directory)
-else:
-    file_folder.clear_directory_files(download_directory)
+file_folder.init_directory(download_directory)
 
 # Steps to login
 experity.open_portal(EXPERITY_URL)
@@ -48,16 +47,18 @@ experity_version = experity.experity_version()
 experity.login(username, password)
 
 reports = Reports(driver, experity, EXPERITY_URL, experity_version, EXPORT_TYPE, download_directory, TIME_OUT)
+cnt_27_staging_table = f"CNT_27_Staging_{client_id}"
+processed_file_path = os.path.join(download_directory, f"CNT_27_Processed_{time_stamp}.csv")
 cnt_27_file_path = reports.cnt_27('CNT_27', '01/01/2022', '03/03/2025')
 task_q.add_task(t_csv.cnt_27, cnt_27_file_path, client_id, date_stamp, time_stamp)
-# Add task here to upload the data to the database
-task_q.add_task(sql.execute_query, "TRUNCATE TABLE CNT_27_Staging_Base")
-task_q.add_task(sql.csv_bulk_insert, f"CNT_27_Processed_{time_stamp}.csv", 'CNT_27_Staging_Base')
-cnt_19_file_path = reports.cnt_19('CNT_19', '01/01/2022', '03/03/2025')
+try:
+    sql.execute_query(f"SELECT TOP 0 * INTO {cnt_27_staging_table} FROM CNT_27_Staging_Base;")
+except Exception as e:
+    pass
+task_q.add_task(sql.truncate_table, cnt_27_staging_table)
+task_q.add_task(sql.csv_bulk_insert, processed_file_path, cnt_27_staging_table)
 
-# TODO: Process the report
-# TODO: Insert the data into the database
-# TODO: Update the status of the report
+cnt_19_file_path = reports.cnt_19('CNT_19', '01/01/2022', '03/03/2025')
 
 time.sleep(1000)
 experity.logout()

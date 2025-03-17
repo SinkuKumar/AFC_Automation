@@ -366,7 +366,7 @@ class ExperityBase:
 
         from_date, to_date = (date1, date2) if date1_obj < date2_obj else (date2, date1)
         
-        try:
+        try: 
             from_service_date = self.wait.until(EC.element_to_be_clickable((By.ID, 'FromServiceDate')))
             from_service_date.clear()
             from_service_date.send_keys(from_date)
@@ -401,6 +401,13 @@ class ExperityBase:
             SeleniumException: If any issue occurs during searching and selection of the report.
         """
         try:
+            self.driver.switch_to.default_content()
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
+            logging.info("Switched to 'reportMainWindow' iframe.")
+
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "PVRC_MainStage")))
+            logging.info("Switched to 'PVRC_MainStage' frame.")
+           
             if month:
                 logging.info(f"Selecting month: {month}")
                 month_dropdown = self.wait.until(EC.visibility_of_element_located((By.NAME, "ClosingDate")))

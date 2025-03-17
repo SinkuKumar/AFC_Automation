@@ -3,7 +3,7 @@ import logging
 import traceback
 from dotenv import load_dotenv
 import utils.file_folder as file_operation
-from utils.general import get_yesterdays_date
+from utils.general import get_current_date
 from utils.pyodbc_sql import PyODBCSQL
 from utils.experity_base import ExperityBase, close_other_windows
 from utils.selenium_driver import SeleniumDriver
@@ -17,7 +17,7 @@ db = PyODBCSQL()
 client_ids = db.get_all_active_client_ids()   # For all clients
 # client_ids = [3671, 3681, 16]               # For particular clients
 report_from_date = '01/01/2022'               # MM/DD/YYYY format
-report_to_date =  get_yesterdays_date()       # MM/DD/YYYY format
+report_to_date =  get_current_date()          # MM/DD/YYYY format
 
 REPORT_NAME = 'PAY_10'
 BROWSER = 'chrome'

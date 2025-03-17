@@ -258,8 +258,6 @@ class PyODBCSQL:
             logging.error(f"Database error occurred while deleting the table data: {e}")
             raise
 
-        
-
 if __name__ == "__main__":
     import os
     from dotenv import load_dotenv

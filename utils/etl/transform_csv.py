@@ -74,7 +74,7 @@ class TransformCSV:
             ])
         return df
 
-    def drop_textbox_columns(self, df: pl.DataFrame) -> pl.DataFrame:
+    def drop_textbox_columns(self, df: pl.DataFrame, skip_columns: list[str] = []) -> pl.DataFrame:
         """
         Drop the columns which start with textbox or Textbox.
 
@@ -85,7 +85,7 @@ class TransformCSV:
             pl.DataFrame: DataFrame with text columns dropped.
         """
         return df.drop(
-            [col for col in df.columns if col.lower().startswith("textbox")]
+            [col for col in df.columns if col.lower().startswith("textbox") and col not in skip_columns]
         )
 
     def cnt_27(self, file_path: str, processed_file: str) -> None:

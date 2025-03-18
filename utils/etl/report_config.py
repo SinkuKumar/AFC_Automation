@@ -60,24 +60,24 @@ PAT_2_FROM_DATE = "01/01/2022"
 PAT_2_TO_DATE = CURRENT_DATE
 
 # LAB_01 Configuration
-LAB_1_REPORT_NAME = "LAB_01"
-LAB_1_FROM_DATE = "01/01/2022"
-LAB_1_TO_DATE = CURRENT_DATE
+LAB_01_REPORT_NAME = "LAB_01"
+LAB_01_FROM_DATE = "01/01/2022"
+LAB_01_TO_DATE = CURRENT_DATE
 
 # XRY_03 Configuration
-XRY_3_REPORT_NAME = "XRY_03"
-XRY_3_FROM_DATE = "01/01/2022"
-XRY_3_TO_DATE = CURRENT_DATE
+XRY_03_REPORT_NAME = "XRY_03"
+XRY_03_FROM_DATE = "01/01/2022"
+XRY_03_TO_DATE = CURRENT_DATE
 
 # CHT_02 Configuration
-CHT_2_REPORT_NAME = "CHT_02"
-CHT_2_FROM_DATE = "01/01/2022"
-CHT_2_TO_DATE = CURRENT_DATE
+CHT_02_REPORT_NAME = "CHT_02"
+CHT_02_FROM_DATE = "01/01/2022"
+CHT_02_TO_DATE = CURRENT_DATE
 
 # MED_01 Configuration
-MED_1_REPORT_NAME = "MED_01"
-MED_1_FROM_DATE = "01/01/2022"
-MED_1_TO_DATE = CURRENT_DATE
+MED_01_REPORT_NAME = "MED_01"
+MED_01_FROM_DATE = "01/01/2022"
+MED_01_TO_DATE = CURRENT_DATE
 
 # PER_02 Configuration
 PER_2_REPORT_NAME = "PER_02"
@@ -113,6 +113,17 @@ PAY_4_TO_DATE = CURRENT_DATE
 ADJ_4_REPORT_NAME = "ADJ_4"
 ADJ_4_FROM_DATE = "01/01/2022"
 ADJ_4_TO_DATE = CURRENT_DATE
+
+## TODO: Add these reports as well
+# PCD_31 Configuration
+PCD_31_REPORT_NAME = "PCD_31"
+PCD_31_FROM_DATE = "01/01/2022"
+PCD_31_TO_DATE = CURRENT_DATE
+
+# PAY_6 Configuration
+PAY_6_REPORT_NAME = "PAY_6"
+PAY_6_FROM_DATE = "01/01/2022"
+PAY_6_TO_DATE = CURRENT_DATE
 
 class ReportConfig:
     def __init__(self, client_id: int) -> None:
@@ -156,7 +167,7 @@ class ReportConfig:
             "report_name": ADJ_11_REPORT_NAME,
             "from_date": ADJ_11_FROM_DATE,
             "to_date": ADJ_11_TO_DATE,
-            "file_name": "ADJ_11_AdjustmentReport.csv",
+            "file_name": "ADJ_11_AdjustmentDetail.csv",
             "base_table": "ADJ_11_Staging_Base",
             "staging_table": f"ADJ_11_Staging_{self.client_id}",
             "processed_file": f"ADJ_11_Processed_{ADJ_11_FROM_DATE.replace('/', '-')}_{ADJ_11_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
@@ -167,7 +178,7 @@ class ReportConfig:
             "report_name": FIN_18_REPORT_NAME,
             "from_date": FIN_18_FROM_DATE,
             "to_date": FIN_18_TO_DATE,
-            "file_name": "FIN_18_CollectionReport.csv",
+            "file_name": "FIN_18_RebillsBySvcDate.csv",
             "base_table": "FIN_18_Staging_Base",
             "staging_table": f"FIN_18_Staging_{self.client_id}",
             "processed_file": f"FIN_18_Processed_{FIN_18_FROM_DATE.replace('/', '-')}_{FIN_18_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
@@ -178,7 +189,7 @@ class ReportConfig:
             "report_name": PAY_41_REPORT_NAME,
             "from_date": PAY_41_FROM_DATE,
             "to_date": PAY_41_TO_DATE,
-            "file_name": "PAY_41_PaymentReport.csv",
+            "file_name": "PAY_41_TotalPaymentByDetail.csv",
             "base_table": "PAY_41_Staging_Base",
             "staging_table": f"PAY_41_Staging_{self.client_id}",
             "processed_file": f"PAY_41_Processed_{PAY_41_FROM_DATE.replace('/', '-')}_{PAY_41_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
@@ -189,54 +200,54 @@ class ReportConfig:
             "report_name": PAT_2_REPORT_NAME,
             "from_date": PAT_2_FROM_DATE,
             "to_date": PAT_2_TO_DATE,
-            "file_name": "PAT_2_PatientReport.csv",
+            "file_name": "PAT_2_PatientDemographicsByPractice.csv",
             "base_table": "PAT_2_Staging_Base",
             "staging_table": f"PAT_2_Staging_{self.client_id}",
             "processed_file": f"PAT_2_Processed_{PAT_2_FROM_DATE.replace('/', '-')}_{PAT_2_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
     
-    def lab_1(self) -> dict:
+    def lab_01(self) -> dict:
         return {
-            "report_name": LAB_1_REPORT_NAME,
-            "from_date": LAB_1_FROM_DATE,
-            "to_date": LAB_1_TO_DATE,
-            "file_name": "LAB_1_LabReport.csv",
-            "base_table": "LAB_1_Staging_Base",
-            "staging_table": f"LAB_1_Staging_{self.client_id}",
-            "processed_file": f"LAB_1_Processed_{LAB_1_FROM_DATE.replace('/', '-')}_{LAB_1_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "report_name": LAB_01_REPORT_NAME,
+            "from_date": LAB_01_FROM_DATE,
+            "to_date": LAB_01_TO_DATE,
+            "file_name": "LAB_01_LabsOrdered.csv",
+            "base_table": "LAB_01_Staging_Base",
+            "staging_table": f"LAB_01_Staging_{self.client_id}",
+            "processed_file": f"LAB_01_Processed_{LAB_01_FROM_DATE.replace('/', '-')}_{LAB_01_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
     
-    def xry_3(self) -> dict:
+    def xry_03(self) -> dict:
         return {
-            "report_name": XRY_3_REPORT_NAME,
-            "from_date": XRY_3_FROM_DATE,
-            "to_date": XRY_3_TO_DATE,
-            "file_name": "XRY_3_XRayReport.csv",
-            "base_table": "XRY_3_Staging_Base",
-            "staging_table": f"XRY_3_Staging_{self.client_id}",
-            "processed_file": f"XRY_3_Processed_{XRY_3_FROM_DATE.replace('/', '-')}_{XRY_3_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "report_name": XRY_03_REPORT_NAME,
+            "from_date": XRY_03_FROM_DATE,
+            "to_date": XRY_03_TO_DATE,
+            "file_name": "XRY_03_XRaysWaitingForReview.csv",
+            "base_table": "XRY_03_Staging_Base",
+            "staging_table": f"XRY_03_Staging_{self.client_id}",
+            "processed_file": f"XRY_03_Processed_{XRY_03_FROM_DATE.replace('/', '-')}_{XRY_03_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
     
-    def cht_2(self) -> dict:
+    def cht_02(self) -> dict:
         return {
-            "report_name": CHT_2_REPORT_NAME,
-            "from_date": CHT_2_FROM_DATE,
-            "to_date": CHT_2_TO_DATE,
-            "file_name": "CHT_2_ChatReport.csv",
-            "base_table": "CHT_2_Staging_Base",
-            "staging_table": f"CHT_2_Staging_{self.client_id}",
-            "processed_file": f"CHT_2_Processed_{CHT_2_FROM_DATE.replace('/', '-')}_{CHT_2_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "report_name": CHT_02_REPORT_NAME,
+            "from_date": CHT_02_FROM_DATE,
+            "to_date": CHT_02_TO_DATE,
+            "file_name": "CHT_02_ChartAudit.csv",
+            "base_table": "CHT_02_Staging_Base",
+            "staging_table": f"CHT_02_Staging_{self.client_id}",
+            "processed_file": f"CHT_02_Processed_{CHT_02_FROM_DATE.replace('/', '-')}_{CHT_02_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
     
-    def med_1(self) -> dict:
+    def med_01(self) -> dict:
         return {
-            "report_name": MED_1_REPORT_NAME,
-            "from_date": MED_1_FROM_DATE,
-            "to_date": MED_1_TO_DATE,
-            "file_name": "MED_1_MedicationReport.csv",
-            "base_table": "MED_1_Staging_Base",
-            "staging_table": f"MED_1_Staging_{self.client_id}",
-            "processed_file": f"MED_1_Processed_{MED_1_FROM_DATE.replace('/', '-')}_{MED_1_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "report_name": MED_01_REPORT_NAME,
+            "from_date": MED_01_FROM_DATE,
+            "to_date": MED_01_TO_DATE,
+            "file_name": "MED_01_MedicationsByDischargingProvider.csv",
+            "base_table": "MED_01_Staging_Base",
+            "staging_table": f"MED_01_Staging_{self.client_id}",
+            "processed_file": f"MED_01_Processed_{MED_01_FROM_DATE.replace('/', '-')}_{MED_01_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
     
     def per_2(self) -> dict:
@@ -244,7 +255,7 @@ class ReportConfig:
             "report_name": PER_2_REPORT_NAME,
             "from_date": PER_2_FROM_DATE,
             "to_date": PER_2_TO_DATE,
-            "file_name": "PER_2_PerformanceReport.csv",
+            "file_name": "PER_2_TimeFromRegistrationToVitalsToDischarge.csv",
             "base_table": "PER_2_Staging_Base",
             "staging_table": f"PER_2_Staging_{self.client_id}",
             "processed_file": f"PER_2_Processed_{PER_2_FROM_DATE.replace('/', '-')}_{PER_2_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",

@@ -166,3 +166,177 @@ class TransformCSV:
         df = self.add_client_id_date_updated_columns(df)
         # TODO: Sync columns from table to df before writing to CSV
         df.write_csv(processed_file)
+
+    def adj_11(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the ADJ_11 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+
+        # TODO: Add column renaming and other transformations
+        columns_to_rename = {
+
+        }
+
+        # df = df.rename(columns_to_rename)
+        df = self.drop_textbox_columns(df)
+        df = self.clean_currency_column('Adj_Amt')
+        df = self.add_client_id_date_updated_columns(df)
+        # TODO: Sync columns from table to df before writing to CSV
+        df.write_csv(processed_file)
+
+    def fin_18(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the FIN_18 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        
+        # TODO: Add column renaming and other transformations
+        columns_to_rename = {
+
+        }
+
+        # df = df.rename(columns_to_rename)
+        df = self.drop_textbox_columns(df)
+        df = self.clean_currency_column(['Total_Charge', 'Rebilled_Total_Charge'])
+        df = self.add_client_id_date_updated_columns(df)
+        # TODO: Sync columns from table to df before writing to CSV
+        df.write_csv(processed_file)
+
+    def pay_41(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the PAY_41 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+
+        # TODO: Add column renaming and other transformations
+        columns_to_rename = {
+
+        }
+
+        # df = df.rename(columns_to_rename)
+        df = self.drop_textbox_columns(df)
+        df = self.clean_currency_column('Payment')
+        df = self.add_client_id_date_updated_columns(df)
+        # TODO: Sync columns from table to df before writing to CSV
+        df.write_csv(processed_file)
+
+    def pat_2(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the PAT_2 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        pass
+
+    def lab_01(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the LAB_01 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        pass
+
+    def xry_03(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the XRY_03 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        pass
+
+    def cht_02(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the CHT_02 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        pass
+
+    def med_01(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the MED_01 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        pass
+
+    def per_02(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the PER_02 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        pass
+
+    def pat_20(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the PAT_20 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        pass
+

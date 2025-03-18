@@ -94,7 +94,6 @@ class ExtractReports:
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)
-        file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
 
     def xry_03(self, report_name, xry_03_from_date, xry_03_to_date):

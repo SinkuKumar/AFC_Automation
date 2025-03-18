@@ -16,6 +16,7 @@ DATE_TIME_STAMP = time.strftime("%Y-%m-%d %H:%M:%S")
 DATE_STAMP = DATE_TIME_STAMP.split()[0]
 TIME_STAMP = DATE_TIME_STAMP.split()[1]
 CURRENT_DATE = time.strftime("%m/%d/%Y")
+LOG_DT_STAMP = DATE_STAMP.replace(' ', '_').replace(':', '-')
 
 # Experity Configuration
 EXPERITY_URL = "https://pvpm.practicevelocity.com"

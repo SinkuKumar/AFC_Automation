@@ -27,6 +27,7 @@ EXRTY_URL = report_config.EXPERITY_URL
 EXPORT_TYPE = report_config.EXPORT_TYPE
 CRED_Q = report_config.CREDENTIALS_QUERY
 DT_STAMP = report_config.DATE_TIME_STAMP
+LOG_STAMP = report_config.LOG_DT_STAMP
 
 sql = PyODBCSQL('BI_AFC_Experity')
 task_q = TaskQueue()
@@ -36,7 +37,7 @@ file_folder.create_directories([LOG_DIR, DWLD_DIR])
 credentials = sql.execute_query(CRED_Q.format(client_id=3671))
 client_id, client_name, username, password = credentials[0]
 
-log_file = os.path.join(LOG_DIR, f'Experity_Automation_{client_id}_{DT_STAMP}.log')
+log_file = os.path.join(LOG_DIR, f'Experity_Automation_{client_id}_{LOG_STAMP}.log')
 
 logging = setup_logger(log_file=log_file)
 DWLD_DIR = os.path.join(DWLD_DIR, str(client_id))

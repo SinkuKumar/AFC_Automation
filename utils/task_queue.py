@@ -43,14 +43,6 @@ class TaskQueue:
         self.task_queue.put((func, args, kwargs))
         self._ensure_worker_running()
 
-def insert_data(task_queue: TaskQueue, sql: PyODBCSQL, staging_table, processed_file_path, *args, **kwargs):
-    task_queue.add_task(*args, **kwargs)
-    try:
-        sql.execute_query(f"SELECT TOP 0 * INTO {staging_table} FROM CNT_27_Staging_Base;")
-    except Exception as e:
-        pass
-    task_queue.add_task(sql.truncate_table, staging_table)
-    task_queue.add_task(sql.csv_bulk_insert, processed_file_path, staging_table)
 
 # Example Usage
 if __name__ == "__main__":

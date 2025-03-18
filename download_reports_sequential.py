@@ -8,10 +8,10 @@ load_dotenv()
 from utils.selenium_driver import SeleniumDriver
 from utils.experity_base import ExperityBase, close_other_windows
 from utils import file_folder
-from utils.reports_base import Reports
+from utils.etl.extract_report import ExtractReports
 from utils.logging_base import setup_logger
 from utils.pyodbc_sql import PyODBCSQL
-from utils import transform_csv as t_csv
+from utils.etl import transform_csv as t_csv
 from utils.sql_queries import CREDENTAILS_QUERY
 from utils.task_queue import TaskQueue
 
@@ -120,7 +120,7 @@ experity.open_portal(EXPERITY_URL)
 experity_version = experity.experity_version()
 experity.login(username, password)
 
-reports = Reports(driver, experity, EXPERITY_URL, experity_version, EXPORT_TYPE, download_directory, TIME_OUT)
+reports = ExtractReports(driver, experity, EXPERITY_URL, experity_version, EXPORT_TYPE, download_directory, TIME_OUT)
 cnt_27_file_path = reports.cnt_27('CNT_27', '01/01/2022', '03/03/2025')
 task_q.add_task(t_csv.cnt_27, cnt_27_file_path, client_id, date_stamp, time_stamp)
 # Add task here to upload the data to the database
@@ -131,7 +131,7 @@ cnt_19_file_path = reports.cnt_19('CNT_19', '01/01/2022', '03/03/2025')
 # TODO: Process the report
 # TODO: Insert the data into the database
 # TODO: Update the status of the report
-reports = Reports(driver, experity, experity_url, experity_version, report_export_type, DOWNLOAD_DIRECTORY, TIME_OUT)
+reports = ExtractReports(driver, experity, experity_url, experity_version, report_export_type, DOWNLOAD_DIRECTORY, TIME_OUT)
 
 reports.cnt_27(cnt_27_report_name, cnt_27_from_date, cnt_27_to_date)
 reports.cnt_19(cnt_19_report_name, cnt_19_from_date, cnt_19_to_date)

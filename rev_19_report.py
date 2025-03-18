@@ -80,8 +80,8 @@ print('New Automation Run Started...\n')
 user_credentials = db.get_users_credentials(client_ids)
 
 for client_id, username, password in user_credentials:
-    ALL_FILES_DIR = os.path.join(os.getcwd(), 'Downloads', str(client_id))
-    DOWNLOAD_DIR = os.path.join(os.getcwd(), 'Downloads', 'Rev_19_TEMP')
+    ALL_FILES_DIR = os.path.join(os.getcwd(), 'downloads', str(client_id))
+    DOWNLOAD_DIR = os.path.join(os.getcwd(), 'downloads', 'Rev_19_TEMP')
     date_folder = rf'{ALL_FILES_DIR}\{datetime.now().strftime("%m-%d-%Y")}'
     file_operation.create_directories([date_folder, DOWNLOAD_DIR])
     selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR, window_width=WINDOW_WIDTH, window_height= WINDOW_HEIGHT)

@@ -21,7 +21,7 @@ CURRENT_DATE = time.strftime("%m/%d/%Y")
 EXPERITY_URL = "https://pvpm.practicevelocity.com"
 
 # SQL Queries
-CREDENTIALS_QUERY = "SELECT client_id, client_name, username, password FROM AFC_Password_Tbl WHERE active = 1 AND Client_ID IN ({client_id})"
+CREDENTIALS_QUERY = "SELECT client_id, client_name, username, password FROM BI_AFC..AFC_Password_Tbl WHERE active = 1 AND Client_ID IN ({client_id})"
 
 ## Report Configuration
 # CNT_27 Configuration

@@ -213,3 +213,12 @@ class ExtractReports:
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+
+    def pay_10(self, report_name, pay_10_from_date, pay_10_to_date):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+        self.experity.select_report_date_range(pay_10_from_date, pay_10_to_date)
+        self.experity.run_report()
+        self.experity.download_report(self.report_export_type)
+        file_folder.wait_for_download(report_name, self.download_directory)
+        close_other_windows(self.driver)

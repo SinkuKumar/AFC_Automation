@@ -100,12 +100,15 @@ def fin_25_report_data_transformation(input_csv_data_file: str, output_csv_data_
 
     This function performs the following operations:
     - Reads the CSV into a Polars DataFrame.
-    - Renames the `Textbox2` column to `svc_date` and converts it to a date.
     - Removes rows where all columns contain only null (None) values
-    - Adds a new column `updated_date` with the current date.
+    - Renames the `Textbox2` column to `svc_date` and converts it to a date.
+    
+
     - Splits the `Proc_Code` column on " | " into 'proc_code' and 'proc_amount'.
     - Adds a new column `client_id` with the provided client ID.
     - Cleans currency columns using `clean_currency_column`.
+    - Adds a new column `updated_date` with the current date.
+    
     - Writes the cleaned DataFrame to an output CSV file.
 
     Args:

@@ -73,6 +73,54 @@ class TransformCSV:
                 pl.col("Date_Updated").fill_null(self.date_time_stamp),
             ])
         return df
+    
+    def drop_all_null_rows(self, frame: pl.DataFrame | pl.LazyFrame) -> pl.DataFrame | pl.LazyFrame:
+        """Removes rows from a Polars DataFrame or LazyFrame where all columns contain only null (None) values.
+
+        Args:
+            frame (pl.DataFrame | pl.LazyFrame): Input DataFrame or LazyFrame to process.
+
+        Returns:
+            pl.DataFrame | pl.LazyFrame: DataFrame or LazyFrame with fully-null rows removed.
+
+        Raises:
+            TypeError: If the input is not a Polars DataFrame or LazyFrame.
+        """
+        if not isinstance(frame, (pl.DataFrame, pl.LazyFrame)):
+            raise TypeError(f"Expected a polars DataFrame or LazyFrame, got {type(frame).__name__}")
+
+        return frame.filter(~pl.all_horizontal(pl.all().is_null()))
+
+    def sync_dataframe_with_table(self, table_columns: list, df: pl.DataFrame) -> pl.DataFrame:
+        """
+        Aligns a Polars DataFrame with a database table by ensuring it has the same columns.
+        Any extra columns in the DataFrame are removed, and missing columns are added with NULL values.
+
+        Args:
+            table_columns (list): The column names of the database table.
+            df (pl.DataFrame): The Polars DataFrame to align.
+
+        Returns:
+            pl.DataFrame: A modified DataFrame that matches the database table schema.
+        """
+        try:            
+            table_columns_lower = {col.lower(): col for sublist in table_columns for col in sublist}
+            df_columns_lower = {col.lower(): col for col in df.columns}
+
+            missing_columns = set(table_columns_lower.keys()) - set(df_columns_lower.keys())
+
+            for col_lower in missing_columns:
+                df = df.with_columns(pl.lit(None).alias(table_columns_lower[col_lower]))
+
+            flat_table_columns = [col for sublist in table_columns for col in sublist]
+            df = df.select(flat_table_columns)
+
+            logging.info("Aligned DataFrame to match database table and dataframe columns")
+            return df
+
+        except Exception as e:
+            logging.error(f"Error while aligning DataFrame with database table: {e}")
+            raise
 
     def drop_textbox_columns(self, df: pl.DataFrame, skip_columns: list[str] = []) -> pl.DataFrame:
         """
@@ -143,200 +191,96 @@ class TransformCSV:
         # TODO: Sync columns from table to df before writing to CSV
         df.write_csv(processed_file)
 
-    def fin_25(self, file_path:str, processed_file: str) -> None:
+    def fin_25(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the FIN_25 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the processed CSV file.
-
+            table_columns list[tuple[str]]: The column names of the specified table.
+            
         Returns:
             None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        try:
+            logging.info("Fin_25 Data transformation process started.")
+            df = pl.read_csv(file_path, infer_schema_length=0)
+            df = self.drop_all_null_rows(df)
 
-        # TODO: Add column renaming and other transformations
-        columns_to_rename = {
+            df = df.rename({"Textbox2":"Svc_Date"})
+            df = df.with_columns(pl.col("Svc_Date").str.to_date(format="%m/%d/%Y", strict=False))
 
-        }
+            df = df.with_columns(df["Proc_Code"].str.split(" | ").alias("split_data"))
+            df = df.explode("split_data")
+            df = df.with_columns(
+                df["split_data"].str.split(": ").alias("split_key_value")
+            ).select(
+                pl.all().exclude("split_data"),
+                pl.col("split_key_value").list.get(0).alias("new_proc_code"),
+                pl.col("split_key_value").list.get(1).alias("Proc_Amount")
+            )
 
-        # df = df.rename(columns_to_rename)
-        df = self.drop_textbox_columns(df)
-        df = self.add_client_id_date_updated_columns(df)
-        # TODO: Sync columns from table to df before writing to CSV
-        df.write_csv(processed_file)
+            df = df.drop(["split_key_value", "Proc_Code"])
+            df = df.rename({"new_proc_code": "Proc_Code"})
 
-    def adj_11(self, file_path: str, processed_file: str) -> None:
+            df = self.clean_currency_column(df, ["Total_Charge", "Copay_Paid", "Curr_Pay_Amt", "Other_Paid", "Total_Adj", "Crg_Balance", "Proc_Amount"])
+
+            df = df.with_columns(
+                pl.col("Pat_Name").str.replace_all(",", "").alias("Pat_Name"),
+                pl.col("Rendering_Phy").str.replace_all(",", "").alias("Rendering_Phy")
+            )
+
+            df = self.add_client_id_date_updated_columns(df)
+            df = self.sync_dataframe_with_table(table_columns, df)
+
+            df.write_csv(processed_file)
+            logging.info("Fin_25 Data transformation process completed.")
+        except Exception as e:
+            logging.error("Error occurred during Fin_25 data transformation.")
+            raise
+
+    def pay_10(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
-        Transform the ADJ_11 report.
+        Transform the PAY_10 report.
+
+        This function performs the following operations:
+        - Reads the CSV into a Polars DataFrame with specified Columns.
+        - Removes rows where all columns contain only null (None) values.
+        - Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
+        - Cleans currency columns using `clean_currency_column`.
+        - Adds a new column `Date_Updated` with the current date and time.
+        - Converts `Svc_Date` to a date.
+        - Adds a new column `Client_id` with the provided client ID.
+        - Writes the cleaned DataFrame to an output CSV file.
 
         Args:
             file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        try:
+            logging.info("Pay_10 Data transformation process started.")
+            df = pl.read_csv(file_path, columns=["Payer_Class", "Payer_Name", "Pat_Name", "Svc_Date", "CPT_Code", "textbox18", "Paid_Amt", "Adj_Amt", "textbox22"], infer_schema_length=0)
+            df = self.drop_all_null_rows(df)
 
-        # TODO: Add column renaming and other transformations
-        columns_to_rename = {
+            df = df.rename({"textbox18":"Charge_Amt", "textbox22":"Net_AR"})
+            df = self.clean_currency_column(df, ["Charge_Amt", "Paid_Amt", "Adj_Amt", "Net_AR"])
 
-        }
+            df = df.with_columns(
+                pl.col("Payer_Name").str.replace_all(",", "").alias("Payer_Name"),
+                pl.col("Pat_Name").str.replace_all(",", "").alias("Pat_Name")
+            )
 
-        # df = df.rename(columns_to_rename)
-        df = self.drop_textbox_columns(df)
-        df = self.clean_currency_column('Adj_Amt')
-        df = self.add_client_id_date_updated_columns(df)
-        # TODO: Sync columns from table to df before writing to CSV
-        df.write_csv(processed_file)
+            df = df.with_columns(pl.col("Svc_Date").str.to_date(format="%m/%d/%Y", strict=False))
+            df = self.add_client_id_date_updated_columns(df)
 
-    def fin_18(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the FIN_18 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-        
-        # TODO: Add column renaming and other transformations
-        columns_to_rename = {
-
-        }
-
-        # df = df.rename(columns_to_rename)
-        df = self.drop_textbox_columns(df)
-        df = self.clean_currency_column(['Total_Charge', 'Rebilled_Total_Charge'])
-        df = self.add_client_id_date_updated_columns(df)
-        # TODO: Sync columns from table to df before writing to CSV
-        df.write_csv(processed_file)
-
-    def pay_41(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the PAY_41 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-
-        # TODO: Add column renaming and other transformations
-        columns_to_rename = {
-
-        }
-
-        # df = df.rename(columns_to_rename)
-        df = self.drop_textbox_columns(df)
-        df = self.clean_currency_column('Payment')
-        df = self.add_client_id_date_updated_columns(df)
-        # TODO: Sync columns from table to df before writing to CSV
-        df.write_csv(processed_file)
-
-    def pat_2(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the PAT_2 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-        pass
-
-    def lab_01(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the LAB_01 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-        pass
-
-    def xry_03(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the XRY_03 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-        pass
-
-    def cht_02(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the CHT_02 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-        pass
-
-    def med_01(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the MED_01 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-        pass
-
-    def per_02(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the PER_02 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-        pass
-
-    def pat_20(self, file_path: str, processed_file: str) -> None:
-        """
-        Transform the PAT_20 report.
-
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-
-        Returns:
-            None
-        """
-        df = pl.read_csv(file_path, infer_schema_length=0)
-        pass
-
+            df = self.sync_dataframe_with_table(table_columns, df)
+            df.write_csv(processed_file)
+            logging.info("Pay_10 Data transformation process completed.")
+        except Exception as e:
+            logging.error("Error occurred during Pay_10 data transformation.")
+            raise

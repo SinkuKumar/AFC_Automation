@@ -20,7 +20,7 @@ BROWSER = 'chrome'
 EXPORT_TYPE = 'CSV'
 EXPERITY_URL = "https://pvpm.practicevelocity.com"
 
-sql = PyODBCSQL()
+sql = PyODBCSQL('BI_AFC_Experity')
 task_q = TaskQueue()
 
 file_folder.create_directories(['logs'])

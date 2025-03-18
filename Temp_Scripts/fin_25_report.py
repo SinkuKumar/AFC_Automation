@@ -30,7 +30,7 @@ selenium = SeleniumDriver(browser=BROWSER, download_directory=download_dir, wind
 driver = selenium.setup_driver()
 
 load_dotenv()
-DB = PyODBCSQL()
+DB = PyODBCSQL('BI_AFC')
 
 def web_workflow():
     try:

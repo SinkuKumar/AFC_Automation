@@ -37,7 +37,7 @@ class PyODBCSQL:
         :bulk_insert_csv_sql(self, file_path: str, staging_table_name: str, client_id: str) -> None:
     """
 
-    def __init__(self):
+    def __init__(self, database):
         """
         Initializes the MSSQLDatabase class.
 
@@ -54,7 +54,7 @@ class PyODBCSQL:
         :rtype: None
         """
         self.server = os.getenv("SQL_SERVER")
-        self.database = os.getenv("SQL_DATABASE")
+        self.database = database
         self.username = os.getenv("SQL_USERNAME")
         self.password = os.getenv("SQL_PASSWORD")
         self.conn = None
@@ -265,6 +265,6 @@ if __name__ == "__main__":
     
     load_dotenv()
     
-    sql = PyODBCSQL()
+    sql = PyODBCSQL('BI_AFC')
     result = sql.execute_query("SELECT 'Result' AS Test")
     print(result)

@@ -12,7 +12,7 @@ from utils.create_table_queries import pay_10_create_query
 from datetime import datetime
 
 load_dotenv()
-db = PyODBCSQL()
+db = PyODBCSQL('BI_AFC')
 
 client_ids = db.get_all_active_client_ids()   # For all clients
 # client_ids = [3671, 3681, 16]               # For particular clients

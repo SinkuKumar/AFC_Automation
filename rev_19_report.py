@@ -11,7 +11,7 @@ from utils.extract_transform import combine_csv_files, rev_19_report_data_transf
 from utils.create_table_queries import rev_19_create_query
 
 load_dotenv()
-# db = PyODBCSQL()
+# db = PyODBCSQL('BI_AFC')
 
 # client_ids = db.get_all_active_client_ids()   # For all clients
 client_ids = [2001]                             # For particular clients 

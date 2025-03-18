@@ -18,7 +18,7 @@ WAIT_TIME = 100
 NUM_WORKERS = 5  # Number of concurrent Selenium workers
 
 # SQL connection
-sql = PyODBCSQL()
+sql = PyODBCSQL('BI_AFC')
 
 def fetch_next_record():
     """Fetches the next available record that needs processing."""

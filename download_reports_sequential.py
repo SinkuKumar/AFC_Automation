@@ -20,7 +20,7 @@ BROWSER = 'chrome'
 EXPORT_TYPE = 'CSV'
 EXPERITY_URL = "https://pvpm.practicevelocity.com"
 
-sql = PyODBCSQL()
+sql = PyODBCSQL('BI_AFC')
 task_q = TaskQueue()
 
 date_stamp = time.strftime("%Y-%m-%d")

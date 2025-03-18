@@ -28,7 +28,8 @@ EXPORT_TYPE = report_config.EXPORT_TYPE
 CRED_Q = report_config.CREDENTIALS_QUERY
 DT_STAMP = report_config.DATE_TIME_STAMP
 
-sql = PyODBCSQL()
+sql = PyODBCSQL('BI_AFC_Experity')
+task_q = TaskQueue()
 
 file_folder.create_directories([LOG_DIR, DWLD_DIR])
 

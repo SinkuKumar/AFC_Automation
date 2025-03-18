@@ -13,7 +13,7 @@ DRIVER = "chrome"
 DOWNLOAD_DIRECTORY = "/Users/Sinku/Development/AFC_Automation/Downloads"
 WAIT_TIME = 100
 
-sql = PyODBCSQL()
+sql = PyODBCSQL('BI_AFC')
 
 query = "SELECT TOP 1 ID, Client_id, P_Num, L_Num, Access_code FROM MB_trans_master_progress WHERE file_location IS NULL AND file_uploaddate IS NULL AND client_id = 16"
 result = sql.execute_query(query)

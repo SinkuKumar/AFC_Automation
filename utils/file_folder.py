@@ -212,30 +212,40 @@ def rename_file_or_folder(old_name: str, new_name: str) -> None:
         logging.error(f"Failed to rename from {old_name} to {new_name}.")
         raise
 
-def move_path(source: str, destination: str) -> None:
+def move_paths(sources: list[str], destination: str) -> None:
     """
-    Moves a file or folder from the source path to the destination path.
+    Moves multiple files or folders from the source paths to the destination path.
 
-    If the destination is an existing directory, the source will be moved inside it. 
+    If the destination is an existing directory, each source will be moved inside it. 
     If the destination path does not exist, it will be created.
 
     Args:
-        source (str): The path of the file or directory to move.
-        destination (str): The target path where the file or directory should be moved.
+        sources (List[str]): A list of file or directory paths to move.
+        destination (str): The target directory where files/folders should be moved.
 
     Raises:
-        FileNotFoundError: If the source file or directory does not exist.
+        FileNotFoundError: If any source file or directory does not exist.
         PermissionError: If the process lacks the necessary permissions.
         Exception: If any other unexpected error occurs during the move operation.
     """
     try:
-        if not os.path.exists(source):
-            raise FileNotFoundError(f"Source path does not exist: {source}")
+        if not isinstance(sources, list) or not sources:
+            raise ValueError("Sources must be a non-empty list of file/folder paths.")
 
-        os.makedirs(os.path.dirname(destination), exist_ok=True)
+        if not os.path.exists(destination):
+            os.makedirs(destination, exist_ok=True)  # Create destination if not exists
 
-        shutil.move(source, destination)
-        logging.info(f"Successfully moved source path to destination path")
+        for source in sources:
+            if not os.path.exists(source):
+                logging.warning(f"Skipping: Source path does not exist: {source}")
+                continue
+
+            if os.path.isdir(destination):  
+                shutil.move(source, os.path.join(destination, os.path.basename(source)))
+            else:
+                shutil.move(source, destination)
+
+            logging.info(f"Successfully moved '{source}' to '{destination}'")
 
     except FileNotFoundError as e:
         logging.error(f"Error: {e}")

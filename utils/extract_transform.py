@@ -1,3 +1,4 @@
+import os
 import logging
 import datetime
 import polars as pl
@@ -197,3 +198,72 @@ def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_
     except Exception as e:
         logging.error("Error occurred during data transformation.")
         raise
+
+def rev_19_report_data_transformation(input_csv_data_file: str, output_csv_data_path: str, table_columns, client_id: int) -> None:
+    """
+    Processes a CSV file and generates a cleaned report.
+
+    This function performs the following operations:
+    - Reads the CSV into a Polars DataFrame with specified Columns.
+    - Removes rows where all columns contain only null (None) values.
+    - Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
+    - Cleans currency columns using `clean_currency_column`.
+    - Adds a new column `Date_Updated` with the current date and time.
+    - Converts `Svc_Date` to a date.
+    - Adds a new column `Client_id` with the provided client ID.
+    - Writes the cleaned DataFrame to an output CSV file.
+
+    Args:
+        input_csv_data_file (str): Path to the input CSV file.
+        output_csv_data_path (str): Path to save the cleaned output CSV file.
+        client_id (int): Client ID to be added as `client_id` in the DataFrame.
+
+    Returns:
+        None
+    """
+    try:
+        logging.info("Data transformation process started.")
+        df = pl.read_csv(input_csv_data_file, columns=["Phy_Name", "Rev_Type", "Proc_Code", "Description", "Charge_Amt"], infer_schema_length=0)
+        df = drop_all_null_rows(df)
+
+        df = df.with_columns(pl.col("Phy_Name").str.replace_all(",", "").alias("Phy_Name"))
+        df = clean_currency_column(df, ['Charge_Amt'])
+
+        df = df.with_columns(pl.lit(datetime.datetime.now()).alias("Date_Updated"))
+        df = df.with_columns(pl.lit(client_id).alias("Client_id"))
+
+        df = sync_dataframe_with_table(table_columns, df)
+        df.write_csv(output_csv_data_path)
+        logging.info("Data transformation process completed.")
+    except Exception as e:
+        logging.error("Error occurred during data transformation.")
+        raise
+
+def combine_csv_files(folder_path: str, output_file: str, start_with: str = None) -> None:
+    """
+    Combines multiple CSV files in a given folder into a single CSV file.
+
+    Args:
+        folder_path (str): Path to the folder containing CSV files.
+        output_file (str): Path where the combined CSV file will be saved.
+        start_with (str, optional): If provided, only files that start with this prefix will be combined.
+
+    Returns:
+        None
+
+    Raises:
+        FileNotFoundError: If no matching CSV files are found in the folder.
+    """
+    all_files = [
+        os.path.join(folder_path, f) for f in os.listdir(folder_path)
+        if f.endswith('.csv') and (start_with is None or f.startswith(start_with))
+    ]
+    
+    if not all_files:
+        raise FileNotFoundError("No matching CSV files found.")
+    
+    df_list = [pl.read_csv(file) for file in all_files]
+    combined_df = pl.concat(df_list)
+    combined_df.write_csv(output_file)
+    
+    logging.info(f" Combined {len(all_files)} CSV files.")

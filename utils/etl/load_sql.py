@@ -46,6 +46,3 @@ class BulkLoadSQL:
         """
         self.prepare_staging_table(base_table, staging_table)
         self.sql.csv_bulk_insert(processed_file, staging_table)
-        
-
-        

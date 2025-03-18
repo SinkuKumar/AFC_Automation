@@ -138,5 +138,28 @@ class TransformCSV:
 
         # df = df.rename(columns_to_rename)
         df = self.drop_textbox_columns(df)
-        df = self.add_client_id_date_updated_columns(df, self.client_id, self.date_time_stamp)
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def fin_25(self, file_path:str, processed_file: str) -> None:
+        """
+        Transform the FIN_25 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+
+        # TODO: Add column renaming and other transformations
+        columns_to_rename = {
+
+        }
+
+        # df = df.rename(columns_to_rename)
+        df = self.drop_textbox_columns(df)
+        df = self.add_client_id_date_updated_columns(df)
         df.write_csv(processed_file)

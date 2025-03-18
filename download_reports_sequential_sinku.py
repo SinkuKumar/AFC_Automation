@@ -67,13 +67,15 @@ file_folder.create_directories([CLIENT_TODAY_DIR])
 exct_rep.cnt_27(cnt_27_cfg['report_name'], cnt_27_cfg['from_date'], cnt_27_cfg['to_date'])
 task_q.add_task(trns_csv.cnt_27, os.path.join(DWLD_DIR, cnt_27_cfg['file_name']), os.path.join(DWLD_DIR, cnt_27_cfg['processed_file']))
 # task_q.add_task(load_csv.load_report, cnt_27_cfg['processed_file'], cnt_27_cfg['base_table'], cnt_27_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, cnt_27_cfg['file_name']), CLIENT_TODAY_DIR)
 
 # Extract, Transform, Load CNT_19
 exct_rep.cnt_19(cnt_19_cfg['report_name'], cnt_19_cfg['from_date'], cnt_19_cfg['to_date'])
-# task_q.add_task(trns_csv.cnt_19, cnt_19_cfg['file_name'], cnt_19_cfg['processed_file'])
+task_q.add_task(trns_csv.cnt_19, os.path.join(DWLD_DIR, cnt_19_cfg['file_name']), os.path.join(DWLD_DIR,cnt_19_cfg['processed_file']))
 # task_q.add_task(load_csv.load_report, cnt_19_cfg['processed_file'], cnt_19_cfg['base_table'], cnt_19_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, cnt_19_cfg['file_name']), CLIENT_TODAY_DIR)
 
-# Move all the file to the date folder
-file_folder.move_files_only(DWLD_DIR, CLIENT_TODAY_DIR)
+# Extract, Transform, Load FIN 25
+
 experity.logout()
 driver.quit()

@@ -296,3 +296,39 @@ def move_files_only(source_folder: str, destination_folder: str) -> None:
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
         raise
+
+def move_file(src_path: str, dest_dir:str) -> None:
+    """
+    Move a file from the source path to the destination directory.
+
+    Args:
+        src_path (str): The path of the file to be moved.
+        dest_dir (str): The directory where the file should be moved.
+
+    Raises:
+        FileNotFoundError: If the source file does not exist.
+        PermissionError: If the process lacks necessary permissions.
+        Exception: If any other unexpected error occurs.
+    
+    Returns:
+        None
+    """
+    try:
+        if not os.path.exists(src_path):
+            raise FileNotFoundError(f"Source file does not exist: {src_path}")
+
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+
+        shutil.move(src_path, dest_dir)
+        logging.info(f"File moved from {src_path} to {dest_dir}")
+
+    except FileNotFoundError as e:
+        logging.error(f"Error: {e}")
+        raise
+    except PermissionError as e:
+        logging.error(f"Permission error: {e}")
+        raise
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}")
+        raise

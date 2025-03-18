@@ -11,30 +11,21 @@ from utils.extract_transform import combine_csv_files, rev_19_report_data_transf
 from utils.create_table_queries import rev_19_create_query
 
 load_dotenv()
-# db = PyODBCSQL('BI_AFC')
+db = PyODBCSQL('BI_AFC')
 
 # client_ids = db.get_all_active_client_ids()   # For all clients
-client_ids = [2001]                             # For particular clients 
-report_from_month = 'June 2024'                 # Month Year format (e.g., 'March 2010')
+client_ids = [3671]                             # For particular clients 
+report_from_month = 'August 2024'                 # Month Year format (e.g., 'March 2010')
 report_to_month = 'February 2025'               # Month Year format (e.g., 'March 2010')
 
 REPORT_NAME = 'REV_19'
 BROWSER = 'chrome'
-ALL_FILES_DIR = os.path.join(os.getcwd(), 'Downloads', 'Rev_19')
-DOWNLOAD_DIR = os.path.join(os.getcwd(), 'Downloads', 'Rev_19_TEMP')
 WINDOW_WIDTH, WINDOW_HEIGHT = None, None
 EXPERITY_URL = 'https://pvpm.practicevelocity.com'
-
-date_folder = rf'{ALL_FILES_DIR}\{datetime.now().strftime("%m-%d-%Y")}'
-file_operation.create_directories([date_folder, DOWNLOAD_DIR])
 
 logging.info(f"{'-'*30}")
 logging.info('  New Automation run started')
 logging.info(f"{'-'*30}")
-selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR, window_width=WINDOW_WIDTH, window_height= WINDOW_HEIGHT)
-
-l_username = os.getenv('USERNAME')
-l_password = os.getenv('PASSWORD')
 
 def web_workflow():
     try:
@@ -73,12 +64,11 @@ def data_workflow():
     logging.info("Database workflow started...")
     try:
         print(f'Data transformation and Records insertion process started for client : {client_id}')
-        # db.check_and_create_table(TABLE_NAME, rev_19_create_query(TABLE_NAME))
-        # table_columns = db.get_column_names(TABLE_NAME)
-        table_columns = [("Phy_Name",), ("Rev_Type",), ("Proc_Code",), ("Description", ), ("Charge_Amt", ), ("Client_id", ), ("Date_Updated", )]
+        db.check_and_create_table(TABLE_NAME, rev_19_create_query(TABLE_NAME))
+        table_columns = db.get_column_names(TABLE_NAME)
         rev_19_report_data_transformation(combined_csv_file_path, transformed_csv_file_path, table_columns, client_id)
-        # db.truncate_table(TABLE_NAME)
-        # db.csv_bulk_insert(output_csv_file, TABLE_NAME)
+        db.truncate_table(TABLE_NAME)
+        db.csv_bulk_insert(transformed_csv_file_path, TABLE_NAME)
         file_operation.move_paths([combined_csv_file_path, transformed_csv_file_path], date_folder)
         print(f'Data transformation and Records insertion completed for client : {client_id}')
         logging.info('Database workflow completed!')
@@ -87,17 +77,22 @@ def data_workflow():
         logging.error(f'An unexpected error occurred during the ETL process: {e}', exc_info=True)
 
 print('New Automation Run Started...\n')
-# user_credentials = db.get_users_credentials(client_ids)
-user_credentials = [(2001, l_username, l_password)]
+user_credentials = db.get_users_credentials(client_ids)
 
 for client_id, username, password in user_credentials:
+    ALL_FILES_DIR = os.path.join(os.getcwd(), 'Downloads', str(client_id))
+    DOWNLOAD_DIR = os.path.join(os.getcwd(), 'Downloads', 'Rev_19_TEMP')
+    date_folder = rf'{ALL_FILES_DIR}\{datetime.now().strftime("%m-%d-%Y")}'
+    file_operation.create_directories([date_folder, DOWNLOAD_DIR])
+    selenium = SeleniumDriver(browser=BROWSER, download_directory=DOWNLOAD_DIR, window_width=WINDOW_WIDTH, window_height= WINDOW_HEIGHT)
+
     file_operation.clear_directory_files(DOWNLOAD_DIR)
 
     TABLE_NAME = f'REV_19_Staging_{client_id}'
     time_stamp = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
     combined_csv_file_name = f'{REPORT_NAME}_{client_id}_{report_from_month.replace(" ", "-")}_{report_to_month.replace(" ", "-")}_{time_stamp}.csv'
     combined_csv_file_path = os.path.join(DOWNLOAD_DIR, combined_csv_file_name)
-    transformed_csv_file_name = f'{REPORT_NAME}_{client_id}_{report_from_month.replace(" ", "-")}_{report_from_month.replace(" ", "-")}_{time_stamp}_transformed.csv'
+    transformed_csv_file_name = f'{REPORT_NAME}_{client_id}_{report_from_month.replace(" ", "-")}_{report_to_month.replace(" ", "-")}_{time_stamp}_transformed.csv'
     transformed_csv_file_path = os.path.join(DOWNLOAD_DIR, transformed_csv_file_name)
     status = False
 

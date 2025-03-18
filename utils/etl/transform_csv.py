@@ -116,6 +116,7 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.clean_currency_column(df, "Total_Charge")
         df = self.add_client_id_date_updated_columns(df)
+        # TODO: Sync columns from table to df before writing to CSV
         df.write_csv(processed_file)
 
     def cnt_19(self, file_path: str, processed_file: str) -> None:
@@ -139,6 +140,7 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.drop_textbox_columns(df)
         df = self.add_client_id_date_updated_columns(df)
+        # TODO: Sync columns from table to df before writing to CSV
         df.write_csv(processed_file)
 
     def fin_25(self, file_path:str, processed_file: str) -> None:
@@ -162,4 +164,5 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.drop_textbox_columns(df)
         df = self.add_client_id_date_updated_columns(df)
+        # TODO: Sync columns from table to df before writing to CSV
         df.write_csv(processed_file)

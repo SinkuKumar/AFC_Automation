@@ -20,7 +20,7 @@ TIME_STAMP = DATE_TIME_STAMP.split()[1]
 EXPERITY_URL = "https://pvpm.practicevelocity.com"
 
 # SQL Queries
-CREDENTIALS_QUERY = "SELECT client_id, client_name, username, password FROM AFC_Password_Tbl WHERE active = 1 AND client_id in ({client_id})"
+CREDENTIALS_QUERY = "SELECT client_id, client_name, username, password FROM AFC_Password_Tbl WHERE active = 1"
 
 ## Report Configuration
 # CNT_27 Configuration
@@ -32,6 +32,11 @@ CNT_27_TO_DATE = "03/17/2025"
 CNT_19_REPORT_NAME = "CNT_19"
 CNT_19_FROM_DATE = "01/01/2022"
 CNT_19_TO_DATE = "03/17/2025"
+
+# FIN_25 Configuration
+FIN_25_REPORT_NAME = "FIN_25"
+FIN_25_FROM_DATE = "01/01/2022"
+FIN_25_TO_DATE = "03/17/2025"
 
 class ReportConfig:
     def __init__(self, client_id: int) -> None:
@@ -56,7 +61,18 @@ class ReportConfig:
             "file_name": "CNT_19_VisitCountByCategory.csv",
             "base_table": "CNT_19_Staging_Base",
             "staging_table": f"CNT_19_Staging_{self.client_id}",
-            "processed_file": f"CNT_19_Processed_{CNT_27_FROM_DATE.replace('/', '-')}_{CNT_27_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "processed_file": f"CNT_19_Processed_{CNT_19_FROM_DATE.replace('/', '-')}_{CNT_19_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+        }
+    
+    def fin_25(self) -> dict:
+        return {
+            "report_name": FIN_25_REPORT_NAME,
+            "from_date": FIN_25_FROM_DATE,
+            "to_date": FIN_25_TO_DATE,
+            "file_name": "FIN_25_RealTimeChargesReview.csv",
+            "base_table": "FIN_25_Staging_Base",
+            "staging_table": f"FIN_25_Staging_{self.client_id}",
+            "processed_file": f"FIN_25_Processed_{FIN_25_FROM_DATE.replace('/', '-')}_{FIN_25_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
 if __name__ == "__main__":

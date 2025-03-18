@@ -46,3 +46,9 @@ class BulkLoadSQL:
         """
         self.prepare_staging_table(base_table, staging_table)
         self.sql.csv_bulk_insert(processed_file, staging_table)
+
+    def load_report_pay_10(self):
+        """
+        Custom instructions to load the Pay_10 report.
+        """
+        pass

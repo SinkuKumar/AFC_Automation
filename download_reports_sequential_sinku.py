@@ -79,9 +79,10 @@ for credential in sql.execute_query(CRED_Q):
         # task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, cnt_19_cfg['file_name']), CLIENT_TODAY_DIR)
 
         # Extract, Transform, Load FIN 25
-        print(client_id)
+        print(client_id, end=": ")
         time.sleep(5)
         experity.logout()
+        print("Success")
     except Exception as e:
         print(e)
     finally:

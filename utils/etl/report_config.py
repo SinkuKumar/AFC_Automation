@@ -114,6 +114,11 @@ ADJ_4_REPORT_NAME = "ADJ_4"
 ADJ_4_FROM_DATE = "01/01/2022"
 ADJ_4_TO_DATE = CURRENT_DATE
 
+# PAY_10 Configuration
+PAY_10_REPORT_NAME = "PAY_10"
+PAY_10_FROM_DATE = "01/01/2022"
+PAY_10_TO_DATE = CURRENT_DATE
+
 class ReportConfig:
     def __init__(self, client_id: int) -> None:
         self.client_id = client_id
@@ -314,6 +319,17 @@ class ReportConfig:
             "base_table": "ADJ_4_Staging_Base",
             "staging_table": f"ADJ_4_Staging_{self.client_id}",
             "processed_file": f"ADJ_4_Processed_{ADJ_4_FROM_DATE.replace('/', '-')}_{ADJ_4_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+        }
+    
+    def pay_10(self) -> dict:
+        return {
+            "report_name": PAY_10_REPORT_NAME,
+            "from_date": PAY_10_FROM_DATE,
+            "to_date": PAY_10_TO_DATE,
+            "file_name": "PAY_10_PayerPatientPaidAdjustedByPayerClass.csv",
+            "base_table": "PAY_10_Staging_Base",
+            "staging_table": f"PAY_10_Staging_{self.client_id}",
+            "processed_file": f"PAY_10_Processed_{PAY_10_FROM_DATE.replace('/', '-')}_{PAY_10_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
 if __name__ == "__main__":

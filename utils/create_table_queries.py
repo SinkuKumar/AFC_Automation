@@ -70,3 +70,7 @@ CREATE TABLE CNT_19_Staging_Base(
     Date_Updated DATETIME
 );
 """
+
+if __name__ == '__main__':
+    print(cnt_27_create_query())
+    print(cnt_19_create_query())

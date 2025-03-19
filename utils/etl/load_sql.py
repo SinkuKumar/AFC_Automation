@@ -28,13 +28,9 @@ class BulkLoadSQL:
         Check if the table exists, if not create the table.
         Clear the table if `clear_table` is set to True.
         """
-        table_exists = False
         try:
-            table_exists = self.sql.execute_query("SELECT TOP 1 * FROM {}".format(staging_table))
+            self.sql.execute_query("SELECT TOP 1 * FROM {}".format(staging_table))
         except:
-            table_exists = False
-
-        if not table_exists:
             self.sql.execute_query("SELECT TOP 0 * INTO {} FROM {}".format(staging_table, base_table))
         
         if self.empty_table:

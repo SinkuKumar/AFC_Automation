@@ -83,15 +83,15 @@ file_folder.create_directories([CLIENT_TODAY_DIR])
 # Extract, Transform, Load CNT_27
 exct_rep.cnt_27(cnt_27_cfg['report_name'], cnt_27_cfg['from_date'], cnt_27_cfg['to_date'])
 task_q.add_task(trns_csv.cnt_27, os.path.join(DWLD_DIR, cnt_27_cfg['file_name']), os.path.join(DWLD_DIR, cnt_27_cfg['processed_file']))
-task_q.add_task(load_csv.load_report, cnt_27_cfg['processed_file'], cnt_27_cfg['base_table'], cnt_27_cfg['staging_table'])
+# task_q.add_task(load_csv.load_report, cnt_27_cfg['processed_file'], cnt_27_cfg['base_table'], cnt_27_cfg['staging_table'])
 task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, cnt_27_cfg['processed_file']), CLIENT_TODAY_DIR)
 
 # Extract, Transform, Load CNT_19
 exct_rep.cnt_19(cnt_19_cfg['report_name'], cnt_19_cfg['from_date'], cnt_19_cfg['to_date'])
 task_q.add_task(trns_csv.cnt_19, os.path.join(DWLD_DIR, cnt_19_cfg['file_name']), os.path.join(DWLD_DIR,cnt_19_cfg['processed_file']))
-task_q.add_task(load_csv.load_report, cnt_19_cfg['processed_file'], cnt_19_cfg['base_table'], cnt_19_cfg['staging_table'])
+# task_q.add_task(load_csv.load_report, cnt_19_cfg['processed_file'], cnt_19_cfg['base_table'], cnt_19_cfg['staging_table'])
 task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, cnt_19_cfg['processed_file']), CLIENT_TODAY_DIR)
-
+"""
 # Extract, Transform, Load ADJ_11
 exct_rep.adj_11(adj_11_cfg['report_name'], adj_11_cfg['from_date'], adj_11_cfg['to_date'])
 task_q.add_task(trns_csv.adj_11, os.path.join(DWLD_DIR, adj_11_cfg['file_name']), os.path.join(DWLD_DIR, adj_11_cfg['processed_file']))
@@ -181,7 +181,7 @@ exct_rep.adj_4(adj_4_cfg['report_name'], adj_4_cfg['from_date'], adj_4_cfg['to_d
 # task_q.add_task(trns_csv.adj_4, os.path.join(DWLD_DIR, adj_4_cfg['file_name']), os.path.join(DWLD_DIR, adj_4_cfg['processed_file']))
 # task_q.add_task(load_csv.load_report, adj_4_cfg['processed_file'], adj_4_cfg['base_table'], adj_4_cfg['staging_table'])
 # task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, adj_4_cfg['file_name']), CLIENT_TODAY_DIR)
-
+"""
 
 experity.logout()
 driver.quit()

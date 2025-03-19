@@ -344,6 +344,7 @@ class ReportConfig:
             "processed_file": f"PAY_10_Processed_{PAY_10_FROM_DATE.replace('/', '-')}_{PAY_10_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
+
 if __name__ == "__main__":
     rep_cfg = ReportConfig(3622)
     print(rep_cfg.cnt_27()['processed_file'])

@@ -439,3 +439,43 @@ class TransformCSV:
         except Exception as e:
             logging.error("Error occurred during Rev_19 data transformation.")
             raise
+    
+    def ccr_03(self, file_path:str, processed_file: str) -> None:
+        """
+        Transform CCR_03 Report
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+
+        columns_to_rename = {
+
+        }
+
+        # df = df.rename(columns_to_rename)
+        df = self.drop_textbox_columns(df)
+        df = self.clean_currency_column(df, 'ReserveAmt')
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def ccr_02(self, file_path:str, processed_file: str) -> None:
+        """
+        Transform CCR_02 Report
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+
+        columns_to_rename = {
+
+        }
+
+        # df = df.rename(columns_to_rename)
+        df = self.drop_textbox_columns(df)
+        df = self.clean_currency_column(df, 'Payment_Amt')
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+    
+    def pat_20(self):
+        """
+        Need clarification
+
+        TODO: Ask AFC Team what Textbox32 columns represents, what to rename
+        """
+        pass

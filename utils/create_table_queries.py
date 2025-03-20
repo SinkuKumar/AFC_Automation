@@ -1,3 +1,6 @@
+from matplotlib import table
+
+
 def pay_10_create_query(table_name):
     return f"""
     CREATE TABLE {table_name}(
@@ -71,6 +74,43 @@ CREATE TABLE CNT_19_Staging_Base(
 );
 """
 
+def ccr_03_create_query(table_name='CCR_03_Staging_Base'):
+    return f"""
+CREATE TABLE {table_name} (
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    DaysSinceTransaction NVARCHAR(MAX),
+    Pat_Name NVARCHAR(MAX),
+    Pymt_Type NVARCHAR(MAX),
+    ReserveAmt FLOAT,
+    Crt_UserID NVARCHAR(MAX),
+    Card_Type NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+"""
+
+def ccr_02_create_query(table_name='CCR_02_Staging_Base'):
+    return f"""
+CREATE TABLE {table_name} (
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Type NVARCHAR(MAX),
+    Inv_Num NVARCHAR(MAX),
+    Pat_Name NVARCHAR(MAX),
+    Payment_Amt FLOAT,
+    Crt_UserID NVARCHAR(MAX),
+    Reversed NVARCHAR(MAX),
+    Card_Type NVARCHAR(MAX),
+    Payment_Plan NVARCHAR(MAX),
+    Payment_Type NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+"""
+
+
 if __name__ == '__main__':
     print(cnt_27_create_query())
     print(cnt_19_create_query())
+    print(ccr_03_create_query())

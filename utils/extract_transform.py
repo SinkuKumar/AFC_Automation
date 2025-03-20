@@ -102,8 +102,6 @@ def fin_25_report_data_transformation(input_csv_data_file: str, output_csv_data_
     - Reads the CSV into a Polars DataFrame.
     - Removes rows where all columns contain only null (None) values
     - Renames the `Textbox2` column to `svc_date` and converts it to a date.
-    
-
     - Splits the `Proc_Code` column on " | " into 'proc_code' and 'proc_amount'.
     - Adds a new column `client_id` with the provided client ID.
     - Cleans currency columns using `clean_currency_column`.
@@ -209,11 +207,11 @@ def rev_19_report_data_transformation(input_csv_data_file: str, output_csv_data_
     This function performs the following operations:
     - Reads the CSV into a Polars DataFrame with specified Columns.
     - Removes rows where all columns contain only null (None) values.
-    - Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
+    - Removes all the commas(,) from the `Phy_Name` column.
     - Cleans currency columns using `clean_currency_column`.
     - Adds a new column `Date_Updated` with the current date and time.
-    - Converts `Svc_Date` to a date.
     - Adds a new column `Client_id` with the provided client ID.
+    - Aligns DataFrame with a database table.
     - Writes the cleaned DataFrame to an output CSV file.
 
     Args:

@@ -183,7 +183,7 @@ class ExperityBase:
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             screenshots_folder = os.path.join(project_root, "Screenshots")
             create_directories([screenshots_folder])
-
+            self.wait.until(page_loads)
             if self.driver.title == "PVM > Login":
                 """
                 Verify if the username or password is incorrect, and capture a screenshot if necessary.
@@ -211,7 +211,7 @@ class ExperityBase:
                     screenshot_path = os.path.join(screenshots_folder, f"Password_Expire_{username}_{TIMESTAMP_IDENTIFIER}.png")
                     self.driver.find_element(By.ID, "pnlPassword").screenshot(screenshot_path)
                     logging.warning(error_message)
-                    
+
             logging.info("Login process completed successfully.")
 
         except Exception as e:
@@ -281,7 +281,7 @@ class ExperityBase:
             "Educational Materials": "HelpDocument",
             # "Knowledge Base": "KnowledgeBase"
         }
-        
+
         try:
             logging.info(f"Attempting to navigate to '{sub_nav_item_name}'.")
             if sub_nav_item_name not in menu_mapping:
@@ -292,10 +292,10 @@ class ExperityBase:
             self.driver.get(target_url)
             self.wait.until(page_loads)
             logging.info(f"Successfully navigated to '{sub_nav_item_name}'.")
-        
+
         except Exception as e:
             raise SeleniumException(f"Code: {em.NAVIGATION_FAILURE} | Message : Error occurred while navigating to '{sub_nav_item_name}'.")
-        
+
     def search_and_select_report(self, report_name: str) -> None:
         """
         Searches for a report by its name and selects it.
@@ -349,12 +349,12 @@ class ExperityBase:
     def select_report_date_range(self, date1:str, date2:str) -> None:
         """
         Sets the 'From Service Date' and 'To Service Date'.
-        
+
         Args:
             date1(str): One of the two dates entered by the user (Format: MM/DD/YYYY).
             date2(str): The other date entered by the user (Format: MM/DD/YYYY).
                         Either date may come first; the code will determine the start and end dates.
-        
+
         Returns:
             None
 
@@ -365,7 +365,7 @@ class ExperityBase:
         date2_obj = datetime.strptime(date2, "%m/%d/%Y")
 
         from_date, to_date = (date1, date2) if date1_obj < date2_obj else (date2, date1)
-        
+
         try: 
             from_service_date = self.wait.until(EC.element_to_be_clickable((By.ID, 'FromServiceDate')))
             from_service_date.clear()

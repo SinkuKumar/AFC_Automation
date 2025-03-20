@@ -52,3 +52,6 @@ class BulkLoadSQL:
         Custom instructions to load the Pay_10 report.
         """
         pass
+
+    def get_column_names(self, table_name: str) -> list[tuple[str, str]]:
+        self.sql.get_column_names(table_name)

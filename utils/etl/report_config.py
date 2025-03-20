@@ -36,7 +36,7 @@ CNT_19_TO_DATE = CURRENT_DATE
 
 # FIN_25 Configuration
 FIN_25_REPORT_NAME = "FIN_25"
-FIN_25_FROM_DATE = "01/01/2022"
+FIN_25_FROM_DATE = "01/01/2025"
 FIN_25_TO_DATE = CURRENT_DATE
 
 # ADJ_11 Configuration
@@ -116,8 +116,14 @@ ADJ_4_TO_DATE = CURRENT_DATE
 
 # PAY_10 Configuration
 PAY_10_REPORT_NAME = "PAY_10"
-PAY_10_FROM_DATE = "01/01/2022"
+PAY_10_FROM_DATE = "12/01/2024"
 PAY_10_TO_DATE = CURRENT_DATE
+
+# REV_19 Configuration
+REV_19_REPORT_NAME = "REV_19"
+REV_19_FROM_MONTH = "January 2025"
+REV_19_TO_MONTH = "February 2025"
+REV_19_FILE_NAME = "REV_19_TotalRevenueByProviderAndCategory.csv"
 
 class ReportConfig:
     def __init__(self, client_id: int) -> None:
@@ -330,6 +336,17 @@ class ReportConfig:
             "base_table": "PAY_10_Staging_Base",
             "staging_table": f"PAY_10_Staging_{self.client_id}",
             "processed_file": f"PAY_10_Processed_{PAY_10_FROM_DATE.replace('/', '-')}_{PAY_10_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+        }
+    
+    def rev_19(self) -> dict:
+        return {
+            "report_name": REV_19_REPORT_NAME,
+            "from_month": REV_19_FROM_MONTH,
+            "to_month": REV_19_TO_MONTH,
+            "file_name": "REV_19_TotalRevenueByProviderAndCategory.csv",
+            "base_table": "REV_19_Staging_Base",
+            "staging_table": f"REV_19_Staging_{self.client_id}",
+            "processed_file": f"REV_19_Processed_{REV_19_FROM_MONTH.replace(' ', '-')}_{REV_19_TO_MONTH.replace(' ', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
 if __name__ == "__main__":

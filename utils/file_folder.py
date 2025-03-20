@@ -332,3 +332,83 @@ def move_file(src_path: str, dest_dir:str) -> None:
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
         raise
+
+def move_items(sources: str | list[str], destination: str, files_only: bool = False) -> None:
+    """
+    Moves files or folders from the source(s) to the destination.
+
+    Args:
+        sources (str | list[str]): A single path or a list of paths to move.
+        destination (str): The target directory.
+        files_only (bool, optional): If True, only files from a folder are moved (subfolders are ignored). Defaults to False.
+
+    Raises:
+        FileNotFoundError: If a source file or folder does not exist.
+        PermissionError: If there is an issue with file permissions.
+        Exception: For any unexpected errors.
+    """
+
+    if isinstance(sources, str):
+        sources = [sources]
+
+    try:
+        if not os.path.exists(destination):
+            os.makedirs(destination, exist_ok=True)
+            logging.info(f"Created destination directory: {destination}")
+
+        for src in sources:
+            if not os.path.exists(src):
+                logging.error(f"Source not found: {src}")
+                raise FileNotFoundError(f"Source not found: {src}")
+
+            if os.path.isdir(src) and files_only:
+                for item in os.listdir(src):
+                    src_item = os.path.join(src, item)
+                    if os.path.isfile(src_item):
+                        shutil.move(src_item, os.path.join(destination, item))
+                        logging.info(f"Moved file: {src_item} -> {destination}")
+            else:
+                shutil.move(src, destination)
+                logging.info(f"Moved: {src} -> {destination}")
+
+    except FileNotFoundError as e:
+        logging.error(f"File not found error: {e}")
+        raise
+    except PermissionError as e:
+        logging.error(f"Permission error: {e}")
+        raise
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        raise
+
+def delete_directories(directories: str | list[str]) -> None:
+    """Delete one or multiple directories safely without confirmation.
+
+    Args:
+        directories (str | list[str]): A single directory path or a list of directory paths to delete.
+
+    Raises:
+        ValueError: If `directories` is not a string or list.
+        PermissionError: If the directory cannot be deleted due to permissions.
+        OSError: If an unexpected OS error occurs.
+    """
+    if isinstance(directories, str):
+        directories = [directories]
+    elif not isinstance(directories, list):
+        raise ValueError("Expected a string or list of strings for directories.")
+
+    for directory in directories:
+        try:
+            if not os.path.exists(directory):
+                logging.warning(f"Directory '{directory}' does not exist.")
+                continue
+
+            shutil.rmtree(directory)
+            logging.info(f"Successfully deleted directory: {directory}")
+
+        except PermissionError:
+            logging.error(f"Permission denied: Cannot delete '{directory}'.")
+            raise
+        except OSError as e:
+            logging.error(f"OS error occurred while deleting '{directory}': {e}")
+            raise

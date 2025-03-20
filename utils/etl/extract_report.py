@@ -4,8 +4,9 @@ from datetime import datetime
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from utils.experity_base import ExperityBase, close_other_windows
+from utils.experity_base import ExperityBase, close_other_windows, run_logic_for_each_month
 from utils import file_folder
+from utils.etl.report_config import REV_19_FILE_NAME
 
 class ExtractReports:
     def __init__(self, driver, experity: ExperityBase, experity_url, experity_version, report_export_type, download_directory, time_out=300):
@@ -223,3 +224,19 @@ class ExtractReports:
         self.experity.download_report(self.report_export_type)
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
+
+    def rev_19(self, report_name, rev_19_from_month, rev_19_to_month):
+        self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
+        self.experity.search_and_select_report(report_name)
+
+        def rev_19_report_steps(month_name):
+            self.experity.select_month(month = month_name)
+            self.experity.run_report()
+            self.experity.download_report(self.report_export_type)
+            file_folder.wait_for_download(report_name, self.download_directory)
+            old_file_name = os.path.join(self.download_directory, REV_19_FILE_NAME)
+            new_file_name = os.path.join(self.download_directory, f'{report_name}_{month_name}.csv')
+            file_folder.rename_file_or_folder(old_file_name, new_file_name)
+            close_other_windows(self.driver)
+
+        run_logic_for_each_month(rev_19_from_month, rev_19_to_month, rev_19_report_steps)

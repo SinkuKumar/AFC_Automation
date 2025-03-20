@@ -91,13 +91,13 @@ class TransformCSV:
 
         return frame.filter(~pl.all_horizontal(pl.all().is_null()))
 
-    def sync_dataframe_with_table(self, table_columns: list, df: pl.DataFrame) -> pl.DataFrame:
+    def sync_dataframe_with_table(self, table_columns: list[tuple[str]], df: pl.DataFrame) -> pl.DataFrame:
         """
         Aligns a Polars DataFrame with a database table by ensuring it has the same columns.
         Any extra columns in the DataFrame are removed, and missing columns are added with NULL values.
 
         Args:
-            table_columns (list): The column names of the database table.
+            table_columns (list[tuple[str]]): The column names of the database table.
             df (pl.DataFrame): The Polars DataFrame to align.
 
         Returns:
@@ -111,6 +111,8 @@ class TransformCSV:
 
             for col_lower in missing_columns:
                 df = df.with_columns(pl.lit(None).alias(table_columns_lower[col_lower]))
+
+            df = df.rename({df_columns_lower[col_lower]: table_columns_lower[col_lower] for col_lower in df_columns_lower if col_lower in table_columns_lower})
 
             flat_table_columns = [col for sublist in table_columns for col in sublist]
             df = df.select(flat_table_columns)
@@ -135,6 +137,35 @@ class TransformCSV:
         return df.drop(
             [col for col in df.columns if col.lower().startswith("textbox") and col not in skip_columns]
         )
+    
+    def combine_csv_files(self, folder_path: str, output_file: str, start_with: str = None) -> None:
+        """
+        Combines multiple CSV files in a given folder into a single CSV file.
+
+        Args:
+            folder_path (str): Path to the folder containing CSV files.
+            output_file (str): Path where the combined CSV file will be saved.
+            start_with (str, optional): If provided, only files that start with this prefix will be combined.
+
+        Returns:
+            None
+
+        Raises:
+            FileNotFoundError: If no matching CSV files are found in the folder.
+        """
+        all_files = [
+            os.path.join(folder_path, f) for f in os.listdir(folder_path)
+            if f.endswith('.csv') and (start_with is None or f.startswith(start_with))
+        ]
+        
+        if not all_files:
+            raise FileNotFoundError("No matching CSV files found.")
+        
+        df_list = [pl.read_csv(file) for file in all_files]
+        combined_df = pl.concat(df_list)
+        combined_df.write_csv(output_file)
+        
+        logging.info(f" Combined {len(all_files)} CSV files.")
 
     def cnt_27(self, file_path: str, processed_file: str) -> None:
         """
@@ -249,9 +280,9 @@ class TransformCSV:
         - Removes rows where all columns contain only null (None) values.
         - Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
         - Cleans currency columns using `clean_currency_column`.
-        - Adds a new column `Date_Updated` with the current date and time.
         - Converts `Svc_Date` to a date.
-        - Adds a new column `Client_id` with the provided client ID.
+        - Adds a new columns `Client_id`, `Date_Updated` with the provided client ID, current date and time respectively.
+        - Aligns DataFrame with a database table.
         - Writes the cleaned DataFrame to an output CSV file.
 
         Args:
@@ -283,4 +314,41 @@ class TransformCSV:
             logging.info("Pay_10 Data transformation process completed.")
         except Exception as e:
             logging.error("Error occurred during Pay_10 data transformation.")
+            raise
+
+    def rev_19(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
+        """
+        Transform the REV_19 report.
+
+        This function performs the following operations:
+        - Reads the CSV into a Polars DataFrame with specified Columns.
+        - Removes rows where all columns contain only null (None) values.
+        - Removes all the commas(,) from the `Phy_Name` column.
+        - Cleans currency columns using `clean_currency_column`.
+        - Adds a new columns `Client_id`, `Date_Updated` with the provided client ID, current date and time respectively.
+        - Aligns DataFrame with a database table.
+        - Writes the cleaned DataFrame to an output CSV file.
+
+        Args:
+            input_csv_data_file (str): Path to the input CSV file.
+            output_csv_data_path (str): Path to save the cleaned output CSV file.
+            client_id (int): Client ID to be added as `client_id` in the DataFrame.
+
+        Returns:
+            None
+        """
+        try:
+            logging.info("Rev_19 Data transformation process started.")
+            df = pl.read_csv(file_path, columns=["Phy_Name", "Rev_Type", "Proc_Code", "Description", "Charge_Amt"], infer_schema_length=0)
+            df = self.drop_all_null_rows(df)
+
+            df = df.with_columns(pl.col("Phy_Name").str.replace_all(",", "").alias("Phy_Name"))
+            df = self.clean_currency_column(df, ['Charge_Amt'])
+            df = self.add_client_id_date_updated_columns(df)
+
+            df = self.sync_dataframe_with_table(table_columns, df)
+            df.write_csv(processed_file)
+            logging.info("Rev_19 Data transformation process completed.")
+        except Exception as e:
+            logging.error("Error occurred during Rev_19 data transformation.")
             raise

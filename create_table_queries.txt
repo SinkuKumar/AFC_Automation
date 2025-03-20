@@ -1,0 +1,141 @@
+CREATE TABLE REV_19_Staging_Base(
+    Phy_Name  VARCHAR(50),
+    Rev_Type  VARCHAR(30),
+    Proc_Code  VARCHAR(20),
+    "Description" VARCHAR(60),
+    Charge_Amt  DECIMAL(10,2),
+    Client_id  INT,
+    Date_Updated datetime
+);
+
+CREATE TABLE PAY_10_Staging_Base(
+    Payer_Class  VARCHAR(50),
+    Payer_Name  VARCHAR(60),
+    Pat_Name  VARCHAR(60),
+    Svc_Date DATE,
+    CPT_Code  VARCHAR(20),
+    Charge_Amt  DECIMAL(10,2),
+    Paid_Amt  DECIMAL(10,2),
+    Adj_Amt  DECIMAL(10,2),
+    Net_AR  DECIMAL(10,2),
+    Client_id  INT,
+    Date_Updated datetime
+);
+
+CREATE TABLE FIN_18_Staging_Base (
+    Inv_Num NVARCHAR(MAX),
+    Log_Num NVARCHAR(MAX),
+    Type NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    Pat_Name NVARCHAR(MAX),
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Phy_Name NVARCHAR(MAX),
+    Prev_Payer_Name NVARCHAR(MAX),
+    Total_Charge FLOAT,
+    New_Inv_Num NVARCHAR(MAX),
+    Rebilled_To_Payer NVARCHAR(MAX),
+    Rebilled_Total_Charge FLOAT,
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE PAY_41_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Payer_Name NVARCHAR(MAX),
+    Patient_Name NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Inv_Num NVARCHAR(MAX),
+    Trans_Date NVARCHAR(MAX),
+    Proc_Code NVARCHAR(MAX),
+    Proc_Description NVARCHAR(MAX),
+    Financial_Class NVARCHAR(MAX),
+    Reason NVARCHAR(MAX),
+    Payment FLOAT,
+	Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE XRY_03_Staging_Base (
+    Past_Due NVARCHAR(MAX),
+    DOS NVARCHAR(MAX),
+    Patient_Number NVARCHAR(MAX),
+    Patient_First NVARCHAR(MAX),
+    Patient_Last NVARCHAR(MAX),
+    Reading_By NVARCHAR(MAX),
+    Clinic NVARCHAR(MAX),
+    CPT NVARCHAR(MAX),
+    Xray_Ordered NVARCHAR(MAX),
+    Status NVARCHAR(MAX),
+	Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE CCR_03_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    DaysSinceTransaction NVARCHAR(MAX),
+    Pat_Name NVARCHAR(MAX),
+    Pymt_Type NVARCHAR(MAX),
+    ReserveAmt FLOAT,
+    Crt_UserID NVARCHAR(MAX),
+    Card_Type NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE CCR_02_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Type NVARCHAR(MAX),
+    Inv_Num NVARCHAR(MAX),
+    Pat_Name NVARCHAR(MAX),
+    Payment_Amt FLOAT,
+    Crt_UserID NVARCHAR(MAX),
+    Reversed NVARCHAR(MAX),
+    Card_Type NVARCHAR(MAX),
+    Payment_Plan NVARCHAR(MAX),
+    Payment_Type NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE ADJ_11_Staging_Base (
+    Inv_Num NVARCHAR(MAX),
+    Clinic NVARCHAR(MAX),
+    Rev_Type NVARCHAR(MAX),
+    Trans_Date NVARCHAR(MAX),
+    Phy_Name NVARCHAR(MAX),
+    Proc_Code NVARCHAR(MAX),
+    Payer NVARCHAR(MAX),
+    Payer_Name NVARCHAR(MAX),
+    Adj_Amt FLOAT,
+    Reason NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE Test_Auto_Staging_Fin_25 (
+    pat_name  VARCHAR(50),
+    pat_num  INT,
+    svc_date  DATE,
+    status_name VARCHAR(50),
+    clinic  VARCHAR(15),
+    rendering_phy  VARCHAR(50),
+    class  VARCHAR(50),
+    payer_name  VARCHAR(50),
+    rte_status  VARCHAR(50),
+    card_on_file  VARCHAR(10),
+    card_level  VARCHAR(20),
+    fee_schedule  VARCHAR(20),
+    total_charge  DECIMAL(10,2),
+    copay_paid  DECIMAL(10,2),
+    curr_pay_amt  DECIMAL(10,2),
+    other_paid  DECIMAL(10,2),
+    total_adj  DECIMAL(10,2),
+    crg_balance  DECIMAL(10,2),
+    proc_code  VARCHAR(20),
+    proc_amount  DECIMAL(10,2),
+    client_id  INT,
+	date_updated DATETIME
+);

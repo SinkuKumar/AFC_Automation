@@ -1,6 +1,3 @@
-from matplotlib import table
-
-
 def pay_10_create_query(table_name):
     return f"""
     CREATE TABLE {table_name}(
@@ -111,6 +108,6 @@ CREATE TABLE {table_name} (
 
 
 if __name__ == '__main__':
-    print(cnt_27_create_query())
-    print(cnt_19_create_query())
+    print(pay_10_create_query('PAY_10_Staging_Base'))
     print(ccr_03_create_query())
+    print(ccr_02_create_query())

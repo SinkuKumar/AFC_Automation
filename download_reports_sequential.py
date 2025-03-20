@@ -60,6 +60,12 @@ load_csv = BulkLoadSQL(sql, empty_table=True)
 rpt_config = report_config.ReportConfig(client_id)
 cnt_27_cfg = rpt_config.cnt_27()
 cnt_19_cfg = rpt_config.cnt_19()
+fin_25_cfg = rpt_config.fin_25()
+cnt_19_cfg = rpt_config.cnt_19()
+adj_11_cfg = rpt_config.adj_11()
+fin_18_cfg = rpt_config.fin_18()
+pay_41_cfg = rpt_config.pay_41()
+
 CLIENT_TODAY_DIR = os.path.join(DWLD_DIR, DATE_STAMP)
 file_folder.create_directories([CLIENT_TODAY_DIR])
 
@@ -76,6 +82,23 @@ task_q.add_task(trns_csv.cnt_19, os.path.join(DWLD_DIR, cnt_19_cfg['file_name'])
 task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, cnt_19_cfg['file_name']), CLIENT_TODAY_DIR)
 
 # Extract, Transform, Load FIN 25
+exct_rep.fin_25(fin_25_cfg['report_name'], fin_25_cfg['from_date'], fin_25_cfg['to_date'])
+task_q.add_task(trns_csv.fin_25, os.path.join(DWLD_DIR, fin_25_cfg['file_name']), os.path.join(DWLD_DIR, fin_25_cfg['processed_file']))
+# task_q.add_task(load_csv.load_report, fin_25_cfg['processed_file'], fin_25_cfg['base_table'], fin_25_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, fin_25_cfg['file_name']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load ADJ 11
+exct_rep.adj_11(adj_11_cfg['report_name'], adj_11_cfg['from_date'], adj_11_cfg['to_date'])
+task_q.add_task(trns_csv.adj_11, os.path.join(DWLD_DIR, adj_11_cfg['file_name']), os.path.join(DWLD_DIR, adj_11_cfg['processed_file']))
+# task_q.add_task(load_csv.load_report, adj_11_cfg['processed_file'], adj_11_cfg['base_table'], adj_11_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, adj_11_cfg['file_name']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load FIN 18
+exct_rep.fin_18(fin_18_cfg['report_name'], fin_18_cfg['from_date'], fin_18_cfg['to_date'])
+task_q.add_task(trns_csv.fin_18, os.path.join(DWLD_DIR, fin_18_cfg['file_name']), os.path.join(DWLD_DIR, fin_18_cfg['processed_file']))
+# task_q.add_task(load_csv.load_report, fin_18_cfg['processed_file'], fin_18_cfg['base_table'], fin_18_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, fin_18_cfg['file_name']), CLIENT_TODAY_DIR)
+
 
 experity.logout()
 driver.quit()

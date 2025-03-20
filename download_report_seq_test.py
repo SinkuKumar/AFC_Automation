@@ -67,26 +67,26 @@ fin_25_cfg = rpt_config.fin_25()
 
 file_folder.create_directories([CLIENT_TODAY_DIR, TEMP_DWLD_DIR])
 
-# Extract, Transform, Load PAY_10
+# Extract, Transform, Load PAY_10 - DONE
 # exct_rep.pay_10(pay_10_cfg['report_name'], pay_10_cfg['from_date'], pay_10_cfg['to_date'])
-# table_columns = [("Payer_Class",), ("Payer_Name",), ("Pat_Name",), ("Svc_Date",), ("CPT_Code",), ("Charge_Amt",), ("Paid_Amt",), ("Adj_Amt",), ("Net_AR",), ("Client_id",), ("Date_Updated",)]
-# task_q.add_task(trns_csv.pay_10, os.path.join(DWLD_DIR, pay_10_cfg['file_name']), os.path.join(DWLD_DIR, pay_10_cfg['processed_file']), table_columns)
-# task_q.add_task(file_folder.move_items, [os.path.join(DWLD_DIR, pay_10_cfg['processed_file'])], CLIENT_TODAY_DIR)
+# table_columns = load_csv.get_column_names(pay_10_cfg['base_table'])
+# task_q.add_task(trns_csv.pay_10, os.path.join(TEMP_DWLD_DIR, pay_10_cfg['file_name']), os.path.join(CLIENT_TODAY_DIR, pay_10_cfg['processed_file']), table_columns)
+# task_q.add_task(load_csv.load_report, os.path.join(CLIENT_TODAY_DIR, pay_10_cfg['processed_file']), pay_10_cfg['base_table'], pay_10_cfg['staging_table'])
+# task_q.add_task(file_folder.delete_directories, TEMP_DWLD_DIR)
 
-# # Extract, Transform, Load REV_19
+# # Extract, Transform, Load REV_19 - Check Again (deletion of directory creating issue)
 # exct_rep.rev_19(rev_19_cfg['report_name'], rev_19_cfg['from_month'], rev_19_cfg['to_month'])
-# task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
-# table_columns = [("Phy_Name",), ("Rev_Type",), ("Proc_Code",), ("Description",), ("Charge_Amt",), ("Client_id",), ("Date_Updated",)]
-# task_q.add_task(trns_csv.rev_19, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), table_columns)
-# task_q.add_task(file_folder.move_items, [os.path.join(DWLD_DIR, rev_19_cfg['processed_file'])], CLIENT_TODAY_DIR)
+# task_q.add_task(trns_csv.combine_csv_files, TEMP_DWLD_DIR, os.path.join(TEMP_DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
+# table_columns = load_csv.get_column_names(rev_19_cfg['base_table'])
+# task_q.add_task(trns_csv.rev_19, os.path.join(TEMP_DWLD_DIR, rev_19_cfg['file_name']), os.path.join(CLIENT_TODAY_DIR, rev_19_cfg['processed_file']), table_columns)
+# task_q.add_task(file_folder.delete_directories, TEMP_DWLD_DIR)
 
-# # Extract, Transform, Load FIN_25
-exct_rep.fin_25(fin_25_cfg['report_name'], fin_25_cfg['from_date'], fin_25_cfg['to_date'])
-# table_columns = [("pat_name",), ("pat_num",), ("svc_date",), ("status_name",), ("clinic",), ("rendering_phy",), ("class",), ("payer_name",), ("rte_status",), ("card_on_file",), ("card_level",), ("fee_schedule",), ("total_charge",), ("copay_paid",), ("curr_pay_amt",), ("other_paid",), ("total_adj",), ("crg_balance",), ("Date_Updated",), ("proc_code",), ("proc_amount",), ("client_id",)]
-table_columns = load_csv.get_column_names(fin_25_cfg['base_table'])
-task_q.add_task(trns_csv.fin_25, os.path.join(TEMP_DWLD_DIR, fin_25_cfg['file_name']), os.path.join(CLIENT_TODAY_DIR, fin_25_cfg['processed_file']), table_columns)
-task_q.add_task(load_csv.load_report, os.path.join(CLIENT_TODAY_DIR, fin_25_cfg['processed_file']), fin_25_cfg['base_table'], fin_25_cfg['staging_table'])
-task_q.add_task(file_folder.delete_directories, TEMP_DWLD_DIR)
+# # Extract, Transform, Load FIN_25 - DONE
+# exct_rep.fin_25(fin_25_cfg['report_name'], fin_25_cfg['from_date'], fin_25_cfg['to_date'])
+# table_columns = load_csv.get_column_names(fin_25_cfg['base_table'])
+# task_q.add_task(trns_csv.fin_25, os.path.join(TEMP_DWLD_DIR, fin_25_cfg['file_name']), os.path.join(CLIENT_TODAY_DIR, fin_25_cfg['processed_file']), table_columns)
+# task_q.add_task(load_csv.load_report, os.path.join(CLIENT_TODAY_DIR, fin_25_cfg['processed_file']), fin_25_cfg['base_table'], fin_25_cfg['staging_table'])
+# task_q.add_task(file_folder.delete_directories, TEMP_DWLD_DIR)
 
 experity.logout()
 driver.quit()

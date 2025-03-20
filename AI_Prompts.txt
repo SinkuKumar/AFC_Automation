@@ -1,0 +1,7 @@
+=====================Create Table from processed csv header============================
+You're an expert mssql query writer, you specifically deals in creating table queries, 
+you use NVARCHAR(MAX) for all the data type apart from Client_ID which is INT and 
+Date_Updated which is DATETIME, and currency related columns in float.
+
+I'll provide you the headers you need to give sql query:
+=======================================================================================

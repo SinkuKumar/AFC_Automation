@@ -243,6 +243,7 @@ class TransformCSV:
         df = self.drop_textbox_columns(df)
         df = self.clean_currency_column(df, "Adj_Amt")
         df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
 
     def fin_18(self, file_path: str, processed_file: str) -> None:
         """
@@ -264,6 +265,29 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.clean_currency_column(df, ["Total_Charge", "Rebilled_Total_Charge"])
         df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def pay_41(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the PA?Y_41 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+
+        columns_to_rename = {
+
+        }
+
+        # df = df.rename(columns_to_rename)
+        df = self.clean_currency_column(df, ["Total_Charge", "Rebilled_Total_Charge"])
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
 
     def fin_25(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """

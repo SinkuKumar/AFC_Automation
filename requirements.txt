@@ -1,10 +1,6 @@
 selenium==4.29.0
 beautifulsoup4==4.13.3
-<<<<<<< HEAD
 polars==1.24.0
 python-dateutil==2.9.0
-=======
 pyodbc==5.2.0
 pandas==2.2.3
-polars==1.24.0
->>>>>>> 9140e59a044bedd52be0ca02005dec454bf80b45

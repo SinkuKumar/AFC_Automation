@@ -50,4 +50,4 @@ class BulkLoadSQL:
         pass
 
     def get_column_names(self, table_name: str) -> list[tuple[str, str]]:
-        self.sql.get_column_names(table_name)
+        return self.sql.get_column_names(table_name)

@@ -17,6 +17,7 @@ import os
 import pyodbc
 import logging
 import utils.error_messages as em
+from dotenv import load_dotenv
 
 class PyODBCSQL:
     """
@@ -53,6 +54,7 @@ class PyODBCSQL:
         :return: None
         :rtype: None
         """
+        load_dotenv()
         self.server = os.getenv("SQL_SERVER")
         self.database = database
         self.username = os.getenv("SQL_USERNAME")
@@ -263,8 +265,8 @@ if __name__ == "__main__":
     import os
     from dotenv import load_dotenv
     
-    load_dotenv()
+    load_dotenv(".env")
     
-    sql = PyODBCSQL('BI_AFC')
-    result = sql.execute_query("SELECT 'Result' AS Test")
+    sql = PyODBCSQL('mallik_BI_AFC_Experity')
+    result = sql.execute_query("select top 10 * from CCR_02_Staging_Base")
     print(result)

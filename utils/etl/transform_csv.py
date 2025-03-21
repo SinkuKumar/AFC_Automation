@@ -222,6 +222,25 @@ class TransformCSV:
         # TODO: Sync columns from table to df before writing to CSV
         df.write_csv(processed_file)
 
+    def adj_4(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the ADJ_4 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the processed CSV file.
+
+        Returns:
+            None
+        """
+
+        df = pl.read_csv(file_path, infer_schema_length=0, skip_lines=3)
+        df = df.slice(3)
+        df = self.drop_textbox_columns()
+
+        df.write_csv(processed_file)
+
+
     def adj_11(self, file_path: str, processed_file: str) -> None:
         """
         Transform the ADJ_11 report.

@@ -116,7 +116,7 @@ PAY_4_TO_DATE = CURRENT_DATE
 
 # ADJ_4 Configuration
 ADJ_4_REPORT_NAME = "ADJ_4"
-ADJ_4_FROM_DATE = "01/01/2024"
+ADJ_4_FROM_DATE = "2024/01/01"
 ADJ_4_TO_DATE = CURRENT_DATE
 
 # PAY_10 Configuration
@@ -336,7 +336,7 @@ class ReportConfig:
             "report_name": ADJ_4_REPORT_NAME,
             "from_date": ADJ_4_FROM_DATE,
             "to_date": ADJ_4_TO_DATE,
-            "file_name": "ADJ_4_AdjustmentReport.csv",
+            "file_name": "ADJ_4_AdjustmentDetail.csv",
             "base_table": "ADJ_4_Staging_Base",
             "staging_table": f"ADJ_4_Staging_{self.client_id}",
             "processed_file": f"ADJ_4_Processed_{ADJ_4_FROM_DATE.replace('/', '-')}_{ADJ_4_TO_DATE.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",

@@ -134,7 +134,7 @@ class ExtractReports:
         self.experity.uncheck_all_check_all("freeunPhyListcheckall", "freePhyListcheck1")
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory)
+        file_folder.wait_for_download('PER_2', self.download_directory)
         close_other_windows(self.driver)
 
     def pat_20(self, report_name, pat_20_from_date, pat_20_to_date):

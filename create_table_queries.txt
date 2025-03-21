@@ -303,3 +303,49 @@ CREATE TABLE PAT_2_Staging_Base (
     Client_ID INT,
     Date_Updated DATETIME
 );
+
+CREATE TABLE REV_16_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Rev_Type NVARCHAR(MAX),
+    textbox33 NVARCHAR(MAX),
+    textbox34 NVARCHAR(MAX),
+    Visit NVARCHAR(MAX),
+    Ref_Clinic NVARCHAR(MAX),
+    Category NVARCHAR(MAX),
+    inv_num NVARCHAR(MAX),
+    PAT_NUM NVARCHAR(MAX),
+    Last_name NVARCHAR(MAX),
+    First_name NVARCHAR(MAX),
+    Charge_Amt FLOAT,
+    Rebilled_Amt FLOAT,
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE PAY_4_Staging_Base (
+    Payer_Name NVARCHAR(MAX),
+    textbox13 NVARCHAR(MAX),
+    Inv_Num NVARCHAR(MAX),
+    Trans_Date NVARCHAR(MAX),
+    Proc_Code NVARCHAR(MAX),
+    Payer NVARCHAR(MAX),
+    Payment FLOAT
+);
+
+CREATE TABLE PAT_20_Staging_Base (
+    Description NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    Last_Name NVARCHAR(MAX),
+    Sex NVARCHAR(MAX),
+    Address1 NVARCHAR(MAX),
+    Address2 NVARCHAR(MAX),
+    City NVARCHAR(MAX),
+    State NVARCHAR(MAX),
+    Zip NVARCHAR(MAX),
+    Pat_Phone NVARCHAR(MAX),
+    Cell_Phone NVARCHAR(MAX),
+    Email NVARCHAR(MAX),
+    Last_Clinic NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);

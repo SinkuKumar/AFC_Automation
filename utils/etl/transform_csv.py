@@ -235,11 +235,11 @@ class TransformCSV:
         """
 
         df = pl.read_csv(file_path, infer_schema_length=0, skip_lines=3)
-        df = df.slice(3)
-        df = self.drop_textbox_columns()
+        df = self.drop_textbox_columns(df, ['textbox20'])
+        df = self.clean_currency_column(df, ["textbox20", "Adj_Amt"])
+        df = self.add_client_id_date_updated_columns(df)
 
         df.write_csv(processed_file)
-
 
     def adj_11(self, file_path: str, processed_file: str) -> None:
         """
@@ -377,6 +377,16 @@ class TransformCSV:
             logging.error("Error occurred during Fin_25 data transformation.")
             raise
 
+    def pay_4(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the PAY_4 report.
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0, skip_lines=3)
+        df = self.drop_textbox_columns(df, ["textbox13"])
+        df = self.clean_currency_column(df, ["textbox13", "Payment"])
+
+        df.write_csv(processed_file)
+
     def pay_10(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the PAY_10 report.
@@ -422,6 +432,27 @@ class TransformCSV:
             logging.error("Error occurred during Pay_10 data transformation.")
             raise
 
+    def rev_16(self, file_path: str, processed_file: str) -> None:
+        """
+        Transform the REV_16 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+
+        Returns:
+            None
+        """
+        try:
+            df = pl.read_csv(file_path, infer_schema_length=0)
+            df = self.drop_textbox_columns(df, ["textbox33", "textbox34"])
+            df = self.clean_currency_column(df, ["textbox33", "textbox34", "Charge_Amt", "Rebilled_Amt"])
+            df = self.add_client_id_date_updated_columns(df)
+            df.write_csv(processed_file)
+        except Exception as e:
+            logging.error("Error occurred during rev_16 data transformation.")
+            raise
+            
     def rev_19(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the REV_19 report.

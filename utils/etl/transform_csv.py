@@ -288,7 +288,7 @@ class TransformCSV:
 
     def pay_41(self, file_path: str, processed_file: str) -> None:
         """
-        Transform the PA?Y_41 report.
+        Transform the PAY_41 report.
 
         Args:
             file_path (str): Path to the input CSV file.
@@ -311,7 +311,7 @@ class TransformCSV:
 
     def xry_03(self, file_path: str, processed_file: str) -> None:
         """
-        Transform the PA?Y_41 report.
+        Transform the XRY_03 report.
 
         Args:
             file_path (str): Path to the input CSV file.
@@ -524,7 +524,7 @@ class TransformCSV:
 
     def per_02(self, file_path:str, processed_file: str) -> None:
         """
-        Transform CCR_02 Report
+        Transform PER_02 Report
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -544,7 +544,7 @@ class TransformCSV:
 
     def pat_20(self, file_path:str, processed_file: str) -> None:
         """
-        Need clarification
+        Transform PAT_20 Report
 
         TODO: Ask AFC Team what Textbox32 columns represents, what to rename
         """
@@ -556,11 +556,31 @@ class TransformCSV:
 
     def cht_02(self, file_path:str, processed_file: str) -> None:
         """
-        Need clarification
+        Transform CHT_02 Report
 
-        TODO: Ask AFC Team what Textbox32 columns represents, what to rename
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def lab_01(self, file_path:str, processed_file: str) -> None:
+        """
+        Transform LAB_01 Report
+
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def pat_02(self, file_path:str, processed_file: str) -> None:
+        """
+        Transform PAT_02 Report
+
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_textbox_columns(df)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)
         df.write_csv(processed_file)

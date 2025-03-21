@@ -490,11 +490,46 @@ class TransformCSV:
         df = self.clean_currency_column(df, 'Payment_Amt')
         df = self.add_client_id_date_updated_columns(df)
         df.write_csv(processed_file)
-    
-    def pat_20(self):
+
+    def per_02(self, file_path:str, processed_file: str) -> None:
+        """
+        Transform CCR_02 Report
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
+        df = df.rename({"textbox5": "Provider"})
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def med_01(self, file_path:str, processed_file: str) -> None:
+        """
+        Transform CCR_02 Report
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_textbox_columns(df)
+        df = self.drop_all_null_rows(df)
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def pat_20(self, file_path:str, processed_file: str) -> None:
         """
         Need clarification
 
         TODO: Ask AFC Team what Textbox32 columns represents, what to rename
         """
-        pass
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
+        df = df.rename({"Textbox32": "Last_Clinic"})
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def cht_02(self, file_path:str, processed_file: str) -> None:
+        """
+        Need clarification
+
+        TODO: Ask AFC Team what Textbox32 columns represents, what to rename
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)

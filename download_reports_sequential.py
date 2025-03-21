@@ -65,20 +65,21 @@ cnt_19_cfg = rpt_config.cnt_19()
 adj_11_cfg = rpt_config.adj_11()
 fin_18_cfg = rpt_config.fin_18()
 pay_41_cfg = rpt_config.pay_41()
-pat_2_cfg = rpt_config.pat_2()
-lab_1_cfg = rpt_config.lab_01()
+pat_2_cfg = rpt_config.pat_2() # csv data has extra more data than excel check it once
+lab_1_cfg = rpt_config.lab_01() # conversion
 xry_03_cfg = rpt_config.xry_03()
-cht_2_cfg = rpt_config.cht_02()
+cht_2_cfg = rpt_config.cht_02() # 
 med_1_cfg = rpt_config.med_01()
-per_2_cfg = rpt_config.per_2()
+per_02_cfg = rpt_config.per_2()
 pat_20_cfg = rpt_config.pat_20()
 ccr2_cfg = rpt_config.ccr_2()
 ccr3_cfg = rpt_config.ccr_3()
-rev_16_cfg = rpt_config.rev_16()
-pay_4_cfg = rpt_config.pay_4()
-adj_4_cfg = rpt_config.adj_4()
+rev_16_cfg = rpt_config.rev_16() # 
+pay_4_cfg = rpt_config.pay_4() #
+adj_4_cfg = rpt_config.adj_4() # 
 pay_10_cfg = rpt_config.pay_10()
 fin_25_cfg = rpt_config.fin_25()
+rev_19_cfg = rpt_config.rev_19()
 
 CLIENT_TODAY_DIR = os.path.join(DWLD_DIR, DATE_STAMP)
 file_folder.create_directories([CLIENT_TODAY_DIR])
@@ -144,6 +145,32 @@ exct_rep.ccr_03(ccr3_cfg['report_name'], ccr3_cfg['from_date'], ccr3_cfg['to_dat
 task_q.add_task(trns_csv.ccr_03, os.path.join(DWLD_DIR, ccr3_cfg['file_name']), os.path.join(DWLD_DIR, ccr3_cfg['processed_file']))
 task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, ccr3_cfg['processed_file']), ccr3_cfg['base_table'], ccr3_cfg['staging_table'])
 task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, ccr3_cfg['processed_file']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load REV_19
+exct_rep.rev_19(rev_19_cfg['report_name'], rev_19_cfg['from_month'], rev_19_cfg['to_month'])
+task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
+table_columns = load_csv.get_column_names(rev_19_cfg['base_table'])
+task_q.add_task(trns_csv.rev_19, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), table_columns)
+task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), rev_19_cfg['base_table'], rev_19_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load PER_02
+exct_rep.per_02(per_02_cfg['report_name'], per_02_cfg['from_date'], per_02_cfg['to_date'])
+task_q.add_task(trns_csv.per_02, os.path.join(DWLD_DIR, per_02_cfg['file_name']), os.path.join(DWLD_DIR, per_02_cfg['processed_file']))
+task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, per_02_cfg['processed_file']), per_02_cfg['base_table'], per_02_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, per_02_cfg['processed_file']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load MED_01
+exct_rep.med_01(med_1_cfg['report_name'], med_1_cfg['from_date'], med_1_cfg['to_date'])
+task_q.add_task(trns_csv.med_01, os.path.join(DWLD_DIR, med_1_cfg['file_name']), os.path.join(DWLD_DIR, med_1_cfg['processed_file']))
+task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, med_1_cfg['processed_file']), med_1_cfg['base_table'], med_1_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, med_1_cfg['processed_file']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load PAT_20
+exct_rep.pat_20(pat_20_cfg['report_name'], pat_20_cfg['from_date'], pat_20_cfg['to_date'])
+task_q.add_task(trns_csv.pat_20, os.path.join(DWLD_DIR, pat_20_cfg['file_name']), os.path.join(DWLD_DIR, pat_20_cfg['processed_file']))
+task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, pat_20_cfg['processed_file']), pat_20_cfg['base_table'], pat_20_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, pat_20_cfg['processed_file']), CLIENT_TODAY_DIR)
 
 experity.logout()
 driver.quit()

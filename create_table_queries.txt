@@ -139,3 +139,58 @@ CREATE TABLE Test_Auto_Staging_Fin_25 (
     client_id  INT,
 	date_updated DATETIME
 );
+
+CREATE TABLE PER_2_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Date_In NVARCHAR(MAX),
+    Patient_Name NVARCHAR(MAX),
+    Provider NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    Time_In NVARCHAR(MAX),
+    Time_In_By NVARCHAR(MAX),
+    Vitals_Time NVARCHAR(MAX),
+    Vitals_By NVARCHAR(MAX),
+    Time_In_To_Time_Vitals	NVARCHAR(MAX),
+	Discharged_Time	NVARCHAR(MAX),
+	Discharged_By	NVARCHAR(MAX),
+	Time_Vitals_To_Time_Discharge	NVARCHAR(MAX),
+	Time_In_To_Time_Discharge	NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE MED_01_Staging_Base (
+    SignedOffBy NVARCHAR(MAX),
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Pat_Name NVARCHAR(MAX),
+    PrescribedDate NVARCHAR(MAX),
+    PrescribedBy NVARCHAR(MAX),
+    DrugName NVARCHAR(MAX),
+    Strength NVARCHAR(MAX),
+    StrengthUOM NVARCHAR(MAX),
+    DispenseQuantity	NVARCHAR(MAX),
+	IsDispensed	NVARCHAR(MAX),
+	IsEPrescribe	NVARCHAR(MAX),
+	IsPrintPhone	NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE PAT_20_Staging_Base (
+    Description	NVARCHAR(MAX),
+	Pat_Num	NVARCHAR(MAX),
+	Last_Name	NVARCHAR(MAX),
+	Sex	NVARCHAR(MAX),
+	Address1	NVARCHAR(MAX),
+	Address2	NVARCHAR(MAX),
+	City	NVARCHAR(MAX),
+	State	NVARCHAR(MAX),
+	Zip	NVARCHAR(MAX),
+	Pat_Phone	NVARCHAR(MAX),
+	Cell_Phone	NVARCHAR(MAX),
+	Email	NVARCHAR(MAX),
+	Last_Clinic  NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);

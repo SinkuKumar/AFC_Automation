@@ -19,7 +19,7 @@ CURRENT_DATE = time.strftime("%m/%d/%Y")
 LOG_DT_STAMP = DATE_STAMP.replace(' ', '_').replace(':', '-')
 
 # TODO: Apply proper dates in production
-CURRENT_DATE = '01/31/2024'
+# CURRENT_DATE = '01/31/2024'
 
 
 # Experity Configuration
@@ -76,12 +76,12 @@ XRY_03_TO_DATE = CURRENT_DATE
 
 # CHT_02 Configuration
 CHT_02_REPORT_NAME = "CHT_02"
-CHT_02_FROM_DATE = "01/01/2024"
+CHT_02_FROM_DATE = "01/01/2025"
 CHT_02_TO_DATE = CURRENT_DATE
 
 # MED_01 Configuration
 MED_01_REPORT_NAME = "MED_01"
-MED_01_FROM_DATE = "01/01/2024"
+MED_01_FROM_DATE = "01/01/2025"
 MED_01_TO_DATE = CURRENT_DATE
 
 # PER_02 Configuration

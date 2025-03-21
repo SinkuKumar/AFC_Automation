@@ -65,18 +65,18 @@ cnt_19_cfg = rpt_config.cnt_19()
 adj_11_cfg = rpt_config.adj_11()
 fin_18_cfg = rpt_config.fin_18()
 pay_41_cfg = rpt_config.pay_41()
-pat_2_cfg = rpt_config.pat_2() # csv data has extra more data than excel check it once
-lab_1_cfg = rpt_config.lab_01() # conversion
+pat_2_cfg = rpt_config.pat_2()
+lab_1_cfg = rpt_config.lab_01()
 xry_03_cfg = rpt_config.xry_03()
-cht_2_cfg = rpt_config.cht_02() # 
+cht_2_cfg = rpt_config.cht_02()
 med_1_cfg = rpt_config.med_01()
 per_02_cfg = rpt_config.per_2()
 pat_20_cfg = rpt_config.pat_20()
 ccr2_cfg = rpt_config.ccr_2()
 ccr3_cfg = rpt_config.ccr_3()
-rev_16_cfg = rpt_config.rev_16() # 
-pay_4_cfg = rpt_config.pay_4() #
-adj_4_cfg = rpt_config.adj_4() # 
+rev_16_cfg = rpt_config.rev_16()
+pay_4_cfg = rpt_config.pay_4()
+adj_4_cfg = rpt_config.adj_4() #
 pay_10_cfg = rpt_config.pay_10()
 fin_25_cfg = rpt_config.fin_25()
 rev_19_cfg = rpt_config.rev_19()
@@ -171,6 +171,24 @@ exct_rep.pat_20(pat_20_cfg['report_name'], pat_20_cfg['from_date'], pat_20_cfg['
 task_q.add_task(trns_csv.pat_20, os.path.join(DWLD_DIR, pat_20_cfg['file_name']), os.path.join(DWLD_DIR, pat_20_cfg['processed_file']))
 task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, pat_20_cfg['processed_file']), pat_20_cfg['base_table'], pat_20_cfg['staging_table'])
 task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, pat_20_cfg['processed_file']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load LAB_01
+exct_rep.lab_01(lab_1_cfg['report_name'], lab_1_cfg['from_date'], lab_1_cfg['to_date'])
+task_q.add_task(trns_csv.lab_01, os.path.join(DWLD_DIR, lab_1_cfg['file_name']), os.path.join(DWLD_DIR, lab_1_cfg['processed_file']))
+task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, lab_1_cfg['processed_file']), lab_1_cfg['base_table'], lab_1_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, lab_1_cfg['processed_file']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load CHT_02
+exct_rep.cht_02(cht_2_cfg['report_name'], cht_2_cfg['from_date'], cht_2_cfg['to_date'])
+task_q.add_task(trns_csv.cht_02, os.path.join(DWLD_DIR, cht_2_cfg['file_name']), os.path.join(DWLD_DIR, cht_2_cfg['processed_file']))
+task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, cht_2_cfg['processed_file']), cht_2_cfg['base_table'], cht_2_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, cht_2_cfg['processed_file']), CLIENT_TODAY_DIR)
+
+# Extract, Transform, Load PAT_02
+exct_rep.pat_2(pat_2_cfg['report_name'], pat_2_cfg['from_date'], pat_2_cfg['to_date'])
+task_q.add_task(trns_csv.pat_02, os.path.join(DWLD_DIR, pat_2_cfg['file_name']), os.path.join(DWLD_DIR, pat_2_cfg['processed_file']))
+task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, pat_2_cfg['processed_file']), pat_2_cfg['base_table'], pat_2_cfg['staging_table'])
+task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, pat_2_cfg['processed_file']), CLIENT_TODAY_DIR)
 
 experity.logout()
 driver.quit()

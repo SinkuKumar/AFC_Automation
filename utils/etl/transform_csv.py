@@ -508,9 +508,29 @@ class TransformCSV:
         """
         Need clarification
 
-        TODO: Ask AFC Team what Textbox32 columns represents, what to rename
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def lab_01(self, file_path:str, processed_file: str) -> None:
+        """
+        Need clarification
+
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
+        df = self.add_client_id_date_updated_columns(df)
+        df.write_csv(processed_file)
+
+    def pat_02(self, file_path:str, processed_file: str) -> None:
+        """
+        Need clarification
+
+        """
+        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_textbox_columns(df)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)
         df.write_csv(processed_file)

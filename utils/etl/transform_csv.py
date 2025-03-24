@@ -381,9 +381,10 @@ class TransformCSV:
         """
         Transform the PAY_4 report.
         """
-        df = pl.read_csv(file_path, infer_schema_length=0, skip_lines=3)
+        df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_textbox_columns(df, ["textbox13"])
         df = self.clean_currency_column(df, ["textbox13", "Payment"])
+        df = self.add_client_id_date_updated_columns(df)
 
         df.write_csv(processed_file)
 

@@ -329,7 +329,9 @@ CREATE TABLE PAY_4_Staging_Base (
     Trans_Date NVARCHAR(MAX),
     Proc_Code NVARCHAR(MAX),
     Payer NVARCHAR(MAX),
-    Payment FLOAT
+    Payment FLOAT,
+    Client_ID INT,
+    Date_Updated DATETIME
 );
 
 CREATE TABLE PAT_20_Staging_Base (

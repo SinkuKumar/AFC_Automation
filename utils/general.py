@@ -80,4 +80,9 @@ def get_past_date(days: int = 0, months: int = 0, years: int = 0, quarters: int 
 
     except Exception as e:
         logging.error("Error occurred while calculating past date: %s", str(e))
-        raise
+        
+        
+
+print(get_past_date(days = 60))
+print(get_past_date(months = 3))
+print(get_past_date(years = 3))

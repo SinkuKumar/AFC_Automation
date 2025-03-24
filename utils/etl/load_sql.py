@@ -29,7 +29,8 @@ class BulkLoadSQL:
         Clear the table if `clear_table` is set to True.
         """
         try:
-            self.sql.execute_query("SELECT TOP 1 * FROM {}".format(staging_table))
+            self.sql.execute_query("DROP TABLE {}".format(staging_table))
+            self.sql.execute_query("SELECT TOP 0 * INTO {} FROM {}".format(staging_table, base_table))
         except:
             self.sql.execute_query("SELECT TOP 0 * INTO {} FROM {}".format(staging_table, base_table))
         

@@ -173,12 +173,7 @@ exct_rep.per_02(per_2_cfg['report_name'], per_2_cfg['from_date'], per_2_cfg['to_
 # print("CCR_03 report completed")
 
 
-# # Extract, Transform, Load ADJ_4
-# exct_rep.adj_4(adj_4_cfg['report_name'], adj_4_cfg['from_month'], adj_4_cfg['to_month'])
-# task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, adj_4_cfg['file_name']), adj_4_cfg['report_name'])
-# task_q.add_task(trns_csv.adj_4, os.path.join(DWLD_DIR, adj_4_cfg['file_name']), os.path.join(DWLD_DIR, adj_4_cfg['processed_file']))
-# task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, adj_4_cfg['processed_file']), adj_4_cfg['base_table'], adj_4_cfg['staging_table'])
-# task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, adj_4_cfg['processed_file']), CLIENT_TODAY_DIR)
+
 
 
 # exct_rep.rev_19(rev_19_cfg['report_name'], rev_19_cfg['from_month'], rev_19_cfg['to_month'])
@@ -197,12 +192,7 @@ exct_rep.per_02(per_2_cfg['report_name'], per_2_cfg['from_date'], per_2_cfg['to_
 # task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, rev_16_cfg['processed_file']), CLIENT_TODAY_DIR)
 # print("REV_16 report completed")
 
-# Extract, Transform, Load PAY_4
-exct_rep.pay_4(pay_4_cfg['report_name'], pay_4_cfg['from_month'], pay_4_cfg['to_month'])
-task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, pay_4_cfg['file_name']), pay_4_cfg['report_name'])
-task_q.add_task(trns_csv.pay_4, os.path.join(DWLD_DIR, pay_4_cfg['file_name']), os.path.join(DWLD_DIR, pay_4_cfg['processed_file']))
-task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, pay_4_cfg['processed_file']), pay_4_cfg['base_table'], pay_4_cfg['staging_table'])
-task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, pay_4_cfg['processed_file']), CLIENT_TODAY_DIR)
+
 
 # time.sleep(10)
 experity.logout()

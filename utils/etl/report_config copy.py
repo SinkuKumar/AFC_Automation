@@ -1,6 +1,5 @@
 import os
 import time
-from general import get_past_date
 
 # Browser Configuration
 TIME_OUT = 900
@@ -30,131 +29,109 @@ EXPERITY_URL = "https://pvpm.practicevelocity.com"
 CREDENTIALS_QUERY = "SELECT client_id, client_name, username, password FROM BI_AFC..AFC_Password_Tbl WHERE active = 1 AND Client_ID IN ({client_id})"
 
 ## Report Configuration
-
 # CNT_27 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
 CNT_27_REPORT_NAME = "CNT_27"
-CNT_27_FROM_DATE = get_past_date(days = 60)
+CNT_27_FROM_DATE = "01/01/2024"
 CNT_27_TO_DATE = CURRENT_DATE
 
 # CNT_19 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
 CNT_19_REPORT_NAME = "CNT_19"
-CNT_19_FROM_DATE = get_past_date(days = 60)
+CNT_19_FROM_DATE = "01/01/2024"
 CNT_19_TO_DATE = CURRENT_DATE
 
+# FIN_25 Configuration
+FIN_25_REPORT_NAME = "FIN_25"
+FIN_25_FROM_DATE = "02/01/2025"
+FIN_25_TO_DATE = CURRENT_DATE
+
 # ADJ_11 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
 ADJ_11_REPORT_NAME = "ADJ_11"
-ADJ_11_FROM_DATE = get_past_date(days = 60)
+ADJ_11_FROM_DATE = "01/01/2024"
 ADJ_11_TO_DATE = CURRENT_DATE
 
 # FIN_18 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
 FIN_18_REPORT_NAME = "FIN_18"
-FIN_18_FROM_DATE = get_past_date(days = 60)
+FIN_18_FROM_DATE = "01/01/2024"
 FIN_18_TO_DATE = CURRENT_DATE
 
 # PAY_41 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
 PAY_41_REPORT_NAME = "PAY_41"
-PAY_41_FROM_DATE = get_past_date(days = 60)
+PAY_41_FROM_DATE = "01/01/2024"
 PAY_41_TO_DATE = CURRENT_DATE
 
 # PAT_2 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
 PAT_2_REPORT_NAME = "PAT_2"
-PAT_2_FROM_DATE = get_past_date(days = 60)
+PAT_2_FROM_DATE = "01/01/2025"
 PAT_2_TO_DATE = CURRENT_DATE
 
 # LAB_01 Configuration
-# Past 2 days for all clients
 LAB_01_REPORT_NAME = "LAB_01"
-LAB_01_FROM_DATE = get_past_date(days = 2)
+LAB_01_FROM_DATE = "01/01/2025"
 LAB_01_TO_DATE = CURRENT_DATE
 
 # XRY_03 Configuration
-# 2 days for all clients
 XRY_03_REPORT_NAME = "XRY_03"
-XRY_03_FROM_DATE = get_past_date(days = 2)
+XRY_03_FROM_DATE = "01/01/2024"
 XRY_03_TO_DATE = CURRENT_DATE
 
 # CHT_02 Configuration
-# 2 days for all clients
 CHT_02_REPORT_NAME = "CHT_02"
-CHT_02_FROM_DATE = get_past_date(days = 2)
+CHT_02_FROM_DATE = "01/01/2025"
 CHT_02_TO_DATE = CURRENT_DATE
 
 # MED_01 Configuration
-# 2 days for all clients
 MED_01_REPORT_NAME = "MED_01"
-MED_01_FROM_DATE = get_past_date(days = 2)
+MED_01_FROM_DATE = "01/01/2025"
 MED_01_TO_DATE = CURRENT_DATE
 
 # PER_02 Configuration
-# 2 days for all clients
 PER_2_REPORT_NAME = "PER_02"
-PER_2_FROM_DATE = get_past_date(days = 2)
+PER_2_FROM_DATE = "01/01/2024"
 PER_2_TO_DATE = CURRENT_DATE
 
 # PAT_20 Configuration
-# Since 1-1-2022 for all clients
 PAT_20_REPORT_NAME = "PAT_20"
-PAT_20_FROM_DATE = "01/01/2022"
+PAT_20_FROM_DATE = "01/01/2024"
 PAT_20_TO_DATE = CURRENT_DATE
 
 # CCR_02 Configuration
-# 60 days
 CCR_2_REPORT_NAME = "CCR_02"
-CCR_2_FROM_DATE = get_past_date(days = 60)
+CCR_2_FROM_DATE = "01/01/2024"
 CCR_2_TO_DATE = CURRENT_DATE
 
 # CCR_03 Configuration
-# 90 days
 CCR_3_REPORT_NAME = "CCR_03"
-CCR_3_FROM_DATE = get_past_date(days = 90)
+CCR_3_FROM_DATE = "01/01/2024"
 CCR_3_TO_DATE = CURRENT_DATE
 
 # REV_16 Configuration
-# Monthly
 REV_16_REPORT_NAME = "REV_16"
-REV_16_FROM_DATE = "2025/02/01" # YYYY/MM/DD
+REV_16_FROM_DATE = "2024/01/01"
 REV_16_TO_DATE = CURRENT_DATE
 
 # PAY_4 Configuration
-# Monthly
 PAY_4_REPORT_NAME = "PAY_4"
-PAY_4_FROM_MONTH = "February 2025"
+PAY_4_FROM_MONTH = "July 2024"
 PAY_4_TO_MONTH = "February 2025"
 PAY_4_FILE_NAME = "PAY_4_TotalPaymentByDetail.csv"
 
 # ADJ_4 Configuration
-# Monthly
 ADJ_4_REPORT_NAME = "ADJ_4"
-ADJ_4_FROM_MONTH = "February 2025"
+ADJ_4_FROM_MONTH = "July 2024"
 ADJ_4_TO_MONTH = "February 2025"
 ADJ_4_FILE_NAME = "ADJ_4_AdjustmentDetail.csv"
 
 # PAY_10 Configuration
-# Since 1-1-2022 for all clients
 PAY_10_REPORT_NAME = "PAY_10"
-PAY_10_FROM_DATE = "01/01/2022"
+PAY_10_FROM_DATE = "12/01/2024"
 PAY_10_TO_DATE = CURRENT_DATE
 
 # REV_19 Configuration
-# Hold
 REV_19_REPORT_NAME = "REV_19"
 REV_19_FROM_MONTH = "August 2024"
 REV_19_TO_MONTH = "February 2025"
 REV_19_FILE_NAME = "REV_19_TotalRevenueByProviderAndCategory.csv"
 ## TODO: Add these reports as well
-
-# FIN_25 Configuration
-# Hold
-FIN_25_REPORT_NAME = "FIN_25"
-FIN_25_FROM_DATE = "01/01/2022"
-FIN_25_TO_DATE = CURRENT_DATE
-
 # PCD_31 Configuration
 PCD_31_REPORT_NAME = "PCD_31"
 PCD_31_FROM_DATE = "01/01/2024"

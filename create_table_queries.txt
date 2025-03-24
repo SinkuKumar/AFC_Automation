@@ -349,3 +349,21 @@ CREATE TABLE PAT_20_Staging_Base (
     Client_ID INT,
     Date_Updated DATETIME
 );
+
+CREATE TABLE ADJ_4_Staging_Base(
+	Inv_Num nvarchar(max),
+	textbox20 nvarchar(max),
+	Svc_Date nvarchar(max),
+	Clinic nvarchar(max),
+	Rev_Type nvarchar(max),
+	Trans_Date nvarchar(max),
+	Phy_Name nvarchar(max),
+	Proc_Code nvarchar(max),
+	Payer nvarchar(max),
+	Payer_Name nvarchar(max),
+	Adj_Amt float,
+	Reason nvarchar(max),
+	Crt_UserID nvarchar(max),
+	Client_ID int,
+	Date_Updated datetime
+)

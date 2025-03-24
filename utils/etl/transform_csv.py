@@ -234,7 +234,7 @@ class TransformCSV:
             None
         """
 
-        df = pl.read_csv(file_path, infer_schema_length=0, skip_lines=3)
+        df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_textbox_columns(df, ['textbox20'])
         df = self.clean_currency_column(df, ["textbox20", "Adj_Amt"])
         df = self.add_client_id_date_updated_columns(df)

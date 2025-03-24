@@ -116,8 +116,8 @@ PAY_4_TO_DATE = CURRENT_DATE
 
 # ADJ_4 Configuration
 ADJ_4_REPORT_NAME = "ADJ_4"
-ADJ_4_FROM_MONTH = "January 2025"
-ADJ_4_TO_MONTH = "January 2025"
+ADJ_4_FROM_MONTH = "July 2024"
+ADJ_4_TO_MONTH = "February 2025"
 ADJ_4_TO_DATE = CURRENT_DATE
 ADJ_4_FILE_NAME = "ADJ_4_AdjustmentDetail.csv"
 
@@ -128,7 +128,7 @@ PAY_10_TO_DATE = CURRENT_DATE
 
 # REV_19 Configuration
 REV_19_REPORT_NAME = "REV_19"
-REV_19_FROM_MONTH = "January 2025"
+REV_19_FROM_MONTH = "August 2024"
 REV_19_TO_MONTH = "February 2025"
 REV_19_FILE_NAME = "REV_19_TotalRevenueByProviderAndCategory.csv"
 ## TODO: Add these reports as well

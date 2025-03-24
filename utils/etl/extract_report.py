@@ -206,10 +206,16 @@ class ExtractReports:
             self.experity.select_month(month = month_name)
             self.experity.run_report()
             self.experity.download_report(self.report_export_type)
-            file_folder.wait_for_download(report_name, self.download_directory)
+            file_folder.wait_for_download(ADJ_4_FILE_NAME, self.download_directory)
             old_file_name = os.path.join(self.download_directory, ADJ_4_FILE_NAME)
             new_file_name = os.path.join(self.download_directory, f'{report_name}_{month_name}.csv')
             file_folder.rename_file_or_folder(old_file_name, new_file_name)
+            with open(new_file_name, 'r') as file:
+                lines = file.readlines()[3:]
+
+            with open(new_file_name, 'w') as file:
+                file.writelines(lines)
+
             close_other_windows(self.driver)
         
         run_logic_for_each_month(adj_4_from_month, adj_4_to_month, adj_4_report_steps)
@@ -232,7 +238,7 @@ class ExtractReports:
             self.experity.select_month(month = month_name)
             self.experity.run_report()
             self.experity.download_report(self.report_export_type)
-            file_folder.wait_for_download(report_name, self.download_directory)
+            file_folder.wait_for_download(REV_19_FILE_NAME, self.download_directory)
             old_file_name = os.path.join(self.download_directory, REV_19_FILE_NAME)
             new_file_name = os.path.join(self.download_directory, f'{report_name}_{month_name}.csv')
             file_folder.rename_file_or_folder(old_file_name, new_file_name)

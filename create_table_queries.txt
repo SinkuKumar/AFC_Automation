@@ -56,6 +56,22 @@ CREATE TABLE PAY_41_Staging_Base (
     Date_Updated DATETIME
 );
 
+CREATE TABLE LAB_01_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    OrderedByPhysicianOn NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    First_Name NVARCHAR(MAX),
+    Last_Name NVARCHAR(MAX),
+    OrderedByPhysician NVARCHAR(MAX),
+    Code NVARCHAR(MAX),
+    TestName NVARCHAR(MAX),
+    Status NVARCHAR(MAX),
+    FacilityName NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
 CREATE TABLE XRY_03_Staging_Base (
     Past_Due NVARCHAR(MAX),
     DOS NVARCHAR(MAX),
@@ -368,4 +384,41 @@ CREATE TABLE ADJ_4_Staging_Base(
 	Crt_UserID nvarchar(max),
 	Client_ID int,
 	Date_Updated datetime
-)
+);
+
+CREATE TABLE CNT_19_Staging_Base (
+    Category NVARCHAR(MAX),
+    Clinic NVARCHAR(MAX),
+    Type NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    Last_Name NVARCHAR(MAX),
+    First_Name NVARCHAR(MAX),
+    Middle_Name NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE CNT_27_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Time_In NVARCHAR(MAX),
+    Time_Out NVARCHAR(MAX),
+    Status_Name NVARCHAR(MAX),
+    ArrivalStatus NVARCHAR(MAX),
+    Class NVARCHAR(MAX),
+    Payer_Type NVARCHAR(MAX),
+    Payer NVARCHAR(MAX),
+    Member_ID NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    Pat_Name NVARCHAR(MAX),
+    Visit_Type NVARCHAR(MAX),
+    Rendering_Phy NVARCHAR(MAX),
+    SignOffSealedDate NVARCHAR(MAX),
+    Log_Num NVARCHAR(MAX),
+    Inv_Num NVARCHAR(MAX),
+    Withhold_Code NVARCHAR(MAX),
+    Total_Charge FLOAT,
+    Client_ID INT,
+    Date_Updated DATETIME
+);

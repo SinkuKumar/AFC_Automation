@@ -11,7 +11,7 @@ from utils.extract_transform import combine_csv_files, rev_19_report_data_transf
 from utils.create_table_queries import rev_19_create_query
 
 load_dotenv()
-db = PyODBCSQL('BI_AFC')
+# db = PyODBCSQL('BI_AFC')
 
 # client_ids = db.get_all_active_client_ids()   # For all clients
 client_ids = [3671]                             # For particular clients 
@@ -64,20 +64,22 @@ def data_workflow():
     logging.info("Database workflow started...")
     try:
         print(f'Data transformation and Records insertion process started for client : {client_id}')
-        db.check_and_create_table(TABLE_NAME, rev_19_create_query(TABLE_NAME))
-        table_columns = db.get_column_names(TABLE_NAME)
-        rev_19_report_data_transformation(combined_csv_file_path, transformed_csv_file_path, table_columns, client_id)
-        db.truncate_table(TABLE_NAME)
-        db.csv_bulk_insert(transformed_csv_file_path, TABLE_NAME)
-        file_operation.move_paths([combined_csv_file_path, transformed_csv_file_path], date_folder)
-        print(f'Data transformation and Records insertion completed for client : {client_id}')
+        # db.check_and_create_table(TABLE_NAME, rev_19_create_query(TABLE_NAME))
+        # table_columns = db.get_column_names(TABLE_NAME)
+        # rev_19_report_data_transformation(combined_csv_file_path, transformed_csv_file_path, table_columns, client_id)
+        # db.truncate_table(TABLE_NAME)
+        # db.csv_bulk_insert(transformed_csv_file_path, TABLE_NAME)
+        # file_operation.move_paths([combined_csv_file_path, transformed_csv_file_path], date_folder)
+        # print(f'Data transformation and Records insertion completed for client : {client_id}')
         logging.info('Database workflow completed!')
     except Exception as e:
         print(e)
         logging.error(f'An unexpected error occurred during the ETL process: {e}', exc_info=True)
 
 print('New Automation Run Started...\n')
-user_credentials = db.get_users_credentials(client_ids)
+# user_credentials = db.get_users_credentials(client_ids)
+# user_credentials = db.get_users_credentials(client_ids)
+user_credentials = [[3671, 'sjalan@zma04', 'Graphx@987']]
 
 for client_id, username, password in user_credentials:
     ALL_FILES_DIR = os.path.join(os.getcwd(), 'downloads', str(client_id))
@@ -97,7 +99,7 @@ for client_id, username, password in user_credentials:
     status = False
 
     status = web_workflow()
-    if status:
-        data_workflow()
+    # if status:
+    #     data_workflow()
 logging.info('Automation run Finished. Please review the results.')
 print('\nAutomation run Finished. Please review the results.')

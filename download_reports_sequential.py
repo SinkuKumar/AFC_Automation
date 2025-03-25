@@ -60,26 +60,26 @@ exct_rep = ExtractReports(driver, experity, EXRTY_URL, experity_version, EXPORT_
 trns_csv = TransformCSV(client_id, DT_STAMP)
 load_csv = BulkLoadSQL(sql, empty_table=True)
 rpt_config = report_config.ReportConfig(client_id)
-cnt_27_cfg = rpt_config.cnt_27()
-cnt_19_cfg = rpt_config.cnt_19()
-adj_11_cfg = rpt_config.adj_11()
-fin_18_cfg = rpt_config.fin_18()
-pay_41_cfg = rpt_config.pay_41()
-pat_2_cfg = rpt_config.pat_2()
-lab_1_cfg = rpt_config.lab_01()
-xry_03_cfg = rpt_config.xry_03()
-cht_2_cfg = rpt_config.cht_02()
-med_1_cfg = rpt_config.med_01()
-per_02_cfg = rpt_config.per_2()
-pat_20_cfg = rpt_config.pat_20()
-ccr2_cfg = rpt_config.ccr_2()
-ccr3_cfg = rpt_config.ccr_3()
-rev_16_cfg = rpt_config.rev_16()
-pay_4_cfg = rpt_config.pay_4()
-adj_4_cfg = rpt_config.adj_4() #
-pay_10_cfg = rpt_config.pay_10()
-fin_25_cfg = rpt_config.fin_25()
-rev_19_cfg = rpt_config.rev_19()
+cnt_27_cfg = rpt_config.cnt_27() # 01 01 2024 to curr (for MD Billing, for non med past 60 days)
+cnt_19_cfg = rpt_config.cnt_19() # 01 01 2024 to curr (for MD Billing, for non med past 60 days)
+adj_11_cfg = rpt_config.adj_11() # 01 01 2024 to curr (for MD Billing, for non med past 60 days)
+fin_18_cfg = rpt_config.fin_18() # 01 01 2024 to curr (for MD Billing, for non med past 60 days)
+pay_41_cfg = rpt_config.pay_41() # 01 01 2024 to curr (for MD Billing, for non med past 60 days)
+pat_2_cfg = rpt_config.pat_2() # 01 01 2024 to curr (for MD Billing, for non med past 60 days)
+lab_1_cfg = rpt_config.lab_01() # past two days
+xry_03_cfg = rpt_config.xry_03() # past two days
+cht_2_cfg = rpt_config.cht_02() # past two days
+med_1_cfg = rpt_config.med_01() # past two days
+per_02_cfg = rpt_config.per_2() # past two days
+pat_20_cfg = rpt_config.pat_20() # 01 01 2022 to curr
+ccr2_cfg = rpt_config.ccr_2() # past 60
+ccr3_cfg = rpt_config.ccr_3() # past 90
+rev_16_cfg = rpt_config.rev_16()  # monthly
+pay_4_cfg = rpt_config.pay_4() # monthly
+adj_4_cfg = rpt_config.adj_4() # monthly
+pay_10_cfg = rpt_config.pay_10() # 01 01 2022 to curr
+fin_25_cfg = rpt_config.fin_25() # on hold
+rev_19_cfg = rpt_config.rev_19() # on hold
 
 CLIENT_TODAY_DIR = os.path.join(DWLD_DIR, DATE_STAMP)
 file_folder.create_directories([CLIENT_TODAY_DIR])
@@ -192,3 +192,5 @@ task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, pat_2_cfg['process
 
 experity.logout()
 driver.quit()
+
+task_q.wait_for_completion()

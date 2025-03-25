@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from datetime import datetime
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
@@ -73,6 +74,7 @@ class ExtractReports:
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
+        self.experity.select_date_type("Created Date")
         self.experity.uncheck_all_check_all("freeunPaymentReasoncheckall", "freePaymentReasoncheck1")
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
@@ -232,7 +234,7 @@ class ExtractReports:
             self.experity.select_month(month = month_name)
             self.experity.run_report()
             self.experity.download_report(self.report_export_type)
-            file_folder.wait_for_download(report_name, self.download_directory)
+            file_folder.wait_for_download(REV_19_FILE_NAME, self.download_directory)
             old_file_name = os.path.join(self.download_directory, REV_19_FILE_NAME)
             new_file_name = os.path.join(self.download_directory, f'{report_name}_{month_name}.csv')
             file_folder.rename_file_or_folder(old_file_name, new_file_name)

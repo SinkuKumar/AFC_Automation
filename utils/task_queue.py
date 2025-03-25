@@ -23,7 +23,7 @@ class TaskQueue:
                     func(*args, **kwargs)
                 except Exception as e:
                     print(f"Error executing task: {e}")  # Log the error but continue
-    
+
                 self.task_queue.task_done()
             except queue.Empty:
                 with self.lock:
@@ -36,6 +36,7 @@ class TaskQueue:
         with self.lock:
             if self.worker_thread is None or not self.worker_thread.is_alive():
                 self.worker_thread = threading.Thread(target=self._process_queue, daemon=True)
+                # self.worker_thread = threading.Thread(target=self._process_queue)
                 self.worker_thread.start()
 
     def add_task(self, func, *args, **kwargs):
@@ -43,12 +44,16 @@ class TaskQueue:
         self.task_queue.put((func, args, kwargs))
         self._ensure_worker_running()
 
+    def wait_for_completion(self):
+        """Wait until all tasks in the queue are processed before exiting."""
+        self.task_queue.join()
+
 
 # Example Usage
 if __name__ == "__main__":
     def example_task(name):
         print(f"Task {name} started")
-        time.sleep(2)
+        time.sleep(5)
         print(f"Task {name} completed")
 
     queue_manager = TaskQueue()
@@ -56,6 +61,9 @@ if __name__ == "__main__":
     queue_manager.add_task(example_task, "A")
     queue_manager.add_task(example_task, "B")
 
-    time.sleep(40)  # Simulate some wait time
+    # time.sleep(40)  # Simulate some wait time
     
     queue_manager.add_task(example_task, "C")  # This will automatically restart the worker
+    print("\nWaiting for completion")
+    queue_manager.wait_for_completion()
+    print("Queue ended")

@@ -1,6 +1,4 @@
 import os
-import time
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -68,24 +66,38 @@ pat_20_cfg = rpt_config.pat_20()
 cht_2_cfg = rpt_config.cht_02()
 lab_1_cfg = rpt_config.lab_01()
 pat_2_cfg = rpt_config.pat_2()
+adj_4_cfg = rpt_config.adj_4()
 
 CLIENT_TODAY_DIR = os.path.join(DWLD_DIR, DATE_STAMP)
 file_folder.create_directories([CLIENT_TODAY_DIR])
 
 # Extract, Transform, Load PAY_10 - DONE
-# exct_rep.pay_10(pay_10_cfg['report_name'], pay_10_cfg['from_date'], pay_10_cfg['to_date'])
+
+exct_rep.pay_10(pay_10_cfg['report_name'], pay_10_cfg['from_date'], pay_10_cfg['to_date'])
 # table_columns = load_csv.get_column_names(pay_10_cfg['base_table'])
 # task_q.add_task(trns_csv.pay_10, os.path.join(TEMP_DWLD_DIR, pay_10_cfg['file_name']), os.path.join(CLIENT_TODAY_DIR, pay_10_cfg['processed_file']), table_columns)
 # task_q.add_task(load_csv.load_report, os.path.join(CLIENT_TODAY_DIR, pay_10_cfg['processed_file']), pay_10_cfg['base_table'], pay_10_cfg['staging_table'])
 # task_q.add_task(file_folder.delete_directories, TEMP_DWLD_DIR)
 
 # # Extract, Transform, Load REV_19 - Check Again (deletion of directory creating issue)
-exct_rep.rev_19(rev_19_cfg['report_name'], rev_19_cfg['from_month'], rev_19_cfg['to_month'])
-task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
-table_columns = load_csv.get_column_names(rev_19_cfg['base_table'])
-task_q.add_task(trns_csv.rev_19, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), table_columns)
+# exct_rep.rev_19(rev_19_cfg['report_name'], rev_19_cfg['from_month'], rev_19_cfg['to_month'])
+# task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
+# table_columns = load_csv.get_column_names(rev_19_cfg['base_table'])
+# task_q.add_task(trns_csv.rev_19, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), table_columns)
 # task_q.add_task(load_csv.load_report, os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), rev_19_cfg['base_table'], rev_19_cfg['staging_table'])
 # task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), CLIENT_TODAY_DIR)
+
+
+# exct_rep.adj_4(adj_4_cfg['report_name'], adj_4_cfg['from_month'], adj_4_cfg['to_month'])
+# task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, adj_4_cfg['file_name']), adj_4_cfg['report_name'])
+# exct_rep.rev_19(rev_19_cfg['report_name'], rev_19_cfg['from_month'], rev_19_cfg['to_month'])
+# task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
+# table_columns = load_csv.get_column_names(rev_19_cfg['base_table'])
+# task_q.add_task(trns_csv.rev_19, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), os.path.join(DWLD_DIR, rev_19_cfg['processed_file']), table_columns)
+
+exct_rep.rev_19(rev_19_cfg['report_name'], rev_19_cfg['from_month'], rev_19_cfg['to_month'])
+task_q.add_task(trns_csv.combine_csv_files, DWLD_DIR, os.path.join(DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
+
 
 # Extract, Transform, Load CNT_27
 # exct_rep.cnt_27(cnt_27_cfg['report_name'], cnt_27_cfg['from_date'], cnt_27_cfg['to_date'])
@@ -99,7 +111,7 @@ task_q.add_task(trns_csv.rev_19, os.path.join(DWLD_DIR, rev_19_cfg['file_name'])
 # task_q.add_task(file_folder.move_file, os.path.join(DWLD_DIR, pat_2_cfg['processed_file']), CLIENT_TODAY_DIR)
 
 # # Extract, Transform, Load FIN_25 - DONE
-# exct_rep.fin_25(fin_25_cfg['report_name'], fin_25_cfg['from_date'], fin_25_cfg['to_date'])
+exct_rep.fin_25(fin_25_cfg['report_name'], fin_25_cfg['from_date'], fin_25_cfg['to_date'])
 # table_columns = load_csv.get_column_names(fin_25_cfg['base_table'])
 # task_q.add_task(trns_csv.fin_25, os.path.join(TEMP_DWLD_DIR, fin_25_cfg['file_name']), os.path.join(CLIENT_TODAY_DIR, fin_25_cfg['processed_file']), table_columns)
 # task_q.add_task(load_csv.load_report, os.path.join(CLIENT_TODAY_DIR, fin_25_cfg['processed_file']), fin_25_cfg['base_table'], fin_25_cfg['staging_table'])

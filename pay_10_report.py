@@ -21,8 +21,8 @@ report_to_date =  get_current_date()          # MM/DD/YYYY format
 
 REPORT_NAME = 'PAY_10'
 BROWSER = 'chrome'
-ALL_FILES_DIR = os.path.join(os.getcwd(), 'Downloads', 'Pay_10')
-DOWNLOAD_DIR = os.path.join(os.getcwd(), 'Downloads', 'Pay_10_TEMP')
+ALL_FILES_DIR = os.path.join(os.getcwd(), 'downloads', 'Pay_10')
+DOWNLOAD_DIR = os.path.join(os.getcwd(), 'downloads', 'Pay_10_TEMP')
 WINDOW_WIDTH, WINDOW_HEIGHT = None, None
 EXPERITY_URL = 'https://pvpm.practicevelocity.com'
 

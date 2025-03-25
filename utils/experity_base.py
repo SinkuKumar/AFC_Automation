@@ -523,6 +523,26 @@ class ExperityBase:
         except Exception as e:
             raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during arrival status selection.")
         
+    def select_date_type(self, date_type: str) -> None:
+        """
+        Selects the specified Date type.
+
+        Args:
+            date_type(str): Date type to select.
+
+        Returns:
+            None
+
+        Raises:
+            SeleniumException: If any issue occurs during the arrival status names selection process.
+        """
+        try:
+            date_type_radio_button = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"div#rightcol input[type='radio'][value='{date_type}']")))
+            date_type_radio_button.click()
+            logging.info(f"{date_type} radio button clicked successfully.")
+        except Exception as e:
+            raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during 'Date Type' selection.")
+
     def uncheck_all_check_all(self, uncheck_button_identifier_id: str, check_checkbox_identifier_id: str):
         """
         Performs the action of first clicking the 'Uncheck All' button and then selecting the 'All' checkbox.

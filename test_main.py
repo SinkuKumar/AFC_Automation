@@ -1,25 +1,30 @@
 from download_reports_sequential_class import execute_report_functions
+from utils.general import get_past_date
+from utils.etl.report_config import CURRENT_DATE
 
 mode = "include"
-report_list = ["CNT_27"]
+report_list = ["PAY_10"]
 
 function_args = {
-    "CNT_27": {"from_date": "01/01/2025", "to_date": "03/10/2025"},
-    # "CNT_19": {"from_date": "01/18/2025", "to_date": "03/07/2025"},
-    # "ADJ_11": {"from_date": "01/01/2025", "to_date": "03/10/2025"},
-    # "FIN_18": {"from_date": "01/18/2025", "to_date": "03/07/2025"},
-    # "PAY_41": {"from_date": "01/01/2025", "to_date": "03/10/2025"},
-    # "PAY_10": {"from_date": "01/17/2025", "to_date": "03/07/2025"},
-    # "XRY_03": {"from_date": "01/18/2025", "to_date": "03/07/2025"},
-    # "PAY_41": {"from_date": "01/01/2025", "to_date": "03/10/2025"},
-    # "CCR_2": {"from_date": "01/18/2025", "to_date": "03/07/2025"},
-    # "CCR_03": {"from_date": "01/01/2025", "to_date": "03/10/2025"},
-    # "PER_02": {"from_date": "01/18/2025", "to_date": "03/07/2025"},
-    # "MED_01": {"from_date": "01/01/2025", "to_date": "03/10/2025"},
-    # "PAT_20": {"from_date": "01/18/2025", "to_date": "03/07/2025"},
-    # "LAB_01": {"from_date": "01/18/2025", "to_date": "03/07/2025"},
-    # "CHT_02": {"from_date": "01/01/2025", "to_date": "03/10/2025"},
-    # "PAT_02": {"from_date": "01/18/2025", "to_date": "03/07/2025"},
+    "CNT_27": {"from_date": "01/01/2024", "to_date": CURRENT_DATE},
+    "CNT_19": {"from_date": get_past_date(days = 60), "to_date": CURRENT_DATE},
+    "ADJ_11": {"from_date": get_past_date(days = 60), "to_date": CURRENT_DATE},
+    "FIN_18": {"from_date": get_past_date(days = 60), "to_date": CURRENT_DATE},
+    "PAY_41": {"from_date": get_past_date(days = 60), "to_date": CURRENT_DATE},
+    "PAY_10": {"from_date": "01/01/2022", "to_date": CURRENT_DATE},
+    "XRY_03": {"from_date": get_past_date(days = 2), "to_date": CURRENT_DATE},
+    "CCR_2": {"from_date": get_past_date(days = 60), "to_date": CURRENT_DATE},
+    "CCR_03": {"from_date": get_past_date(days = 90), "to_date": CURRENT_DATE},
+    "PER_02": {"from_date": get_past_date(days = 2), "to_date": CURRENT_DATE},
+    "MED_01": {"from_date": get_past_date(days = 2), "to_date": CURRENT_DATE},
+    "PAT_20": {"from_date": "01/01/2022", "to_date": CURRENT_DATE},
+    "LAB_01": {"from_date": get_past_date(days = 2), "to_date": CURRENT_DATE},
+    "CHT_02": {"from_date": get_past_date(days = 2), "to_date": CURRENT_DATE},
+    "PAT_02": {"from_date": get_past_date(days = 60), "to_date": CURRENT_DATE},
+    "ADJ_04": {"from_month": "August 2024", "to_month": "February 2025"},
+    "PAY_04": {"from_month": "February 2025", "to_month": "February 2025"},
+    "REV_16": {"from_date": "2025/02/01", "to_date": CURRENT_DATE[-4:] + "/" + CURRENT_DATE[:2] + "/" + CURRENT_DATE[3:5]}
 }
 
-execute_report_functions(mode, report_list, function_args=function_args)
+client_id = 3698
+execute_report_functions(client_id, mode, report_list, function_args=function_args)

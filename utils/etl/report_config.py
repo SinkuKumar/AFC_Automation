@@ -1,6 +1,6 @@
 import os
 import time
-from general import get_past_date
+from utils.general import get_past_date
 
 # Browser Configuration
 TIME_OUT = 900

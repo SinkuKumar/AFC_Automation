@@ -56,6 +56,22 @@ CREATE TABLE PAY_41_Staging_Base (
     Date_Updated DATETIME
 );
 
+CREATE TABLE LAB_01_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    OrderedByPhysicianOn NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    First_Name NVARCHAR(MAX),
+    Last_Name NVARCHAR(MAX),
+    OrderedByPhysician NVARCHAR(MAX),
+    Code NVARCHAR(MAX),
+    TestName NVARCHAR(MAX),
+    Status NVARCHAR(MAX),
+    FacilityName NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
 CREATE TABLE XRY_03_Staging_Base (
     Past_Due NVARCHAR(MAX),
     DOS NVARCHAR(MAX),
@@ -329,7 +345,9 @@ CREATE TABLE PAY_4_Staging_Base (
     Trans_Date NVARCHAR(MAX),
     Proc_Code NVARCHAR(MAX),
     Payer NVARCHAR(MAX),
-    Payment FLOAT
+    Payment FLOAT,
+    Client_ID INT,
+    Date_Updated DATETIME
 );
 
 CREATE TABLE PAT_20_Staging_Base (
@@ -346,6 +364,61 @@ CREATE TABLE PAT_20_Staging_Base (
     Cell_Phone NVARCHAR(MAX),
     Email NVARCHAR(MAX),
     Last_Clinic NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE ADJ_4_Staging_Base(
+	Inv_Num nvarchar(max),
+	textbox20 nvarchar(max),
+	Svc_Date nvarchar(max),
+	Clinic nvarchar(max),
+	Rev_Type nvarchar(max),
+	Trans_Date nvarchar(max),
+	Phy_Name nvarchar(max),
+	Proc_Code nvarchar(max),
+	Payer nvarchar(max),
+	Payer_Name nvarchar(max),
+	Adj_Amt float,
+	Reason nvarchar(max),
+	Crt_UserID nvarchar(max),
+	Client_ID int,
+	Date_Updated datetime
+);
+
+CREATE TABLE CNT_19_Staging_Base (
+    Category NVARCHAR(MAX),
+    Clinic NVARCHAR(MAX),
+    Type NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    Last_Name NVARCHAR(MAX),
+    First_Name NVARCHAR(MAX),
+    Middle_Name NVARCHAR(MAX),
+    Client_ID INT,
+    Date_Updated DATETIME
+);
+
+CREATE TABLE CNT_27_Staging_Base (
+    Clinic NVARCHAR(MAX),
+    Svc_Date NVARCHAR(MAX),
+    Time_In NVARCHAR(MAX),
+    Time_Out NVARCHAR(MAX),
+    Status_Name NVARCHAR(MAX),
+    ArrivalStatus NVARCHAR(MAX),
+    Class NVARCHAR(MAX),
+    Payer_Type NVARCHAR(MAX),
+    Payer NVARCHAR(MAX),
+    Member_ID NVARCHAR(MAX),
+    Pat_Num NVARCHAR(MAX),
+    Pat_Name NVARCHAR(MAX),
+    Visit_Type NVARCHAR(MAX),
+    Rendering_Phy NVARCHAR(MAX),
+    SignOffSealedDate NVARCHAR(MAX),
+    Log_Num NVARCHAR(MAX),
+    Inv_Num NVARCHAR(MAX),
+    Withhold_Code NVARCHAR(MAX),
+    Total_Charge FLOAT,
     Client_ID INT,
     Date_Updated DATETIME
 );

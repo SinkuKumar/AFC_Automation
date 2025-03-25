@@ -196,3 +196,4 @@ error_log.txt
 # Personal reference files
 reportDetailsAndUserDetailsStructure.js
 mallik_personal_*
+select statements.sql

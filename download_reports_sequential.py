@@ -48,7 +48,7 @@ class ReportETL:
         file_folder.create_directories([self.CLIENT_TODAY_DIR])
 
     def experity_login(self):
-        username, password = self.sql.get_users_credentials([self.client_id])
+        client_id, username, password = self.sql.get_users_credentials([self.client_id])
         self.experity.open_portal(self.EXRTY_URL)
         self.experity_version = self.experity.experity_version()
         self.exct_rep = ExtractReports(self.driver, self.experity, self.EXRTY_URL, self.experity_version, self.EXPORT_TYPE, self.DWLD_DIR, self.TIME_OUT)

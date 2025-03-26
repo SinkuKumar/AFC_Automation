@@ -235,7 +235,7 @@ def execute_report_functions(client_id, mode, function_list, function_args=None)
 
     # credentials = sql.execute_query(CRED_Q.format(client_id=3671))
     # client_id, client_name, username, password = credentials[0]
-    client_id, client_name, username, password = [3698, 'AFC-Mandeep', 'sjalan@zca10', 'Graphx@222']
+    client_id, client_name, username, password = [3622, 'AFC-Mandeep', 'sjalan@zil01', 'Graphx@444']
     etl_reports = ReportETL('BI_AFC_Experity', client_id)
     etl_reports.experity_login(username, password)
 

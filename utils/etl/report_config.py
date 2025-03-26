@@ -313,7 +313,7 @@ class ReportConfig:
             "to_date": to_date,
             "file_name": "CCR_02_CreditCardOnFilePayments.csv",
             "base_table": "CCR_02_Staging_Base",
-            "staging_table": f"CCR_2_Staging_{self.client_id}",
+            "staging_table": f"CCR_02_Staging_{self.client_id}",
             "processed_file": f"CCR_2_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
     
@@ -324,15 +324,15 @@ class ReportConfig:
             "to_date": to_date,
             "file_name": "CCR_03_AllCCReserveAmounts.csv",
             "base_table": "CCR_03_Staging_Base",
-            "staging_table": f"CCR_3_Staging_{self.client_id}",
+            "staging_table": f"CCR_03_Staging_{self.client_id}",
             "processed_file": f"CCR_3_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
     
     def rev_16(self, from_date, to_date) -> dict:
         return {
             "report_name": REV_16_REPORT_NAME,
-            "from_date": from_date,
-            "to_date": from_date,
+            "from_month": from_date,
+            "to_month": from_date,
             "rev_16_date": from_date,
             "file_name": "REV_16_revenueByClinicWithDetails.csv",
             "base_table": "REV_16_Staging_Base",

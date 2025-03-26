@@ -167,19 +167,20 @@ class TransformCSV:
         
         logging.info(f" Combined {len(all_files)} CSV files.")
 
-    def cnt_27(self, file_path: str, processed_file: str) -> None:
+    def cnt_27(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the CNT_27 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the processed CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
-
+        df = self.drop_all_null_rows(df)
         columns_to_rename = {
             "Svc_Date": "Service_Date",
             "Status_Name": "Status",
@@ -195,22 +196,23 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.clean_currency_column(df, "Total_Charge")
         df = self.add_client_id_date_updated_columns(df)
-        # TODO: Sync columns from table to df before writing to CSV
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def cnt_19(self, file_path: str, processed_file: str) -> None:
+    def cnt_19(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the CNT_19 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the processed CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
-
+        df = self.drop_all_null_rows(df)
         # TODO: Add column renaming and other transformations
         columns_to_rename = {
 
@@ -219,41 +221,44 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.drop_textbox_columns(df)
         df = self.add_client_id_date_updated_columns(df)
-        # TODO: Sync columns from table to df before writing to CSV
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def adj_4(self, file_path: str, processed_file: str) -> None:
+    def adj_4(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the ADJ_4 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the processed CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
 
         df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
         df = self.drop_textbox_columns(df, ['textbox20'])
         df = self.clean_currency_column(df, ["textbox20", "Adj_Amt"])
         df = self.add_client_id_date_updated_columns(df)
-
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def adj_11(self, file_path: str, processed_file: str) -> None:
+    def adj_11(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the ADJ_11 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the processed CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
-
+        df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
         }
@@ -262,21 +267,23 @@ class TransformCSV:
         df = self.drop_textbox_columns(df)
         df = self.clean_currency_column(df, "Adj_Amt")
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def fin_18(self, file_path: str, processed_file: str) -> None:
+    def fin_18(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the FIN_18 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the processed CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
-
+        df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
         }
@@ -284,21 +291,23 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.clean_currency_column(df, ["Total_Charge", "Rebilled_Total_Charge"])
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def pay_41(self, file_path: str, processed_file: str) -> None:
+    def pay_41(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the PAY_41 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the processed CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
-
+        df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
         }
@@ -307,25 +316,28 @@ class TransformCSV:
         df = self.drop_textbox_columns(df)
         df = self.clean_currency_column(df, ["Payment"])
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def xry_03(self, file_path: str, processed_file: str) -> None:
+    def xry_03(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the XRY_03 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the processed CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
-
+        df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
         }
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
     def fin_25(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -377,14 +389,24 @@ class TransformCSV:
             logging.error("Error occurred during Fin_25 data transformation.")
             raise
 
-    def pay_4(self, file_path: str, processed_file: str) -> None:
+    def pay_4(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the PAY_4 report.
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
+        df = self.drop_all_null_rows(df)
         df = self.drop_textbox_columns(df, ["textbox13"])
         df = self.clean_currency_column(df, ["textbox13", "Payment"])
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
 
         df.write_csv(processed_file)
 
@@ -433,22 +455,25 @@ class TransformCSV:
             logging.error("Error occurred during Pay_10 data transformation.")
             raise
 
-    def rev_16(self, file_path: str, processed_file: str) -> None:
+    def rev_16(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform the REV_16 report.
 
         Args:
             file_path (str): Path to the input CSV file.
             processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
         """
         try:
             df = pl.read_csv(file_path, infer_schema_length=0)
+            df = self.drop_all_null_rows(df)
             df = self.drop_textbox_columns(df, ["textbox33", "textbox34"])
             df = self.clean_currency_column(df, ["textbox33", "textbox34", "Charge_Amt", "Rebilled_Amt"])
             df = self.add_client_id_date_updated_columns(df)
+            df = self.sync_dataframe_with_table(table_columns, df)
             df.write_csv(processed_file)
         except Exception as e:
             logging.error("Error occurred during rev_16 data transformation.")
@@ -470,7 +495,7 @@ class TransformCSV:
         Args:
             input_csv_data_file (str): Path to the input CSV file.
             output_csv_data_path (str): Path to save the cleaned output CSV file.
-            client_id (int): Client ID to be added as `client_id` in the DataFrame.
+            table_columns list[tuple[str]]: The column names of the specified table.
 
         Returns:
             None
@@ -491,12 +516,20 @@ class TransformCSV:
             logging.error("Error occurred during Rev_19 data transformation.")
             raise
     
-    def ccr_03(self, file_path:str, processed_file: str) -> None:
+    def ccr_03(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform CCR_03 Report
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
-
+        df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
         }
@@ -505,14 +538,23 @@ class TransformCSV:
         df = self.drop_textbox_columns(df)
         df = self.clean_currency_column(df, 'ReserveAmt')
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def ccr_02(self, file_path:str, processed_file: str) -> None:
+    def ccr_02(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform CCR_02 Report
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
-
+        df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
         }
@@ -521,67 +563,117 @@ class TransformCSV:
         df = self.drop_textbox_columns(df)
         df = self.clean_currency_column(df, 'Payment_Amt')
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def per_02(self, file_path:str, processed_file: str) -> None:
+    def per_02(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform PER_02 Report
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
         df = df.rename({"textbox5": "Provider"})
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def med_01(self, file_path:str, processed_file: str) -> None:
+    def med_01(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform CCR_02 Report
+
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_textbox_columns(df)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def pat_20(self, file_path:str, processed_file: str) -> None:
+    def pat_20(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform PAT_20 Report
 
-        TODO: Ask AFC Team what Textbox32 columns represents, what to rename
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
         df = df.rename({"Textbox32": "Last_Clinic"})
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def cht_02(self, file_path:str, processed_file: str) -> None:
+    def cht_02(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform CHT_02 Report
 
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def lab_01(self, file_path:str, processed_file: str) -> None:
+    def lab_01(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform LAB_01 Report
 
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)
 
-    def pat_02(self, file_path:str, processed_file: str) -> None:
+    def pat_02(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
         Transform PAT_02 Report
 
+        Args:
+            file_path (str): Path to the input CSV file.
+            processed_file (str): Path to save the cleaned output CSV file.
+            table_columns list[tuple[str]]: The column names of the specified table.
+
+        Returns:
+            None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_textbox_columns(df)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)
+        df = self.sync_dataframe_with_table(table_columns, df)
         df.write_csv(processed_file)

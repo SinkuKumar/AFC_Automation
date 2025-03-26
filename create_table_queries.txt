@@ -131,7 +131,7 @@ CREATE TABLE ADJ_11_Staging_Base (
     Date_Updated DATETIME
 );
 
-CREATE TABLE Test_Auto_Staging_Fin_25 (
+CREATE TABLE FIN_25_Staging_Base (
     pat_name  VARCHAR(50),
     pat_num  INT,
     svc_date  DATE,
@@ -152,8 +152,8 @@ CREATE TABLE Test_Auto_Staging_Fin_25 (
     crg_balance  DECIMAL(10,2),
     proc_code  VARCHAR(20),
     proc_amount  DECIMAL(10,2),
-    client_id  INT,
-	date_updated DATETIME
+    Client_ID INT,
+    Date_Updated DATETIME
 );
 
 CREATE TABLE PER_2_Staging_Base (
@@ -207,22 +207,6 @@ CREATE TABLE PAT_20_Staging_Base (
 	Cell_Phone	NVARCHAR(MAX),
 	Email	NVARCHAR(MAX),
 	Last_Clinic  NVARCHAR(MAX),
-    Client_ID INT,
-    Date_Updated DATETIME
-);
-
-CREATE TABLE LAB_01_Staging_Base (
-	Clinic	NVARCHAR(MAX),
-	Svc_Date	NVARCHAR(MAX),
-	OrderedByPhysicianOn	NVARCHAR(MAX),
-	Pat_Num	NVARCHAR(MAX),
-	First_Name	NVARCHAR(MAX),
-	Last_Name	NVARCHAR(MAX),
-	OrderedByPhysician	NVARCHAR(MAX),
-	Code	NVARCHAR(MAX),
-	TestName	NVARCHAR(MAX),
-	Status	NVARCHAR(MAX),
-	FacilityName  NVARCHAR(MAX),
     Client_ID INT,
     Date_Updated DATETIME
 );
@@ -350,23 +334,6 @@ CREATE TABLE PAY_4_Staging_Base (
     Date_Updated DATETIME
 );
 
-CREATE TABLE PAT_20_Staging_Base (
-    Description NVARCHAR(MAX),
-    Pat_Num NVARCHAR(MAX),
-    Last_Name NVARCHAR(MAX),
-    Sex NVARCHAR(MAX),
-    Address1 NVARCHAR(MAX),
-    Address2 NVARCHAR(MAX),
-    City NVARCHAR(MAX),
-    State NVARCHAR(MAX),
-    Zip NVARCHAR(MAX),
-    Pat_Phone NVARCHAR(MAX),
-    Cell_Phone NVARCHAR(MAX),
-    Email NVARCHAR(MAX),
-    Last_Clinic NVARCHAR(MAX),
-    Client_ID INT,
-    Date_Updated DATETIME
-);
 
 CREATE TABLE ADJ_4_Staging_Base(
 	Inv_Num nvarchar(max),

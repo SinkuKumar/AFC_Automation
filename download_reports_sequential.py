@@ -18,6 +18,7 @@ from utils.etl.extract_report import ExtractReports
 from utils.etl.load_sql import BulkLoadSQL
 from utils.etl import report_config
 
+
 class ReportETL:
     def __init__(self, db_name, client_id):
         self.client_id = client_id
@@ -33,20 +34,21 @@ class ReportETL:
         self.LOG_STAMP = report_config.LOG_DT_STAMP
         self.DWLD_DIR = os.path.join(report_config.DWLD_DIR, str(self.client_id))
         file_folder.init_directory(self.DWLD_DIR)
-        sql = PyODBCSQL(db_name)
+        self.sql = PyODBCSQL(db_name)
         sel_driver = SeleniumDriver(self.BROWSER, self.DWLD_DIR)
         self.driver = sel_driver.setup_driver()
         self.experity = ExperityBase(self.driver, self.TIME_OUT)
         self.task_q = TaskQueue()
         self.trns_csv = TransformCSV(self.client_id, self.DT_STAMP)
-        self.load_csv = BulkLoadSQL(sql, empty_table=True)
+        self.load_csv = BulkLoadSQL(self.sql, empty_table=True)
         self.rpt_config = report_config.ReportConfig(self.client_id)
 
         file_folder.create_directories([self.LOG_DIR, self.DWLD_DIR])
         self.CLIENT_TODAY_DIR = os.path.join(self.DWLD_DIR, self.DATE_STAMP)
         file_folder.create_directories([self.CLIENT_TODAY_DIR])
 
-    def experity_login(self, username, password):
+    def experity_login(self):
+        username, password = self.sql.get_users_credentials([self.client_id])
         self.experity.open_portal(self.EXRTY_URL)
         self.experity_version = self.experity.experity_version()
         self.exct_rep = ExtractReports(self.driver, self.experity, self.EXRTY_URL, self.experity_version, self.EXPORT_TYPE, self.DWLD_DIR, self.TIME_OUT)
@@ -233,11 +235,8 @@ def execute_report_functions(client_id, mode, function_list, function_args=None)
 
     normalized_args = {key.lower(): value for key, value in function_args.items()}
 
-    # credentials = sql.execute_query(CRED_Q.format(client_id=3671))
-    # client_id, client_name, username, password = credentials[0]
-    client_id, client_name, username, password = [3622, 'AFC-Mandeep', 'sjalan@zil01', 'Graphx@444']
     etl_reports = ReportETL('BI_AFC_Experity', client_id)
-    etl_reports.experity_login(username, password)
+    etl_reports.experity_login()
 
     def execute_func(short_name):
         full_func_name = function_name_map.get(short_name)

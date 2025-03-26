@@ -26,6 +26,5 @@ function_args = {
     "REV_16": {"from_date": "2025/02/01", "to_date": CURRENT_DATE[-4:] + "/" + CURRENT_DATE[:2] + "/" + CURRENT_DATE[3:5]}
 }
 
-client_id = 3622
+client_id = 640
 execute_report_functions(client_id, mode, report_list, function_args=function_args)
-

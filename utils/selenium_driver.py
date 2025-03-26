@@ -51,7 +51,7 @@ class SeleniumDriver:
     """
     BROWSER_OPTIONS = ['chrome', 'firefox', 'edge']
 
-    def __init__(self, browser: str = 'chrome', download_directory: str = None, window_width: int = None, window_height: int = None, headless: bool = True) -> None:
+    def __init__(self, browser: str = 'chrome', download_directory: str = None, window_width: int = None, window_height: int = None, headless: bool = False) -> None:
         if browser not in self.BROWSER_OPTIONS:
             raise SeleniumException(f"(Error Code: {em.UNSUPPORTED_BROWSER}) :Unsupported browser. Please select from {self.BROWSER_OPTIONS}.")
         self.browser: str = browser

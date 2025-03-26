@@ -1,4 +1,4 @@
-from download_reports_sequential_class import execute_report_functions
+from download_reports_sequential import execute_report_functions
 from utils.general import get_past_date
 from utils.etl.report_config import CURRENT_DATE
 

@@ -21,8 +21,6 @@ Note:
 :Author: Sinku Kumar
 """
 
-# TODO: Either remove setup_driver method or make the setup_chrome, setup_firefox, and setup_edge methods private.
-
 import os
 import sys
 from typing import Optional
@@ -40,31 +38,35 @@ class SeleniumDriver:
     """
     SeleniumDriver class for setting up Selenium WebDriver instances with multiple browsers.
 
-    This class provides methods to initialize WebDriver instances for Chrome, Firefox, and Edge browsers,
-    with support for specifying a default download directory and disabling download prompts.
+    :param browser: The browser to use ('chrome', 'firefox', or 'edge').
+    :type browser: str
+    :param download_directory: The directory to download files to.
+    :type download_directory: Optional[str]
+    :param window_width: The width of the browser window.
+    :type window_width: Optional[int]
+    :param window_height: The height of the browser window.
+    :type window_height: Optional[int]
+    :param headless: Whether to run the browser in headless mode.
+    :type headless: bool
     """
     BROWSER_OPTIONS = ['chrome', 'firefox', 'edge']
 
-    def __init__(self, browser: str = 'chrome', download_directory: str = None, window_width: int = None, window_height: int = None) -> None:
-        """
-        Initialize the SeleniumDriver with a specified browser and download directory.
-
-        :param browser: The browser to use ('chrome', 'firefox', or 'edge').
-        :param download_directory: The directory to download files to.
-        """
+    def __init__(self, browser: str = 'chrome', download_directory: str = None, window_width: int = None, window_height: int = None, headless: bool = True) -> None:
         if browser not in self.BROWSER_OPTIONS:
             raise SeleniumException(f"(Error Code: {em.UNSUPPORTED_BROWSER}) :Unsupported browser. Please select from {self.BROWSER_OPTIONS}.")
         self.browser: str = browser
         self.download_directory: str = download_directory
-        self.driver: Optional[webdriver.Remote] = None
         self.window_width = window_width
         self.window_height = window_height
+        self.headless = headless
+        self.driver: Optional[webdriver.Remote] = None
 
     def setup_driver(self) -> webdriver.Remote:
         """
         Set up and return the WebDriver instance based on the selected browser.
 
         :return: WebDriver instance.
+        :rtype: webdriver.Remote
         """
         try:
             if self.browser == 'chrome':
@@ -81,6 +83,7 @@ class SeleniumDriver:
         Initialize and return a Chrome WebDriver instance with specified download settings.
 
         :return: Chrome WebDriver instance.
+        :rtype: webdriver.Chrome
         """
         try:
             options = webdriver.ChromeOptions()
@@ -94,6 +97,10 @@ class SeleniumDriver:
             options.add_argument("--disable-background-networking")
             options.add_argument("--disable-features=UseDeviceAsDictationMic")
             options.add_argument("--disable-blink-features=AutomationControlled")
+            
+            if self.headless:
+                options.add_argument("--headless")
+
             prefs = {
                 "download.default_directory": self.download_directory,
                 "profile.default_content_settings.popups": 0,
@@ -101,6 +108,7 @@ class SeleniumDriver:
             }
             options.add_experimental_option("prefs", prefs)
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            
             if self.window_width and self.window_height:
                 options.add_argument(f"--window-size={self.window_width},{self.window_height}")
             else:
@@ -116,6 +124,7 @@ class SeleniumDriver:
         Initialize and return a Firefox WebDriver instance with specified download settings.
 
         :return: Firefox WebDriver instance.
+        :rtype: webdriver.Firefox
         """
         try:
             options = FirefoxOptions()
@@ -126,6 +135,10 @@ class SeleniumDriver:
             options.set_preference("browser.helperApps.alwaysAsk.force", False)
             options.set_preference("dom.webdriver.enabled", False)
             options.set_preference("dom.webnotifications.enabled", False)
+            
+            if self.headless:
+                options.add_argument("--headless")
+            
             if self.window_width and self.window_height:
                 options.add_argument(f"--width={self.window_width}")
                 options.add_argument(f"--height={self.window_height}")
@@ -143,6 +156,7 @@ class SeleniumDriver:
         Initialize and return an Edge WebDriver instance with specified download settings.
 
         :return: Edge WebDriver instance.
+        :rtype: webdriver.Edge
         """
         try:
             options = EdgeOptions()
@@ -153,9 +167,11 @@ class SeleniumDriver:
             }
             
             options.add_experimental_option("prefs", prefs)
-            options.add_argument(f"--window-size={self.window_width},{self.window_height}")
-            options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_argument("--disable-blink-features=AutomationControlled")
+            
+            if self.headless:
+                options.add_argument("--headless")
+            
             if self.window_width and self.window_height:
                 options.add_argument(f"--window-size={self.window_width},{self.window_height}")
             else:
@@ -165,7 +181,6 @@ class SeleniumDriver:
             return self.driver
         except Exception as e:
             raise SeleniumException(f"Code: {em.BROWSER_INSTANCE_ISSUE} | Message: Unable to create Edge Browser Instance")
-
 
 if __name__ == '__main__':
     # Example usage

@@ -1,8 +1,37 @@
+"""
+Logger Setup Module
+
+This module provides functionality for setting up a logger with both console and file handlers.
+It allows customization of log levels and formats for improved logging in automation scripts.
+
+Functions:
+    - setup_logger: Configures and returns a logger instance.
+
+Example Usage:
+    ```python
+    logger = setup_logger()
+    logger.info("This is an info message")
+    ```
+"""
+
 import logging
+
 
 def setup_logger(
     log_file=r"./logs/logfile.log", log_level_console=logging.ERROR, log_level_file=logging.INFO
 ):
+    """
+    Sets up a logger with console and file handlers.
+
+    :param log_file: Path to the log file.
+    :type log_file: str
+    :param log_level_console: Logging level for console output.
+    :type log_level_console: int
+    :param log_level_file: Logging level for file output.
+    :type log_level_file: int
+    :return: Configured logger instance.
+    :rtype: logging.Logger
+    """
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
 
@@ -23,8 +52,8 @@ def setup_logger(
     return logger
 
 
-# Example usage
 if __name__ == "__main__":
+    # Example usage
     import os
     import sys
     

@@ -1,17 +1,27 @@
 """
-Error Codes: Specifies a list of error codes which can typically occur during automation script exectution.
+Error Codes Module
+
+This module defines a set of error codes that can occur during automation script execution.
+Each error code is categorized by severity level and module type.
+
+Constants:
+    - Error Severity Levels: MINOR, MODERATE, CRITICAL
+    - Module Prefixes: SELENIUM, EXPERITY, DATABASE
+    - Contact Information: CONTACT
+    - Specific Error Codes for Selenium, Experity, and Database operations
 """
-# Error Severity
+
+# Error Severity Levels
 MINOR = 1
 MODERATE = 2
 CRITICAL = 3
 
-# Module Prefix
+# Module Prefixes
 SELENIUM = "SEL"
 EXPERITY = "EXP"
 DATABASE = "DB"
 
-# Contact Message
+# Contact Information
 CONTACT = "BI Automation Team - bi@graphxsys.com"
 
 # Selenium Error Codes - MINOR

@@ -107,14 +107,6 @@ class ReportETL:
         self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, pay_10_cfg['processed_file']), pay_10_cfg['base_table'], pay_10_cfg['staging_table'])
         self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, pay_10_cfg['processed_file']), self.CLIENT_TODAY_DIR)
 
-    # def etl_fin_25(self, from_date, to_date):
-    #     fin_25_cfg = self.rpt_config.fin_25(from_date, to_date)
-    #     self.exct_rep.fin_25(fin_25_cfg['report_name'], from_date, to_date)
-    #     table_columns = self.load_csv.get_column_names(fin_25_cfg['base_table'])
-    #     self.task_q.add_task(self.trns_csv.fin_25, os.path.join(self.DWLD_DIR, fin_25_cfg['file_name']), os.path.join(self.DWLD_DIR, fin_25_cfg['processed_file']), table_columns)
-    #     self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, fin_25_cfg['processed_file']), fin_25_cfg['base_table'], fin_25_cfg['staging_table'])
-    #     self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, fin_25_cfg['processed_file']), self.CLIENT_TODAY_DIR)
-
     def etl_ccr_02(self, from_date, to_date):
         ccr2_cfg = self.rpt_config.ccr_2(from_date, to_date)
         self.exct_rep.ccr_02(ccr2_cfg['report_name'], from_date, to_date)
@@ -130,15 +122,6 @@ class ReportETL:
         self.task_q.add_task(self.trns_csv.ccr_03, os.path.join(self.DWLD_DIR, ccr3_cfg['file_name']), os.path.join(self.DWLD_DIR, ccr3_cfg['processed_file']), table_columns)
         self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, ccr3_cfg['processed_file']), ccr3_cfg['base_table'], ccr3_cfg['staging_table'])
         self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, ccr3_cfg['processed_file']), self.CLIENT_TODAY_DIR)
-
-    # def etl_rev_19(self, from_month, to_month):
-    #     rev_19_cfg = self.rpt_config.rev_19(from_month, to_month)
-    #     self.exct_rep.rev_19(rev_19_cfg['report_name'], from_month, to_month)
-    #     self.task_q.add_task(self.trns_csv.combine_csv_files, self.DWLD_DIR, os.path.join(self.DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
-    #     table_columns = self.load_csv.get_column_names(rev_19_cfg['base_table'])
-    #     self.task_q.add_task(self.trns_csv.rev_19, os.path.join(self.DWLD_DIR, rev_19_cfg['file_name']), os.path.join(self.DWLD_DIR, rev_19_cfg['processed_file']), table_columns)
-    #     self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, rev_19_cfg['processed_file']), rev_19_cfg['base_table'], rev_19_cfg['staging_table'])
-    #     self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, rev_19_cfg['processed_file']), self.CLIENT_TODAY_DIR)
 
     def etl_per_02(self, from_date, to_date):
         per_02_cfg = self.rpt_config.per_2(from_date, to_date)
@@ -219,6 +202,23 @@ class ReportETL:
         self.experity.logout()
         self.driver.quit()
         self.task_q.wait_for_completion()
+
+    # def etl_fin_25(self, from_date, to_date):
+    #     fin_25_cfg = self.rpt_config.fin_25(from_date, to_date)
+    #     self.exct_rep.fin_25(fin_25_cfg['report_name'], from_date, to_date)
+    #     table_columns = self.load_csv.get_column_names(fin_25_cfg['base_table'])
+    #     self.task_q.add_task(self.trns_csv.fin_25, os.path.join(self.DWLD_DIR, fin_25_cfg['file_name']), os.path.join(self.DWLD_DIR, fin_25_cfg['processed_file']), table_columns)
+    #     self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, fin_25_cfg['processed_file']), fin_25_cfg['base_table'], fin_25_cfg['staging_table'])
+    #     self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, fin_25_cfg['processed_file']), self.CLIENT_TODAY_DIR)
+
+    # def etl_rev_19(self, from_month, to_month):
+    #     rev_19_cfg = self.rpt_config.rev_19(from_month, to_month)
+    #     self.exct_rep.rev_19(rev_19_cfg['report_name'], from_month, to_month)
+    #     self.task_q.add_task(self.trns_csv.combine_csv_files, self.DWLD_DIR, os.path.join(self.DWLD_DIR, rev_19_cfg['file_name']), rev_19_cfg['report_name'])
+    #     table_columns = self.load_csv.get_column_names(rev_19_cfg['base_table'])
+    #     self.task_q.add_task(self.trns_csv.rev_19, os.path.join(self.DWLD_DIR, rev_19_cfg['file_name']), os.path.join(self.DWLD_DIR, rev_19_cfg['processed_file']), table_columns)
+    #     self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, rev_19_cfg['processed_file']), rev_19_cfg['base_table'], rev_19_cfg['staging_table'])
+    #     self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, rev_19_cfg['processed_file']), self.CLIENT_TODAY_DIR)
 
 def execute_report_functions(client_id, mode, function_list, function_args=None):
     all_report_function_names = ["etl_cnt_27", "etl_cnt_19", "etl_adj_11", "etl_fin_18", "etl_pay_41", "etl_xry_03", "rtl_pay_10", "etl_ccr_02", "etl_ccr_03", "etl_per_02", "etl_med_01", "etl_pat_20", "etl_lab_01", "etl_cht_02", "etl_pat_02", "etl_rev_16", "etl_pay_04", "etl_adj_04"]

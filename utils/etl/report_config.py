@@ -29,135 +29,15 @@ EXPERITY_URL = "https://pvpm.practicevelocity.com"
 # SQL Queries
 CREDENTIALS_QUERY = "SELECT client_id, client_name, username, password FROM BI_AFC..AFC_Password_Tbl WHERE active = 1 AND Client_ID IN ({client_id})"
 
-# CNT_19 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
-CNT_19_REPORT_NAME = "CNT_19"
-CNT_19_FROM_DATE = get_past_date(days = 60)
-CNT_19_TO_DATE = CURRENT_DATE
-
-# ADJ_11 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
-ADJ_11_REPORT_NAME = "ADJ_11"
-ADJ_11_FROM_DATE = get_past_date(days = 60)
-ADJ_11_TO_DATE = CURRENT_DATE
-
-# FIN_18 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
-FIN_18_REPORT_NAME = "FIN_18"
-FIN_18_FROM_DATE = get_past_date(days = 60)
-FIN_18_TO_DATE = CURRENT_DATE
-
-# PAY_41 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
-PAY_41_REPORT_NAME = "PAY_41"
-PAY_41_FROM_DATE = get_past_date(days = 60)
-PAY_41_TO_DATE = CURRENT_DATE
-
-# PAT_2 Configuration
-# For MB clients, since 1-1-2024, for others, 60 days
-PAT_2_REPORT_NAME = "PAT_2"
-PAT_2_FROM_DATE = get_past_date(days = 60)
-PAT_2_TO_DATE = CURRENT_DATE
-
-# LAB_01 Configuration
-# Past 2 days for all clients
-LAB_01_REPORT_NAME = "LAB_01"
-LAB_01_FROM_DATE = get_past_date(days = 2)
-LAB_01_TO_DATE = CURRENT_DATE
-
-# XRY_03 Configuration
-# 2 days for all clients
-XRY_03_REPORT_NAME = "XRY_03"
-XRY_03_FROM_DATE = get_past_date(days = 2)
-XRY_03_TO_DATE = CURRENT_DATE
-
-# CHT_02 Configuration
-# 2 days for all clients
-CHT_02_REPORT_NAME = "CHT_02"
-CHT_02_FROM_DATE = get_past_date(days = 2)
-CHT_02_TO_DATE = CURRENT_DATE
-
-# MED_01 Configuration
-# 2 days for all clients
-MED_01_REPORT_NAME = "MED_01"
-MED_01_FROM_DATE = get_past_date(days = 2)
-MED_01_TO_DATE = CURRENT_DATE
-
-# PER_02 Configuration
-# 2 days for all clients
-PER_2_REPORT_NAME = "PER_02"
-PER_2_FROM_DATE = get_past_date(days = 2)
-PER_2_TO_DATE = CURRENT_DATE
-
-# PAT_20 Configuration
-# Since 1-1-2022 for all clients
-PAT_20_REPORT_NAME = "PAT_20"
-PAT_20_FROM_DATE = "01/01/2022"
-PAT_20_TO_DATE = CURRENT_DATE
-
-# CCR_02 Configuration
-# 60 days
-CCR_2_REPORT_NAME = "CCR_02"
-CCR_2_FROM_DATE = get_past_date(days = 60)
-CCR_2_TO_DATE = CURRENT_DATE
-
-# CCR_03 Configuration
-# 90 days
-CCR_3_REPORT_NAME = "CCR_03"
-CCR_3_FROM_DATE = get_past_date(days = 90)
-CCR_3_TO_DATE = CURRENT_DATE
-
-# REV_16 Configuration
-# Monthly
-REV_16_REPORT_NAME = "REV_16"
-REV_16_FROM_DATE = "2025/02/01" # YYYY/MM/DD
-REV_16_TO_DATE = CURRENT_DATE
 
 # PAY_4 Configuration
-# Monthly
-PAY_4_REPORT_NAME = "PAY_4"
-PAY_4_FROM_MONTH = "February 2025"
-PAY_4_TO_MONTH = "February 2025"
 PAY_4_FILE_NAME = "PAY_4_TotalPaymentByDetail.csv"
 
 # ADJ_4 Configuration
-# Monthly
-ADJ_4_REPORT_NAME = "ADJ_4"
-ADJ_4_FROM_MONTH = "August 2024"
-ADJ_4_TO_MONTH = "February 2025"
-ADJ_4_TO_DATE = CURRENT_DATE
 ADJ_4_FILE_NAME = "ADJ_4_AdjustmentDetail.csv"
 
-# PAY_10 Configuration
-# Since 1-1-2022 for all clients
-PAY_10_REPORT_NAME = "PAY_10"
-PAY_10_FROM_DATE = "01/01/2022"
-PAY_10_TO_DATE = CURRENT_DATE
-
 # REV_19 Configuration
-# Hold
-REV_19_REPORT_NAME = "REV_19"
-REV_19_FROM_MONTH = "August 2024"
-REV_19_FROM_MONTH = "August 2024"
-REV_19_TO_MONTH = "February 2025"
 REV_19_FILE_NAME = "REV_19_TotalRevenueByProviderAndCategory.csv"
-## TODO: Add these reports as well
-
-# FIN_25 Configuration
-# Hold
-FIN_25_REPORT_NAME = "FIN_25"
-FIN_25_FROM_DATE = "01/01/2022"
-FIN_25_TO_DATE = CURRENT_DATE
-
-# PCD_31 Configuration
-PCD_31_REPORT_NAME = "PCD_31"
-PCD_31_FROM_DATE = "01/01/2024"
-PCD_31_TO_DATE = CURRENT_DATE
-
-# PAY_6 Configuration
-PAY_6_REPORT_NAME = "PAY_6"
-PAY_6_FROM_DATE = "01/01/2024"
-PAY_6_TO_DATE = CURRENT_DATE
 
 class ReportConfig:
     def __init__(self, client_id: int) -> None:
@@ -176,7 +56,7 @@ class ReportConfig:
     
     def cnt_19(self, from_date, to_date) -> dict:
         return {
-            "report_name": CNT_19_REPORT_NAME,
+            "report_name": "CNT_19",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "CNT_19_VisitCountByCategory.csv",
@@ -187,7 +67,7 @@ class ReportConfig:
     
     def fin_25(self, from_date, to_date) -> dict:
         return {
-            "report_name": FIN_25_REPORT_NAME,
+            "report_name": "FIN_25",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "FIN_25_RealTimeChargesReview.csv",
@@ -198,7 +78,7 @@ class ReportConfig:
     
     def adj_11(self, from_date, to_date) -> dict:
         return {
-            "report_name": ADJ_11_REPORT_NAME,
+            "report_name": "ADJ_11",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "ADJ_11_AdjustmentDetail.csv",
@@ -209,7 +89,7 @@ class ReportConfig:
     
     def fin_18(self, from_date, to_date) -> dict:
         return {
-            "report_name": FIN_18_REPORT_NAME,
+            "report_name": "FIN_18",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "FIN_18_RebillsBySvcDate.csv",
@@ -220,7 +100,7 @@ class ReportConfig:
     
     def pay_41(self, from_date, to_date) -> dict:
         return {
-            "report_name": PAY_41_REPORT_NAME,
+            "report_name": "PAY_41",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "PAY_41_TotalPaymentByDetail.csv",
@@ -231,7 +111,7 @@ class ReportConfig:
     
     def pat_2(self, from_date, to_date) -> dict:
         return {
-            "report_name": PAT_2_REPORT_NAME,
+            "report_name": "PAT_2",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "PAT_2_PatientDemographicsByPractice.csv",
@@ -242,7 +122,7 @@ class ReportConfig:
     
     def lab_01(self, from_date, to_date) -> dict:
         return {
-            "report_name": LAB_01_REPORT_NAME,
+            "report_name": "LAB_01",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "LAB_01_LabsOrdered.csv",
@@ -253,7 +133,7 @@ class ReportConfig:
     
     def xry_03(self, from_date, to_date) -> dict:
         return {
-            "report_name": XRY_03_REPORT_NAME,
+            "report_name": "XRY_03",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "XRY_03_XRaysWaitingForReview.csv",
@@ -264,7 +144,7 @@ class ReportConfig:
     
     def cht_02(self, from_date, to_date) -> dict:
         return {
-            "report_name": CHT_02_REPORT_NAME,
+            "report_name": "CHT_02",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "CHT_02_ChartAudit.csv",
@@ -275,7 +155,7 @@ class ReportConfig:
     
     def med_01(self, from_date, to_date) -> dict:
         return {
-            "report_name": MED_01_REPORT_NAME,
+            "report_name": "MED_01",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "MED_01_MedicationsByDischargingProvider.csv",
@@ -286,7 +166,7 @@ class ReportConfig:
     
     def per_2(self, from_date, to_date) -> dict:
         return {
-            "report_name": PER_2_REPORT_NAME,
+            "report_name": "PER_2",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "PER_2_TimeFromRegistrationToVitalsToDischarge.csv",
@@ -297,7 +177,7 @@ class ReportConfig:
     
     def pat_20(self, from_date, to_date) -> dict:
         return {
-            "report_name": PAT_20_REPORT_NAME,
+            "report_name": "PAT_20",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "PAT_20_PatContactByProvider.csv",
@@ -308,7 +188,7 @@ class ReportConfig:
     
     def ccr_2(self, from_date, to_date) -> dict:
         return {
-            "report_name": CCR_2_REPORT_NAME,
+            "report_name": "CCR_2",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "CCR_02_CreditCardOnFilePayments.csv",
@@ -319,7 +199,7 @@ class ReportConfig:
     
     def ccr_3(self, from_date, to_date) -> dict:
         return {
-            "report_name": CCR_3_REPORT_NAME,
+            "report_name": "CCR_3",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "CCR_03_AllCCReserveAmounts.csv",
@@ -330,7 +210,7 @@ class ReportConfig:
     
     def rev_16(self, from_date, to_date) -> dict:
         return {
-            "report_name": REV_16_REPORT_NAME,
+            "report_name": "REV_16",
             "from_month": from_date,
             "to_month": from_date,
             "rev_16_date": from_date,
@@ -342,7 +222,7 @@ class ReportConfig:
     
     def pay_4(self, from_date, to_date) -> dict:
         return {
-            "report_name": PAY_4_REPORT_NAME,
+            "report_name": "PAY_4",
             "from_date": from_date,
             "to_date": to_date,
             "pay_4_date": from_date,
@@ -354,7 +234,7 @@ class ReportConfig:
     
     def adj_4(self, from_month, to_month) -> dict:
         return {
-            "report_name": ADJ_4_REPORT_NAME,
+            "report_name": "ADJ_4",
             "from_month": from_month,
             "to_month": to_month,
             "file_name": "ADJ_4_AdjustmentDetail.csv",
@@ -365,7 +245,7 @@ class ReportConfig:
     
     def pay_10(self, from_date, to_date) -> dict:
         return {
-            "report_name": PAY_10_REPORT_NAME,
+            "report_name": "PAY_10",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "PAY_10_PayerPatientPaidAdjustedByPayerClass.csv",
@@ -376,7 +256,7 @@ class ReportConfig:
     
     def rev_19(self, from_month, to_month) -> dict:
         return {
-            "report_name": REV_19_REPORT_NAME,
+            "report_name": "REV_19",
             "from_month": from_month,
             "to_month": to_month,
             "file_name": "REV_19_TotalRevenueByProviderAndCategory.csv",

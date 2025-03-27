@@ -1,15 +1,16 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from utils.pyodbc_sql import PyODBCSQL
+
 
 class BulkLoadSQL:
     def __init__(self, sql: PyODBCSQL, empty_table: bool = False) -> None:
         self.sql = sql
         self.empty_table = empty_table
-    
+
     def clear_table(self, table: str) -> None:
         """
         Clear the entire table.
@@ -33,10 +34,10 @@ class BulkLoadSQL:
             self.sql.execute_query("SELECT TOP 0 * INTO {} FROM {}".format(staging_table, base_table))
         except:
             self.sql.execute_query("SELECT TOP 0 * INTO {} FROM {}".format(staging_table, base_table))
-        
+
         if self.empty_table:
             self.clear_table(staging_table)
-    
+
     def load_report(self, processed_file: str, base_table, staging_table: str) -> None:
         """
         Bulk load the report into the database.

@@ -241,9 +241,9 @@ class TransformCSV:
         df = self.drop_all_null_rows(df)
         df = self.drop_textbox_columns(df, ['textbox20'])
         df = self.clean_currency_column(df, ["textbox20", "Adj_Amt"])
-        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
+        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def adj_11(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -267,9 +267,9 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.drop_textbox_columns(df)
         df = self.clean_currency_column(df, "Adj_Amt")
-        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
+        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def fin_18(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -317,9 +317,9 @@ class TransformCSV:
         # df = df.rename(columns_to_rename)
         df = self.drop_textbox_columns(df)
         df = self.clean_currency_column(df, ["Payment"])
-        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
+        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def xry_03(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -408,10 +408,9 @@ class TransformCSV:
         df = self.drop_all_null_rows(df)
         df = self.drop_textbox_columns(df, ["textbox13"])
         df = self.clean_currency_column(df, ["textbox13", "Payment"])
-        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
-
+        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def pay_10(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:

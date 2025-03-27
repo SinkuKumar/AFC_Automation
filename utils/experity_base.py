@@ -348,19 +348,21 @@ class ExperityBase:
 
     def select_report_date_range(self, date1:str, date2:str) -> None:
         """
-        Sets the 'From Service Date' and 'To Service Date'.
+        Sets the 'From Service Date' and 'To Service Date' fields in a web form.
 
-        Args:
-            date1(str): One of the two dates entered by the user (Format: MM/DD/YYYY).
-            date2(str): The other date entered by the user (Format: MM/DD/YYYY).
-                        Either date may come first; the code will determine the start and end dates.
+        This method determines the correct order of the provided dates and inputs them
+        into the respective fields on the web page. It waits for the fields to be clickable
+        before interacting with them.
 
-        Returns:
-            None
+        :param date1: The first date entered by the user (Format: MM/DD/YYYY).
+        :type date1: str
+        :param date2: The second date entered by the user (Format: MM/DD/YYYY).
+                      Either date may come first; the method will determine the correct order.
+        :type date2: str
 
-        Raises:
-            SeleniumException: If any issue occurs during searching and selection of the report.
+        :raises SeleniumException: If an error occurs during the interaction with the web elements.
         """
+
         date1_obj = datetime.strptime(date1, "%m/%d/%Y")
         date2_obj = datetime.strptime(date2, "%m/%d/%Y")
 
@@ -388,17 +390,18 @@ class ExperityBase:
         Date Format:
             Month Year (e.g., 'March 2010', 'December 2022')
 
-        Args:
-            month (str, optional): Single month to select.
-            from_month (str, optional): Start month for range selection.
-            to_month (str, optional): End month for range selection.
+        :param month: Single month to select.
+        :type month: str, optional
+        :param from_month: Start month for range selection.
+        :type from_month: str, optional
+        :param to_month: End month for range selection.
+        :type to_month: str, optional
 
-        Returns:
-            None
+        :raises ValueError: If arguments provided are invalid (e.g., only from_month or to_month is given).
+        :raises SeleniumException: If any issue occurs during searching and selection of the report.
 
-        Raises:
-            ValueError: If arguments provided are invalid (e.g., only from_month or to_month is given).
-            SeleniumException: If any issue occurs during searching and selection of the report.
+        :returns: None
+        :rtype: None
         """
         try:
             self.driver.switch_to.default_content()
@@ -978,28 +981,33 @@ def close_other_windows(driver: WebDriver) -> None:
     
 def run_logic_for_each_month(from_month: str, to_month: str, logic_function, *args, **kwargs) -> None:
     """
-    Executes the provided logic function for each month between 'from_month' and 'to_month', inclusive.
+    Iterates through each month between 'from_month' and 'to_month' (inclusive) and executes the provided logic function.
 
-    Args:
-        from_month (str): Starting month in the format "Month YYYY", e.g., "March 2023".
-        to_month (str): Ending month in the format "Month YYYY", e.g., "February 2024".
-        logic_function (Callable): Function to call for each month, accepting:
-            - A string with the month and year (e.g., "March 2023")
-            - Any additional positional (*args) and keyword arguments (**kwargs)
-        *args: Additional positional arguments passed to 'logic_function'.
-        **kwargs: Additional keyword arguments passed to 'logic_function'.
+    :param from_month: The starting month in the format "Month YYYY" (e.g., "March 2023").
+    :type from_month: str
+    :param to_month: The ending month in the format "Month YYYY" (e.g., "February 2024").
+    :type to_month: str
+    :param logic_function: The function to execute for each month. It should accept:
+                           - A string representing the month and year (e.g., "March 2023").
+                           - Any additional positional ``*args`` and keyword arguments ``**kwargs``.
+    :type logic_function: Callable
+    :param args: Additional positional arguments to pass to ``logic_function``.
+    :type args: tuple
+    :param kwargs: Additional keyword arguments to pass to ``logic_function``.
+    :type kwargs: dict
 
-    Returns:
-        None
+    :raises ValueError: If the date formats are invalid or if ``from_month`` is later than ``to_month``.
 
-    Raises:
-        ValueError: If date formats are incorrect, or 'from_month' is after 'to_month'.
+    :returns: None
+    :rtype: None
 
-    Example:
-        def process_month(month_year, flag=None):
-            print(f"Processing {month_year}, flag={flag}")
+    :example:
+        .. code-block:: python
 
-        run_logic_for_each_month("March 2023", "May 2023", process_month, flag="example")
+            def process_month(month_year, flag=None):
+                print(f"Processing {month_year}, flag={flag}")
+
+            run_logic_for_each_month("March 2023", "May 2023", process_month, flag="example")
     """
     try:
         start_date = datetime.strptime(from_month, "%B %Y")

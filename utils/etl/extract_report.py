@@ -588,16 +588,15 @@ class ExtractReports:
     def rev_16(self, report_name, rev_16_date):
         """
         Generates and downloads a report for a specified month and year based on the given report name
-        and date in the format "YYYY/MM/DD".
-
-        Args:
-            report_name (str): The name of the report to be generated.
-            rev_16_date (str): The date in "YYYY/MM/DD" format used to determine the month and year
-                               for the report.
-
-        Raises:
-            ValueError: If the provided date is not in the correct "YYYY/MM/DD" format.
-
+        and date in the format ``YYYY/MM/DD``.
+        
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param rev_16_date: The date in ``YYYY/MM/DD`` format used to determine the month and year for the report.
+        :type rev_16_date: str
+        
+        :raises ValueError: If the provided date is not in the correct ``YYYY/MM/DD`` format.
+        
         Workflow:
             1. Navigates to the "Reports" section of the Experity application.
             2. Searches for and selects the specified report by name.

@@ -14,7 +14,7 @@ documentation for details.
    :maxdepth: 2
    :caption: Getting Started
 
-   utils
+   gettingstarted
 
 .. toctree::
    :maxdepth: 2

@@ -11,7 +11,7 @@ function_args = {
     "ADJ_11": {"from_date": "01/01/2022", "to_date": CURRENT_DATE},  #
     "FIN_18": {"from_date": get_past_date(days=60), "to_date": CURRENT_DATE},
     "PAY_41": {"from_date": "01/01/2022", "to_date": CURRENT_DATE},
-    "PAY_10": {"from_date": get_past_date(year=1), "to_date": CURRENT_DATE},
+    "PAY_10": {"from_date": get_past_date(year=1), "to_date": CURRENT_DATE},  # To be validated
     "XRY_03": {"from_date": get_past_date(days=2), "to_date": CURRENT_DATE},
     "CCR_02": {"from_date": get_past_date(days=60), "to_date": CURRENT_DATE},
     "CCR_03": {"from_date": get_past_date(days=90), "to_date": CURRENT_DATE},

@@ -3,12 +3,12 @@ from utils.report_date import get_past_date
 from utils.etl.report_config import CURRENT_DATE
 
 mode = "include"
-report_list = ["CCR_02"]
+report_list = ["ADJ_11", "PAY_41"]
 
 function_args = {
     "CNT_27": {"from_date": get_past_date(days=60), "to_date": CURRENT_DATE},
     "CNT_19": {"from_date": get_past_date(days=60), "to_date": CURRENT_DATE},
-    "ADJ_11": {"from_date": "01/01/2022", "to_date": CURRENT_DATE},  #
+    "ADJ_11": {"from_date": "01/01/2022", "to_date": CURRENT_DATE},
     "FIN_18": {"from_date": get_past_date(days=60), "to_date": CURRENT_DATE},
     "PAY_41": {"from_date": "01/01/2022", "to_date": CURRENT_DATE},
     "PAY_10": {"from_date": get_past_date(year=1), "to_date": CURRENT_DATE},

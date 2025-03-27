@@ -1,4 +1,4 @@
-from download_reports_sequential import execute_report_functions
+from download_reports import execute_report_functions
 from utils.report_date import get_past_date
 from utils.etl.report_config import CURRENT_DATE
 
@@ -23,7 +23,7 @@ function_args = {
     "PAT_02": {"from_date": get_past_date(days=60), "to_date": CURRENT_DATE},
     "ADJ_04": {"from_month": "August 2024", "to_month": "February 2025"},
     "PAY_04": {"from_month": "February 2025", "to_month": "February 2025"},
-    "REV_16": {"from_date": "2025/02/01", "to_date": CURRENT_DATE[-4:] + "/" + CURRENT_DATE[:2] + "/" + CURRENT_DATE[3:5]}
+    "REV_16": {"from_date": "2025/02/01", "to_date": CURRENT_DATE[-4:] + "/" + CURRENT_DATE[:2] + "/" + CURRENT_DATE[3:5]},
 }
 
 client_id = 640

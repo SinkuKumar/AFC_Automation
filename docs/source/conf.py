@@ -11,7 +11,7 @@ import sys
 
 project = "Urgent Care Automation"
 copyright = "2025, Graphx MedTech"
-author = "Sinku Kumar, Prasad Goled, Niladari Mallik"
+author = "Sinku Kumar, Prasad Goled, Niladri Mallik"
 release = "1.0"
 
 # -- General configuration ---------------------------------------------------

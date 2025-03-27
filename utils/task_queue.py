@@ -11,11 +11,16 @@ from utils.pyodbc_sql import PyODBCSQL
 
 class TaskQueue:
     def __init__(self):
+        """Initializes a task queue."""
         self.task_queue = queue.Queue()
         self.worker_thread = None
         self.lock = threading.Lock()  # Prevents race conditions
 
     def _process_queue(self):
+        """
+        Worker thread to retrieve the tasks from the queue
+        and execute the functions with the provided arguments.
+        """
         while True:
             try:
                 func, args, kwargs = self.task_queue.get(timeout=1)
@@ -33,6 +38,7 @@ class TaskQueue:
 
 
     def _ensure_worker_running(self):
+        """Ensure worker thread is running."""
         with self.lock:
             if self.worker_thread is None or not self.worker_thread.is_alive():
                 self.worker_thread = threading.Thread(target=self._process_queue, daemon=True)
@@ -57,12 +63,12 @@ if __name__ == "__main__":
         print(f"Task {name} completed")
 
     queue_manager = TaskQueue()
-    
+
     queue_manager.add_task(example_task, "A")
     queue_manager.add_task(example_task, "B")
 
     # time.sleep(40)  # Simulate some wait time
-    
+
     queue_manager.add_task(example_task, "C")  # This will automatically restart the worker
     print("\nWaiting for completion")
     queue_manager.wait_for_completion()

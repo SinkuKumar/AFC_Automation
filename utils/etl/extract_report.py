@@ -37,15 +37,21 @@ class ExtractReports:
 
     Attributes:
         driver: WebDriver instance used for browser automation.
+
         experity: An instance of ExperityBase for interacting with the Experity platform.
+
         experity_url: The base URL of the Experity platform.
+
         experity_version: The version of the Experity platform.
+
         report_export_type: The format in which reports are exported (e.g., CSV, PDF).
+
         download_directory: The directory where downloaded reports are saved.
+
         time_out: Maximum time to wait for downloads to complete (default is 300 seconds).
 
     Methods:
-        cnt_27(report_name, cnt_27_from_date, cnt_27_to_date):
+        cnt_27(report_name, cnt_27_from_date, cnt_27_to_date): 
             Extracts the CNT_27 report for a specified date range.
 
         cnt_19(report_name, cnt_19_from_date, cnt_19_to_date):
@@ -109,14 +115,20 @@ class ExtractReports:
     def __init__(self, driver, experity: ExperityBase, experity_url, experity_version, report_export_type, download_directory, time_out=300):
         """
         Initializes the ExtractReport class with the necessary parameters.
-        Args:
-            driver: The web driver instance used for browser automation.
-            experity (ExperityBase): An instance of the ExperityBase class for interacting with Experity.
-            experity_url (str): The base URL for the Experity application.
-            experity_version (str): The version of the Experity application being used.
-            report_export_type (str): The type of report export (e.g., CSV, PDF).
-            download_directory (str): The directory where downloaded reports will be saved.
-            time_out (int, optional): The maximum time (in seconds) to wait for operations to complete. Defaults to 300.
+
+        :param driver: The web driver instance used for browser automation.
+        :param experity: An instance of the ExperityBase class for interacting with Experity.
+        :type experity: ExperityBase
+        :param experity_url: The base URL for the Experity application.
+        :type experity_url: str
+        :param experity_version: The version of the Experity application being used.
+        :type experity_version: str
+        :param report_export_type: The type of report export (e.g., CSV, PDF).
+        :type report_export_type: str
+        :param download_directory: The directory where downloaded reports will be saved.
+        :type download_directory: str
+        :param time_out: The maximum time (in seconds) to wait for operations to complete. Defaults to 300.
+        :type time_out: int, optional
         """
 
         self.driver = driver
@@ -136,11 +148,14 @@ class ExtractReports:
     def cnt_27(self, report_name, cnt_27_from_date, cnt_27_to_date):
         """
         Generates and downloads a report based on the specified parameters.
-
+        
         Args:
-            report_name (str): The name of the report to be generated.
-            cnt_27_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
-            cnt_27_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+            :param report_name: The name of the report to be generated.
+            :type report_name: str
+            :param cnt_27_from_date: The start date for the report's date range in the format `YYYY-MM-DD`.
+            :type cnt_27_from_date: str
+            :param cnt_27_to_date: The end date for the report's date range in the format `YYYY-MM-DD`.
+            :type cnt_27_to_date: str
 
         Steps:
             1. Navigates to the Reports section of the Experity application.

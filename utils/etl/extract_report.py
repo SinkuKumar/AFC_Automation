@@ -227,6 +227,26 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def adj_11(self, report_name, adj_11_from_date, adj_11_to_date):
+        """
+        Generates and downloads a report based on the specified parameters.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            adj_11_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
+            adj_11_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+
+        Steps:
+            1. Navigates to the Reports section of the Experity application.
+            2. Searches for and selects the specified report.
+            3. Sets the date range for the report.
+            4. Unchecks all options and selects specific reason codes for the report.
+            5. Runs the report and downloads it in the specified export format.
+            6. Waits for the report to finish downloading in the specified directory.
+            7. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the report generation or download process fails.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(adj_11_from_date, adj_11_to_date)
@@ -237,6 +257,22 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def fin_18(self, report_name, fin_18_from_date, fin_18_to_date):
+        """
+        Extracts a financial report (FIN-18) within a specified date range.
+
+        This method navigates to the Reports section of the Experity application,
+        searches for the specified report, selects the date range, runs the report,
+        and downloads it to the specified directory.
+
+        Args:
+            report_name (str): The name of the report to be extracted.
+            fin_18_from_date (str): The start date for the report in the format 'YYYY-MM-DD'.
+            fin_18_to_date (str): The end date for the report in the format 'YYYY-MM-DD'.
+
+        Raises:
+            Exception: If the report download fails or any step in the process encounters an error.
+
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(fin_18_from_date, fin_18_to_date)
@@ -246,6 +282,30 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def pay_41(self, report_name, pay_41_from_date, pay_41_to_date):
+        """
+        Generates and downloads a report based on the specified parameters.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            pay_41_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
+            pay_41_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+
+        Steps:
+            1. Navigates to the Reports section of the Experity application.
+            2. Searches for and selects the specified report.
+            3. Sets the date range for the report using the provided start and end dates.
+            4. Selects "Created Date" as the date type for the report.
+            5. Unchecks all payment reason checkboxes and checks a specific one.
+            6. Runs the report and downloads it in the specified export format.
+            7. Waits for the report to be downloaded to the specified directory.
+            8. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If the report download fails or any step encounters an error.
+
+        Returns:
+            None
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
@@ -257,6 +317,27 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def pat_2(self, report_name, pay_41_from_date, pay_41_to_date):
+        """
+        Executes the process of navigating to a report, selecting a date range,
+        running the report, and downloading it.
+
+        Args:
+            report_name (str): The name of the report to be processed.
+            pay_41_from_date (str): The start date for the report's date range.
+            pay_41_to_date (str): The end date for the report's date range.
+
+        Steps:
+            1. Navigate to the Reports section of the Experity application.
+            2. Search for and select the specified report by name.
+            3. Set the date range for the report using the provided start and end dates.
+            4. Run the report and download it in the specified export format.
+            5. Wait for the report to finish downloading to the designated directory.
+            6. Close any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the process fails, an appropriate exception
+                       will be raised to indicate the issue.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
@@ -266,6 +347,28 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def lab_01(self, report_name, pay_41_from_date, pay_41_to_date):
+        """
+        Generates and downloads a report from the Experity system based on the specified parameters.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            pay_41_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
+            pay_41_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+
+        Steps:
+            1. Navigates to the "Reports" section of the Experity system.
+            2. Searches for and selects the specified report.
+            3. Sets the date range for the report using the provided start and end dates.
+            4. Runs the report and downloads it in the specified export format.
+            5. Waits for the report to be downloaded to the specified directory.
+            6. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If the report download fails or any step encounters an error.
+
+        Returns:
+            None
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
@@ -275,6 +378,27 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def xry_03(self, report_name, xry_03_from_date, xry_03_to_date):
+        """
+        Generates and downloads the XRY-03 report within a specified date range.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            xry_03_from_date (str): The start date for the report in the required format.
+            xry_03_to_date (str): The end date for the report in the required format.
+
+        Steps:
+            1. Navigate to the "Reports" section of the Experity application.
+            2. Search for and select the specified report by name.
+            3. Set the date range for the report using the provided start and end dates.
+            4. Uncheck all clinics and then check the required clinics for the report.
+            5. Include X-rays reviewed in the report.
+            6. Run the report and download it in the specified export format.
+            7. Wait for the report to finish downloading in the designated directory.
+            8. Close any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the report generation or download process fails.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(xry_03_from_date, xry_03_to_date)
@@ -286,6 +410,26 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def cht_02(self, report_name, cht_02_from_date, cht_02_to_date):
+        """
+        Generates and downloads the CHT-02 report for a specified date range.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            cht_02_from_date (str): The start date for the report in the required format.
+            cht_02_to_date (str): The end date for the report in the required format.
+
+        Steps:
+            1. Navigates to the "Reports" section of the Experity application.
+            2. Searches for and selects the specified report by name.
+            3. Sets the date range for the report using the provided start and end dates.
+            4. Unchecks all clinic options and selects the required clinic(s).
+            5. Runs the report and downloads it in the specified export format.
+            6. Waits for the report to be downloaded to the designated directory.
+            7. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the report generation or download process fails.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(cht_02_from_date, cht_02_to_date)
@@ -296,6 +440,26 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def med_01(self, report_name, med_01_from_date, med_01_to_date):
+        """
+        Generates and downloads a report based on the specified date range.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            med_01_from_date (str): The start date for the report in the required format.
+            med_01_to_date (str): The end date for the report in the required format.
+
+        Steps:
+            1. Navigates to the Reports section of the Experity application.
+            2. Searches for and selects the specified report.
+            3. Sets the date range for the report.
+            4. Runs the report.
+            5. Downloads the report in the specified export format.
+            6. Waits for the report to be downloaded to the specified directory.
+            7. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the report generation or download process fails.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(med_01_from_date, med_01_to_date)
@@ -305,6 +469,26 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def per_02(self, report_name, per_02_from_date, per_02_to_date):
+        """
+        Generates and downloads the PER_02 report for a specified date range.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            per_02_from_date (str): The start date for the report in the required format.
+            per_02_to_date (str): The end date for the report in the required format.
+
+        Steps:
+            1. Navigates to the "Reports" section of the Experity application.
+            2. Searches for and selects the specified report by name.
+            3. Sets the date range for the report using the provided start and end dates.
+            4. Unchecks all checkboxes and then checks the required ones for the report.
+            5. Runs the report and downloads it in the specified export format.
+            6. Waits for the download to complete and verifies the file is saved in the download directory.
+            7. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the report generation or download process fails.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(per_02_from_date, per_02_to_date)
@@ -315,6 +499,28 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def pat_20(self, report_name, pat_20_from_date, pat_20_to_date):
+        """
+        Generates and downloads a report based on the specified date range.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            pat_20_from_date (str): The start date for the report in the required format.
+            pat_20_to_date (str): The end date for the report in the required format.
+
+        Workflow:
+            1. Navigates to the "Reports" section of the Experity application.
+            2. Searches for and selects the specified report.
+            3. Sets the date range for the report using the provided start and end dates.
+            4. Runs the report and downloads it in the specified export format.
+            5. Waits for the report to be downloaded to the designated directory.
+            6. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the process fails, an exception may be raised.
+
+        Returns:
+            None
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(pat_20_from_date, pat_20_to_date)
@@ -324,6 +530,25 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def ccr_02(self, report_name, ccr_02_from_date, ccr_02_to_date):
+        """
+        Generates and downloads the CCR-02 report from the Experity system.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            ccr_02_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
+            ccr_02_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+
+        Steps:
+            1. Navigates to the Reports section of the Experity system.
+            2. Searches for and selects the specified report by name.
+            3. Sets the date range for the report using the provided start and end dates.
+            4. Runs the report and downloads it in the specified export format.
+            5. Waits for the report to be downloaded to the specified directory.
+            6. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the report generation or download process fails.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(ccr_02_from_date, ccr_02_to_date)
@@ -333,6 +558,25 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def ccr_03(self, report_name, ccr_03_from_date, ccr_03_to_date):
+        """
+        Generates and downloads the CCR-03 report for a specified date range.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            ccr_03_from_date (str): The start date for the report in the format 'YYYY-MM-DD'.
+            ccr_03_to_date (str): The end date for the report in the format 'YYYY-MM-DD'.
+
+        Steps:
+            1. Navigates to the "Reports" section of the Experity application.
+            2. Searches for and selects the specified report by name.
+            3. Sets the date range for the report using the provided start and end dates.
+            4. Runs the report and downloads it in the specified export format.
+            5. Waits for the report to be downloaded to the designated directory.
+            6. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If any step in the report generation or download process fails.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(ccr_03_from_date, ccr_03_to_date)
@@ -342,6 +586,27 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def rev_16(self, report_name, rev_16_date):
+        """
+        Generates and downloads a report for a specified month and year based on the given report name
+        and date in the format "YYYY/MM/DD".
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            rev_16_date (str): The date in "YYYY/MM/DD" format used to determine the month and year
+                               for the report.
+
+        Raises:
+            ValueError: If the provided date is not in the correct "YYYY/MM/DD" format.
+
+        Workflow:
+            1. Navigates to the "Reports" section of the Experity application.
+            2. Searches for and selects the specified report by name.
+            3. Converts the provided date string to a datetime object and formats it as "Month Year".
+            4. Selects the corresponding month in the application.
+            5. Runs the report and downloads it in the specified export type.
+            6. Waits for the download to complete and ensures the file is saved in the download directory.
+            7. Closes any additional browser windows opened during the process.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         try:
@@ -359,6 +624,35 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def pay_4(self, report_name, pay_4_from_month, pay_4_to_month):
+        """
+        Generates and processes Pay 4 reports for a specified range of months.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            pay_4_from_month (str): The starting month for the report generation (e.g., "January").
+            pay_4_to_month (str): The ending month for the report generation (e.g., "December").
+
+        Steps:
+            1. Navigates to the Reports section in the Experity application.
+            2. Searches for and selects the specified report.
+            3. Iterates through each month in the specified range and performs the following:
+                - Selects the month in the application.
+                - Runs the report and downloads it.
+                - Waits for the download to complete.
+                - Renames the downloaded file to include the report name and month.
+                - Removes the first three lines from the file (assumed to be headers or metadata).
+                - Closes any additional windows opened during the process.
+
+        Dependencies:
+            - Requires `self.experity` for navigation, report selection, and report execution.
+            - Uses `file_folder` module for file operations (waiting for download, renaming files).
+            - Relies on `run_logic_for_each_month` to iterate through the months.
+            - Assumes `close_other_windows` is a utility function to manage browser windows.
+
+        Note:
+            - The downloaded file is expected to have a specific name defined by `PAY_4_FILE_NAME`.
+            - The processed file is saved in the same directory with a new name format.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
 
@@ -381,6 +675,39 @@ class ExtractReports:
         run_logic_for_each_month(pay_4_from_month, pay_4_to_month, pay_4_report_steps)
 
     def adj_4(self, report_name, adj_4_from_month, adj_4_to_month):
+        """
+        Generates and processes adjustment reports for a specified range of months.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            adj_4_from_month (str): The starting month for the report generation (e.g., "January").
+            adj_4_to_month (str): The ending month for the report generation (e.g., "December").
+
+        Steps:
+            1. Navigates to the "Reports" section of the Experity application.
+            2. Searches for and selects the specified report by name.
+            3. Iterates through each month in the specified range and performs the following:
+                - Selects the month in the application.
+                - Runs the report for the selected month.
+                - Downloads the report in the specified export format.
+                - Waits for the report to be downloaded.
+                - Renames the downloaded file to include the report name and month.
+                - Removes the first three lines from the report file.
+                - Closes any additional windows opened during the process.
+
+        Dependencies:
+            - Requires the `experity` object for interacting with the Experity application.
+            - Uses `file_folder` for file operations such as waiting for downloads and renaming files.
+            - Relies on `run_logic_for_each_month` to handle the iteration over the month range.
+            - Assumes `close_other_windows` is available to manage browser windows.
+
+        Raises:
+            Any exceptions raised during navigation, file operations, or report generation will propagate.
+
+        Note:
+            Ensure that `self.download_directory` and `self.report_export_type` are properly configured
+            before calling this method.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
 
@@ -403,6 +730,25 @@ class ExtractReports:
         run_logic_for_each_month(adj_4_from_month, adj_4_to_month, adj_4_report_steps)
 
     def pay_10(self, report_name, pay_10_from_date, pay_10_to_date):
+        """
+        Generates and downloads a report for the specified date range.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            pay_10_from_date (str): The start date for the report in the format 'YYYY-MM-DD'.
+            pay_10_to_date (str): The end date for the report in the format 'YYYY-MM-DD'.
+
+        Steps:
+            1. Navigates to the Reports section of the Experity application.
+            2. Searches for and selects the specified report.
+            3. Sets the date range for the report.
+            4. Runs the report and downloads it in the specified export format.
+            5. Waits for the report to be downloaded to the specified directory.
+            6. Closes any additional browser windows opened during the process.
+
+        Raises:
+            Exception: If the report download fails or any step encounters an error.
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
         self.experity.select_report_date_range(pay_10_from_date, pay_10_to_date)
@@ -412,6 +758,41 @@ class ExtractReports:
         close_other_windows(self.driver)
 
     def rev_19(self, report_name, rev_19_from_month, rev_19_to_month):
+        """
+        Generates and downloads monthly reports for a specified range of months.
+
+        Args:
+            report_name (str): The name of the report to be generated.
+            rev_19_from_month (str): The starting month for the report generation (e.g., "January").
+            rev_19_to_month (str): The ending month for the report generation (e.g., "December").
+
+        Steps:
+            1. Navigates to the "Reports" section of the Experity application.
+            2. Searches for and selects the specified report.
+            3. Iterates through each month in the specified range:
+                - Selects the month.
+                - Runs the report.
+                - Downloads the report.
+                - Renames the downloaded file to include the report name and month.
+                - Closes any additional browser windows opened during the process.
+
+        Dependencies:
+            - `self.experity.navigate_to`: Navigates to a specific URL and section.
+            - `self.experity.search_and_select_report`: Searches and selects a report.
+            - `self.experity.select_month`: Selects a specific month in the report interface.
+            - `self.experity.run_report`: Runs the selected report.
+            - `self.experity.download_report`: Downloads the report in the specified format.
+            - `file_folder.wait_for_download`: Waits for the file to be downloaded.
+            - `file_folder.rename_file_or_folder`: Renames the downloaded file.
+            - `close_other_windows`: Closes additional browser windows.
+            - `run_logic_for_each_month`: Executes logic for each month in the specified range.
+
+        Raises:
+            Any exceptions raised by the dependent methods will propagate up.
+
+        Returns:
+            None
+        """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
 

@@ -11,7 +11,23 @@ Functions:
     - cnt_19_staging_table: Generates SQL for the `CNT_19_Staging_Base` table.
     - ccr_03_staging_table: Generates SQL for the `CCR_03_Staging_Base` table.
     - ccr_02_staging_table: Generates SQL for the `CCR_02_Staging_Base` table.
+    - 
 """
+import os
+import sys
+import argparse
+import functools
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from utils.pyodbc_sql import PyODBCSQL
+
+def execute_query():
+    try:
+        #execture query
+    except:
+        # ask user to drop and re-recarete trable
+    
 
 
 def cnt_27_staging_table(table_name="CNT_27_Staging_Base"):
@@ -590,5 +606,8 @@ def rev_16_staging_table(table_name="REV_16_Staging_Base"):
 
 
 if __name__ == "__main__":
-    pass
-    # TODO: Create all the table in the database if this file is called, if table exists print the message table already exists
+    parser = argparse.ArgumentParser(description="Execute a SQL query on a specified database.")
+    parser.add_argument("--db_name", required=True, help="Name of the database")
+    args = parser.parse_args()
+    sql = PyODBCSQL(args.db_name)
+    sql.execute_query(rev_16_staging_table())

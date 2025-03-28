@@ -26,7 +26,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 
 from utils.experity_base import ExperityBase, close_other_windows, run_logic_for_each_month
 from utils import file_folder
-from utils.etl.report_config import REV_19_FILE_NAME, ADJ_4_FILE_NAME, PAY_4_FILE_NAME
+from utils.etl.report_config import REV_19_FILE_NAME, ADJ_4_FILE_NAME, PAY_4_FILE_NAME, PAT_2_FILE_NAME
 
 
 class ExtractReports:
@@ -358,7 +358,7 @@ class ExtractReports:
         self.experity.select_report_date_range(pay_41_from_date, pay_41_to_date)
         self.experity.run_report()
         self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory)
+        file_folder.wait_for_download(PAT_2_FILE_NAME, self.download_directory)
         close_other_windows(self.driver)
 
     def lab_01(self, report_name, pay_41_from_date, pay_41_to_date):
@@ -604,14 +604,14 @@ class ExtractReports:
         """
         Generates and downloads a report for a specified month and year based on the given report name
         and date in the format ``YYYY/MM/DD``.
-        
+
         :param report_name: The name of the report to be generated.
         :type report_name: str
         :param rev_16_date: The date in ``YYYY/MM/DD`` format used to determine the month and year for the report.
         :type rev_16_date: str
-        
+
         :raises ValueError: If the provided date is not in the correct ``YYYY/MM/DD`` format.
-        
+
         Workflow:
             1. Navigates to the "Reports" section of the Experity application.
             2. Searches for and selects the specified report by name.

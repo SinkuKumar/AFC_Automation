@@ -102,7 +102,7 @@ def init_directory(directory_path: str) -> None:
     else:
         create_directories([directory_path])
 
-def wait_for_download(report_name: str, download_directory: str, timeout: int = 300, sleep_interval: int = 1) -> None:
+def wait_for_download(report_name: str, download_directory: str, timeout: int = 1800, sleep_interval: int = 1) -> None:
     """
     Waits for a file download to complete in the specified directory.
 
@@ -114,7 +114,7 @@ def wait_for_download(report_name: str, download_directory: str, timeout: int = 
     :type report_name: str
     :param download_directory: The directory where the file is expected to be downloaded.
     :type download_directory: str
-    :param timeout: Maximum time (in seconds) to wait before giving up. Default is 300 seconds.
+    :param timeout: Maximum time (in seconds) to wait before giving up. Default is 1800 seconds.
     :type timeout: int, optional
     :param sleep_interval: Interval (in seconds) between directory checks. Default is 1 second.
     :type sleep_interval: str, optional

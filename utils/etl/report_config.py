@@ -3,7 +3,7 @@ import time
 from utils.general import get_past_date
 
 # Browser Configuration
-TIME_OUT = 900
+TIME_OUT = 1800
 BROWSER = 'chrome'
 C_DIR = os.getcwd()
 EXPORT_TYPE = 'CSV'
@@ -38,6 +38,9 @@ ADJ_4_FILE_NAME = "ADJ_4_AdjustmentDetail.csv"
 
 # REV_19 Configuration
 REV_19_FILE_NAME = "REV_19_TotalRevenueByProviderAndCategory.csv"
+
+# PAT_2 Configuration
+PAT_2_FILE_NAME = "PAT_2_PatientDemographicsByPractice.csv"
 
 class ReportConfig:
     def __init__(self, client_id: int) -> None:
@@ -201,7 +204,7 @@ class ReportConfig:
 
     def ccr_2(self, from_date, to_date) -> dict:
         return {
-            "report_name": "CCR_2",
+            "report_name": "CCR_02",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "CCR_02_CreditCardOnFilePayments.csv",
@@ -213,7 +216,7 @@ class ReportConfig:
 
     def ccr_3(self, from_date, to_date) -> dict:
         return {
-            "report_name": "CCR_3",
+            "report_name": "CCR_03",
             "from_date": from_date,
             "to_date": to_date,
             "file_name": "CCR_03_AllCCReserveAmounts.csv",

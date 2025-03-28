@@ -9,7 +9,7 @@ This module contains classes to send emails using SMTP server. It also contains 
 :synopsis: Send emails using SMTP server and email templates.
 
 :date: March 3, 2025
-:author: Sinku Kumar `sinkukumar.r@hq.graphxsys.com <mailto:sinkukumar.r@hq.graphxsys.com>`
+:author: Sinku Kumar <sinkukumar.r@hq.graphxsys.com>`
 """
 
 import os

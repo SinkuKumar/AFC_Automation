@@ -8,14 +8,13 @@ This module provides functionality to:
     3. Get message statistics
 with the help of Ultramsg WhatsApp API.
 
-This module can be used as a standalone script, 
-if that the `UMSG_INSTANCE_ID` and `UMSG_SECRET_KEY` environment variables are set.
+This module can be used as a standalone script, if the `UMSG_INSTANCE_ID` and `UMSG_SECRET_KEY` environment variables are set.
 
 :module: messages.py
 :platform: Unix, Windows
 
 :date: March 3, 2025
-:author: Niladri Mallik `niladrimallik.p@hq.graphxsys.com <mailto:niladrimallik.p@hq.graphxsys.com>`
+:author: Niladri Mallik <niladrimallik.p@hq.graphxsys.com>
 
 # TODO: Implement logging
 # TODO: Add error handling
@@ -48,7 +47,6 @@ class UltraMsgMessages:
         :type phone_number: int
         :param message: The message to be sent to the receipient in UTF-16 encoding
         :type message: str
-
         :returns: The response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -68,9 +66,8 @@ class UltraMsgMessages:
         :type image_url: str
         :param image_caption: The caption for the image.
         :type image_caption: str
-
         :returns: The response from the ultramsg server.
-        rtype: str(json)
+        :rtype: str(json)
         '''
         payload=f'to={phone_number}&image={image_url}&caption={image_caption}'
         return self.umsg_base.make_request(url='messages/image',
@@ -87,7 +84,6 @@ class UltraMsgMessages:
         :param sticker_url: The http(s) url of the sticker. 
             Note: It won't accept images from local disk.
         :type sticker_url: str
-
         :returns: The response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -110,7 +106,6 @@ class UltraMsgMessages:
         :type doc_url: str
         :param doc_caption: The text under the file.
         :type doc_caption: str
-
         :returns: The response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -129,7 +124,6 @@ class UltraMsgMessages:
         :param audio_url: The http(s) url of the audio. 
             Note: It won't accept audio files from local disk.
         :type audio_url: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -146,11 +140,11 @@ class UltraMsgMessages:
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
         :type phone_number: int
         :param voice_url: The http(s) url of the voice note. 
-        Note: It won't accept voice notes from local disk.
         :type voice_url: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
+        
+        Note: It won't accept voice notes from local disk.
         '''
         payload=f'to={phone_number}&audio={voice_url}'
         return self.umsg_base.make_request(url='messages/voice',
@@ -169,9 +163,8 @@ class UltraMsgMessages:
         :type video_url: str
         :param video_caption: The caption for the video.
         :type video_caption: str
-
         :returns: The response from the ultramsg server.
-        rtype: str(json)
+        :rtype: str(json)
         '''
         payload=f'to={phone_number}&video={video_url}&caption={video_caption}'
         return self.umsg_base.make_request(url='messages/video',
@@ -190,7 +183,6 @@ class UltraMsgMessages:
             The contact_id must be in the format: `<country_code><phone_number>@c.us`.<br>
             Eg: 14000000001@c.us or 14000000001@c.us,14000000002@c.us,14000000003@c.us
         :type contact_id: str or list(str)
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -213,7 +205,6 @@ class UltraMsgMessages:
         :type latitude: float
         :param longitude: Longitude of the address
         :type longitude: float
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -231,7 +222,6 @@ class UltraMsgMessages:
         :type phone_number: int
         :param text_card: Text in the virtual contact card.
         :type text_card: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -249,7 +239,6 @@ class UltraMsgMessages:
         :type message_id: int
         :param emoji: Emoji to react with.
         :type emoji: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -265,7 +254,6 @@ class UltraMsgMessages:
 
         :param msgId: Message ID of the message to be deleted.
         :type msgId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -280,7 +268,6 @@ class UltraMsgMessages:
 
         :param status: Status of the message to be deleted (unsent, expired).
         :type status: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -296,7 +283,6 @@ class UltraMsgMessages:
 
         :param msgId: Status of the message to be deleted.
         :type msgId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -331,7 +317,6 @@ class UltraMsgMessages:
         :type status: str
         :param sort: Order of sorting of messages (asc, desc)
         :type sort: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -348,7 +333,6 @@ class UltraMsgMessages:
         '''
         Get statistics of instance messages.
         Uses GET request.
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''

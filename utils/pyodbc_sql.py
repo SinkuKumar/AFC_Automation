@@ -8,7 +8,7 @@ This module contains the PyODBCSQL class, which allows executing SQL queries and
 :synopsis: Executes SQL queries and performing data operations with a SQL database.
 
 :date: Feb 24, 2025
-:author: Sinku Kumar `sinkukumar.r@hq.graphxsys.com <mailto:sinkukumar.r@hq.graphxsys.com>`
+:author: Sinku Kumar <sinkukumar.r@hq.graphxsys.com>`
 """
 
 # TODO: Implement logging along with proper error handling with error codes, as per guidelines.
@@ -23,19 +23,34 @@ class PyODBCSQL:
     """
     A class for executing SQL queries and performing data operations with a SQL database.
 
-    :Attributes:
-        server: The name of the SQL server.
-        database: The name of the database.
-        username: The username for the SQL server.
-        password: The password for the SQL server.
-        conn: The connection to the SQL server.
+    Attributes:
+        :server: The name of the SQL server.
 
-    :Methods:
-        :execute_query(self, query: str) -> Any: Executes the specified SQL query and returns the result.
-        :get_column_names(self, table_name: str) -> list[tuple[str, str]]: Returns the column names of the specified table.
-        :delete_table_data(self, table_name: str) -> None: Deletes the data from the specified table.
-        :insert_csv_data(self, table_name: str, csv_file_path: str) -> None:
-        :bulk_insert_csv_sql(self, file_path: str, staging_table_name: str, client_id: str) -> None:
+        :database: The name of the database.
+
+        :username: The username for the SQL server.
+
+        :password: The password for the SQL server.
+
+        :conn: The connection to the SQL server.
+
+    Methods:
+        execute_query (self, query(str)): 
+            Executes the specified SQL query and returns the result.
+        get_column_names(self, table_name: str):
+            Returns the column names of the specified table.
+        get_users_credentials(self, client_ids: list[int]):
+            Returns list of client credentials
+        csv_bulk_insert(self, output_csv_path: str, table_name: str):
+            Load data from a CSV file into a database table.
+        get_all_active_client_ids(self):
+            Retrieves all active Client IDs from the Database table.
+        check_and_create_table(self, table_name, create_table_query):
+            Checks if a table exists in the database and creates it if it does not exist.
+        delete_table_data(self, table_name: str, client_id: int):
+            Deletes the data from the specified table.
+        truncate_table(self, table_name: str):
+            Deletes all data for particular client_id from the specified database table.
     """
 
     def __init__(self, database):
@@ -50,7 +65,6 @@ class PyODBCSQL:
         :type username: str
         :param password: The password for the SQL server.
         :type password: str
-
         :returns: None
         :rtype: None
         """
@@ -67,7 +81,6 @@ class PyODBCSQL:
 
         :param query: The SQL query to execute.
         :type query: str
-
         :returns: The result of the query.
         :rtype: list[tuple[str, str]] | None
         """
@@ -97,7 +110,6 @@ class PyODBCSQL:
 
         :param table_name: The name of the table to get the column names from.
         :type table_name: str
-
         :returns: The column names of the specified table.
         :rtype: list[tuple[str, str]]
         """
@@ -108,15 +120,13 @@ class PyODBCSQL:
         """
         Fetches the usernames and passwords of active clients from the MSSQL database.
 
-        Args:
-            client_ids (List[int]): List of client IDs whose credentials need to be fetched.
+        :param client_ids: List of client IDs whose credentials need to be fetched.
+        :type client_ids: List[int]
+        :returns: A list of tuples, where each tuple contains (Username, Password).
+        :rtype: list[tuple[str, str]]
 
-        Returns:
-            list[tuple[str, str]]: A list of tuples, where each tuple contains (Username, Password).
-
-        Raises:
-            ValueError: If the client_ids list is empty.
-            Exception: If there is a database error.
+        :raises ValueError: If the client_ids list is empty.
+        :raises Exception: If there is a database error.
         """
         if not client_ids:
             logging.warning("Empty client_ids list provided.")
@@ -140,12 +150,11 @@ class PyODBCSQL:
         This function reads data from a CSV file and inserts it into the specified database table 
         using the provided connection string.
 
-        Args:
-            output_csv_path (str): The path to the CSV file containing the data to be loaded.
-            table_name (str): The name of the target database table.
-
-        Returns:
-            None
+        :param output_csv_path: The path to the CSV file containing the data to be loaded.
+        :type output_csv_path: str
+        :param table_name: The name of the target database table.
+        :type table_name: str
+        :returns: None
         """
         try:
             sql = f"""
@@ -169,11 +178,8 @@ class PyODBCSQL:
         """
         Retrieves all active Client IDs from the Database table.
 
-        Args:
-            None
-        
-        Returns:
-            list: A list of active Client IDs.
+        :returns: A list of active Client IDs.
+        :rtype: list
         """
         try:
             logging.info("Fetching all Client IDs from Databse table.")
@@ -189,12 +195,11 @@ class PyODBCSQL:
         """
         Checks if a table exists in the database and creates it if it does not exist.
 
-        Args:
-            table_name (str): The name of the table to check.
-            create_table_query (str): The SQL query to create the table if it does not exist.
-
-        Returns:
-            None
+        :param table_name: The name of the table to check.
+        :type table_name: str
+        :param create_table_query: The SQL query to create the table if it does not exist.
+        :type create_table_query: str
+        :returns: None
         """
         try:
             logging.info("Checking if table '%s' exists.", table_name)
@@ -218,15 +223,13 @@ class PyODBCSQL:
 
         This method executes a SQL `DELETE` statement to remove all rows of the particular client_id from the given table. 
 
-        Args:
-            table_name (str): The name of the table from which data should be deleted.
-            client_id (int): Client ID for which the data to be deleted.
+        :param table_name: The name of the table from which data should be deleted.
+        :type table_name: str
+        :param client_id: Client ID for which the data to be deleted.
+        :type client_id: int
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            pyodbc.Error: If an error occurs while executing the SQL query.
+        :raises pyodbc.Error: If an error occurs while executing the SQL query.
         """
         try:
             query = f"DELETE FROM {table_name} where Client_id = {client_id}"
@@ -243,14 +246,11 @@ class PyODBCSQL:
 
         This method executes a SQL `DELETE` statement to remove all rows of the particular client_id from the given table. 
 
-        Args:
-            table_name (str): The name of the table from which data should be deleted.
+        :param table_name: The name of the table from which data should be deleted.
+        :type table_name: str
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            pyodbc.Error: If an error occurs while executing the SQL query.
+        :raises pyodbc.Error: If an error occurs while executing the SQL query.
         """
         try:
             query = f"TRUNCATE TABLE {table_name};"

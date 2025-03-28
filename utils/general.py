@@ -26,14 +26,10 @@ def get_yesterdays_date() -> str:
     """
     Returns yesterday's date in MM/DD/YYYY format.
 
-    Args:
-        None
+    :returns: Yesterday's date in MM/DD/YYYY format.
+    :rtype: str
 
-    Returns:
-        str: Yesterday's date in MM/DD/YYYY format.
-
-    Raises:
-        Exception: If an unexpected error occurs while retrieving the date.
+    :raises Exception: If an unexpected error occurs while retrieving the date.
     """
     try:
         yesterday = datetime.now() - timedelta(days=1)
@@ -50,15 +46,18 @@ def get_past_date(days: int = 0, months: int = 0, years: int = 0, quarters: int 
     This function computes a past date by subtracting the given time values from the provided
     `from_date` (or the current date if not specified).
 
-    Args:
-        days (int, optional): Number of days to subtract. Defaults to 0.
-        months (int, optional): Number of months to subtract. Defaults to 0.
-        years (int, optional): Number of years to subtract. Defaults to 0.
-        quarters (int, optional): Number of quarters to subtract (1 quarter = 3 months). Defaults to 0.
-        from_date (str, optional): The reference date in "MM/DD/YYYY" format. If not provided, uses the current date.
-
-    Returns:
-        str: The calculated past date in "MM/DD/YYYY" format.
+    :param days: Number of days to subtract. Defaults to 0.
+    :type days: int, optional
+    :param months: Number of months to subtract. Defaults to 0.
+    :type months: int, optional
+    :param years: Number of years to subtract. Defaults to 0.
+    :type years: int, optional
+    :param quarters: Number of quarters to subtract (1 quarter = 3 months). Defaults to 0.
+    :type quarters: int, optional
+    :param from_date: The reference date in "MM/DD/YYYY" format. If not provided, uses the current date.
+    :type from_date: str, optional
+    :returns: The calculated past date in "MM/DD/YYYY" format.
+    :rtype: str
 
     Raises:
         ValueError: If `from_date` is not in the correct "MM/DD/YYYY" format.

@@ -27,8 +27,6 @@ def page_loads(driver: WebDriver) -> bool:
     :type driver: WebDriver
     :returns: True if the page is fully loaded, False otherwise.
     :rtype: bool
-
-    :raises None:
     """
     return driver.execute_script("return document.readyState") == "complete"
 
@@ -40,7 +38,6 @@ def retry_on_exception(retries: int = 3, delay: int = 2) -> callable:
     :type retries: int
     :param delay: The wait time (in seconds) between retries.
     :type delay: int
-
     :returns: A wrapped function with retry logic applied.
     :rtype: Callable
 
@@ -122,7 +119,6 @@ class ExperityBase:
 
         This method fetches the current URL from the WebDriver, splits it by slashes (`/`),
         and returns the 4th part (index 3), which is the portal url/segment.
-
         :returns: portal_url: The portal URL segment extracted from the current browser URL.
         :rtype: str
 
@@ -385,7 +381,6 @@ class ExperityBase:
         :param to_month: End month for range selection.
         :type to_month: str, optional
         :returns: None
-        :rtype: None
 
         :raises ValueError: If arguments provided are invalid (e.g., only from_month or to_month is given).
         :raises SeleniumException: If any issue occurs during searching and selection of the report.
@@ -428,8 +423,7 @@ class ExperityBase:
         :type status_name: list
         :returns: None
 
-        Raises:
-            SeleniumException: If any issue occurs during the logbook status names selection process.
+        :raises SeleniumException: If any issue occurs during the logbook status names selection process.
         """
         status_mapping = {
             "All": 'freeStatusListcheck1',
@@ -511,7 +505,6 @@ class ExperityBase:
 
         :param date_type: Date type to select.
         :type date_type: str
-
         :returns: None
 
         :raises: SeleniumException: If any issue occurs during the arrival status names selection process.
@@ -585,16 +578,15 @@ class ExperityBase:
         2. Expanding the correct Subcategory (by name), scoped inside the Category
         3. Clicking the correct Report (by report code or report name), scoped inside the Subcategory
 
-        Args:
-            category_name (str): Name of the Category.
-            subcategory_name (str): Name of the Subcategory.
-            report_identifier (str): Either the report name OR report code.
+        :param category_name: Name of the Category.
+        :type category_name: str
+        :param subcategory_name: Name of the Subcategory.
+        :type subcategory_name: str
+        :param report_identifier: Either the report name OR report code.
+        :type report_identifier: str
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during the pm report selection process.
+        :raises SeleniumException: If any issue occurs during the pm report selection process.
         """
         try:  
             self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
@@ -656,21 +648,25 @@ class ExperityBase:
         """
         Applies filters to select a PM report based on various criteria.
 
-        Args:
-            report_code (str): The code identifying the specific report to be selected.
-            cls_from_month (str, optional): From month for the closing date filter (format: "Month YYYY"). Defaults to None.
-            cls_to_month (str, optional): To month for the closing date filter (format: "Month YYYY"). Defaults to None.
-            cls_month_end (str, optional): Closing month-end date filter (format: "Month YYYY"). Defaults to None.
-            serv_from_date (str, optional): From date for the service date filter (format: "MM/DD/YYYY"). Defaults to None.
-            serv_to_date (str, optional): To date for the service date filter (format: "MM/DD/YYYY"). Defaults to None.
-            rev_code (str, optional): Revenue code filter. Defaults to None.
-            report_type (str, optional): Type of report being requested. Defaults to None.
+        :param report_code: The code identifying the specific report to be selected.
+        :type report_code: str
+        :param cls_from_month: From month for the closing date filter (format: "Month YYYY"). Defaults to None.
+        :type cls_from_month: str, optional
+        :param cls_to_month: To month for the closing date filter (format: "Month YYYY"). Defaults to None.
+        :type cls_to_month: str, optional
+        :param cls_month_end: Closing month-end date filter (format: "Month YYYY"). Defaults to None.
+        :type cls_month_end: str, optional
+        :param serv_from_date: From date for the service date filter (format: "MM/DD/YYYY"). Defaults to None.
+        :type serv_from_date: str, optional
+        :param serv_to_date: To date for the service date filter (format: "MM/DD/YYYY"). Defaults to None.
+        :type serv_to_date: str, optional
+        :param rev_code: Revenue code filter. Defaults to None.
+        :type rev_code: str, optional
+        :param report_type: Type of report being requested. Defaults to None.
+        :type report_type: str, optional
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during PM report filter selection process. 
+        :raises SeleniumException: If any issue occurs during PM report filter selection process. 
 
         Notes:
             This function is intended to apply various filters that refine the selection of a PM report.
@@ -721,14 +717,10 @@ class ExperityBase:
         """
         Extracts and return data from 'Clinic List' table data.
 
-        Args:
-            None
+        :returns: A list of lists containing table data where each inner list represents a row.
+        :rtype: data(list)
 
-        Returns:
-            data(list): A list of lists containing table data where each inner list represents a row.
-
-        Raises:
-            SeleniumException: If any issue occurs during data extraction.
+        :raises SeleniumException: If any issue occurs during data extraction.
         """
         try:
             self.wait.until(page_loads)
@@ -757,14 +749,11 @@ class ExperityBase:
         """
         Navigates to recievables page where recievables details of given invoice number are present.
 
-        Args:
-            invoice_number (int): The invoice_number to get recievables details.
+        :parma invoice_number: The invoice_number to get recievables details.
+        :type invoice_numer: int
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during navigating to recievables page.
+        :raises SeleniumException: If any issue occurs during navigating to recievables page.
         """
         try:
             logging.info(f"Waiting for invoice number input field.")
@@ -790,14 +779,9 @@ class ExperityBase:
         """
         Triggers the 'Run Report' action by clicking the designated 'Run Report' button.
 
-        Args:
-            None
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs while running the report.
+        :raises SeleniumException: If any issue occurs while running the report.
         """
         try:
             self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='submit' and @name='submitbtn' and @value='Run Report']"))).click()
@@ -810,19 +794,16 @@ class ExperityBase:
         Automates the process of downloading a report in provided report format.
 
         Steps:
-        1. Switches to the latest browser window.
-        2. Waits for the page to fully load.
-        3. Ensures that the report viewer is ready.
-        4. Selects and clicks the provided report format download option.
+            1. Switches to the latest browser window.
+            2. Waits for the page to fully load.
+            3. Ensures that the report viewer is ready.
+            4. Selects and clicks the provided report format download option.
 
-        Args:
-            report_format(str): Specifies the format of the report (e.g., 'CSV', 'Excel', 'TXT').
+        :param report_format: Specifies the format of the report (e.g., 'CSV', 'Excel', 'TXT').
+        :type report_format: str
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during report download.
+        :raises SeleniumException: If any issue occurs during report download.
         """
 
         format_mapping = {
@@ -892,14 +873,9 @@ class ExperityBase:
         """
         Logs out the user by clicking the logout button.
 
-        Args:
-            None
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during logout.
+        :raises SeleniumException: If any issue occurs during logout.
         """
         try:
             self.driver.switch_to.default_content()
@@ -918,15 +894,12 @@ def close_other_windows(driver: WebDriver) -> None:
     This function iterates through all open browser windows, closes any 
     additional windows, and switches focus back to the main window.
 
-    Args:
-        driver (WebDriver): The Selenium WebDriver instance controlling the browser.
+    :param driver: The Selenium WebDriver instance controlling the browser.
+    :type driver: WebDriver
+    :returns: None
 
-    Raises:
-        None
-
-    Raises:
-        SeleniumException: If any issue occurs during closing other windows.
-        TimeoutException: If switching to a window or closing it times out.
+    :raises SeleniumException: If any issue occurs during closing other windows.
+    :raises TimeoutException: If switching to a window or closing it times out.
     """
     logging.info("Attempting to close other browser windows.")
     
@@ -970,12 +943,10 @@ def run_logic_for_each_month(from_month: str, to_month: str, logic_function, *ar
     :type args: tuple
     :param kwargs: Additional keyword arguments to pass to ``logic_function``.
     :type kwargs: dict
+    :returns: None
 
     :raises ValueError: If the date formats are invalid or if ``from_month`` is later than ``to_month``.
-
-    :returns: None
-    :rtype: None
-
+    
     :example:
         .. code-block:: python
 

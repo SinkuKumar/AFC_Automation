@@ -11,7 +11,6 @@ def create_directories(paths: list[str]) -> None:
 
     :param paths: A list of directory paths to be created.
     :type paths: list[str]
-
     :returns: None
 
     :raises PermissionError: If the script lacks permissions to create a directory.
@@ -41,7 +40,6 @@ def clear_directory_files(directory_path: str) -> None:
 
     :param directory_path: The absolute or relative path of the directory whose files need to be cleared.
     :type directory_path: str
-
     :returns: None
 
     :raises ValueError: If the provided directory path does not exist or is not a directory.
@@ -118,7 +116,6 @@ def wait_for_download(report_name: str, download_directory: str, timeout: int = 
     :type timeout: int, optional
     :param sleep_interval: Interval (in seconds) between directory checks. Default is 1 second.
     :type sleep_interval: str, optional
-
     :returns: None
 
     :raises FileNotFoundError: If the specified download directory does not exist.
@@ -340,10 +337,9 @@ def move_items(sources: str | list[str], destination: str, files_only: bool = Fa
     :param files_only: If True, only files from a folder are moved (subfolders are ignored). Defaults to False.
     :type files_only:  Optional[bool]
 
-    Raises:
-        FileNotFoundError: If a source file or folder does not exist.
-        PermissionError: If there is an issue with file permissions.
-        Exception: For any unexpected errors.
+    :raises FileNotFoundError: If a source file or folder does not exist.
+    :raises PermissionError: If there is an issue with file permissions.
+    :raises Exception: For any unexpected errors.
     """
 
     if isinstance(sources, str):
@@ -382,13 +378,13 @@ def move_items(sources: str | list[str], destination: str, files_only: bool = Fa
 def delete_paths(paths: str | list[str]) -> None:
     """Delete one or multiple files or directories safely without confirmation.
 
-    Args:
-        paths (str | list[str]): A single file/directory path or a list of file/directory paths to delete.
+    :param paths: A single file/directory path or a list of file/directory paths to delete.
+    :type directories: str | list[str]
+    :returns: None
 
-    Raises:
-        ValueError: If `paths` is not a string or list.
-        PermissionError: If the file/directory cannot be deleted due to permissions.
-        OSError: If an unexpected OS error occurs.
+    :raises ValueError: If `paths` is not a string or list.
+    :raises PermissionError: If the file/directory cannot be deleted due to permissions.
+    :raises OSError: If an unexpected OS error occurs.
     """
     if isinstance(paths, str):
         paths = [paths]

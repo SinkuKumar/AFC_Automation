@@ -149,13 +149,12 @@ class ExtractReports:
         """
         Generates and downloads a report based on the specified parameters.
         
-        Args:
-            :param report_name: The name of the report to be generated.
-            :type report_name: str
-            :param cnt_27_from_date: The start date for the report's date range in the format `YYYY-MM-DD`.
-            :type cnt_27_from_date: str
-            :param cnt_27_to_date: The end date for the report's date range in the format `YYYY-MM-DD`.
-            :type cnt_27_to_date: str
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param cnt_27_from_date: The start date for the report's date range in the format `YYYY-MM-DD`.
+        :type cnt_27_from_date: str
+        :param cnt_27_to_date: The end date for the report's date range in the format `YYYY-MM-DD`.
+        :type cnt_27_to_date: str
 
         Steps:
             1. Navigates to the Reports section of the Experity application.
@@ -166,8 +165,7 @@ class ExtractReports:
             6. Waits for the download to complete and ensures the file is saved in the designated directory.
             7. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
 
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -185,10 +183,12 @@ class ExtractReports:
         """
         Generates and downloads a report based on the specified date range.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            cnt_19_from_date (str): The start date for the report in the format 'YYYY-MM-DD'.
-            cnt_19_to_date (str): The end date for the report in the format 'YYYY-MM-DD'.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param cnt_19_from_date: The start date for the report in the format 'YYYY-MM-DD'.
+        :type cnt_19_from_date: str
+        :param cnt_19_to_date: The end date for the report in the format 'YYYY-MM-DD'.
+        :type cnt_19_to_date: str
 
         Steps:
             1. Navigates to the "Reports" section in the Experity application.
@@ -199,8 +199,7 @@ class ExtractReports:
             6. Waits for the report to be downloaded to the specified directory.
             7. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -214,10 +213,12 @@ class ExtractReports:
         """
         Generates and downloads a financial report (FIN 25) from the Experity system.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            fin_25_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
-            fin_25_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param fin_25_from_date: The start date for the report's date range in the format 'YYYY-MM-DD'.
+        :type fin_25_from_date: str
+        :param fin_25_to_date: The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :type fin_25_to_date: str
 
         Steps:
             1. Navigates to the Reports section of the Experity system.
@@ -228,8 +229,7 @@ class ExtractReports:
             6. Waits for the report to be downloaded to the specified directory.
             7. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If the report download fails or any step encounters an error.
+        :raises Exception: If the report download fails or any step encounters an error.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -245,10 +245,12 @@ class ExtractReports:
         """
         Generates and downloads a report based on the specified parameters.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            adj_11_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
-            adj_11_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param adj_11_from_date: The start date for the report's date range in the format 'YYYY-MM-DD'.
+        :type adj_11_from_date: str
+        :param adj_11_to_date: The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :type adj_11_to_date: str
 
         Steps:
             1. Navigates to the Reports section of the Experity application.
@@ -259,8 +261,7 @@ class ExtractReports:
             6. Waits for the report to finish downloading in the specified directory.
             7. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -279,13 +280,11 @@ class ExtractReports:
         searches for the specified report, selects the date range, runs the report,
         and downloads it to the specified directory.
 
-        Args:
-            report_name (str): The name of the report to be extracted.
+        :param report_name (str): The name of the report to be extracted.
             fin_18_from_date (str): The start date for the report in the format 'YYYY-MM-DD'.
             fin_18_to_date (str): The end date for the report in the format 'YYYY-MM-DD'.
 
-        Raises:
-            Exception: If the report download fails or any step in the process encounters an error.
+        :raises Exception: If the report download fails or any step in the process encounters an error.
 
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
@@ -300,10 +299,13 @@ class ExtractReports:
         """
         Generates and downloads a report based on the specified parameters.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            pay_41_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
-            pay_41_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param pay_41_from_date: The start date for the report's date range in the format 'YYYY-MM-DD'.
+        :type pay_41_from_date: str
+        :param pay_41_to_date: The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :type pay_41_to_date: str
+        :returns: None
 
         Steps:
             1. Navigates to the Reports section of the Experity application.
@@ -315,11 +317,7 @@ class ExtractReports:
             7. Waits for the report to be downloaded to the specified directory.
             8. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If the report download fails or any step encounters an error.
-
-        Returns:
-            None
+        :raises Exception: If the report download fails or any step encounters an error.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -336,10 +334,12 @@ class ExtractReports:
         Executes the process of navigating to a report, selecting a date range,
         running the report, and downloading it.
 
-        Args:
-            report_name (str): The name of the report to be processed.
-            pay_41_from_date (str): The start date for the report's date range.
-            pay_41_to_date (str): The end date for the report's date range.
+        :param report_name: The name of the report to be processed.
+        :type report_name: str
+        :param pay_41_from_date: The start date for the report's date range.
+        :type pay_41_from_date: str
+        :param pay_41_to_date: The end date for the report's date range.
+        :type pay_41_to_date: str
 
         Steps:
             1. Navigate to the Reports section of the Experity application.
@@ -349,9 +349,7 @@ class ExtractReports:
             5. Wait for the report to finish downloading to the designated directory.
             6. Close any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the process fails, an appropriate exception
-                       will be raised to indicate the issue.
+        :raises Exception: If any step in the process fails, an appropriate exception will be raised to indicate the issue.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -365,10 +363,13 @@ class ExtractReports:
         """
         Generates and downloads a report from the Experity system based on the specified parameters.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            pay_41_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
-            pay_41_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param pay_41_from_date: The start date for the report's date range in the format 'YYYY-MM-DD'.
+        :type pay_41_from_date: str
+        :param pay_41_to_date: The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :type pay_41_to_date: str
+        :returns: None
 
         Steps:
             1. Navigates to the "Reports" section of the Experity system.
@@ -378,11 +379,7 @@ class ExtractReports:
             5. Waits for the report to be downloaded to the specified directory.
             6. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If the report download fails or any step encounters an error.
-
-        Returns:
-            None
+        :raises Exception: If the report download fails or any step encounters an error.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -396,9 +393,10 @@ class ExtractReports:
         """
         Generates and downloads the XRY-03 report within a specified date range.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            xry_03_from_date (str): The start date for the report in the required format.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param xry_03_from_date: The start date for the report in the required format.
+        :type xry_03_from_date: str
             xry_03_to_date (str): The end date for the report in the required format.
 
         Steps:
@@ -411,8 +409,7 @@ class ExtractReports:
             7. Wait for the report to finish downloading in the designated directory.
             8. Close any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -428,10 +425,12 @@ class ExtractReports:
         """
         Generates and downloads the CHT-02 report for a specified date range.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            cht_02_from_date (str): The start date for the report in the required format.
-            cht_02_to_date (str): The end date for the report in the required format.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param cht_02_from_date: The start date for the report in the required format.
+        :type cht_02_from_date: str
+        :param cht_02_to_date: The end date for the report in the required format.
+        :type cht_02_to_date: str
 
         Steps:
             1. Navigates to the "Reports" section of the Experity application.
@@ -442,8 +441,7 @@ class ExtractReports:
             6. Waits for the report to be downloaded to the designated directory.
             7. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -458,10 +456,12 @@ class ExtractReports:
         """
         Generates and downloads a report based on the specified date range.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            med_01_from_date (str): The start date for the report in the required format.
-            med_01_to_date (str): The end date for the report in the required format.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param med_01_from_date: The start date for the report in the required format.
+        :type med_01_from_date: str
+        :param med_01_to_date: The end date for the report in the required format.
+        :type med_01_to_date: str
 
         Steps:
             1. Navigates to the Reports section of the Experity application.
@@ -472,8 +472,7 @@ class ExtractReports:
             6. Waits for the report to be downloaded to the specified directory.
             7. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -487,10 +486,12 @@ class ExtractReports:
         """
         Generates and downloads the PER_02 report for a specified date range.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            per_02_from_date (str): The start date for the report in the required format.
-            per_02_to_date (str): The end date for the report in the required format.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param per_02_from_date: The start date for the report in the required format.
+        :type per_02_from_date: str
+        :param per_02_to_date: The end date for the report in the required format.
+        :type per_02_to_date: str
 
         Steps:
             1. Navigates to the "Reports" section of the Experity application.
@@ -501,8 +502,7 @@ class ExtractReports:
             6. Waits for the download to complete and verifies the file is saved in the download directory.
             7. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -517,10 +517,13 @@ class ExtractReports:
         """
         Generates and downloads a report based on the specified date range.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            pat_20_from_date (str): The start date for the report in the required format.
-            pat_20_to_date (str): The end date for the report in the required format.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param pat_20_from_date: The start date for the report in the required format.
+        :type pat_20_from_date: str
+        :param pat_20_to_date: The end date for the report in the required format.
+        :type pat_20_to_date: str
+        :returns: None
 
         Workflow:
             1. Navigates to the "Reports" section of the Experity application.
@@ -530,11 +533,7 @@ class ExtractReports:
             5. Waits for the report to be downloaded to the designated directory.
             6. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the process fails, an exception may be raised.
-
-        Returns:
-            None
+        :raises Exception: If any step in the process fails, an exception may be raised.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -548,10 +547,12 @@ class ExtractReports:
         """
         Generates and downloads the CCR-02 report from the Experity system.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            ccr_02_from_date (str): The start date for the report's date range in the format 'YYYY-MM-DD'.
-            ccr_02_to_date (str): The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param ccr_02_from_date: The start date for the report's date range in the format 'YYYY-MM-DD'.
+        :type ccr_02_from_date: str
+        :param ccr_02_to_date: The end date for the report's date range in the format 'YYYY-MM-DD'.
+        :type ccr_02_to_date: str
 
         Steps:
             1. Navigates to the Reports section of the Experity system.
@@ -561,8 +562,7 @@ class ExtractReports:
             5. Waits for the report to be downloaded to the specified directory.
             6. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -576,10 +576,12 @@ class ExtractReports:
         """
         Generates and downloads the CCR-03 report for a specified date range.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            ccr_03_from_date (str): The start date for the report in the format 'YYYY-MM-DD'.
-            ccr_03_to_date (str): The end date for the report in the format 'YYYY-MM-DD'.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param ccr_03_from_date: The start date for the report in the format 'YYYY-MM-DD'.
+        :type ccr_03_from_date: str
+        :param ccr_03_to_date: The end date for the report in the format 'YYYY-MM-DD'.
+        :type ccr_03_to_date: str
 
         Steps:
             1. Navigates to the "Reports" section of the Experity application.
@@ -589,8 +591,7 @@ class ExtractReports:
             5. Waits for the report to be downloaded to the designated directory.
             6. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If any step in the report generation or download process fails.
+        :raises Exception: If any step in the report generation or download process fails.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -641,21 +642,23 @@ class ExtractReports:
         """
         Generates and processes Pay 4 reports for a specified range of months.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            pay_4_from_month (str): The starting month for the report generation (e.g., "January").
-            pay_4_to_month (str): The ending month for the report generation (e.g., "December").
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param pay_4_from_month: The starting month for the report generation (e.g., "January").
+        :type pay_4_from_month: str
+        :param pay_4_to_month: The ending month for the report generation (e.g., "December").
+        :type pay_4_to_month: str
 
         Steps:
             1. Navigates to the Reports section in the Experity application.
             2. Searches for and selects the specified report.
             3. Iterates through each month in the specified range and performs the following:
-                - Selects the month in the application.
-                - Runs the report and downloads it.
-                - Waits for the download to complete.
-                - Renames the downloaded file to include the report name and month.
-                - Removes the first three lines from the file (assumed to be headers or metadata).
-                - Closes any additional windows opened during the process.
+            4. Selects the month in the application.
+            5. Runs the report and downloads it.
+            6. Waits for the download to complete.
+            7. Renames the downloaded file to include the report name and month.
+            8. Removes the first three lines from the file (assumed to be headers or metadata).
+            9. Closes any additional windows opened during the process.
 
         Dependencies:
             - Requires `self.experity` for navigation, report selection, and report execution.
@@ -692,22 +695,24 @@ class ExtractReports:
         """
         Generates and processes adjustment reports for a specified range of months.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            adj_4_from_month (str): The starting month for the report generation (e.g., "January").
-            adj_4_to_month (str): The ending month for the report generation (e.g., "December").
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param adj_4_from_month: The starting month for the report generation (e.g., "January").
+        :type adj_4_from_month: str
+        :param adj_4_to_month: The ending month for the report generation (e.g., "December").
+        :type adj_4_to_month: str
 
         Steps:
             1. Navigates to the "Reports" section of the Experity application.
             2. Searches for and selects the specified report by name.
             3. Iterates through each month in the specified range and performs the following:
-                - Selects the month in the application.
-                - Runs the report for the selected month.
-                - Downloads the report in the specified export format.
-                - Waits for the report to be downloaded.
-                - Renames the downloaded file to include the report name and month.
-                - Removes the first three lines from the report file.
-                - Closes any additional windows opened during the process.
+            4. Selects the month in the application.
+            5. Runs the report for the selected month.
+            6. Downloads the report in the specified export format.
+            7. Waits for the report to be downloaded.
+            8. Renames the downloaded file to include the report name and month.
+            9. Removes the first three lines from the report file.
+            10. Closes any additional windows opened during the process.
 
         Dependencies:
             - Requires the `experity` object for interacting with the Experity application.
@@ -715,8 +720,7 @@ class ExtractReports:
             - Relies on `run_logic_for_each_month` to handle the iteration over the month range.
             - Assumes `close_other_windows` is available to manage browser windows.
 
-        Raises:
-            Any exceptions raised during navigation, file operations, or report generation will propagate.
+        :raises: Any exceptions raised during navigation, file operations, or report generation will propagate.
 
         Note:
             Ensure that `self.download_directory` and `self.report_export_type` are properly configured
@@ -747,10 +751,12 @@ class ExtractReports:
         """
         Generates and downloads a report for the specified date range.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            pay_10_from_date (str): The start date for the report in the format 'YYYY-MM-DD'.
-            pay_10_to_date (str): The end date for the report in the format 'YYYY-MM-DD'.
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param pay_10_from_date: The start date for the report in the format 'YYYY-MM-DD'.
+        :type pay_10_from_date: str
+        :param pay_10_to_date: The end date for the report in the format 'YYYY-MM-DD'.
+        :type pay_10_to_date: str
 
         Steps:
             1. Navigates to the Reports section of the Experity application.
@@ -760,8 +766,7 @@ class ExtractReports:
             5. Waits for the report to be downloaded to the specified directory.
             6. Closes any additional browser windows opened during the process.
 
-        Raises:
-            Exception: If the report download fails or any step encounters an error.
+        :raises Exception: If the report download fails or any step encounters an error.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
@@ -775,20 +780,23 @@ class ExtractReports:
         """
         Generates and downloads monthly reports for a specified range of months.
 
-        Args:
-            report_name (str): The name of the report to be generated.
-            rev_19_from_month (str): The starting month for the report generation (e.g., "January").
-            rev_19_to_month (str): The ending month for the report generation (e.g., "December").
+        :param report_name: The name of the report to be generated.
+        :type report_name: str
+        :param rev_19_from_month: The starting month for the report generation (e.g., "January").
+        :type rev_19_from_month: str
+        :param rev_19_to_month: The ending month for the report generation (e.g., "December").
+        :type rev_19_to_month: str
+        :returns: None
 
         Steps:
             1. Navigates to the "Reports" section of the Experity application.
             2. Searches for and selects the specified report.
             3. Iterates through each month in the specified range:
-                - Selects the month.
-                - Runs the report.
-                - Downloads the report.
-                - Renames the downloaded file to include the report name and month.
-                - Closes any additional browser windows opened during the process.
+            4. Selects the month.
+            5. Runs the report.
+            6. Downloads the report.
+            7. Renames the downloaded file to include the report name and month.
+            8. Closes any additional browser windows opened during the process.
 
         Dependencies:
             - `self.experity.navigate_to`: Navigates to a specific URL and section.
@@ -801,11 +809,7 @@ class ExtractReports:
             - `close_other_windows`: Closes additional browser windows.
             - `run_logic_for_each_month`: Executes logic for each month in the specified range.
 
-        Raises:
-            Any exceptions raised by the dependent methods will propagate up.
-
-        Returns:
-            None
+        :raises: Any exceptions raised by the dependent methods will propagate up.
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)

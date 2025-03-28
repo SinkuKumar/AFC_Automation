@@ -2,17 +2,15 @@
 Ultramsg Media
 -------------------
 
-This module provides functionality to interact with media files
-    with the help of Ultramsg WhatsApp API.
+This module provides functionality to interact with media files with the help of Ultramsg WhatsApp API.
 
-This module can be used as a standalone script, 
-if that the `UMSG_INSTANCE_ID` and `UMSG_SECRET_KEY` environment variables are set.
+This module can be used as a standalone script, if the `UMSG_INSTANCE_ID` and `UMSG_SECRET_KEY` environment variables are set.
 
 :module: media.py
 :platform: Unix, Windows
 
 :date: March 3, 2025
-:author: Niladri Mallik `niladrimallik.p@hq.graphxsys.com <mailto:niladrimallik.p@hq.graphxsys.com>`
+:author: Niladri Mallik <niladrimallik.p@hq.graphxsys.com>
 
 # TODO: Implement logging
 # TODO: Add error handling
@@ -42,7 +40,6 @@ class UltraMsgMedia:
 
         :param file: from URL or from your local device.
         :type file: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -57,7 +54,6 @@ class UltraMsgMedia:
 
         :param url: the URL of the media file.
         :type url: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -73,7 +69,6 @@ class UltraMsgMedia:
         :param date: month and year
             Example :1-2023 or 01-2023
         :type date: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''

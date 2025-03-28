@@ -8,7 +8,7 @@ from utils.pyodbc_sql import PyODBCSQL
 from utils.experity_base import ExperityBase, close_other_windows
 from utils.selenium_driver import SeleniumDriver
 from utils.extract_transform import pay_10_report_data_transformation
-from utils.create_table_queries import pay_10_create_query
+from utils.create_table_queries import pay_10_staging_table
 from datetime import datetime
 
 load_dotenv()
@@ -67,7 +67,7 @@ def data_workflow():
         print(f'Data transformation and Records insertion process started for client : {client_id}')
         input_csv_file = os.path.join(DOWNLOAD_DIR, download_csv_file_rename)
         output_csv_file = os.path.join(DOWNLOAD_DIR, transformed_csv_file_name)
-        db.check_and_create_table(TABLE_NAME, pay_10_create_query(TABLE_NAME))
+        db.check_and_create_table(TABLE_NAME, pay_10_staging_table(TABLE_NAME))
         table_columns = db.get_column_names(TABLE_NAME)
         pay_10_report_data_transformation(input_csv_file, output_csv_file, table_columns, client_id)
         db.truncate_table(TABLE_NAME)

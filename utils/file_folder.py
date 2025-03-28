@@ -378,34 +378,40 @@ def move_items(sources: str | list[str], destination: str, files_only: bool = Fa
         logging.error(f"Unexpected error: {e}")
         raise
 
-def delete_directories(directories: str | list[str]) -> None:
-    """Delete one or multiple directories safely without confirmation.
+def delete_paths(paths: str | list[str]) -> None:
+    """Delete one or multiple files or directories safely without confirmation.
 
-    :param directories: A single directory path or a list of directory paths to delete.
+    :param paths: A single file/directory path or a list of file/directory paths to delete.
     :type directories: str | list[str]
     :returns: None
 
-    :raises ValueError: If `directories` is not a string or list.
-    :raises PermissionError: If the directory cannot be deleted due to permissions.
+    :raises ValueError: If `paths` is not a string or list.
+    :raises PermissionError: If the file/directory cannot be deleted due to permissions.
     :raises OSError: If an unexpected OS error occurs.
     """
-    if isinstance(directories, str):
-        directories = [directories]
-    elif not isinstance(directories, list):
-        raise ValueError("Expected a string or list of strings for directories.")
+    if isinstance(paths, str):
+        paths = [paths]
+    elif not isinstance(paths, list):
+        raise ValueError("Expected a string or list of strings for paths.")
 
-    for directory in directories:
+    for path in paths:
         try:
-            if not os.path.exists(directory):
-                logging.warning(f"Directory '{directory}' does not exist.")
+            if not os.path.exists(path):
+                logging.warning(f"Path '{path}' does not exist.")
                 continue
 
-            shutil.rmtree(directory)
-            logging.info(f"Successfully deleted directory: {directory}")
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+                logging.info(f"Successfully deleted directory: {path}")
+            elif os.path.isfile(path):
+                os.remove(path)
+                logging.info(f"Successfully deleted file: {path}")
+            else:
+                logging.warning(f"Unknown file type: {path}")
 
         except PermissionError:
-            logging.error(f"Permission denied: Cannot delete '{directory}'.")
+            logging.error(f"Permission denied: Cannot delete '{path}'.")
             raise
         except OSError as e:
-            logging.error(f"OS error occurred while deleting '{directory}': {e}")
-            raise
+            logging.error(f"OS error occurred while deleting '{path}': {e}")
+            raise 

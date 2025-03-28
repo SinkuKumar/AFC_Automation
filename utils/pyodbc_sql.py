@@ -65,7 +65,6 @@ class PyODBCSQL:
         :type username: str
         :param password: The password for the SQL server.
         :type password: str
-
         :returns: None
         :rtype: None
         """
@@ -82,7 +81,6 @@ class PyODBCSQL:
 
         :param query: The SQL query to execute.
         :type query: str
-
         :returns: The result of the query.
         :rtype: list[tuple[str, str]] | None
         """
@@ -112,7 +110,6 @@ class PyODBCSQL:
 
         :param table_name: The name of the table to get the column names from.
         :type table_name: str
-
         :returns: The column names of the specified table.
         :rtype: list[tuple[str, str]]
         """
@@ -202,7 +199,6 @@ class PyODBCSQL:
         :type table_name: str
         :param create_table_query: The SQL query to create the table if it does not exist.
         :type create_table_query: str
-
         :returns: None
         """
         try:

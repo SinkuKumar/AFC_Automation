@@ -19,7 +19,6 @@ def clean_currency_column(df: pl.DataFrame, column_names: str | list[str], decim
     :type column_names: str | list[str]
     :param decimals: The number of decimal places to round the cleaned values. Defaults to 2.
     :type decimals: int, optional
-    
     :returns: A new DataFrame with cleaned currency columns.
     :rtype: pl.DataFrame
     """
@@ -222,7 +221,6 @@ def rev_19_report_data_transformation(input_csv_data_file: str, output_csv_data_
     :type output_csv_data_path: str
     :param client_id: Client ID to be added as `client_id` in the DataFrame.
     :type client_id: int
-
     :returns: None
     """
     try:

@@ -25,7 +25,6 @@ class TransformCSV:
         :type column_names: str | list[str]
         :param decimals: The number of decimal places to round the cleaned values. Defaults to 2.
         :type decimals: int, optional
-
         :returns: A new DataFrame with cleaned currency columns.
         :rtype: pl.DataFrame
         """
@@ -59,7 +58,6 @@ class TransformCSV:
 
         :param df: Input DataFrame.
         :type df: pl.DataFrame
-
         :returns: Updated DataFrame with the new columns.
         :rtype: pl.DataFrame
 
@@ -101,7 +99,6 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :param df: The Polars DataFrame to align.
         :type df: pl.DataFrame
-
         :returns: A modified DataFrame that matches the database table schema.
         :rtype: pl.DataFrame
         """

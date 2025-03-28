@@ -40,7 +40,6 @@ def retry_on_exception(retries: int = 3, delay: int = 2) -> callable:
     :type retries: int
     :param delay: The wait time (in seconds) between retries.
     :type delay: int
-
     :returns: A wrapped function with retry logic applied.
     :rtype: Callable
 
@@ -122,7 +121,6 @@ class ExperityBase:
 
         This method fetches the current URL from the WebDriver, splits it by slashes (`/`),
         and returns the 4th part (index 3), which is the portal url/segment.
-
         :returns: portal_url: The portal URL segment extracted from the current browser URL.
         :rtype: str
 
@@ -511,7 +509,6 @@ class ExperityBase:
 
         :param date_type: Date type to select.
         :type date_type: str
-
         :returns: None
 
         :raises: SeleniumException: If any issue occurs during the arrival status names selection process.
@@ -591,7 +588,6 @@ class ExperityBase:
         :type subcategory_name: str
         :param report_identifier: Either the report name OR report code.
         :type report_identifier: str
-
         :returns: None
 
         :raises SeleniumException: If any issue occurs during the pm report selection process.

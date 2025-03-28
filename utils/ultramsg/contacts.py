@@ -40,7 +40,6 @@ class UltraMsgContacts:
 
         :param chatId: chatId for contact or group.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -55,7 +54,6 @@ class UltraMsgContacts:
 
         :param chatId: chatId for contact or group.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -67,7 +65,6 @@ class UltraMsgContacts:
         '''
         Get the contacts list.
         Uses GET request.
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -82,7 +79,6 @@ class UltraMsgContacts:
 
         :param clear:
         :type clear: bool
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -100,7 +96,6 @@ class UltraMsgContacts:
 
         :param chatId: chatId for contact or group.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -115,7 +110,6 @@ class UltraMsgContacts:
         '''
         Get all blocked contacts.
         Uses GET request.
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -151,7 +145,6 @@ class UltraMsgContacts:
             Contact information is normally cached for 3 days. 
             Setting the nocache parameter to `True` bypasses the cache ensuring check is performed.
         :type nocache: bool
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -170,7 +163,6 @@ class UltraMsgContacts:
 
         :param chatId: chatId for contact.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''

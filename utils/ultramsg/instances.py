@@ -133,7 +133,6 @@ class UltraMsgInstances:
 
         :param sendDelay: Delay in seconds in sending message, defaults to 1.
         :type sendDelay: int
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''

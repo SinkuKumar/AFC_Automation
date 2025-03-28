@@ -11,7 +11,6 @@ def create_directories(paths: list[str]) -> None:
 
     :param paths: A list of directory paths to be created.
     :type paths: list[str]
-
     :returns: None
 
     :raises PermissionError: If the script lacks permissions to create a directory.
@@ -41,7 +40,6 @@ def clear_directory_files(directory_path: str) -> None:
 
     :param directory_path: The absolute or relative path of the directory whose files need to be cleared.
     :type directory_path: str
-
     :returns: None
 
     :raises ValueError: If the provided directory path does not exist or is not a directory.
@@ -118,7 +116,6 @@ def wait_for_download(report_name: str, download_directory: str, timeout: int = 
     :type timeout: int, optional
     :param sleep_interval: Interval (in seconds) between directory checks. Default is 1 second.
     :type sleep_interval: str, optional
-
     :returns: None
 
     :raises FileNotFoundError: If the specified download directory does not exist.

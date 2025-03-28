@@ -37,7 +37,6 @@ class UltraMsgGroups:
         '''
         Get all groups info and participants.
         Uses GET request.
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -52,7 +51,6 @@ class UltraMsgGroups:
 
         :param clear:
         :type clear: bool
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -69,7 +67,6 @@ class UltraMsgGroups:
 
         :param groupId: ID of the group
         :type groupId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''

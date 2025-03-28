@@ -37,7 +37,6 @@ class UltraMsgChats:
         '''
         Get list of chats.
         Uses GET request.
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -52,7 +51,6 @@ class UltraMsgChats:
 
         :param clear:
         :type clear: bool
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -70,7 +68,6 @@ class UltraMsgChats:
 
         :param limit: number of messages per request, max value: 1000
         :type limit: int
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -88,7 +85,6 @@ class UltraMsgChats:
 
         :param chatId: chatId for contact or group.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -103,7 +99,6 @@ class UltraMsgChats:
 
         :param chatId: chatId for contact or group.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -118,7 +113,6 @@ class UltraMsgChats:
 
         :param chatId: chatId for contact or group.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -133,7 +127,6 @@ class UltraMsgChats:
 
         :param chatId: chatId for contact or group.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''
@@ -148,7 +141,6 @@ class UltraMsgChats:
 
         :param chatId: chatId for contact or group.
         :type chatId: str
-
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
         '''

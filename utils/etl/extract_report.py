@@ -430,7 +430,7 @@ class ExtractReports:
         :param cht_02_from_date: The start date for the report in the required format.
         :type cht_02_from_date: str
         :param cht_02_to_date: The end date for the report in the required format.
-        :type cht_02_to_date
+        :type cht_02_to_date: str
 
         Steps:
             1. Navigates to the "Reports" section of the Experity application.
@@ -720,7 +720,7 @@ class ExtractReports:
             - Relies on `run_logic_for_each_month` to handle the iteration over the month range.
             - Assumes `close_other_windows` is available to manage browser windows.
 
-        :raises Any exceptions raised during navigation, file operations, or report generation will propagate.
+        :raises: Any exceptions raised during navigation, file operations, or report generation will propagate.
 
         Note:
             Ensure that `self.download_directory` and `self.report_export_type` are properly configured
@@ -752,11 +752,11 @@ class ExtractReports:
         Generates and downloads a report for the specified date range.
 
         :param report_name: The name of the report to be generated.
-    :type report_name: str
-    :param pay_10_from_date: The start date for the report in the format 'YYYY-MM-DD'.
-    :type pay_10_from_date: str
-    :param pay_10_to_date: The end date for the report in the format 'YYYY-MM-DD'.
-    :type pay_10_to_date: str
+        :type report_name: str
+        :param pay_10_from_date: The start date for the report in the format 'YYYY-MM-DD'.
+        :type pay_10_from_date: str
+        :param pay_10_to_date: The end date for the report in the format 'YYYY-MM-DD'.
+        :type pay_10_to_date: str
 
         Steps:
             1. Navigates to the Reports section of the Experity application.

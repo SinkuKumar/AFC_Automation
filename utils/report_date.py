@@ -22,7 +22,7 @@ def get_past_date(days: int = 0, month: int = 0, year: int = 0) -> str:
     :type month: int, optional
     :param year: Number of years ago (default is 0)
     :type year: int, optional
-    :return: The calculated past date in MM/DD/YYYY format
+    :returns: The calculated past date in MM/DD/YYYY format
     :rtype: str
     """
     today = datetime.today()

@@ -29,7 +29,7 @@ def setup_logger(
     :type log_level_console: int
     :param log_level_file: Logging level for file output.
     :type log_level_file: int
-    :return: Configured logger instance.
+    :returns: Configured logger instance.
     :rtype: logging.Logger
     """
     logger = logging.getLogger(__name__)

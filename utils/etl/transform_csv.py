@@ -15,18 +15,19 @@ class TransformCSV:
 
         This function performs the following transformations:
         - Strips leading and trailing whitespace.
-        - Removes dollar signs (`$`) and commas (`,`).
-        - Converts values enclosed in parentheses (e.g., `(123.45)`) to negative numbers (`-123.45`).
-        - Casts the column to `Float64` and rounds to the specified number of decimal places.
+        - Removes dollar signs (``$``) and commas (`,``).
+        - Converts values enclosed in parentheses (e.g., ``(123.45)``) to negative numbers (``-123.45``).
+        - Casts the column to ``Float64`` and rounds to the specified number of decimal places.
 
-        Args:
-            df (pl.DataFrame): The Polars DataFrame containing the currency columns.
-            column_names (str | list[str]): The name(s) of the column(s) to clean. 
-                Can be a single column name (string) or a list of column names.
-            decimals (int, optional): The number of decimal places to round the cleaned values. Defaults to 2.
+        :param df: The Polars DataFrame containing the currency columns.
+        :type df: pl.DataFrame
+        :param column_names: The name(s) of the column(s) to clean. Can be a single column name (string) or a list of column names.
+        :type column_names: str | list[str]
+        :param decimals: The number of decimal places to round the cleaned values. Defaults to 2.
+        :type decimals: int, optional
 
-        Returns:
-            pl.DataFrame: A new DataFrame with cleaned currency columns.
+        :returns: A new DataFrame with cleaned currency columns.
+        :rtype: pl.DataFrame
         """
         logging.info("Starting currency column cleaning...")
 
@@ -243,6 +244,7 @@ class TransformCSV:
         df = self.clean_currency_column(df, ["textbox20", "Adj_Amt"])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
+        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def adj_11(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -268,6 +270,7 @@ class TransformCSV:
         df = self.clean_currency_column(df, "Adj_Amt")
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
+        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def fin_18(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -317,6 +320,7 @@ class TransformCSV:
         df = self.clean_currency_column(df, ["Payment"])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
+        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def xry_03(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -407,7 +411,7 @@ class TransformCSV:
         df = self.clean_currency_column(df, ["textbox13", "Payment"])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
-
+        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def pay_10(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:

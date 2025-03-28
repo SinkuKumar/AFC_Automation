@@ -41,11 +41,11 @@ class SeleniumDriver:
     :param browser: The browser to use ('chrome', 'firefox', or 'edge').
     :type browser: str
     :param download_directory: The directory to download files to.
-    :type download_directory: Optional[str]
+    :type download_directory: str, optional
     :param window_width: The width of the browser window.
-    :type window_width: Optional[int]
+    :type window_width: int, optional
     :param window_height: The height of the browser window.
-    :type window_height: Optional[int]
+    :type window_height: int, optional
     :param headless: Whether to run the browser in headless mode.
     :type headless: bool
     """
@@ -65,7 +65,7 @@ class SeleniumDriver:
         """
         Set up and return the WebDriver instance based on the selected browser.
 
-        :return: WebDriver instance.
+        :returns: WebDriver instance.
         :rtype: webdriver.Remote
         """
         try:
@@ -82,7 +82,7 @@ class SeleniumDriver:
         """
         Initialize and return a Chrome WebDriver instance with specified download settings.
 
-        :return: Chrome WebDriver instance.
+        :returns: Chrome WebDriver instance.
         :rtype: webdriver.Chrome
         """
         try:
@@ -123,7 +123,7 @@ class SeleniumDriver:
         """
         Initialize and return a Firefox WebDriver instance with specified download settings.
 
-        :return: Firefox WebDriver instance.
+        :returns: Firefox WebDriver instance.
         :rtype: webdriver.Firefox
         """
         try:
@@ -155,7 +155,7 @@ class SeleniumDriver:
         """
         Initialize and return an Edge WebDriver instance with specified download settings.
 
-        :return: Edge WebDriver instance.
+        :returns: Edge WebDriver instance.
         :rtype: webdriver.Edge
         """
         try:

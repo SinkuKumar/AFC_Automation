@@ -23,14 +23,12 @@ def page_loads(driver: WebDriver) -> bool:
     """
     Checks if the web page has fully loaded by verifying document.readyState.
 
-    Args:
-        driver (WebDriver): Selenium WebDriver instance controlling the browser.
+    :param driver: Selenium WebDriver instance controlling the browser.
+    :type driver: WebDriver
+    :returns: True if the page is fully loaded, False otherwise.
+    :rtype: bool
 
-    Returns:
-        bool: True if the page is fully loaded, False otherwise.
-
-    Raises:
-        None
+    :raises None:
     """
     return driver.execute_script("return document.readyState") == "complete"
 
@@ -38,15 +36,15 @@ def retry_on_exception(retries: int = 3, delay: int = 2) -> callable:
     """
     Decorator to automatically retry a class method if it raises an exception.
 
-    Args:
-        retries (int): The number of retry attempts before failing completely.
-        delay (int): The wait time (in seconds) between retries.
+    :param retries: The number of retry attempts before failing completely.
+    :type retries: int
+    :param delay: The wait time (in seconds) between retries.
+    :type delay: int
 
-    Returns:
-        Callable: A wrapped function with retry logic applied.
+    :returns: A wrapped function with retry logic applied.
+    :rtype: Callable
 
-    Raises:
-        SeleniumException: If the function still fails after all retries.
+    :raises SeleniumException: If the function still fails after all retries.
     """
     def decorator(func):
         @wraps(func)
@@ -70,14 +68,12 @@ def switch_to_latest_window(driver: WebDriver) -> None:
     This function waits until at least two windows are open and then switches the driver's focus
     to the latest window.
 
-    Args:
-        driver (WebDriver): The Selenium WebDriver instance controlling the browser.
+    :param driver: The Selenium WebDriver instance controlling the browser.
+    :type driver: WebDriver
 
-    Returns:
-        None
+    :return: None
 
-    Raises:
-        SeleniumException: If any issue occurs while switching to latest window.
+    :raises SeleniumException: If any issue occurs while switching to latest window.
     """
     logging.info("Attempting to switch to the latest browser window.")
 
@@ -102,12 +98,11 @@ class ExperityBase:
         """
         Opens the specified Experity portal URL.
 
-        Args:
-            url (str): URL of the Experity portal.
+        :param url: URL of the Experity portal.
+        :type url: str
 
-        Raises:
-            ValueError: If the URL does not start with 'http://' or 'https://'.
-            SeleniumException: If any other issue occurs during portal opening.
+        :raises ValueError: If the URL does not start with 'http://' or 'https://'.
+        :raises SeleniumException: If any other issue occurs during portal opening.
         """
         if not url.startswith(('http://', 'https://')):
             raise ValueError("Invalid URL format. Please include 'http://' or 'https://'.")
@@ -128,12 +123,11 @@ class ExperityBase:
         This method fetches the current URL from the WebDriver, splits it by slashes (`/`),
         and returns the 4th part (index 3), which is the portal url/segment.
 
-        Returns:
-            portal_url (str): The portal URL segment extracted from the current browser URL.
+        :returns: portal_url: The portal URL segment extracted from the current browser URL.
+        :rtype: str
 
-        Raises:
-            ValueError: If the URL structure does not match the expected format.
-            SeleniumException: If any other issue occurs while extracting portal URL segment.
+        :raises ValueError: If the URL structure does not match the expected format.
+        :raises SeleniumException: If any other issue occurs while extracting portal URL segment.
         """
         try:
             current_url = self.driver.current_url
@@ -154,15 +148,13 @@ class ExperityBase:
         """
         Automates the login process for Experity portal, checks for invalid username or password..
 
-        Args:
-            username (str): username to log in.
-            password (str): password associated with the username.
+        :param username: username to log in.
+        :type username: str
+        :param password: password associated with the username.
+        :type password: str
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during login process.
+        :raises SeleniumException: If any issue occurs during login process.
         """
         try:
             logging.info("Entering username.")
@@ -221,16 +213,15 @@ class ExperityBase:
         """
         Navigates to a specific sub-navigation item on the Experity website.
 
-        Args:
-            base_url (str): The base URL of the website.
-            portal_url (str): The specific portal or subdirectory in the URL.
-            sub_nav_item_name (str): The name of the sub-navigation item to navigate to.
+        :param base_url: The base URL of the website.
+        :type base_url: str
+        :param portal_url: The specific portal or subdirectory in the URL.
+        :type portal_url: str
+        :param sub_nav_item_name: The name of the sub-navigation item to navigate to.
+        :type sub_nav_item_name: str
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during navigating to sub nav item.
+        :raises SeleniumException: If any issue occurs during navigating to sub nav item.
         """
         menu_mapping = {
             "Log Book": "LogBook",
@@ -300,14 +291,11 @@ class ExperityBase:
         """
         Searches for a report by its name and selects it.
 
-        Args:
-            report_name(str): The name of the report to search and select.
+        :param report_name: The name of the report to search and select.
+        :type report_name: str
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during searching and selection of the report.
+        :raises SeleniumException: If any issue occurs during searching and selection of the report.
         """
         try:  
             self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME, "reportMainWindow")))
@@ -348,19 +336,21 @@ class ExperityBase:
 
     def select_report_date_range(self, date1:str, date2:str) -> None:
         """
-        Sets the 'From Service Date' and 'To Service Date'.
+        Sets the 'From Service Date' and 'To Service Date' fields in a web form.
 
-        Args:
-            date1(str): One of the two dates entered by the user (Format: MM/DD/YYYY).
-            date2(str): The other date entered by the user (Format: MM/DD/YYYY).
-                        Either date may come first; the code will determine the start and end dates.
+        This method determines the correct order of the provided dates and inputs them
+        into the respective fields on the web page. It waits for the fields to be clickable
+        before interacting with them.
 
-        Returns:
-            None
+        :param date1: The first date entered by the user (Format: MM/DD/YYYY).
+        :type date1: str
+        :param date2: The second date entered by the user (Format: MM/DD/YYYY).
+                      Either date may come first; the method will determine the correct order.
+        :type date2: str
 
-        Raises:
-            SeleniumException: If any issue occurs during searching and selection of the report.
+        :raises SeleniumException: If an error occurs during the interaction with the web elements.
         """
+
         date1_obj = datetime.strptime(date1, "%m/%d/%Y")
         date2_obj = datetime.strptime(date2, "%m/%d/%Y")
 
@@ -388,17 +378,17 @@ class ExperityBase:
         Date Format:
             Month Year (e.g., 'March 2010', 'December 2022')
 
-        Args:
-            month (str, optional): Single month to select.
-            from_month (str, optional): Start month for range selection.
-            to_month (str, optional): End month for range selection.
+        :param month: Single month to select.
+        :type month: str, optional
+        :param from_month: Start month for range selection.
+        :type from_month: str, optional
+        :param to_month: End month for range selection.
+        :type to_month: str, optional
+        :returns: None
+        :rtype: None
 
-        Returns:
-            None
-
-        Raises:
-            ValueError: If arguments provided are invalid (e.g., only from_month or to_month is given).
-            SeleniumException: If any issue occurs during searching and selection of the report.
+        :raises ValueError: If arguments provided are invalid (e.g., only from_month or to_month is given).
+        :raises SeleniumException: If any issue occurs during searching and selection of the report.
         """
         try:
             self.driver.switch_to.default_content()
@@ -434,11 +424,9 @@ class ExperityBase:
         """
         Selects the specified logbook statuses.
 
-        Args:
-            status_name(list): A list of logbook status names to select.
-
-        Returns:
-            None
+        :param status_name: A list of logbook status names to select.
+        :type status_name: list
+        :returns: None
 
         Raises:
             SeleniumException: If any issue occurs during the logbook status names selection process.
@@ -465,14 +453,11 @@ class ExperityBase:
         """
         Selects the specified financial classes.
 
-        Args:
-            class_name(list): A list of financial class names to select.
+        :param class_name: A list of financial class names to select.
+        :type class_name: list
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during the financial class names selection process.
+        :raises SeleniumException: If any issue occurs during the financial class names selection process.
         """
         class_mapping = {
             "All": 'freePayerClasscheck1',
@@ -496,14 +481,11 @@ class ExperityBase:
         """
         Selects the specified arrival statuses.
 
-        Args:
-            status_name(list): A list of arrival status names to select.
+        :param status_name: A list of arrival status names to select.
+        :type status_name: list
+        :returns: None
 
-        Returns:
-            None
-
-        Raises:
-            SeleniumException: If any issue occurs during the arrival status names selection process.
+        :raises: SeleniumException: If any issue occurs during the arrival status names selection process.
         """
         status_mapping = {
             "All": 'freeArrivalStatuscheck1',
@@ -522,19 +504,17 @@ class ExperityBase:
                     logging.info(f"Checkbox '{name}' selected.")
         except Exception as e:
             raise SeleniumException(f"Code: {em.REPORT_FILTER_SELECTION_ERROR} | Message : Error during arrival status selection.")
-        
+
     def select_date_type(self, date_type: str) -> None:
         """
         Selects the specified Date type.
 
-        Args:
-            date_type(str): Date type to select.
+        :param date_type: Date type to select.
+        :type date_type: str
 
-        Returns:
-            None
+        :returns: None
 
-        Raises:
-            SeleniumException: If any issue occurs during the arrival status names selection process.
+        :raises: SeleniumException: If any issue occurs during the arrival status names selection process.
         """
         try:
             date_type_radio_button = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"div#rightcol input[type='radio'][value='{date_type}']")))
@@ -555,15 +535,13 @@ class ExperityBase:
             - Use this method only when no dedicated method exists, or the filter is generic and does not have structured helper methods yet.
             - This method directly interacts with the UI elements via their IDs, so ensure the identifiers are correct.
         
-        Args:
-            uncheck_button_identifier_id (str): The HTML element ID for the 'Uncheck All' button.
-            check_checkbox_identifier_id (str): The HTML element ID for the 'All' checkbox.
-        
-        Returns:
-            None
+        :params uncheck_button_identifier_id: The HTML element ID for the 'Uncheck All' button.
+        :type uncheck_button_identifier_id: str
+        :param check_checkbox_identifier_id: The HTML element ID for the 'All' checkbox.
+        :type check_checkbox_identifier_id: str
+        :returns: None
 
-        Raises:
-            SeleniumException: If any issue occurs while clicking the 'Uncheck All' button and then selecting the 'All' checkbox.
+        :raises SeleniumException: If any issue occurs while clicking the 'Uncheck All' button and then selecting the 'All' checkbox.
         """
 
         logging.info(f"Starting 'Uncheck All' and 'Check All' process using elements.")
@@ -978,28 +956,33 @@ def close_other_windows(driver: WebDriver) -> None:
     
 def run_logic_for_each_month(from_month: str, to_month: str, logic_function, *args, **kwargs) -> None:
     """
-    Executes the provided logic function for each month between 'from_month' and 'to_month', inclusive.
+    Iterates through each month between 'from_month' and 'to_month' (inclusive) and executes the provided logic function.
 
-    Args:
-        from_month (str): Starting month in the format "Month YYYY", e.g., "March 2023".
-        to_month (str): Ending month in the format "Month YYYY", e.g., "February 2024".
-        logic_function (Callable): Function to call for each month, accepting:
-            - A string with the month and year (e.g., "March 2023")
-            - Any additional positional (*args) and keyword arguments (**kwargs)
-        *args: Additional positional arguments passed to 'logic_function'.
-        **kwargs: Additional keyword arguments passed to 'logic_function'.
+    :param from_month: The starting month in the format "Month YYYY" (e.g., "March 2023").
+    :type from_month: str
+    :param to_month: The ending month in the format "Month YYYY" (e.g., "February 2024").
+    :type to_month: str
+    :param logic_function: The function to execute for each month. It should accept:
+                           - A string representing the month and year (e.g., "March 2023").
+                           - Any additional positional ``*args`` and keyword arguments ``**kwargs``.
+    :type logic_function: Callable
+    :param args: Additional positional arguments to pass to ``logic_function``.
+    :type args: tuple
+    :param kwargs: Additional keyword arguments to pass to ``logic_function``.
+    :type kwargs: dict
 
-    Returns:
-        None
+    :raises ValueError: If the date formats are invalid or if ``from_month`` is later than ``to_month``.
 
-    Raises:
-        ValueError: If date formats are incorrect, or 'from_month' is after 'to_month'.
+    :returns: None
+    :rtype: None
 
-    Example:
-        def process_month(month_year, flag=None):
-            print(f"Processing {month_year}, flag={flag}")
+    :example:
+        .. code-block:: python
 
-        run_logic_for_each_month("March 2023", "May 2023", process_month, flag="example")
+            def process_month(month_year, flag=None):
+                print(f"Processing {month_year}, flag={flag}")
+
+            run_logic_for_each_month("March 2023", "May 2023", process_month, flag="example")
     """
     try:
         start_date = datetime.strptime(from_month, "%B %Y")

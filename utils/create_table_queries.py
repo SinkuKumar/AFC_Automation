@@ -20,7 +20,7 @@ def cnt_27_staging_table(table_name="CNT_27_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -56,7 +56,7 @@ def cnt_19_staging_table(table_name="CNT_19_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -81,7 +81,7 @@ def adj_11_staging_table(table_name="ADJ_11_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -108,7 +108,7 @@ def fin_18_staging_table(table_name="FIN_18_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -138,7 +138,7 @@ def pay_41_staging_table(table_name="PAY_41_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -166,7 +166,7 @@ def pay_10_staging_table(table_name="PAY_10_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -192,7 +192,7 @@ def xry_03_staging_table(table_name="XRY_03_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -219,7 +219,7 @@ def ccr_02_staging_table(table_name="CCR_02_Staging_Base"):
 
     :param table_name: The name of the table to be created (default: CCR_02_Staging_Base).
     :type table_name: str, optional
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -247,7 +247,7 @@ def ccr_03_staging_table(table_name="CCR_03_Staging_Base"):
 
     :param table_name: The name of the table to be created (default: CCR_03_Staging_Base).
     :type table_name: str, optional
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -272,7 +272,7 @@ def per_2_staging_table(table_name="PER_2_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -303,7 +303,7 @@ def med_01_staging_table(table_name="MED_01_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -333,7 +333,7 @@ def pat_20_staging_table(table_name="PAT_20_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -363,7 +363,7 @@ def lab_01_staging_table(table_name="LAB_01_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -391,7 +391,7 @@ def cht_02_staging_table(table_name="CHT_02_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -459,7 +459,7 @@ def pat_2_staging_table(table_name="PAT_2_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     return f"""
@@ -508,7 +508,7 @@ def adj_4_staging_table(table_name="ADJ_4_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     # TODO: textbox20: Rename the column
@@ -539,7 +539,7 @@ def pay_4_staging_table(table_name="PAY_4_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     # TODO: Rename textbox13 column
@@ -564,7 +564,7 @@ def rev_16_staging_table(table_name="REV_16_Staging_Base"):
 
     :param table_name: The name of the table to be created.
     :type table_name: str
-    :return: SQL table string.
+    :returns: SQL table string.
     :rtype: str
     """
     # TODO: Rename textbox33 and textbox34 columns

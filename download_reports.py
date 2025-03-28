@@ -10,6 +10,7 @@ from utils.task_queue import TaskQueue
 from utils.pyodbc_sql import PyODBCSQL
 from utils.logging_base import setup_logger
 from utils.experity_base import ExperityBase
+from utils.experity_base import ExperityBase
 from utils.selenium_driver import SeleniumDriver
 
 from utils.etl.transform_csv import TransformCSV
@@ -260,9 +261,29 @@ class ReportETL:
     #     self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, rev_19_cfg['processed_file']), rev_19_cfg['base_table'], rev_19_cfg['staging_table'])
     #     self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, rev_19_cfg['processed_file']), self.CLIENT_TODAY_DIR)
 
+
 def execute_report_functions(client_id, mode, function_list, function_args=None):
-    all_report_function_names = ["etl_cnt_27", "etl_cnt_19", "etl_adj_11", "etl_fin_18", "etl_pay_41", "etl_xry_03", "rtl_pay_10", "etl_ccr_02", "etl_ccr_03", "etl_per_02", "etl_med_01", "etl_pat_20", "etl_lab_01", "etl_cht_02", "etl_pat_02", "etl_rev_16", "etl_pay_04", "etl_adj_04"]
-    
+    all_report_function_names = [
+        "etl_cnt_27",
+        "etl_cnt_19",
+        "etl_adj_11",
+        "etl_fin_18",
+        "etl_pay_41",
+        "etl_xry_03",
+        "rtl_pay_10",
+        "etl_ccr_02",
+        "etl_ccr_03",
+        "etl_per_02",
+        "etl_med_01",
+        "etl_pat_20",
+        "etl_lab_01",
+        "etl_cht_02",
+        "etl_pat_02",
+        "etl_rev_16",
+        "etl_pay_04",
+        "etl_adj_04",
+    ]
+
     function_list = [name.lower() for name in function_list]
 
     if function_args is None:
@@ -272,7 +293,7 @@ def execute_report_functions(client_id, mode, function_list, function_args=None)
 
     normalized_args = {key.lower(): value for key, value in function_args.items()}
 
-    etl_reports = ReportETL('BI_AFC_Experity', client_id)
+    etl_reports = ReportETL("BI_AFC_Experity", client_id)
     etl_reports.experity_login()
 
     def execute_func(short_name):

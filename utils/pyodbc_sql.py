@@ -51,7 +51,7 @@ class PyODBCSQL:
         :param password: The password for the SQL server.
         :type password: str
 
-        :return: None
+        :returns: None
         :rtype: None
         """
         load_dotenv()
@@ -68,7 +68,7 @@ class PyODBCSQL:
         :param query: The SQL query to execute.
         :type query: str
 
-        :return: The result of the query.
+        :returns: The result of the query.
         :rtype: list[tuple[str, str]] | None
         """
 
@@ -98,7 +98,7 @@ class PyODBCSQL:
         :param table_name: The name of the table to get the column names from.
         :type table_name: str
 
-        :return: The column names of the specified table.
+        :returns: The column names of the specified table.
         :rtype: list[tuple[str, str]]
         """
         column_names_query = f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table_name}';"

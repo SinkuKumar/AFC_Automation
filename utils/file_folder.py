@@ -7,19 +7,16 @@ from datetime import datetime
 def create_directories(paths: list[str]) -> None:
     """
     Create one or more directories if they do not already exist.
-
     This method takes a list of directory paths and attempts to create each directory.
 
-    Args:
-        paths (list[str]): A list of directory paths to be created.
+    :param paths: A list of directory paths to be created.
+    :type paths: list[str]
 
-    Returns:
-        None
+    :returns: None
 
-    Raises:
-        PermissionError: If the script lacks permissions to create a directory.
-        OSError: For general OS-related errors during file operations.
-        Exception: Catches any unforeseen exceptions that may occur.
+    :raises PermissionError: If the script lacks permissions to create a directory.
+    :raises OSError: For general OS-related errors during file operations.
+    :raises Exception: Catches any unforeseen exceptions that may occur.
     """
     for path in paths:
         try:
@@ -42,18 +39,16 @@ def clear_directory_files(directory_path: str) -> None:
     """
     Deletes all files in the specified directory without affecting subdirectories.
 
-    Args:
-        directory_path (str): The absolute or relative path of the directory whose files need to be cleared.
+    :param directory_path: The absolute or relative path of the directory whose files need to be cleared.
+    :type directory_path: str
 
-    Returns:
-        None
+    :returns: None
 
-    Raises:
-        ValueError: If the provided directory path does not exist or is not a directory.
-        PermissionError: If the script lacks permissions to read or modify the directory or files.
-        FileNotFoundError: If a file is not found during deletion (possibly already deleted).
-        OSError: For general OS-related errors during file operations.
-        Exception: Catches any unforeseen exceptions that may occur.
+    :raises ValueError: If the provided directory path does not exist or is not a directory.
+    :raises PermissionError: If the script lacks permissions to read or modify the directory or files.
+    :raises FileNotFoundError: If a file is not found during deletion (possibly already deleted).
+    :raises OSError: For general OS-related errors during file operations.
+    :raises Exception: Catches any unforeseen exceptions that may occur.
     """
     if not os.path.exists(directory_path):
         logging.error(f"Provided directory does not exist: {directory_path}")
@@ -98,6 +93,9 @@ def init_directory(directory_path: str) -> None:
     """
     Creates a directory if it does not already exist.
     Clear all the files in the directory if it already exists.
+
+    :param directory_path: The absolute or relative path of the directory which is to be initialized.
+    :type directory_path: str
     """
     if os.path.exists(directory_path):
         clear_directory_files(directory_path)
@@ -112,20 +110,21 @@ def wait_for_download(report_name: str, download_directory: str, timeout: int = 
     the given `report_name` and ensures it is fully downloaded (i.e., no temporary extensions 
     like `.part` or `.crdownload`).
 
-    Args:
-        report_name (str): The expected prefix of the downloaded file.
-        download_directory (str): The directory where the file is expected to be downloaded.
-        timeout (Optional[int]): Maximum time (in seconds) to wait before giving up. Default is 300 seconds.
-        sleep_interval (Optional[int]): Interval (in seconds) between directory checks. Default is 1 second.
+    :param report_name: The expected prefix of the downloaded file.
+    :type report_name: str
+    :param download_directory: The directory where the file is expected to be downloaded.
+    :type download_directory: str
+    :param timeout: Maximum time (in seconds) to wait before giving up. Default is 300 seconds.
+    :type timeout: int, optional
+    :param sleep_interval: Interval (in seconds) between directory checks. Default is 1 second.
+    :type sleep_interval: str, optional
 
-    Returns:
-        None
+    :returns: None
 
-    Raises:
-        FileNotFoundError: If the specified download directory does not exist.
-        TimeoutError: If the download does not complete within the specified timeout.
-        PermissionError: If the script lacks permissions to read the download directory.
-        Exception: Catches unforeseen exceptions and logs detailed error info.
+    :raises FileNotFoundError: If the specified download directory does not exist.
+    :raises TimeoutError: If the download does not complete within the specified timeout.
+    :raises PermissionError: If the script lacks permissions to read the download directory.
+    :raises Exception: Catches unforeseen exceptions and logs detailed error info.
     """
     start_time = time.time()
 
@@ -185,18 +184,17 @@ def rename_file_or_folder(old_name: str, new_name: str) -> None:
     """
     Renames a file or folder from `old_name` to `new_name`.
 
-    Parameters:
-        old_name (str): The current name (or path) of the file or folder.
-        new_name (str): The new name (or path) to rename the file or folder.
+    :param old_name: The current name (or path) of the file or folder.
+    :type old_name: str
+    :param new_name: The new name (or path) to rename the file or folder.
+    :type new_name: str
+    :returns: True if renaming was successful, False otherwise.
+    :rtype: bool
 
-    Returns:
-        bool: True if renaming was successful, False otherwise.
-
-    Raises:
-        FileNotFoundError: If the specified `old_name` does not exist.
-        FileExistsError: If a file or folder with `new_name` already exists.
-        PermissionError: If the operation is not permitted due to system restrictions.
-        OSError: For other OS-related errors.
+    :raises FileNotFoundError: If the specified `old_name` does not exist.
+    :raises FileExistsError: If a file or folder with `new_name` already exists.
+    :raises PermissionError: If the operation is not permitted due to system restrictions.
+    :raises OSError: For other OS-related errors.
     """
     try:
         if not os.path.exists(old_name):
@@ -219,14 +217,14 @@ def move_paths(sources: list[str], destination: str) -> None:
     If the destination is an existing directory, each source will be moved inside it. 
     If the destination path does not exist, it will be created.
 
-    Args:
-        sources (List[str]): A list of file or directory paths to move.
-        destination (str): The target directory where files/folders should be moved.
+    :param sources: A list of file or directory paths to move.
+    :type sources: List[str]
+    :param destination: The target directory where files/folders should be moved.
+    :type destination: str
 
-    Raises:
-        FileNotFoundError: If any source file or directory does not exist.
-        PermissionError: If the process lacks the necessary permissions.
-        Exception: If any other unexpected error occurs during the move operation.
+    :raises FileNotFoundError: If any source file or directory does not exist.
+    :raises PermissionError: If the process lacks the necessary permissions.
+    :raises Exception: If any other unexpected error occurs during the move operation.
     """
     try:
         if not isinstance(sources, list) or not sources:
@@ -261,14 +259,14 @@ def move_files_only(source_folder: str, destination_folder: str) -> None:
     """
     Moves all files (but not subfolders) from the source folder to the destination folder.
 
-    Args:
-        source_folder (str): The folder containing files to be moved.
-        destination_folder (str): The folder where the files should be moved.
+    :param source_folder: The folder containing files to be moved.
+    :type source_folder: str
+    :param destination_folder: The folder where the files should be moved.
+    :type destination_folder: str
 
-    Raises:
-        FileNotFoundError: If the source folder does not exist.
-        PermissionError: If the process lacks necessary permissions.
-        Exception: If any other unexpected error occurs.
+    :raises FileNotFoundError: If the source folder does not exist.
+    :raises PermissionError: If the process lacks necessary permissions.
+    :raises Exception: If any other unexpected error occurs.
     """
     try:
         if not os.path.exists(source_folder):
@@ -301,17 +299,15 @@ def move_file(src_path: str, dest_dir:str) -> None:
     """
     Move a file from the source path to the destination directory.
 
-    Args:
-        src_path (str): The path of the file to be moved.
-        dest_dir (str): The directory where the file should be moved.
+    :param src_path: The path of the file to be moved.
+    :type src_path: str
+    :param dest_dir: The directory where the file should be moved.
+    :type dest_dir: str
+    :returns: None
 
-    Raises:
-        FileNotFoundError: If the source file does not exist.
-        PermissionError: If the process lacks necessary permissions.
-        Exception: If any other unexpected error occurs.
-    
-    Returns:
-        None
+    :raises FileNotFoundError: If the source file does not exist.
+    :raises PermissionError: If the process lacks necessary permissions.
+    :raises Exception: If any other unexpected error occurs.
     """
     try:
         if not os.path.exists(src_path):
@@ -337,10 +333,12 @@ def move_items(sources: str | list[str], destination: str, files_only: bool = Fa
     """
     Moves files or folders from the source(s) to the destination.
 
-    Args:
-        sources (str | list[str]): A single path or a list of paths to move.
-        destination (str): The target directory.
-        files_only (bool, optional): If True, only files from a folder are moved (subfolders are ignored). Defaults to False.
+    :param sources: A single path or a list of paths to move.
+    :type sources: str | list[str]
+    :param destination: The target directory.
+    :type destination: str
+    :param files_only: If True, only files from a folder are moved (subfolders are ignored). Defaults to False.
+    :type files_only:  Optional[bool]
 
     Raises:
         FileNotFoundError: If a source file or folder does not exist.

@@ -39,7 +39,7 @@ class SeleniumException(Exception):
         """
         Returns the string representation of the exception.
 
-        :return: The error message.
+        :returns: The error message.
         :rtype: str
         """
         return self.message

@@ -340,10 +340,9 @@ def move_items(sources: str | list[str], destination: str, files_only: bool = Fa
     :param files_only: If True, only files from a folder are moved (subfolders are ignored). Defaults to False.
     :type files_only:  Optional[bool]
 
-    Raises:
-        FileNotFoundError: If a source file or folder does not exist.
-        PermissionError: If there is an issue with file permissions.
-        Exception: For any unexpected errors.
+    :raises FileNotFoundError: If a source file or folder does not exist.
+    :raises PermissionError: If there is an issue with file permissions.
+    :raises Exception: For any unexpected errors.
     """
 
     if isinstance(sources, str):
@@ -382,13 +381,13 @@ def move_items(sources: str | list[str], destination: str, files_only: bool = Fa
 def delete_directories(directories: str | list[str]) -> None:
     """Delete one or multiple directories safely without confirmation.
 
-    Args:
-        directories (str | list[str]): A single directory path or a list of directory paths to delete.
+    :param directories: A single directory path or a list of directory paths to delete.
+    :type directories: str | list[str]
+    :returns: None
 
-    Raises:
-        ValueError: If `directories` is not a string or list.
-        PermissionError: If the directory cannot be deleted due to permissions.
-        OSError: If an unexpected OS error occurs.
+    :raises ValueError: If `directories` is not a string or list.
+    :raises PermissionError: If the directory cannot be deleted due to permissions.
+    :raises OSError: If an unexpected OS error occurs.
     """
     if isinstance(directories, str):
         directories = [directories]

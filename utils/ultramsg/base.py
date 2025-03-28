@@ -7,14 +7,13 @@ This module provides functionality to interact with the UltraMsg API to send mes
 `UltraMsgBase` class initializes an UltraMsg instance with an `instance_id`
 and `token`, and a method to send requests to the UltraMsg API.
 
-This module can be used as a standalone script to send a WhatsApp message, 
-    if that the `UMSG_INSTANCE_ID` and `UMSG_SECRET_KEY` environment variables are set.
+This module can be used as a standalone script to send a WhatsApp message, if the `UMSG_INSTANCE_ID` and `UMSG_SECRET_KEY` environment variables are set.
 
 :module: ultramsg.base.py
 :platform: Unix, Windows
 
 :date: March 3, 2025
-:author: Niladri Mallik `niladrimallik.p@hq.graphxsys.com <mailto:niladrimallik.p@hq.graphxsys.com>`
+:author: Niladri Mallik <niladrimallik.p@hq.graphxsys.com>
 
 # TODO: Implement logging
 # TODO: Add error handling
@@ -33,9 +32,11 @@ class UltraMsgBase:
     It constructs the base URL for making requests to the UltraMsg API.
 
     Attributes:
-        instance_id (str): The instance ID provided by UltraMsg.
-        token (str): The secret API token for authentication with the UltraMsg API.
-        url (str): The base URL for the UltraMsg API, constructed using the instance ID.
+        :instance_id (str): The instance ID provided by UltraMsg.
+
+        :token (str): The secret API token for authentication with the UltraMsg API.
+
+        :url (str): The base URL for the UltraMsg API, constructed using the instance ID.
     """
 
     def __init__(self, instance_id: str, token: str):

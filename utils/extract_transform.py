@@ -51,14 +51,12 @@ def clean_currency_column(df: pl.DataFrame, column_names: str | list[str], decim
 def drop_all_null_rows(frame: pl.DataFrame | pl.LazyFrame) -> pl.DataFrame | pl.LazyFrame:
     """Removes rows from a Polars DataFrame or LazyFrame where all columns contain only null (None) values.
 
-    Args:
-        frame (pl.DataFrame | pl.LazyFrame): Input DataFrame or LazyFrame to process.
+    :param frame: Input DataFrame or LazyFrame to process.
+    :type frame: pl.DataFrame | pl.LazyFrame
+    :returns: DataFrame or LazyFrame with fully-null rows removed.
+    :rtype: pl.DataFrame | pl.LazyFrame
 
-    Returns:
-        pl.DataFrame | pl.LazyFrame: DataFrame or LazyFrame with fully-null rows removed.
-
-    Raises:
-        TypeError: If the input is not a Polars DataFrame or LazyFrame.
+    :raises TypeError: If the input is not a Polars DataFrame or LazyFrame.
     """
     if not isinstance(frame, (pl.DataFrame, pl.LazyFrame)):
         raise TypeError(f"Expected a polars DataFrame or LazyFrame, got {type(frame).__name__}")
@@ -70,12 +68,12 @@ def sync_dataframe_with_table(table_columns: list, df: pl.DataFrame) -> pl.DataF
         Aligns a Polars DataFrame with a database table by ensuring it has the same columns.
         Any extra columns in the DataFrame are removed, and missing columns are added with NULL values.
 
-        Args:
-            table_columns (list): The column names of the database table.
-            df (pl.DataFrame): The Polars DataFrame to align.
-
-        Returns:
-            pl.DataFrame: A modified DataFrame that matches the database table schema.
+        :param table_columns: The column names of the database table.
+        :type table_columns: list
+        :param df: The Polars DataFrame to align.
+        :type df: pl.DataFrame
+        :returns: A modified DataFrame that matches the database table schema.
+        :rtype: pl.DataFrame
         """
         try:            
             table_columns_lower = {col.lower(): col for sublist in table_columns for col in sublist}
@@ -111,13 +109,13 @@ def fin_25_report_data_transformation(input_csv_data_file: str, output_csv_data_
     
     - Writes the cleaned DataFrame to an output CSV file.
 
-    Args:
-        input_csv_data_file (str): Path to the input CSV file.
-        output_csv_data_path (str): Path to save the cleaned output CSV file.
-        client_id (int): Client ID to be added as `client_id` in the DataFrame.
-
-    Returns:
-        None
+    :param input_csv_data_file: Path to the input CSV file.
+    :type input_csv_data_file: str
+    :param output_csv_data_path: Path to save the cleaned output CSV file.
+    :type output_csv_data_path: str
+    :param client_id: Client ID to be added as `client_id` in the DataFrame.
+    :type client_id: int
+    :returns: None
     """
     try:
         logging.info("Data transformation process started.")
@@ -169,10 +167,12 @@ def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_
     - Adds a new column `Client_id` with the provided client ID.
     - Writes the cleaned DataFrame to an output CSV file.
 
-    Args:
-        input_csv_data_file (str): Path to the input CSV file.
-        output_csv_data_path (str): Path to save the cleaned output CSV file.
-        client_id (int): Client ID to be added as `client_id` in the DataFrame.
+    :param input_csv_data_file: Path to the input CSV file.
+    :type input_csv_data_file: str
+    :param output_csv_data_path: Path to save the cleaned output CSV file.
+    :type output_csv_data_path: str
+    :param client_id: Client ID to be added as `client_id` in the DataFrame.
+    :type client_id: int
 
     Returns:
         None
@@ -216,13 +216,14 @@ def rev_19_report_data_transformation(input_csv_data_file: str, output_csv_data_
     - Aligns DataFrame with a database table.
     - Writes the cleaned DataFrame to an output CSV file.
 
-    Args:
-        input_csv_data_file (str): Path to the input CSV file.
-        output_csv_data_path (str): Path to save the cleaned output CSV file.
-        client_id (int): Client ID to be added as `client_id` in the DataFrame.
+    :param input_csv_data_file: Path to the input CSV file.
+    :type input_csv_data_file: str
+    :param output_csv_data_path: Path to save the cleaned output CSV file.
+    :type output_csv_data_path: str
+    :param client_id: Client ID to be added as `client_id` in the DataFrame.
+    :type client_id: int
 
-    Returns:
-        None
+    :returns: None
     """
     try:
         logging.info("Data transformation process started.")
@@ -246,16 +247,15 @@ def combine_csv_files(folder_path: str, output_file: str, start_with: str = None
     """
     Combines multiple CSV files in a given folder into a single CSV file.
 
-    Args:
-        folder_path (str): Path to the folder containing CSV files.
-        output_file (str): Path where the combined CSV file will be saved.
-        start_with (str, optional): If provided, only files that start with this prefix will be combined.
+    :param folder_path: Path to the folder containing CSV files.
+    :type folder_path: str
+    :param output_file: Path where the combined CSV file will be saved.
+    :type output_file: str
+    :param start_with: If provided, only files that start with this prefix will be combined.
+    :type start_with: str, optional
+    :returns: None
 
-    Returns:
-        None
-
-    Raises:
-        FileNotFoundError: If no matching CSV files are found in the folder.
+    :raises FileNotFoundError: If no matching CSV files are found in the folder.
     """
     all_files = [
         os.path.join(folder_path, f) for f in os.listdir(folder_path)

@@ -14,10 +14,10 @@ class TransformCSV:
         Cleans and converts currency columns in a Polars DataFrame to numeric values.
 
         This function performs the following transformations:
-        - Strips leading and trailing whitespace.
-        - Removes dollar signs (``$``) and commas (`,``).
-        - Converts values enclosed in parentheses (e.g., ``(123.45)``) to negative numbers (``-123.45``).
-        - Casts the column to ``Float64`` and rounds to the specified number of decimal places.
+            1. Strips leading and trailing whitespace.
+            2. Removes dollar signs (``$``) and commas (`,``).
+            3. Converts values enclosed in parentheses (e.g., ``(123.45)``) to negative numbers (``-123.45``).
+            4. Casts the column to ``Float64`` and rounds to the specified number of decimal places.
 
         :param df: The Polars DataFrame containing the currency columns.
         :type df: pl.DataFrame
@@ -57,11 +57,12 @@ class TransformCSV:
         """
         Add 'Client_ID' and 'Date_Updated' columns to the DataFrame.
 
-        Args:
-            df (pl.DataFrame): Input DataFrame.
+        :param df: Input DataFrame.
+        :type df: pl.DataFrame
 
-        Returns:
-            pl.DataFrame: Updated DataFrame with the new columns.
+        :returns: Updated DataFrame with the new columns.
+        :rtype: pl.DataFrame
+
         """
         if "Client_ID" not in df.columns:
             df = df.with_columns([
@@ -76,16 +77,15 @@ class TransformCSV:
         return df
     
     def drop_all_null_rows(self, frame: pl.DataFrame | pl.LazyFrame) -> pl.DataFrame | pl.LazyFrame:
-        """Removes rows from a Polars DataFrame or LazyFrame where all columns contain only null (None) values.
+        """
+        Removes rows from a Polars DataFrame or LazyFrame where all columns contain only null (None) values.
 
-        Args:
-            frame (pl.DataFrame | pl.LazyFrame): Input DataFrame or LazyFrame to process.
+        :param frame: Input DataFrame or LazyFrame to process.
+        :type frame: pl.DataFrame | pl.LazyFrame
+        :returns: DataFrame or LazyFrame with fully-null rows removed.
+        :rtype: pl.DataFrame | pl.LazyFrame
 
-        Returns:
-            pl.DataFrame | pl.LazyFrame: DataFrame or LazyFrame with fully-null rows removed.
-
-        Raises:
-            TypeError: If the input is not a Polars DataFrame or LazyFrame.
+        :raises TypeError: If the input is not a Polars DataFrame or LazyFrame.
         """
         if not isinstance(frame, (pl.DataFrame, pl.LazyFrame)):
             raise TypeError(f"Expected a polars DataFrame or LazyFrame, got {type(frame).__name__}")
@@ -97,12 +97,13 @@ class TransformCSV:
         Aligns a Polars DataFrame with a database table by ensuring it has the same columns.
         Any extra columns in the DataFrame are removed, and missing columns are added with NULL values.
 
-        Args:
-            table_columns (list[tuple[str]]): The column names of the database table.
-            df (pl.DataFrame): The Polars DataFrame to align.
+        :param table_columns: The column names of the database table.
+        :type table_columns: list[tuple[str]]
+        :param df: The Polars DataFrame to align.
+        :type df: pl.DataFrame
 
-        Returns:
-            pl.DataFrame: A modified DataFrame that matches the database table schema.
+        :returns: A modified DataFrame that matches the database table schema.
+        :rtype: pl.DataFrame
         """
         try:            
             table_columns_lower = {col.lower(): col for sublist in table_columns for col in sublist}
@@ -129,11 +130,10 @@ class TransformCSV:
         """
         Drop the columns which start with textbox or Textbox.
 
-        Args:
-            df (pl.DataFrame): Input DataFrame.
-
-        Returns:
-            pl.DataFrame: DataFrame with text columns dropped.
+        :param df: Input DataFrame.
+        :type df: pl.DataFrame
+        :returns: DataFrame with text columns dropped.
+        :rtype: pl.DataFrame
         """
         return df.drop(
             [col for col in df.columns if col.lower().startswith("textbox") and col not in skip_columns]
@@ -143,16 +143,16 @@ class TransformCSV:
         """
         Combines multiple CSV files in a given folder into a single CSV file.
 
-        Args:
-            folder_path (str): Path to the folder containing CSV files.
-            output_file (str): Path where the combined CSV file will be saved.
-            start_with (str, optional): If provided, only files that start with this prefix will be combined.
+        :param folder_path: Path to the folder containing CSV files.
+        :type folder_path: str
+        :param output_file: Path where the combined CSV file will be saved.
+        :type output_file: str
+        :param start_with: If provided, only files that start with this prefix will be combined.
+        :type start_with: str, optional
+        :returns: None
 
-        Returns:
-            None
+        :raises FileNotFoundError: If no matching CSV files are found in the folder.
 
-        Raises:
-            FileNotFoundError: If no matching CSV files are found in the folder.
         """
         all_files = [
             os.path.join(folder_path, f) for f in os.listdir(folder_path)
@@ -172,13 +172,13 @@ class TransformCSV:
         """
         Transform the CNT_27 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the processed CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -204,13 +204,13 @@ class TransformCSV:
         """
         Transform the CNT_19 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the processed CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -229,13 +229,13 @@ class TransformCSV:
         """
         Transform the ADJ_4 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the processed CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
 
         df = pl.read_csv(file_path, infer_schema_length=0)
@@ -251,13 +251,13 @@ class TransformCSV:
         """
         Transform the ADJ_11 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the processed CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -277,13 +277,13 @@ class TransformCSV:
         """
         Transform the FIN_18 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the processed CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -301,13 +301,13 @@ class TransformCSV:
         """
         Transform the PAY_41 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the processed CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -327,13 +327,13 @@ class TransformCSV:
         """
         Transform the XRY_03 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the processed CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -348,13 +348,13 @@ class TransformCSV:
         """
         Transform the FIN_25 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the processed CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-            
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the processed CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         try:
             logging.info("Fin_25 Data transformation process started.")
@@ -397,13 +397,13 @@ class TransformCSV:
         """
         Transform the PAY_4 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -419,22 +419,22 @@ class TransformCSV:
         Transform the PAY_10 report.
 
         This function performs the following operations:
-        - Reads the CSV into a Polars DataFrame with specified Columns.
-        - Removes rows where all columns contain only null (None) values.
-        - Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
-        - Cleans currency columns using `clean_currency_column`.
-        - Converts `Svc_Date` to a date.
-        - Adds a new columns `Client_id`, `Date_Updated` with the provided client ID, current date and time respectively.
-        - Aligns DataFrame with a database table.
-        - Writes the cleaned DataFrame to an output CSV file.
+            1. Reads the CSV into a Polars DataFrame with specified Columns.
+            2. Removes rows where all columns contain only null (None) values.
+            3. Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
+            4. Cleans currency columns using `clean_currency_column`.
+            5. Converts `Svc_Date` to a date.
+            6. Adds a new columns `Client_id`, `Date_Updated` with the provided client ID, current date and time respectively.
+            7. Aligns DataFrame with a database table.
+            8. Writes the cleaned DataFrame to an output CSV file.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         try:
             logging.info("Pay_10 Data transformation process started.")
@@ -463,13 +463,13 @@ class TransformCSV:
         """
         Transform the REV_16 report.
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         try:
             df = pl.read_csv(file_path, infer_schema_length=0)
@@ -488,21 +488,21 @@ class TransformCSV:
         Transform the REV_19 report.
 
         This function performs the following operations:
-        - Reads the CSV into a Polars DataFrame with specified Columns.
-        - Removes rows where all columns contain only null (None) values.
-        - Removes all the commas(,) from the `Phy_Name` column.
-        - Cleans currency columns using `clean_currency_column`.
-        - Adds a new columns `Client_id`, `Date_Updated` with the provided client ID, current date and time respectively.
-        - Aligns DataFrame with a database table.
-        - Writes the cleaned DataFrame to an output CSV file.
+            1. Reads the CSV into a Polars DataFrame with specified Columns.
+            2. Removes rows where all columns contain only null (None) values.
+            3. Removes all the commas(,) from the `Phy_Name` column.
+            4. Cleans currency columns using `clean_currency_column`.
+            5. Adds a new columns `Client_id`, `Date_Updated` with the provided client ID, current date and time respectively.
+            6. Aligns DataFrame with a database table.
+            7. Writes the cleaned DataFrame to an output CSV file.
 
-        Args:
-            input_csv_data_file (str): Path to the input CSV file.
-            output_csv_data_path (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param input_csv_data_file: Path to the input CSV file.
+        :type input_csv_data_file: str
+        :param output_csv_data_path: Path to save the cleaned output CSV file.
+        :type output_csv_data_path: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         try:
             logging.info("Rev_19 Data transformation process started.")
@@ -524,13 +524,13 @@ class TransformCSV:
         """
         Transform CCR_03 Report
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -549,13 +549,13 @@ class TransformCSV:
         """
         Transform CCR_02 Report
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -574,13 +574,13 @@ class TransformCSV:
         """
         Transform PER_02 Report
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -593,13 +593,13 @@ class TransformCSV:
         """
         Transform CCR_02 Report
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_textbox_columns(df)
@@ -612,13 +612,13 @@ class TransformCSV:
         """
         Transform PAT_20 Report
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -631,13 +631,13 @@ class TransformCSV:
         """
         Transform CHT_02 Report
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -649,13 +649,13 @@ class TransformCSV:
         """
         Transform LAB_01 Report
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_all_null_rows(df)
@@ -667,13 +667,13 @@ class TransformCSV:
         """
         Transform PAT_02 Report
 
-        Args:
-            file_path (str): Path to the input CSV file.
-            processed_file (str): Path to save the cleaned output CSV file.
-            table_columns list[tuple[str]]: The column names of the specified table.
-
-        Returns:
-            None
+        :param file_path: Path to the input CSV file.
+        :type file_path: str
+        :param processed_file: Path to save the cleaned output CSV file.
+        :type processed_file: str
+        :param table_columns: The column names of the specified table.
+        :type table_columns: list[tuple[str]]
+        :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
         df = self.drop_textbox_columns(df)

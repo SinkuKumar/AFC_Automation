@@ -56,7 +56,8 @@ def get_past_date(days: int = 0, months: int = 0, years: int = 0, quarters: int 
     :type quarters: int, optional
     :param from_date: The reference date in "MM/DD/YYYY" format. If not provided, uses the current date.
     :type from_date: str, optional
-    :returns: str: The calculated past date in "MM/DD/YYYY" format.
+    :returns: The calculated past date in "MM/DD/YYYY" format.
+    :rtype: str
 
     Raises:
         ValueError: If `from_date` is not in the correct "MM/DD/YYYY" format.

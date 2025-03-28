@@ -98,15 +98,14 @@ def fin_25_report_data_transformation(input_csv_data_file: str, output_csv_data_
     Processes a CSV file and generates a cleaned report.
 
     This function performs the following operations:
-    - Reads the CSV into a Polars DataFrame.
-    - Removes rows where all columns contain only null (None) values
-    - Renames the `Textbox2` column to `svc_date` and converts it to a date.
-    - Splits the `Proc_Code` column on " | " into 'proc_code' and 'proc_amount'.
-    - Adds a new column `client_id` with the provided client ID.
-    - Cleans currency columns using `clean_currency_column`.
-    - Adds a new column `updated_date` with the current date.
-    
-    - Writes the cleaned DataFrame to an output CSV file.
+        1. Reads the CSV into a Polars DataFrame.
+        2. Removes rows where all columns contain only null (None) values
+        3. Renames the `Textbox2` column to `svc_date` and converts it to a date.
+        4. Splits the `Proc_Code` column on " | " into 'proc_code' and 'proc_amount'.
+        5. Adds a new column `client_id` with the provided client ID.
+        6. Cleans currency columns using `clean_currency_column`.
+        7. Adds a new column `updated_date` with the current date.
+        8. Writes the cleaned DataFrame to an output CSV file.
 
     :param input_csv_data_file: Path to the input CSV file.
     :type input_csv_data_file: str
@@ -157,14 +156,14 @@ def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_
     Processes a CSV file and generates a cleaned report.
 
     This function performs the following operations:
-    - Reads the CSV into a Polars DataFrame with specified Columns.
-    - Removes rows where all columns contain only null (None) values.
-    - Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
-    - Cleans currency columns using `clean_currency_column`.
-    - Adds a new column `Date_Updated` with the current date and time.
-    - Converts `Svc_Date` to a date.
-    - Adds a new column `Client_id` with the provided client ID.
-    - Writes the cleaned DataFrame to an output CSV file.
+        1. Reads the CSV into a Polars DataFrame with specified Columns.
+        2. Removes rows where all columns contain only null (None) values.
+        3. Renames the `textbox18`, `textbox22` columns to `Charge_Amt`, `Net_AR` respectively.
+        4. Cleans currency columns using `clean_currency_column`.
+        5. Adds a new column `Date_Updated` with the current date and time.
+        6. Converts `Svc_Date` to a date.
+        7. Adds a new column `Client_id` with the provided client ID.
+        8. Writes the cleaned DataFrame to an output CSV file.
 
     :param input_csv_data_file: Path to the input CSV file.
     :type input_csv_data_file: str
@@ -206,14 +205,14 @@ def rev_19_report_data_transformation(input_csv_data_file: str, output_csv_data_
     Processes a CSV file and generates a cleaned report.
 
     This function performs the following operations:
-    - Reads the CSV into a Polars DataFrame with specified Columns.
-    - Removes rows where all columns contain only null (None) values.
-    - Removes all the commas(,) from the `Phy_Name` column.
-    - Cleans currency columns using `clean_currency_column`.
-    - Adds a new column `Date_Updated` with the current date and time.
-    - Adds a new column `Client_id` with the provided client ID.
-    - Aligns DataFrame with a database table.
-    - Writes the cleaned DataFrame to an output CSV file.
+        1. Reads the CSV into a Polars DataFrame with specified Columns.
+        2. Removes rows where all columns contain only null (None) values.
+        3. Removes all the commas(,) from the `Phy_Name` column.
+        4. leans currency columns using `clean_currency_column`.
+        5. Adds a new column `Date_Updated` with the current date and time.
+        6. Adds a new column `Client_id` with the provided client ID.
+        7. Aligns DataFrame with a database table.
+        8. Writes the cleaned DataFrame to an output CSV file.
 
     :param input_csv_data_file: Path to the input CSV file.
     :type input_csv_data_file: str

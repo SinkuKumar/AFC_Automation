@@ -27,8 +27,6 @@ def page_loads(driver: WebDriver) -> bool:
     :type driver: WebDriver
     :returns: True if the page is fully loaded, False otherwise.
     :rtype: bool
-
-    :raises None:
     """
     return driver.execute_script("return document.readyState") == "complete"
 
@@ -383,7 +381,6 @@ class ExperityBase:
         :param to_month: End month for range selection.
         :type to_month: str, optional
         :returns: None
-        :rtype: None
 
         :raises ValueError: If arguments provided are invalid (e.g., only from_month or to_month is given).
         :raises SeleniumException: If any issue occurs during searching and selection of the report.
@@ -426,8 +423,7 @@ class ExperityBase:
         :type status_name: list
         :returns: None
 
-        Raises:
-            SeleniumException: If any issue occurs during the logbook status names selection process.
+        :raises SeleniumException: If any issue occurs during the logbook status names selection process.
         """
         status_mapping = {
             "All": 'freeStatusListcheck1',
@@ -755,7 +751,7 @@ class ExperityBase:
 
         :parma invoice_number: The invoice_number to get recievables details.
         :type invoice_numer: int
-       :returns: None
+        :returns: None
 
         :raises SeleniumException: If any issue occurs during navigating to recievables page.
         """
@@ -798,10 +794,10 @@ class ExperityBase:
         Automates the process of downloading a report in provided report format.
 
         Steps:
-        1. Switches to the latest browser window.
-        2. Waits for the page to fully load.
-        3. Ensures that the report viewer is ready.
-        4. Selects and clicks the provided report format download option.
+            1. Switches to the latest browser window.
+            2. Waits for the page to fully load.
+            3. Ensures that the report viewer is ready.
+            4. Selects and clicks the provided report format download option.
 
         :param report_format: Specifies the format of the report (e.g., 'CSV', 'Excel', 'TXT').
         :type report_format: str
@@ -948,7 +944,6 @@ def run_logic_for_each_month(from_month: str, to_month: str, logic_function, *ar
     :param kwargs: Additional keyword arguments to pass to ``logic_function``.
     :type kwargs: dict
     :returns: None
-    :rtype: None
 
     :raises ValueError: If the date formats are invalid or if ``from_month`` is later than ``to_month``.
     

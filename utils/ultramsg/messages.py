@@ -140,10 +140,11 @@ class UltraMsgMessages:
             Eg: 919717415826 without any space or extra characters such as (, ), -, +
         :type phone_number: int
         :param voice_url: The http(s) url of the voice note. 
-        Note: It won't accept voice notes from local disk.
         :type voice_url: str
         :returns: The json response from the ultramsg server.
         :rtype: str(json)
+        
+        Note: It won't accept voice notes from local disk.
         '''
         payload=f'to={phone_number}&audio={voice_url}'
         return self.umsg_base.make_request(url='messages/voice',
@@ -163,7 +164,7 @@ class UltraMsgMessages:
         :param video_caption: The caption for the video.
         :type video_caption: str
         :returns: The response from the ultramsg server.
-        rtype: str(json)
+        :rtype: str(json)
         '''
         payload=f'to={phone_number}&video={video_url}&caption={video_caption}'
         return self.umsg_base.make_request(url='messages/video',

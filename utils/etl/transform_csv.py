@@ -102,7 +102,7 @@ class TransformCSV:
         :returns: A modified DataFrame that matches the database table schema.
         :rtype: pl.DataFrame
         """
-        try:            
+        try:
             table_columns_lower = {col.lower(): col for sublist in table_columns for col in sublist}
             df_columns_lower = {col.lower(): col for col in df.columns}
 

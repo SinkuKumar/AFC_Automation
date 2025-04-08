@@ -155,6 +155,14 @@ def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_
     """
     Processes a CSV file and generates a cleaned report.
 
+    :param input_csv_data_file: Path to the input CSV file.
+    :type input_csv_data_file: str
+    :param output_csv_data_path: Path to save the cleaned output CSV file.
+    :type output_csv_data_path: str
+    :param client_id: Client ID to be added as `client_id` in the DataFrame.
+    :type client_id: int
+    :returns: None
+
     This function performs the following operations:
         1. Reads the CSV into a Polars DataFrame with specified Columns.
         2. Removes rows where all columns contain only null (None) values.
@@ -164,16 +172,6 @@ def pay_10_report_data_transformation(input_csv_data_file: str, output_csv_data_
         6. Converts `Svc_Date` to a date.
         7. Adds a new column `Client_id` with the provided client ID.
         8. Writes the cleaned DataFrame to an output CSV file.
-
-    :param input_csv_data_file: Path to the input CSV file.
-    :type input_csv_data_file: str
-    :param output_csv_data_path: Path to save the cleaned output CSV file.
-    :type output_csv_data_path: str
-    :param client_id: Client ID to be added as `client_id` in the DataFrame.
-    :type client_id: int
-
-    Returns:
-        None
     """
     try:
         logging.info("Data transformation process started.")
@@ -204,6 +202,19 @@ def rev_19_report_data_transformation(input_csv_data_file: str, output_csv_data_
     """
     Processes a CSV file and generates a cleaned report.
 
+    :param input_csv_data_file: Path to the input CSV file.
+    :type input_csv_data_file: str
+    :param output_csv_data_path: Path to save the cleaned output CSV file.
+    :type output_csv_data_path: str
+    :param client_id: Client ID to be added as `client_id` in the DataFrame.
+    :type client_id: int
+    
+    .. rst-class:: blank-lines
+
+    :returns: None
+
+    .. rst-class:: blank-lines
+
     This function performs the following operations:
         1. Reads the CSV into a Polars DataFrame with specified Columns.
         2. Removes rows where all columns contain only null (None) values.
@@ -214,13 +225,6 @@ def rev_19_report_data_transformation(input_csv_data_file: str, output_csv_data_
         7. Aligns DataFrame with a database table.
         8. Writes the cleaned DataFrame to an output CSV file.
 
-    :param input_csv_data_file: Path to the input CSV file.
-    :type input_csv_data_file: str
-    :param output_csv_data_path: Path to save the cleaned output CSV file.
-    :type output_csv_data_path: str
-    :param client_id: Client ID to be added as `client_id` in the DataFrame.
-    :type client_id: int
-    :returns: None
     """
     try:
         logging.info("Data transformation process started.")

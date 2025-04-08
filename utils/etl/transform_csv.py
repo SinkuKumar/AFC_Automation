@@ -102,7 +102,8 @@ class TransformCSV:
         :returns: A modified DataFrame that matches the database table schema.
         :rtype: pl.DataFrame
         """
-        try:            
+        try:
+            df = self.remove_commas_apos_from_df(df)            
             table_columns_lower = {col.lower(): col for sublist in table_columns for col in sublist}
             df_columns_lower = {col.lower(): col for col in df.columns}
 
@@ -159,11 +160,22 @@ class TransformCSV:
         if not all_files:
             raise FileNotFoundError("No matching CSV files found.")
         
-        df_list = [pl.read_csv(file) for file in all_files]
+        df_list = [
+            pl.read_csv(file).with_columns([pl.col(col).cast(pl.Utf8) for col in pl.read_csv(file, n_rows=1).columns])
+            for file in all_files
+        ]
         combined_df = pl.concat(df_list)
         combined_df.write_csv(output_file)
         
         logging.info(f" Combined {len(all_files)} CSV files.")
+
+    def remove_commas_apos_from_df(self, df: pl.DataFrame) -> pl.DataFrame:
+        def remove_commas_apos(series: pl.Series) -> pl.Series:
+            if series.dtype in [pl.Date, pl.Datetime, pl.Boolean]:
+                return series # Skip modification for these types
+            return series.cast(pl.Utf8).str.replace_all(",", "").str.replace_all("'", "").cast(series.dtype, strict=False)
+        return df.with_columns([remove_commas_apos(df[col]).alias(col) for col in df.columns])
+        
 
     def cnt_27(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
         """
@@ -241,7 +253,7 @@ class TransformCSV:
         df = self.clean_currency_column(df, ["textbox20", "Adj_Amt"])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
-        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
+        # df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def adj_11(self, file_path: str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -408,7 +420,7 @@ class TransformCSV:
         df = self.clean_currency_column(df, ["textbox13", "Payment"])
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
-        df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
+        # df = df.with_columns([pl.col("rebilled_status").fill_null(0)])
         df.write_csv(processed_file)
 
     def pay_10(self, file_path:str, processed_file: str, table_columns: list[tuple[str]]) -> None:
@@ -599,6 +611,16 @@ class TransformCSV:
         :returns: None
         """
         df = pl.read_csv(file_path, infer_schema_length=0)
+        columns = ["SignedOffBy", "textbox13", "textbox19", "textbox42", "textbox20", "textbox52", "textbox21", "textbox56", "Clinic", "Svc_Date", "Pat_Name", "PrescribedDate", "PrescribedBy", "DrugName", "Strength", "StrengthUOM", "DispenseQuantity", "IsDispensed"]
+        target_values = ["textbox1", "textbox18", "textbox22", "textbox23", "Pat_Name1", "PrescribedDate1", "PrescribedBy1", "textbox24", "textbox25", "textbox26", "textbox27", "textbox28", "textbox29", "textbox30", "textbox15", "textbox46", "textbox47", "textbox48"]
+
+        mask = df.select([df[col] == val for col, val in zip(columns, target_values)]).with_columns(
+            match_row=pl.fold(acc=True, function=lambda acc, col: acc & col, exprs=pl.all())
+        )["match_row"]
+        row_index = mask.arg_true().min()
+
+        if row_index is not None:
+            df = df.slice(0, row_index)
         df = self.drop_textbox_columns(df)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)

@@ -22,13 +22,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from utils.pyodbc_sql import PyODBCSQL
 
-def execute_query():
-    try:
-        #execture query
-    except:
-        # ask user to drop and re-recarete trable
-    
-
 
 def cnt_27_staging_table(table_name="CNT_27_Staging_Base"):
     """

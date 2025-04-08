@@ -42,6 +42,9 @@ REV_19_FILE_NAME = "REV_19_TotalRevenueByProviderAndCategory.csv"
 # PAT_2 Configuration
 PAT_2_FILE_NAME = "PAT_2_PatientDemographicsByPractice.csv"
 
+# REV_16 Configuration
+REV_16_FILE_NAME = "REV_16_revenueByClinicWithDetails.csv"
+
 class ReportConfig:
     def __init__(self, client_id: int) -> None:
         self.client_id = client_id
@@ -226,30 +229,29 @@ class ReportConfig:
             "processed_file": f"CCR_3_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
-    def rev_16(self, from_date, to_date) -> dict:
+    def rev_16(self, from_month, to_month) -> dict:
         return {
             "report_name": "REV_16",
-            "from_month": from_date,
-            "to_month": from_date,
-            "rev_16_date": from_date,
+            "from_month": from_month,
+            "to_month": to_month,
             "file_name": "REV_16_revenueByClinicWithDetails.csv",
             "base_table": "REV_16_Staging_Base",
             "staging_table": f"REV_16_Staging_{self.client_id}",
-            "raw_file":f"REV_16_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
-            "processed_file": f"REV_16_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "raw_file":f"REV_16_Raw_{from_month.replace(' ', '-')}_{to_month.replace(' ', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "processed_file": f"REV_16_Processed_{from_month.replace(' ', '-')}_{to_month.replace(' ', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
     def pay_4(self, from_date, to_date) -> dict:
         return {
-            "report_name": "PAY_4",
+            "report_name": "PAY_04",
             "from_date": from_date,
             "to_date": to_date,
             "pay_4_date": from_date,
             "file_name": "PAY_4_TotalPaymentByDetail.csv",
             "base_table": "PAY_4_Staging_Base",
             "staging_table": f"PAY_4_Staging_{self.client_id}",
-            "raw_file":f"PAY_4_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
-            "processed_file": f"PAY_4_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "raw_file":f"PAY_04_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "processed_file": f"PAY_04_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
     def adj_4(self, from_month, to_month) -> dict:

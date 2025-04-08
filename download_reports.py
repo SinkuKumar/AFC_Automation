@@ -61,7 +61,7 @@ class ReportETL:
         self.exct_rep.cnt_27(cnt_27_cfg['report_name'], from_date, to_date)
         self.task_q.add_task(file_folder.rename_file_or_folder, os.path.join(self.DWLD_DIR, cnt_27_cfg['file_name']), os.path.join(self.RAW_DIR,cnt_27_cfg['raw_file']))
         table_columns = self.load_csv.get_column_names(cnt_27_cfg['base_table'])
-        self.task_q.add_task(self.trns_csv.cnt_27, os.path.join(self.DWLD_DIR, cnt_27_cfg['raw_file']), os.path.join(self.DWLD_DIR, cnt_27_cfg['processed_file']), table_columns)
+        self.task_q.add_task(self.trns_csv.cnt_27, os.path.join(self.RAW_DIR, cnt_27_cfg['raw_file']), os.path.join(self.DWLD_DIR, cnt_27_cfg['processed_file']), table_columns)
         self.task_q.add_task(file_folder.delete_paths, os.path.join(self.RAW_DIR,cnt_27_cfg['raw_file']))
         self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, cnt_27_cfg['processed_file']), cnt_27_cfg['base_table'], cnt_27_cfg['staging_table'])
         self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, cnt_27_cfg['processed_file']), self.CLIENT_TODAY_DIR)
@@ -133,7 +133,7 @@ class ReportETL:
         table_columns = self.load_csv.get_column_names(ccr2_cfg['base_table'])
         self.task_q.add_task(self.trns_csv.ccr_02, os.path.join(self.RAW_DIR, ccr2_cfg['raw_file']), os.path.join(self.DWLD_DIR, ccr2_cfg['processed_file']), table_columns)
         self.task_q.add_task(file_folder.delete_paths, os.path.join(self.RAW_DIR,ccr2_cfg['raw_file']))
-        self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, ccr2_cfg['file_name']), ccr2_cfg['base_table'], ccr2_cfg['staging_table'])
+        self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, ccr2_cfg['processed_file']), ccr2_cfg['base_table'], ccr2_cfg['staging_table'])
         self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, ccr2_cfg['processed_file']), self.CLIENT_TODAY_DIR)
 
     def etl_ccr_03(self, from_date, to_date):
@@ -212,24 +212,24 @@ class ReportETL:
         self.task_q.add_task(self.trns_csv.combine_csv_files, self.DWLD_DIR, os.path.join(self.RAW_DIR, adj_4_cfg['raw_file']), adj_4_cfg['report_name'])
         table_columns = self.load_csv.get_column_names(adj_4_cfg['base_table'])
         self.task_q.add_task(self.trns_csv.adj_4, os.path.join(self.RAW_DIR, adj_4_cfg['raw_file']), os.path.join(self.DWLD_DIR, adj_4_cfg['processed_file']), table_columns)
-        self.task_q.add_task(file_folder.delete_paths, os.path.join(self.RAW_DIR,adj_4_cfg['raw_file']))
+        self.task_q.add_task(file_folder.delete_paths, os.path.join(self.RAW_DIR, adj_4_cfg['raw_file']))
         self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, adj_4_cfg['processed_file']), adj_4_cfg['base_table'], adj_4_cfg['staging_table'])
         self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, adj_4_cfg['processed_file']), self.CLIENT_TODAY_DIR)
 
     def etl_pay_04(self, from_month, to_month):
         pay_4_cfg = self.rpt_config.pay_4(from_month, to_month)
         self.exct_rep.pay_4(pay_4_cfg['report_name'], from_month, to_month)
-        self.task_q.add_task(self.trns_csv.combine_csv_files, self.DWLD_DIR, os.path.join(self.RAW_DIR,pay_4_cfg['raw_file']), pay_4_cfg['report_name'])
+        self.task_q.add_task(self.trns_csv.combine_csv_files, self.DWLD_DIR, os.path.join(self.RAW_DIR, pay_4_cfg['raw_file']), pay_4_cfg['report_name'])
         table_columns = self.load_csv.get_column_names(pay_4_cfg['base_table'])
         self.task_q.add_task(self.trns_csv.pay_4, os.path.join(self.RAW_DIR, pay_4_cfg['raw_file']), os.path.join(self.DWLD_DIR, pay_4_cfg['processed_file']), table_columns)
         self.task_q.add_task(file_folder.delete_paths, os.path.join(self.RAW_DIR, pay_4_cfg['raw_file']))
         self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, pay_4_cfg['processed_file']), pay_4_cfg['base_table'], pay_4_cfg['staging_table'])
         self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, pay_4_cfg['processed_file']), self.CLIENT_TODAY_DIR)
 
-    def etl_rev_16(self, from_date, to_date):
-        rev_16_cfg = self.rpt_config.rev_16(from_date, to_date)
-        self.exct_rep.rev_16(rev_16_cfg['report_name'], from_date, to_date)
-        self.task_q.add_task(self.trns_csv.combine_csv_files, self.DWLD_DIR, os.path.join(self.RAW_DIR,rev_16_cfg['raw_file']), rev_16_cfg['report_name'])
+    def etl_rev_16(self, from_month, to_month):
+        rev_16_cfg = self.rpt_config.rev_16(from_month, to_month)
+        self.exct_rep.rev_16(rev_16_cfg['report_name'], from_month, to_month)
+        self.task_q.add_task(self.trns_csv.combine_csv_files, self.DWLD_DIR, os.path.join(self.RAW_DIR, rev_16_cfg['raw_file']), rev_16_cfg['report_name'])
         table_columns = self.load_csv.get_column_names(rev_16_cfg['base_table'])
         self.task_q.add_task(self.trns_csv.rev_16, os.path.join(self.RAW_DIR, rev_16_cfg['raw_file']), os.path.join(self.DWLD_DIR, rev_16_cfg['processed_file']), table_columns)
         self.task_q.add_task(file_folder.delete_paths, os.path.join(self.RAW_DIR,rev_16_cfg['raw_file']))

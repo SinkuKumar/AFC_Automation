@@ -19,16 +19,11 @@ TIME_STAMP = DATE_TIME_STAMP.split()[1]
 CURRENT_DATE = time.strftime("%m/%d/%Y")
 LOG_DT_STAMP = DATE_STAMP.replace(' ', '_').replace(':', '-')
 
-# TODO: Apply proper dates in production
-# CURRENT_DATE = '01/31/2024'
-
-
 # Experity Configuration
 EXPERITY_URL = "https://pvpm.practicevelocity.com"
 
 # SQL Queries
 CREDENTIALS_QUERY = "SELECT client_id, client_name, username, password FROM BI_AFC..AFC_Password_Tbl WHERE active = 1 AND Client_ID IN ({client_id})"
-
 
 # PAY_4 Configuration
 PAY_4_FILE_NAME = "PAY_4_TotalPaymentByDetail.csv"
@@ -41,6 +36,9 @@ REV_19_FILE_NAME = "REV_19_TotalRevenueByProviderAndCategory.csv"
 
 # PAT_2 Configuration
 PAT_2_FILE_NAME = "PAT_2_PatientDemographicsByPractice.csv"
+
+# REV_16 Configuration
+REV_16_FILE_NAME = "REV_16_revenueByClinicWithDetails.csv"
 
 class ReportConfig:
     def __init__(self, client_id: int) -> None:
@@ -55,7 +53,7 @@ class ReportConfig:
             "base_table": "CNT_27_Staging_Base",
             "staging_table": f"CNT_27_Staging_{self.client_id}",
             "raw_file":f"CNT_27_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
-            "processed_file": f"CNT_27_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "processed_file": f"CNT_27_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv"
         }
 
     def cnt_19(self, from_date, to_date) -> dict:
@@ -67,7 +65,7 @@ class ReportConfig:
             "base_table": "CNT_19_Staging_Base",
             "staging_table": f"CNT_19_Staging_{self.client_id}",
             "raw_file":f"CNT_19_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
-            "processed_file": f"CNT_19_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "processed_file": f"CNT_19_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv"
         }
 
     def fin_25(self, from_date, to_date) -> dict:
@@ -79,7 +77,7 @@ class ReportConfig:
             "base_table": "FIN_25_Staging_Base",
             "staging_table": f"FIN_25_Staging_{self.client_id}",
             "raw_file":f"FIN_25_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
-            "processed_file": f"FIN_25_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "processed_file": f"FIN_25_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv"
         }
 
     def adj_11(self, from_date, to_date) -> dict:
@@ -226,30 +224,29 @@ class ReportConfig:
             "processed_file": f"CCR_3_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
-    def rev_16(self, from_date, to_date) -> dict:
+    def rev_16(self, from_month, to_month) -> dict:
         return {
             "report_name": "REV_16",
-            "from_month": from_date,
-            "to_month": from_date,
-            "rev_16_date": from_date,
+            "from_month": from_month,
+            "to_month": to_month,
             "file_name": "REV_16_revenueByClinicWithDetails.csv",
             "base_table": "REV_16_Staging_Base",
             "staging_table": f"REV_16_Staging_{self.client_id}",
-            "raw_file":f"REV_16_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
-            "processed_file": f"REV_16_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "raw_file":f"REV_16_Raw_{from_month.replace(' ', '-')}_{to_month.replace(' ', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "processed_file": f"REV_16_Processed_{from_month.replace(' ', '-')}_{to_month.replace(' ', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
     def pay_4(self, from_date, to_date) -> dict:
         return {
-            "report_name": "PAY_4",
+            "report_name": "PAY_04",
             "from_date": from_date,
             "to_date": to_date,
             "pay_4_date": from_date,
             "file_name": "PAY_4_TotalPaymentByDetail.csv",
             "base_table": "PAY_4_Staging_Base",
             "staging_table": f"PAY_4_Staging_{self.client_id}",
-            "raw_file":f"PAY_4_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
-            "processed_file": f"PAY_4_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "raw_file":f"PAY_04_Raw_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
+            "processed_file": f"PAY_04_Processed_{from_date.replace('/', '-')}_{to_date.replace('/', '-')}_{TIME_STAMP.replace(':', '-')}.csv",
         }
 
     def adj_4(self, from_month, to_month) -> dict:

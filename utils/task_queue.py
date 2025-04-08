@@ -15,6 +15,7 @@ class TaskQueue:
         self.task_queue = queue.Queue()
         self.worker_thread = None
         self.lock = threading.Lock()  # Prevents race conditions
+        self.error = None
 
     def _process_queue(self):
         """
@@ -24,9 +25,15 @@ class TaskQueue:
         while True:
             try:
                 func, args, kwargs = self.task_queue.get(timeout=1)
+
+                if self.error:
+                    self.task_queue.task_done()
+                    continue 
+
                 try:
                     func(*args, **kwargs)
                 except Exception as e:
+                    self.error = e
                     print(f"Error executing task: {e}")  # Log the error but continue
 
                 self.task_queue.task_done()
@@ -47,8 +54,19 @@ class TaskQueue:
 
     def add_task(self, func, *args, **kwargs):
         """Add a task and start the worker if necessary."""
+        if self.error:
+            return
+        
         self.task_queue.put((func, args, kwargs))
         self._ensure_worker_running()
+
+    def check_and_raise_error(self):
+        """Check if any task failed, and raise the error in the main thread."""
+        error_message = None
+        if self.error:
+            error_message = self.error
+            self.error = None
+        return error_message
 
     def wait_for_completion(self):
         """Wait until all tasks in the queue are processed before exiting."""

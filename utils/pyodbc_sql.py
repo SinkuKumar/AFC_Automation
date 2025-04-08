@@ -261,6 +261,77 @@ class PyODBCSQL:
             logging.error(f"Database error occurred while deleting the table data: {e}")
             raise
 
+    def log_etl_start(self, table_name, etl_log_id, client_id, report_name, date_updated):
+        """
+        Logs the start of an ETL process for a given report.
+
+        :type table_name: str
+        :param table_name: Name of the ETL log table in the database.
+
+        :type etl_log_id: str
+        :param etl_log_id: Unique identifier for the ETL process.
+
+        :type client_id: str
+        :param client_id: Identifier for the client associated with this ETL run.
+
+        :type report_name: str
+        :param report_name: Name of the report being processed.
+
+        :type date_updated: str
+        :param date_updated: Timestamp string when the ETL process started.
+
+        :returns: None
+        """
+        query = f"""INSERT INTO {table_name} WITH (ROWLOCK) (etl_id, client_id, report_name, status, date_updated)
+                VALUES ('{etl_log_id}', '{client_id}', '{report_name}', 'IN_PROGRESS', '{date_updated}');"""
+        self.execute_query(query)
+
+
+    def log_etl_success(self, table_name, etl_log_id, date_updated):
+        """
+        Logs a successful completion of an ETL process.
+
+        :type table_name: str
+        :param table_name: Name of the ETL log table in the database.
+
+        :type etl_log_id: str
+        :param etl_log_id: Unique identifier for the ETL process.
+
+        :type date_updated: str
+        :param date_updated: Timestamp string when the ETL process finished successfully.
+
+        :returns: None
+        """
+        query = f"""UPDATE {table_name} WITH (ROWLOCK) 
+                    SET status = 'SUCCESS', date_updated = '{date_updated}' 
+                    WHERE etl_id = '{etl_log_id}';"""
+        self.execute_query(query)
+
+
+    def log_etl_failure(self, table_name, etl_log_id, date_updated, error_msg):
+        """
+        Logs a failed ETL process along with the error message.
+
+        :type table_name: str
+        :param table_name: Name of the ETL log table in the database.
+
+        :type etl_log_id: str
+        :param etl_log_id: Unique identifier for the ETL process.
+
+        :type date_updated: str
+        :param date_updated: Timestamp string when the ETL process failed.
+
+        :type error_msg: str
+        :param error_msg: Error message describing the failure reason.
+
+        :returns: None
+        """
+        query = f"""UPDATE {table_name} WITH (ROWLOCK) 
+                    SET status = 'FAILED', date_updated = '{date_updated}', error_msg = '{error_msg}' 
+                    WHERE etl_id = '{etl_log_id}';"""
+        self.execute_query(query)
+
+
 if __name__ == "__main__":
     import os
     from dotenv import load_dotenv

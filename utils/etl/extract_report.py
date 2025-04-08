@@ -26,7 +26,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 
 from utils.experity_base import ExperityBase, close_other_windows, run_logic_for_each_month
 from utils import file_folder
-from utils.etl.report_config import REV_19_FILE_NAME, ADJ_4_FILE_NAME, PAY_4_FILE_NAME, PAT_2_FILE_NAME
+from utils.etl.report_config import REV_19_FILE_NAME, ADJ_4_FILE_NAME, PAY_4_FILE_NAME, PAT_2_FILE_NAME, REV_16_FILE_NAME
 
 
 class ExtractReports:
@@ -601,7 +601,7 @@ class ExtractReports:
         file_folder.wait_for_download(report_name, self.download_directory)
         close_other_windows(self.driver)
 
-    def rev_16(self, report_name, rev_16_date):
+    def rev_16(self, report_name, rev_16_from_month, rev_16_to_month):
         """
         Generates and downloads a report for a specified month and year based on the given report name
         and date in the format ``YYYY/MM/DD``.
@@ -624,19 +624,18 @@ class ExtractReports:
         """
         self.experity.navigate_to(self.experity_url, self.experity_version, "Reports")
         self.experity.search_and_select_report(report_name)
-        try:
-            # Convert the input date string to a datetime object
-            input_date = datetime.strptime(rev_16_date, "%Y/%m/%d")
+        
+        def rev_16_report_steps(month_name):
+            self.experity.select_month(month=month_name)
+            self.experity.run_report()
+            self.experity.download_report(self.report_export_type)
+            file_folder.wait_for_download(REV_16_FILE_NAME, self.download_directory)
+            old_file_name = os.path.join(self.download_directory, REV_16_FILE_NAME)
+            new_file_name = os.path.join(self.download_directory, f"{report_name}_{month_name}.csv")
+            file_folder.rename_file_or_folder(old_file_name, new_file_name)
+            close_other_windows(self.driver)
 
-            # Format the datetime object as "Month Year"
-            formatted_date = input_date.strftime("%B %Y")
-            self.experity.select_month(month=formatted_date)
-        except ValueError:
-            print("Invalid date format. Please provide a valid YYYY/MM/DD date.")
-        self.experity.run_report()
-        self.experity.download_report(self.report_export_type)
-        file_folder.wait_for_download(report_name, self.download_directory)
-        close_other_windows(self.driver)
+        run_logic_for_each_month(rev_16_from_month, rev_16_to_month, rev_16_report_steps)
 
     def pay_4(self, report_name, pay_4_from_month, pay_4_to_month):
         """

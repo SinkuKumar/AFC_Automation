@@ -22,13 +22,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from utils.pyodbc_sql import PyODBCSQL
 
-def execute_query():
-    try:
-        #execture query
-    except:
-        # ask user to drop and re-recarete trable
-    
-
 
 def cnt_27_staging_table(table_name="CNT_27_Staging_Base"):
     """
@@ -601,6 +594,18 @@ def rev_16_staging_table(table_name="REV_16_Staging_Base"):
         Rebilled_Amt FLOAT,
         Client_ID INT,
         Date_Updated DATETIME
+    );
+    """
+
+def status_table(table_name = 'data_uploads_status'):
+    return f"""
+    CREATE TABLE {table_name} (
+        etl_id VARCHAR(50) PRIMARY KEY,
+        client_id NVARCHAR(MAX),
+        report_name NVARCHAR(MAX),
+        status NVARCHAR(MAX),
+        date_updated DATETIME,
+        error_msg NVARCHAR(MAX) NULL
     );
     """
 

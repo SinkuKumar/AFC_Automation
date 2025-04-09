@@ -521,6 +521,7 @@ def adj_4_staging_table(table_name="ADJ_4_Staging_Base"):
     :rtype: str
     """
     # TODO: textbox20: Rename the column
+    # textbox20 not required
     return f"""
     CREATE TABLE {table_name}(
     	Inv_Num nvarchar(max),
@@ -552,6 +553,7 @@ def pay_4_staging_table(table_name="PAY_4_Staging_Base"):
     :rtype: str
     """
     # TODO: Rename textbox13 column
+    # textbox13 not required
     return f"""
     CREATE TABLE {table_name}(
         Payer_Name NVARCHAR(MAX),
@@ -577,6 +579,7 @@ def rev_16_staging_table(table_name="REV_16_Staging_Base"):
     :rtype: str
     """
     # TODO: Rename textbox33 and textbox34 columns
+    # textbox33 & textbox34 not required
     return f"""
     CREATE TABLE {table_name}(
         Clinic NVARCHAR(MAX),

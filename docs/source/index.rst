@@ -20,10 +20,13 @@ Urgent Care Automation
    :caption: Getting Started
 
    installation
-   automation
+   py_automation
+   other_automation
 
 .. toctree::
    :maxdepth: 2
    :caption: Reference
 
+   etl
+   ultramsg
    utils

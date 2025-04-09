@@ -1,9 +1,9 @@
 .. _using_automation:
 
-Using Automation
-================
+Python Automation
+=================
 
-To use the automation script, follow these steps:
+To directly use the automation script using python, follow these steps:
 
 1. **Create a Python File:**
    - In the root directory of the project, create a new Python file, such as ``mtd_uploads.py``.

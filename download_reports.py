@@ -52,7 +52,7 @@ class ReportETL:
         self.sql.check_and_create_table(self.STATUS_TABLE, status_table(self.STATUS_TABLE))
 
     def experity_login(self):
-        etl_id = f'{self.client_id}_LOGIN__{self.DATE_STAMP}_{self.TIME_STAMP}'
+        etl_id = f'{self.client_id}_LOGIN_{self.DATE_STAMP}_{self.TIME_STAMP}'
         try:
             self.sql.log_etl_start(self.STATUS_TABLE, etl_id, self.client_id, "LOGIN", f"{self.DATE_STAMP} {self.TIME_STAMP}")
             # NOTE: It'll take only the first client credentials

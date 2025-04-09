@@ -155,18 +155,18 @@ class ExperityBase:
         try:
             logging.info("Entering username.")
             login_username = self.wait.until(EC.element_to_be_clickable((By.ID,'txtLogin')))
-            login_username.send_keys(username)
+            login_username.send_keys(f"{username}\r\n")
 
-            logging.info("Clicking 'Next' button.")
-            self.wait.until(EC.element_to_be_clickable((By.ID,'btnNext'))).click()
+            # logging.info("Clicking 'Next' button.")
+            # self.wait.until(EC.element_to_be_clickable((By.ID,'btnNext'))).click()
 
             logging.info("Entering password.")
             login_password = self.wait.until(EC.element_to_be_clickable((By.ID,'txtPassword')))
-            login_password.send_keys(password)
+            login_password.send_keys(f"{password}\r\n")
 
-            logging.info("Clicking 'Submit' button to log in.")
-            self.wait.until(EC.element_to_be_clickable((By.ID,'btnSubmit'))).click()
-            self.wait.until(page_loads)
+            # logging.info("Clicking 'Submit' button to log in.")
+            # self.wait.until(EC.element_to_be_clickable((By.ID,'btnSubmit'))).click()
+            # self.wait.until(page_loads)
 
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             screenshots_folder = os.path.join(project_root, "Screenshots")
@@ -176,9 +176,10 @@ class ExperityBase:
                 """
                 Verify if the username or password is incorrect, and capture a screenshot if necessary.
                 """
-                if self.driver.find_element(By.ID, "lblErrorMessage").text == "Invalid User Credentials":
+                error_message = self.driver.find_element(By.ID, "lblErrorMessage")
+                if error_message.text == "Invalid User Credentials":
                     screenshot_path = os.path.join(screenshots_folder, f"Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
-                    self.driver.find_element(By.ID, "ctl00").screenshot(screenshot_path)
+                    self.driver.save_screenshot(screenshot_path)
                     raise Exception("Invalid user credentials.")
 
             elif self.driver.title == "PVM > User Profile":

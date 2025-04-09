@@ -97,6 +97,10 @@ class SeleniumDriver:
             options.add_argument("--disable-background-networking")
             options.add_argument("--disable-features=UseDeviceAsDictationMic")
             options.add_argument("--disable-blink-features=AutomationControlled")
+            options.add_argument("--log-level=3")
+            options.add_experimental_option("excludeSwitches", ["enable-logging"])
+            options.add_experimental_option("useAutomationExtension", False)
+            options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
             
             if self.headless:
                 options.add_argument("--headless")

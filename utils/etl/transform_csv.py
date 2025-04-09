@@ -189,7 +189,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         columns_to_rename = {
             "Svc_Date": "Service_Date",
@@ -221,7 +221,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         # TODO: Add column renaming and other transformations
         columns_to_rename = {
@@ -247,7 +247,7 @@ class TransformCSV:
         :returns: None
         """
 
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         df = self.drop_textbox_columns(df, ['textbox20'])
         df = self.clean_currency_column(df, ["textbox20", "Adj_Amt"])
@@ -268,7 +268,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
@@ -294,7 +294,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
@@ -318,7 +318,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
@@ -344,7 +344,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
@@ -367,7 +367,7 @@ class TransformCSV:
         """
         try:
             logging.info("Fin_25 Data transformation process started.")
-            df = pl.read_csv(file_path, infer_schema_length=0)
+            df = pl.read_csv(file_path, infer_schema=False)
             df = self.drop_all_null_rows(df)
 
             df = df.rename({"Textbox2":"Svc_Date"})
@@ -414,7 +414,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         df = self.drop_textbox_columns(df, ["textbox13"])
         df = self.clean_currency_column(df, ["textbox13", "Payment"])
@@ -447,7 +447,7 @@ class TransformCSV:
         """
         try:
             logging.info("Pay_10 Data transformation process started.")
-            df = pl.read_csv(file_path, columns=["Payer_Class", "Payer_Name", "Pat_Name", "Svc_Date", "CPT_Code", "textbox18", "Paid_Amt", "Adj_Amt", "textbox22"], infer_schema_length=0)
+            df = pl.read_csv(file_path, columns=["Payer_Class", "Payer_Name", "Pat_Name", "Svc_Date", "CPT_Code", "textbox18", "Paid_Amt", "Adj_Amt", "textbox22"], infer_schema=False)
             df = self.drop_all_null_rows(df)
 
             df = df.rename({"textbox18":"Charge_Amt", "textbox22":"Net_AR"})
@@ -481,7 +481,7 @@ class TransformCSV:
         :returns: None
         """
         try:
-            df = pl.read_csv(file_path, infer_schema_length=0)
+            df = pl.read_csv(file_path, infer_schema=False)
             df = self.drop_all_null_rows(df)
             df = self.drop_textbox_columns(df, ["textbox33", "textbox34"])
             df = self.clean_currency_column(df, ["textbox33", "textbox34", "Charge_Amt", "Rebilled_Amt"])
@@ -515,7 +515,7 @@ class TransformCSV:
         """
         try:
             logging.info("Rev_19 Data transformation process started.")
-            df = pl.read_csv(file_path, columns=["Phy_Name", "Rev_Type", "Proc_Code", "Description", "Charge_Amt"], infer_schema_length=0)
+            df = pl.read_csv(file_path, columns=["Phy_Name", "Rev_Type", "Proc_Code", "Description", "Charge_Amt"], infer_schema=False)
             df = self.drop_all_null_rows(df)
 
             df = df.with_columns(pl.col("Phy_Name").str.replace_all(",", "").alias("Phy_Name"))
@@ -541,7 +541,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
@@ -566,7 +566,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         columns_to_rename = {
 
@@ -591,7 +591,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         df = df.rename({"textbox5": "Provider"})
         df = self.add_client_id_date_updated_columns(df)
@@ -610,7 +610,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         columns = ["SignedOffBy", "textbox13", "textbox19", "textbox42", "textbox20", "textbox52", "textbox21", "textbox56", "Clinic", "Svc_Date", "Pat_Name", "PrescribedDate", "PrescribedBy", "DrugName", "Strength", "StrengthUOM", "DispenseQuantity", "IsDispensed"]
         target_values = ["textbox1", "textbox18", "textbox22", "textbox23", "Pat_Name1", "PrescribedDate1", "PrescribedBy1", "textbox24", "textbox25", "textbox26", "textbox27", "textbox28", "textbox29", "textbox30", "textbox15", "textbox46", "textbox47", "textbox48"]
 
@@ -639,7 +639,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         df = df.rename({"Textbox32": "Last_Clinic"})
         df = self.add_client_id_date_updated_columns(df)
@@ -658,7 +658,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
@@ -676,7 +676,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)
         df = self.sync_dataframe_with_table(table_columns, df)
@@ -694,7 +694,7 @@ class TransformCSV:
         :type table_columns: list[tuple[str]]
         :returns: None
         """
-        df = pl.read_csv(file_path, infer_schema_length=0)
+        df = pl.read_csv(file_path, infer_schema=False)
         df = self.drop_textbox_columns(df)
         df = self.drop_all_null_rows(df)
         df = self.add_client_id_date_updated_columns(df)

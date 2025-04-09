@@ -6,7 +6,7 @@ mode = "include"
 # report_list = ["CNT_19", "FIN_18", "CNT_27", "ADJ_11", "PAY_41", "PAT_02"]
 # report_list = ["PAT_20", "CCR_03", "PAY_10", "PAT_02", "CCR_02"]
 # report_list = ["ADJ_04", "PAY_04", "REV_16"]
-report_list = ["PAY_04"]
+report_list = ["CNT_19"]
 
 function_args = {
     "CNT_27": {"from_date": "01/01/2022", "to_date": CURRENT_DATE},

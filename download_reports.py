@@ -84,7 +84,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{cnt_27_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_cnt_19(self, from_date, to_date):
@@ -106,7 +106,7 @@ class ReportETL:
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
 
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{cnt_19_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_adj_11(self, from_date, to_date):
@@ -127,7 +127,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{adj_11_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_fin_18(self, from_date, to_date):
@@ -148,7 +148,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{fin_18_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_pay_41(self, from_date, to_date):
@@ -169,7 +169,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{pay_41_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_xry_03(self, from_date, to_date):
@@ -190,7 +190,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{xry_03_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def rtl_pay_10(self, from_date, to_date):
@@ -211,7 +211,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{pay_10_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_ccr_02(self, from_date, to_date):
@@ -232,7 +232,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{ccr2_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
         
 
@@ -254,7 +254,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{ccr3_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_per_02(self, from_date, to_date):
@@ -275,7 +275,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{per_02_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_med_01(self, from_date, to_date):
@@ -296,7 +296,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{med_1_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_pat_20(self, from_date, to_date):
@@ -317,7 +317,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{pat_20_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_lab_01(self, from_date, to_date):
@@ -338,7 +338,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{lab_1_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_cht_02(self, from_date, to_date):
@@ -359,7 +359,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{cht_2_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_pat_02(self, from_date, to_date):
@@ -380,7 +380,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{pat_2_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_adj_04(self, from_month, to_month):
@@ -401,7 +401,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{adj_4_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_pay_04(self, from_month, to_month):
@@ -422,7 +422,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{pay_4_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def etl_rev_16(self, from_month, to_month):
@@ -443,7 +443,7 @@ class ReportETL:
                 raise Exception(error)
             self.sql.log_etl_success(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}")
         except Exception as e:
-            print(f"Something Error occured : {e}")
+            print(f"{rev_16_cfg['report_name']} Error occured : {e}")
             self.sql.log_etl_failure(self.STATUS_TABLE, etl_id, f"{self.DATE_STAMP} {self.TIME_STAMP}", e)
 
     def experity_logout(self):

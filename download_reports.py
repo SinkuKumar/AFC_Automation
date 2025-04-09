@@ -224,7 +224,7 @@ class ReportETL:
             table_columns = self.load_csv.get_column_names(ccr2_cfg['base_table'])
             self.task_q.add_task(self.trns_csv.ccr_02, os.path.join(self.RAW_DIR, ccr2_cfg['raw_file']), os.path.join(self.DWLD_DIR, ccr2_cfg['processed_file']), table_columns)
             self.task_q.add_task(file_folder.delete_paths, os.path.join(self.RAW_DIR,ccr2_cfg['raw_file']))
-            self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, ccr2_cfg['file_name']), ccr2_cfg['base_table'], ccr2_cfg['staging_table'])
+            self.task_q.add_task(self.load_csv.load_report, os.path.join(self.DWLD_DIR, ccr2_cfg['processed_file']), ccr2_cfg['base_table'], ccr2_cfg['staging_table'])
             self.task_q.add_task(file_folder.move_file, os.path.join(self.DWLD_DIR, ccr2_cfg['processed_file']), self.CLIENT_TODAY_DIR)
             self.task_q.wait_for_completion()
             error = self.task_q.check_and_raise_error()

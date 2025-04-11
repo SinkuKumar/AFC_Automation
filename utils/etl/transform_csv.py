@@ -161,7 +161,7 @@ class TransformCSV:
             raise FileNotFoundError("No matching CSV files found.")
         
         df_list = [
-            pl.read_csv(file).with_columns([pl.col(col).cast(pl.Utf8) for col in pl.read_csv(file, n_rows=1).columns])
+            pl.read_csv(file, infer_schema_length=0).with_columns([pl.col(col).cast(pl.Utf8) for col in pl.read_csv(file, n_rows=1, infer_schema_length=0).columns])
             for file in all_files
         ]
         combined_df = pl.concat(df_list)

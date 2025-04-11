@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from utils import error_messages as em
 from utils.automation_exceptions import SeleniumException
+from selenium.common.exceptions import StaleElementReferenceException
 TIMESTAMP_IDENTIFIER = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 def page_loads(driver: WebDriver) -> bool:
@@ -142,69 +143,71 @@ class ExperityBase:
 
     def login(self, username: str, password: str) -> None:
         """
-        Automates the login process for Experity portal, checks for invalid username or password..
+        Automates the login process for Experity portal, checks for invalid username or password.
 
         :param username: username to log in.
-        :type username: str
         :param password: password associated with the username.
-        :type password: str
         :returns: None
 
         :raises SeleniumException: If any issue occurs during login process.
         """
         try:
             logging.info("Entering username.")
-            login_username = self.wait.until(EC.element_to_be_clickable((By.ID,'txtLogin')))
+            login_username = self.wait.until(EC.element_to_be_clickable((By.ID, 'txtLogin')))
             login_username.send_keys(f"{username}\r\n")
 
-            # logging.info("Clicking 'Next' button.")
-            # self.wait.until(EC.element_to_be_clickable((By.ID,'btnNext'))).click()
-
             logging.info("Entering password.")
-            login_password = self.wait.until(EC.element_to_be_clickable((By.ID,'txtPassword')))
+            login_password = self.wait.until(EC.element_to_be_clickable((By.ID, 'txtPassword')))
             login_password.send_keys(f"{password}\r\n")
-
-            # logging.info("Clicking 'Submit' button to log in.")
-            # self.wait.until(EC.element_to_be_clickable((By.ID,'btnSubmit'))).click()
-            # self.wait.until(page_loads)
 
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             screenshots_folder = os.path.join(project_root, "Screenshots")
             create_directories([screenshots_folder])
-            self.wait.until(page_loads)
-            if self.driver.title == "PVM > Login":
-                """
-                Verify if the username or password is incorrect, and capture a screenshot if necessary.
-                """
-                error_message = self.driver.find_element(By.ID, "lblErrorMessage")
-                if error_message.text == "Invalid User Credentials":
-                    screenshot_path = os.path.join(screenshots_folder, f"Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
-                    self.driver.save_screenshot(screenshot_path)
-                    raise Exception("Invalid user credentials.")
 
-            elif self.driver.title == "PVM > User Profile":
-                """
-                Check if the user is required to change the password, and capture a screenshot if necessary.
-                """
+            self.wait.until(page_loads)
+
+            current_title = self.driver.title
+
+            if current_title == "PVM > Log Book":
+                return
+
+            elif current_title == "PVM > Login":
+                try:
+                    logging.info("Checking for login error message.")
+                    error_message = self.wait.until(EC.presence_of_element_located((By.ID, "lblErrorMessage"))).text
+                    if error_message == "Invalid User Credentials":
+                        screenshot_path = os.path.join(screenshots_folder, f"Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                        self.driver.save_screenshot(screenshot_path)
+                        raise Exception("Invalid user credentials.")
+                except StaleElementReferenceException:
+                    logging.warning("Stale element encountered while checking login error message.")
+                    error_message = self.driver.find_element(By.ID, "lblErrorMessage").text
+                    if error_message == "Invalid User Credentials":
+                        screenshot_path = os.path.join(screenshots_folder, f"Invalid_User_Cred_{username}_{TIMESTAMP_IDENTIFIER}.png")
+                        self.driver.save_screenshot(screenshot_path)
+                        raise Exception("Invalid user credentials.")
+
+            elif current_title == "PVM > User Profile":
                 try:
                     error_message = self.driver.find_element(By.ID, "lblPasswordError").text
-                except:
+                except Exception:
                     error_message = ""
 
                 if error_message == "You are required to change your password.":
                     screenshot_path = os.path.join(screenshots_folder, f"Password_Change_{username}_{TIMESTAMP_IDENTIFIER}.png")
-                    self.driver.find_element(By.ID, "pnlPassword").screenshot(screenshot_path)
+                    self.wait.until(EC.presence_of_element_located((By.ID, "pnlPassword"))).screenshot(screenshot_path)
                     raise Exception("Password change required")
 
                 elif "Your password is about to expire on" in error_message:
                     screenshot_path = os.path.join(screenshots_folder, f"Password_Expire_{username}_{TIMESTAMP_IDENTIFIER}.png")
-                    self.driver.find_element(By.ID, "pnlPassword").screenshot(screenshot_path)
+                    self.wait.until(EC.presence_of_element_located((By.ID, "pnlPassword"))).screenshot(screenshot_path)
                     logging.warning(error_message)
 
             logging.info("Login process completed successfully.")
 
         except Exception as e:
             raise SeleniumException(f"Code: {em.INVALID_CREDENTIALS} | Message : Error in Logging process - {str(e)}")
+
 
     def navigate_to(self, base_url: str, portal_url: str, sub_nav_item_name: str) -> None:
         """
